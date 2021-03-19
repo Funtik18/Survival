@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5821659017225267393, guid: 6346fa589909a3f46a304731f3ea8c7c, type: 3}
+  - {fileID: 2100000, guid: 3a9e2c181b3c47046b6cbc632a4a02a9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14367,7 +14367,7 @@ GameObject:
   - component: {fileID: 7986179049096122259}
   - component: {fileID: 7986179049098056108}
   m_Layer: 0
-  m_Name: Bonfire
+  m_Name: Bonfire0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14416,7 +14416,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5821659017225267393, guid: 6346fa589909a3f46a304731f3ea8c7c, type: 3}
+  - {fileID: 2100000, guid: 3a9e2c181b3c47046b6cbc632a4a02a9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
