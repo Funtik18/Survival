@@ -14,12 +14,12 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
-  m_FogDensity: 0.01
+  m_Fog: 1
+  m_FogColor: {r: 0.36645603, g: 0.45131713, b: 0.5754717, a: 1}
+  m_FogMode: 1
+  m_FogDensity: 0.07
   m_LinearFogStart: 0
-  m_LinearFogEnd: 300
+  m_LinearFogEnd: 50
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
@@ -1232,6 +1232,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 31.45
       objectReference: {fileID: 0}
+    - target: {fileID: 2927252029152217261, guid: 02a49226f9b31384f93c958166a9086b,
+        type: 3}
+      propertyPath: isMobileControll
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6568542015979931070, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_Enabled
@@ -1431,20 +1436,20 @@ Terrain:
   m_Enabled: 1
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: 5c89664dea31e454e943bb8400fef144, type: 2}
-  m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
+  m_TreeDistance: 40
+  m_TreeBillboardDistance: 40
   m_TreeCrossFadeLength: 200
-  m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
-  m_DetailObjectDensity: 1
-  m_HeightmapPixelError: 5
+  m_TreeMaximumFullLODCount: 25
+  m_DetailObjectDistance: 41
+  m_DetailObjectDensity: 0.05
+  m_HeightmapPixelError: 45
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
-  m_ShadowCastingMode: 2
+  m_ShadowCastingMode: 0
   m_DrawHeightmap: 1
   m_DrawInstanced: 0
   m_DrawTreesAndFoliage: 1
-  m_ReflectionProbeUsage: 1
+  m_ReflectionProbeUsage: 0
   m_MaterialTemplate: {fileID: 2100000, guid: cdc1a8a69a51de94ea66405eb106199a, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
