@@ -737,7 +737,7 @@ GameObject:
   - component: {fileID: 2599462480557564623}
   - component: {fileID: 2595936250329351758}
   - component: {fileID: 2927252029152217261}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -941,10 +941,10 @@ MonoBehaviour:
   slopeForceRayLength: 1.5
   currentSensitivity: 3.5
   currentSmoothTime: 0.03
-  magnitude: 0
-  roughness: 0
-  fadeInTime: 0
-  fadeOutTime: 0
+  magnitude: 1
+  roughness: 1
+  fadeInTime: 1
+  fadeOutTime: 1
 --- !u!1 &6276677825751079916
 GameObject:
   m_ObjectHideFlags: 0
