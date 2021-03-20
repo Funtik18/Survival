@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.36645603, g: 0.45131713, b: 0.5754717, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.07
@@ -1235,12 +1235,17 @@ PrefabInstance:
     - target: {fileID: 2927252029152217261, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: isMobileControll
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6568542015979931070, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6819919131059496624, guid: 02a49226f9b31384f93c958166a9086b,
+        type: 3}
+      propertyPath: m_Depth
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02a49226f9b31384f93c958166a9086b, type: 3}
@@ -1436,12 +1441,12 @@ Terrain:
   m_Enabled: 1
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: 5c89664dea31e454e943bb8400fef144, type: 2}
-  m_TreeDistance: 40
-  m_TreeBillboardDistance: 40
+  m_TreeDistance: 5000
+  m_TreeBillboardDistance: 2000
   m_TreeCrossFadeLength: 200
-  m_TreeMaximumFullLODCount: 25
-  m_DetailObjectDistance: 41
-  m_DetailObjectDensity: 0.05
+  m_TreeMaximumFullLODCount: 10000
+  m_DetailObjectDistance: 250
+  m_DetailObjectDensity: 1
   m_HeightmapPixelError: 45
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0

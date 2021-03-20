@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6694220682337751722}
-  - component: {fileID: 7730848410846076175}
-  - component: {fileID: 5525225023650884037}
+  - component: {fileID: 3892251337079966545}
+  - component: {fileID: 4080769318952089583}
   - component: {fileID: 1823990825152856710}
   m_Layer: 0
   m_Name: Tree_Pine_Large_03_Snow
@@ -28,12 +28,12 @@ Transform:
   m_GameObject: {fileID: 6317836224398673936}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 496.30658, y: 0, z: 203.86086}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.2, y: 2.2, z: 2.2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7730848410846076175
+--- !u!33 &3892251337079966545
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6317836224398673936}
   m_Mesh: {fileID: 5908926996145260130, guid: 0e84b2cbfca65d74d89d653ef42e67e3, type: 3}
---- !u!23 &5525225023650884037
+--- !u!23 &4080769318952089583
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,5 +91,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0122681, y: 7.1513786, z: 0.9859009}
-  m_Center: {x: 0.0546875, y: 3.8373222, z: -0.06762695}
+  m_Size: {x: 1.0122681, y: 8.147827, z: 0.9859009}
+  m_Center: {x: 0.0546875, y: 3.7682247, z: -0.06762695}
