@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
 
 using UnityEngine;
 
@@ -7,12 +7,17 @@ public class PlayerUI : MonoBehaviour
 	//states
 	public EnduranceUI endurance;
 
-	//control
+	[Title("Control")]
+	public TargetPoint targetPoint;
 	public Joystick joystickMove;
 	public FixedTouchField touchField;
 
-	//buttons
+	[Title("Buttons")]
+	public FixedTouchButton buttonPickUp;
 	public FixedTouchButton buttonSpeedUp;
+
+	[Title("Windows")]
+	public WindowItemInspector itemInspector;
 
 	public void Setup(Player player)
 	{

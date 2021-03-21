@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Player owner = null;
-    private CharacterController characterController = null;
-    private Transform ownerTransform = null;
+    [SerializeField] private CharacterController characterController;
+
+    private Transform ownerTransform;
 
     private Transform ownerCamera = null;
 
@@ -76,14 +76,12 @@ public class PlayerController : MonoBehaviour
 
 
 
-    public void Setup(Player owner, Transform ownerCamera, bool isMobileControll = false)
+    public void Setup(Player owner, bool isMobileControll = false)
 	{
         this.isMobileControll = isMobileControll;
-
-        characterController = owner.characterController;
-        ownerTransform = owner.transform;
-        this.ownerCamera = ownerCamera;
-
+        this.ownerCamera = owner.playerCamera.Transform;
+        this.ownerTransform = owner.Transform;
+        
         PlayerUI playerUI = owner.playerUI;
 
         joystickMove = playerUI.joystickMove;
@@ -96,7 +94,7 @@ public class PlayerController : MonoBehaviour
 		playerUI.buttonSpeedUp.onUnPressed += () => { currentSpeed = maxWalkSpeed; speedUp = false; };
     }
 
-    public void UpdateMouseLook()
+    public void UpdateLook()
     {
 		if(!isMobileControll)
 		{

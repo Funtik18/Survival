@@ -1,9 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 using EZCameraShake;
-
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -20,10 +18,30 @@ public class PlayerCamera : MonoBehaviour
 		}
 	}
 
-
+	[SerializeField] private ItemInspector inspector;
 	[SerializeField] private Camera playerCamera;
 	[SerializeField] private CameraShaker shaker;
 
+	[SerializeField] private LayerMask castLayers;
+
+	[Space]
+	[SerializeField] private float rayDistance = 5f;
+
+	//coroutines
+	private Coroutine shakeCoroutine = null;
+	private bool IsShakeProccess => shakeCoroutine != null;
+
+	private Coroutine visionCoroutine = null;
+	private bool IsVisionProccess => visionCoroutine != null;
+	private WaitForSeconds visionSeconds = new WaitForSeconds(0.25f);
+
+	//cash
+	private PlayerUI playerUI;
+
+	private Item itemCashed = null;
+	private bool checkExit = false;
+
+	//properties
 	private Transform trans;
 	public Transform Transform
 	{
@@ -47,36 +65,88 @@ public class PlayerCamera : MonoBehaviour
 		}
 	}
 
-
-	private Coroutine shakeCoroutine = null;
-	private bool IsShakeProccess => shakeCoroutine != null;
-
-
-	private void Update()//need hit in 0.25f sec
+	private void Awake()
 	{
-		Debug.DrawLine(transform.position, transform.position + (transform.forward * 5), Color.blue);
+		playerUI = Player.Instance.playerUI;
 
-		RaycastHit hit;
+		playerUI.buttonPickUp.onClicked += InspectorLook;
+		
+		StartVision();
+	}
 
-		if(Physics.Linecast(transform.position, transform.position + (transform.forward * 5), out hit))
+	private void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.E))
 		{
-			PickableItem obj = hit.collider.gameObject.GetComponent<PickableItem>();
-			if(obj != null)
-			{
-				obj.Interact();
-
-				if(Input.GetKeyDown(KeyCode.Space))
-				{
-					obj.PickUp();
-				}
-
-				Debug.LogError(hit.collider.gameObject.name, hit.collider.gameObject);
-			}
+			InspectorLook();
 		}
 	}
 
+	private void InspectorLook()
+	{
+		if(itemCashed && itemCashed.IsPickable)
+		{
+			inspector.SetItem(itemCashed);
+		}
+	}
 
+	#region Vision
+	private void StartVision()
+	{
+		if(!IsVisionProccess)
+		{
+			visionCoroutine = StartCoroutine(Vision());
+		}
+	}
+	private IEnumerator Vision()
+	{
+		while(true)
+		{
+			Debug.DrawLine(Transform.position, Transform.position + (Transform.forward * rayDistance), Color.blue);
 
+			RaycastHit hit;
+			Ray ray = new Ray(Transform.position, Transform.forward);
+
+			if(Physics.Raycast(ray, out hit, rayDistance, castLayers))
+			{
+				Item item = hit.collider.GetComponent<Item>();
+				if(item != null && item != itemCashed)
+				{
+					itemCashed = item;
+
+					playerUI.buttonPickUp.IsActive(true);
+
+					playerUI.targetPoint.ShowPoint();
+					playerUI.targetPoint.SetToolTipText(itemCashed.data.name).ShowToolTip();
+					checkExit = true;
+				}
+			}
+			else
+			{
+				if(checkExit)
+				{
+					playerUI.buttonPickUp.IsActive(false);
+
+					playerUI.targetPoint.HidePoint();
+					itemCashed = null;
+					checkExit = false;
+				}
+			}
+			yield return visionSeconds;
+		}
+		StopVision();
+	}
+	private void StopVision()
+	{
+		if(IsVisionProccess)
+		{
+			StopCoroutine(visionCoroutine);
+			visionCoroutine = null;
+		}
+	}
+	#endregion
+
+	#region Idle Shake
 	public void StartIdleShake()
 	{
 		if(!IsShakeProccess)
@@ -103,33 +173,5 @@ public class PlayerCamera : MonoBehaviour
 			shakeCoroutine = null;
 		}
 	}
-
-	//private void Update()
-	//{
-	//	if(Input.GetKeyDown(KeyCode.Space))
-	//	{
-	//		StartCoroutine(CameraShake());
-	//	}
-	//}
-
-
-	//IEnumerator CameraShake()
-	//{
-	//	Vector3 originalPos = Transform.localPosition;
-	//	float elapsed = 0f;
-
-	//	while(elapsed < duration)
-	//	{
-	//		float x = Random.Range(-1f, 1f) * magnitude;
-	//		float y = Random.Range(-1f, 1f) * magnitude;
-
-	//		Transform.localPosition = new Vector3(x, y, originalPos.z);
-
-	//		elapsed += Time.deltaTime;
-
-	//		yield return null;
-	//	}
-
-	//	Transform.localPosition = originalPos;
-	//}
+	#endregion
 }

@@ -1,21 +1,50 @@
 ﻿using UnityEngine;
 
 using Sirenix.OdinInspector;
+using System;
 
 public class Player : MonoBehaviour
 {
+	private static Player instance;
+	public static Player Instance
+	{
+		get
+		{
+			if(instance == null)
+			{
+				instance = FindObjectOfType<Player>();
+			}
+			return instance;
+		}
+	}
+
 	[SerializeField] private PlayerData data;
 	public PlayerStats stats;
 
-
-	public CharacterController characterController;
+	[SerializeField] private ItemInspector itemInspector;
 	[SerializeField] private PlayerController playerController;
-	[SerializeField] private PlayerCamera playerCamera;
+	public PlayerCamera playerCamera;
 	public PlayerUI playerUI;
 
 	[Space]
 	[SerializeField] private bool isLockCursor = true;
 	[SerializeField] private bool isMobileControll = false;
+
+	private bool lockLook = false;
+	private bool lockMovement = false;
+
+
+
+	private Transform trans;
+	public Transform Transform
+	{
+		get
+		{
+			if(trans == null)
+				trans = transform;
+			return trans;
+		}
+	}
 
 	private void Awake()
 	{
@@ -25,19 +54,36 @@ public class Player : MonoBehaviour
 
 		CheckCursor();
 
-		playerController.Setup(this, playerCamera.transform, isMobileControll);
+		playerController.Setup(this, isMobileControll);
 	}
 
 
 	private void Update()
 	{
-		playerController.UpdateMovement();
+		if(!lockMovement)
+			playerController.UpdateMovement();
 	}
 	private void LateUpdate()
 	{
-		playerController.UpdateMouseLook();
+		if(!lockLook)
+			playerController.UpdateLook();
 	}
 
+	public void Lock(bool trigger)
+	{
+		LockMovement(trigger);
+		LockLook(trigger);
+	}
+	public void LockMovement(bool trigger)
+	{
+		lockMovement = trigger;
+		playerUI.joystickMove.IsEnable = trigger;
+	}
+	public void LockLook(bool trigger)
+	{
+		lockLook = trigger;
+		playerUI.joystickMove.IsEnable = trigger;
+	}
 
 	private void CheckCursor()
 	{

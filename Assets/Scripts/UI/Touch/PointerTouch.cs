@@ -9,6 +9,7 @@ public abstract class PointerTouch : MonoBehaviour, IPointerDownHandler, IPointe
 
     public UnityAction onPressed;
     public UnityAction onUnPressed;
+    public UnityAction onClicked;
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
@@ -19,7 +20,12 @@ public abstract class PointerTouch : MonoBehaviour, IPointerDownHandler, IPointe
 
     public virtual void OnPointerUp(PointerEventData eventData)
     {
-        isPressed = false;
         onUnPressed?.Invoke();
+
+        if(isPressed)
+        {
+           onClicked?.Invoke();
+           isPressed = false;
+        }
     }
 }

@@ -20,4 +20,10 @@ public class FixedTouchButton : PointerTouch
 
         button.color = new Color(1, 1, 1, button.color.a);
     }
+
+
+    public void IsActive(bool trigger)
+	{
+        gameObject.SetActive(trigger);
+	}
 }
