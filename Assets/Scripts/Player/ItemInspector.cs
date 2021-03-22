@@ -53,7 +53,7 @@ public class ItemInspector : MonoBehaviour
 		{
 			if(inspector == null)
 			{
-				inspector = Player.Instance.playerUI.itemInspector;
+				inspector = Player.Instance.playerUI.windowsUI.itemInspectorWindow;
 				inspector.onTakeIt += ItemTake;
 				inspector.onLeaveIt += ItemLeave;
 			}
@@ -196,7 +196,7 @@ public class ItemInspector : MonoBehaviour
 
 	private void ItemTake()
 	{
-		Player.Instance.AddItem(currentItem);
+		Player.Instance.AddItem(currentItem.scriptableData);
 
 		isItemNeedDestroy = true;
 		isInspect = false;

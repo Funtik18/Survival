@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -22,7 +20,6 @@ public class WindowItemInspector : WindowUI
         takeItButton.onClick.AddListener(() => { onTakeIt?.Invoke(); });
         leaveItButton.onClick.AddListener(() => { onLeaveIt?.Invoke(); });
     }
-
 
     public void SetInformation(ItemData data)
 	{

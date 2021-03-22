@@ -1,21 +1,33 @@
-﻿using Sirenix.OdinInspector;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerUI : MonoBehaviour
 {
-	//states
-	public EnduranceUI endurance;
-
-	[Title("Control")]
 	public PlayerControlUI controlUI;
-	
-
-	[Title("Windows")]
-	public WindowItemInspector itemInspector;
+	public PlayerWindowsUI windowsUI;
 
 	public void Setup(Player player)
 	{
-		endurance.Setup(player.stats.Endurance);
+		//controlUI.buttonPickUp.onClicked.AddListener(InspectorLook);
+
+
+		//controlUI.buttonSpeedUp.onPressed.AddListener(() => { speedUp = true; });
+		//controlUI.buttonSpeedUp.onUnPressed.AddListener(() => { currentSpeed = maxWalkSpeed; speedUp = false; });
+
+		windowsUI.inventoryWindow.onBack += CloseInventory;
+
+		controlUI.buttonInventory.onClicked.AddListener(OpenInventory);
+
+		//controlUI.endurance.Setup(player.stats.Endurance);
+	}
+
+	private void OpenInventory()
+	{
+		controlUI.BlockControl();
+		windowsUI.inventoryWindow.ShowWindow();
+	}
+	private void CloseInventory()
+	{
+		controlUI.UnBlockControl();
+		windowsUI.inventoryWindow.HideWindow();
 	}
 }

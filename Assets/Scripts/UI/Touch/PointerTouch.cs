@@ -14,9 +14,9 @@ public abstract class PointerTouch : MonoBehaviour, IPointerDownHandler, IPointe
     protected bool isPressed;
     public bool IsPressed => isPressed;
 
-    public UnityAction onPressed;
-    public UnityAction onUnPressed;
-    public UnityAction onClicked;
+    public UnityEvent onPressed;
+    public UnityEvent onUnPressed;
+    public UnityEvent onClicked;
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {

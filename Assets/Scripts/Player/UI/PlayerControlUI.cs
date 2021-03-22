@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class PlayerControlUI : MonoBehaviour
 {
+	public EnduranceUI endurance;
+
 	[Title("Control")]
 	public TargetPoint targetPoint;
 	public Joystick joystickMove;
@@ -26,6 +28,7 @@ public class PlayerControlUI : MonoBehaviour
 		UnBlockControl();
 	}
 
+	#region Lock
 	public void BlockControl()
 	{
 		LockLook(false);
@@ -47,4 +50,5 @@ public class PlayerControlUI : MonoBehaviour
 		IsMoveEnable = trigger;
 		joystickMove.IsEnable = IsMoveEnable;
 	}
+	#endregion
 }

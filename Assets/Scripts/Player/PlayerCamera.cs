@@ -71,7 +71,6 @@ public class PlayerCamera : MonoBehaviour
 	{
 		playerUI = Player.Instance.playerUI;
 
-		playerUI.controlUI.buttonPickUp.onClicked += InspectorLook;
 
 		inspector.onStopInspect += ()=> { blockVision = false; };
 

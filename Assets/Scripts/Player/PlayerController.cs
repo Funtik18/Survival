@@ -83,9 +83,6 @@ public class PlayerController : MonoBehaviour
 
         //speed
         currentSpeed = maxWalkSpeed;
-
-        controlUI.buttonSpeedUp.onPressed += () => { speedUp = true; };
-        controlUI.buttonSpeedUp.onUnPressed += () => { currentSpeed = maxWalkSpeed; speedUp = false; };
     }
 
     public void UpdateLook()

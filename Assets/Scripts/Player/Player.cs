@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
 	public PlayerStats stats;
 
 	[SerializeField] private ItemInspector itemInspector;
+	[Space]
+	[SerializeField] private PlayerInventory playerInventory;
 	[SerializeField] private PlayerController playerController;
 	public PlayerCamera playerCamera;
 	public PlayerUI playerUI;
@@ -44,7 +46,7 @@ public class Player : MonoBehaviour
 
 	private void Awake()
 	{
-		stats = new PlayerStats(data.statsData);
+		//stats = new PlayerStats(data.statsData);
 
 		playerUI.Setup(this);
 
@@ -65,11 +67,11 @@ public class Player : MonoBehaviour
 			playerController.UpdateLook();
 	}
 
-	public void AddItem(ItemModel item)
+	public void AddItem(ItemScriptableData data)
 	{
-		data.items.Add(item);
 	}
-	
+
+
 	private void CheckCursor()
 	{
 		if(isLockCursor)
@@ -82,10 +84,9 @@ public class Player : MonoBehaviour
 [System.Serializable]
 public class PlayerData
 {
-	public List<ItemModel> items = new List<ItemModel>();
-	[TabGroup("PlayerStats")]
-	[HideLabel]
-	public PlayerStatsData statsData;
+	//[TabGroup("PlayerStats")]
+	//[HideLabel]
+	//public PlayerStatsData statsData;
 
 	[Button]
 	private void Save()
