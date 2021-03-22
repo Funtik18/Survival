@@ -8,13 +8,8 @@ public class PlayerUI : MonoBehaviour
 	public EnduranceUI endurance;
 
 	[Title("Control")]
-	public TargetPoint targetPoint;
-	public Joystick joystickMove;
-	public FixedTouchField touchField;
-
-	[Title("Buttons")]
-	public FixedTouchButton buttonPickUp;
-	public FixedTouchButton buttonSpeedUp;
+	public PlayerControlUI controlUI;
+	
 
 	[Title("Windows")]
 	public WindowItemInspector itemInspector;

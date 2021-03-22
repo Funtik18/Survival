@@ -10,6 +10,7 @@ public class FixedTouchField : PointerTouch
 
     void Update()
     {
+        if(!IsEnable) return;
         if(IsPressed)
         {
             if(pointerId >= 0 && pointerId < Input.touches.Length)
@@ -31,6 +32,8 @@ public class FixedTouchField : PointerTouch
 
     public override void OnPointerDown(PointerEventData eventData)
     {
+        if(!IsEnable) return;
+
         base.OnPointerDown(eventData);
         pointerId = eventData.pointerId;
         pointerOld = eventData.position;

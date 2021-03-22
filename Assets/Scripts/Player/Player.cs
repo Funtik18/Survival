@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 using Sirenix.OdinInspector;
-using System;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
@@ -30,10 +30,6 @@ public class Player : MonoBehaviour
 	[SerializeField] private bool isLockCursor = true;
 	[SerializeField] private bool isMobileControll = false;
 
-	private bool lockLook = false;
-	private bool lockMovement = false;
-
-
 
 	private Transform trans;
 	public Transform Transform
@@ -54,37 +50,26 @@ public class Player : MonoBehaviour
 
 		CheckCursor();
 
-		playerController.Setup(this, isMobileControll);
+		playerController.Setup(Transform, playerCamera.Transform, playerUI.controlUI, isMobileControll);
 	}
 
 
 	private void Update()
 	{
-		if(!lockMovement)
+		if(playerUI.controlUI.IsMoveEnable)
 			playerController.UpdateMovement();
 	}
 	private void LateUpdate()
 	{
-		if(!lockLook)
+		if(playerUI.controlUI.IsLookEnable)
 			playerController.UpdateLook();
 	}
 
-	public void Lock(bool trigger)
+	public void AddItem(ItemModel item)
 	{
-		LockMovement(trigger);
-		LockLook(trigger);
+		data.items.Add(item);
 	}
-	public void LockMovement(bool trigger)
-	{
-		lockMovement = trigger;
-		playerUI.joystickMove.IsEnable = trigger;
-	}
-	public void LockLook(bool trigger)
-	{
-		lockLook = trigger;
-		playerUI.joystickMove.IsEnable = trigger;
-	}
-
+	
 	private void CheckCursor()
 	{
 		if(isLockCursor)
@@ -97,7 +82,14 @@ public class Player : MonoBehaviour
 [System.Serializable]
 public class PlayerData
 {
+	public List<ItemModel> items = new List<ItemModel>();
 	[TabGroup("PlayerStats")]
 	[HideLabel]
 	public PlayerStatsData statsData;
+
+	[Button]
+	private void Save()
+	{
+		SaveLoadManager.SavePlayerStatistics(this);
+	}
 }

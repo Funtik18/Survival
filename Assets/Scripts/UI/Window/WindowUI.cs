@@ -28,6 +28,5 @@ public abstract class WindowUI : MonoBehaviour
 	private void CloseWindow()
 	{
 		canvasGroup.IsEnabled(false);
-
 	}
 }

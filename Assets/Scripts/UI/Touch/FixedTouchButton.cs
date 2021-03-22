@@ -8,6 +8,8 @@ public class FixedTouchButton : PointerTouch
 
     public override void OnPointerDown(PointerEventData eventData)
     {
+        if(!IsEnable) return;
+
         base.OnPointerDown(eventData);
 
         button.color = new Color(0.7f, 0.7f, 0.7f, button.color.a);
@@ -16,6 +18,8 @@ public class FixedTouchButton : PointerTouch
 
     public override void OnPointerUp(PointerEventData eventData)
     {
+        if(!IsEnable) return;
+
         base.OnPointerUp(eventData);
 
         button.color = new Color(1, 1, 1, button.color.a);

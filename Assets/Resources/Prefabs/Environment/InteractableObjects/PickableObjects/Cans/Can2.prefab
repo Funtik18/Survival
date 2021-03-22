@@ -135,13 +135,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 857920658658162907}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2b22a017cc12dc4982fb2fb4be51f42, type: 3}
+  m_Script: {fileID: 11500000, guid: df269a0c740b5684cb6d8c71d24dad7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    name: Can "Bubble cola ZERO"
-    description: Coca-Cola No Sugar, in some markets called Coca-Cola Zero Sugar,
-      is a new recipe being introduced around the world.
+  itemAngle: 0
+  scriptableData: {fileID: 11400000, guid: b96f1292f7824524f9011e4ed97ea957, type: 2}
 --- !u!1 &857920658658162909
 GameObject:
   m_ObjectHideFlags: 0

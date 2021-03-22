@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ItemInspector : MonoBehaviour
 {
@@ -9,9 +10,12 @@ public class ItemInspector : MonoBehaviour
 	[SerializeField] private float rotationSpeedX = 10f;
 	[SerializeField] private float rotationSpeedY = 10f;
 
+	public UnityAction onStopInspect;
+
 	private InspectAnimationType inspectType = InspectAnimationType.WorldToLocal;
 	
 	private float thresholdDistacnce = 0.05f;
+	private float thresholdAngle = 0.1f;
 
 	//coroutine
 	private Coroutine inspectCoutine = null;
@@ -21,7 +25,7 @@ public class ItemInspector : MonoBehaviour
 	private bool isItemNeedDestroy = false;
 
 	//cash
-	private Item currentItem;
+	private ItemModel currentItem;
 	private Transform itemTransform;
 
 	private Vector3 oldInspectPosition;
@@ -58,7 +62,7 @@ public class ItemInspector : MonoBehaviour
 	}
 
 
-	public void SetItem(Item item, InspectAnimationType type = InspectAnimationType.WorldToLocal)
+	public void SetItem(ItemModel item, InspectAnimationType type = InspectAnimationType.WorldToLocal)
 	{
 		if(!item) return;
 
@@ -84,7 +88,7 @@ public class ItemInspector : MonoBehaviour
 			itemTransform.localRotation = Quaternion.identity;
 		}
 
-		Player.Instance.Lock(true);
+		Player.Instance.playerUI.controlUI.BlockControl();
 
 		StartInspect();
 	}
@@ -100,10 +104,17 @@ public class ItemInspector : MonoBehaviour
 
 	private IEnumerator Inspect()
 	{
-		yield return LerpItem(itemTransform, Transform.position, Transform.rotation);
+		if(currentItem.itemAngle == ItemInspectorAngle.World)
+		{
+			yield return LerpItem(itemTransform, Transform.position, itemTransform.rotation);
+		}
+		else
+		{
+			yield return LerpItem(itemTransform, Transform.position, Transform.rotation);
+		}
 		itemTransform.SetParent(Transform);
 
-		Inspector.SetInformation(currentItem.data);
+		Inspector.SetInformation(currentItem.scriptableData.data);
 		Inspector.ShowWindow();
 
 		yield return InspectItem();
@@ -132,10 +143,10 @@ public class ItemInspector : MonoBehaviour
 	/// <returns></returns>
 	private IEnumerator LerpItem(Transform item, Vector3 posTo, Quaternion rotTo, float t = 0.2f)
 	{
-		while((posTo - item.position).magnitude >= thresholdDistacnce && (item.rotation.eulerAngles - rotTo.eulerAngles).magnitude >= thresholdDistacnce)
+		while((posTo - item.position).magnitude >= thresholdDistacnce || Quaternion.Angle(item.rotation, rotTo) >= thresholdAngle)
 		{
 			item.position = Vector3.Lerp(item.position, posTo, t);
-			item.rotation = Quaternion.Lerp(item.rotation, rotTo, t);
+			item.rotation = Quaternion.Slerp(item.rotation, rotTo, t);
 			yield return null;
 		}
 		item.position = posTo;
@@ -172,17 +183,21 @@ public class ItemInspector : MonoBehaviour
 		{
 			StopCoroutine(inspectCoutine);
 			inspectCoutine = null;
-			
-			Player.Instance.Lock(false);
+
+			Player.Instance.playerUI.controlUI.UnBlockControl();
 
 			currentItem.ColliderEnable(true);
 			currentItem = null;
+
+			onStopInspect?.Invoke();
 		}
 	}
 
 
 	private void ItemTake()
 	{
+		Player.Instance.AddItem(currentItem);
+
 		isItemNeedDestroy = true;
 		isInspect = false;
 	}

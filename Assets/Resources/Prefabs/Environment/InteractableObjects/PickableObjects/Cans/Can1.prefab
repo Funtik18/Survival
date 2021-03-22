@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1860084534014364890}
   - component: {fileID: 1860084534013874429}
-  - component: {fileID: 1860084534013874427}
+  - component: {fileID: 6175048884332802669}
   m_Layer: 9
   m_Name: Can1
   m_TagString: Untagged
@@ -126,7 +126,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.025, y: 0.035, z: 0.025}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1860084534013874427
+--- !u!114 &6175048884332802669
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,12 +135,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1860084534013874426}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2b22a017cc12dc4982fb2fb4be51f42, type: 3}
+  m_Script: {fileID: 11500000, guid: df269a0c740b5684cb6d8c71d24dad7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    name: Can "Strike"
-    description: Strike is a lemon-lime flavored soft drink with a crisp.
+  itemAngle: 0
+  scriptableData: {fileID: 11400000, guid: 1e38920c091ef0844adcef1c28aece41, type: 2}
 --- !u!1 &1860084534013874428
 GameObject:
   m_ObjectHideFlags: 0

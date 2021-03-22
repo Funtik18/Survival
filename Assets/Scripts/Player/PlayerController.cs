@@ -12,8 +12,7 @@ public class PlayerController : MonoBehaviour
 
     private Transform ownerCamera = null;
 
-    private Joystick joystickMove;
-    private FixedTouchField touchField;
+    private PlayerControlUI controlUI;
 
     [Space]
     [SerializeField] private Vector2 pitchYMinMaxClamp = new Vector2(-90.0f, 45.0f);
@@ -75,23 +74,18 @@ public class PlayerController : MonoBehaviour
     public float fadeOutTime;
 
 
-
-    public void Setup(Player owner, bool isMobileControll = false)
+    public void Setup(Transform owner, Transform cam, PlayerControlUI control, bool isMobileControll = false)
 	{
         this.isMobileControll = isMobileControll;
-        this.ownerCamera = owner.playerCamera.Transform;
-        this.ownerTransform = owner.Transform;
-        
-        PlayerUI playerUI = owner.playerUI;
-
-        joystickMove = playerUI.joystickMove;
-        touchField = playerUI.touchField;
+        this.ownerCamera = cam;
+        this.ownerTransform = owner;
+        this.controlUI = control;
 
         //speed
         currentSpeed = maxWalkSpeed;
 
-        playerUI.buttonSpeedUp.onPressed += () => { speedUp = true; };
-		playerUI.buttonSpeedUp.onUnPressed += () => { currentSpeed = maxWalkSpeed; speedUp = false; };
+        controlUI.buttonSpeedUp.onPressed += () => { speedUp = true; };
+        controlUI.buttonSpeedUp.onUnPressed += () => { currentSpeed = maxWalkSpeed; speedUp = false; };
     }
 
     public void UpdateLook()
@@ -106,7 +100,7 @@ public class PlayerController : MonoBehaviour
 		{
             currentSensitivity = touchSensitivity;
             currentSmoothTime = touchSmoothTime;
-            targetDelta = touchField.Direction;
+            targetDelta = controlUI.touchField.Direction;
             targetDelta.Normalize();
         }
 
@@ -126,7 +120,7 @@ public class PlayerController : MonoBehaviour
         if(!isMobileControll)
             targetDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         else
-            targetDir = joystickMove.Direction;
+            targetDir = controlUI.joystickMove.Direction;
 
 		if(targetDir == Vector2.zero)
 		{

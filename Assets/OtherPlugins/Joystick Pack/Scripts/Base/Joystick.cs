@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     private bool isEnable = true;
-    public virtual bool IsEnable { get => isEnable; set => isEnable = !value; }
+    public virtual bool IsEnable { get => isEnable; set => isEnable = value; }
 
     public float Horizontal { get { return (snapX) ? SnapFloat(input.x, AxisOptions.Horizontal) : input.x; } }
     public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } }

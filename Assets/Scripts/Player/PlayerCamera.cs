@@ -34,11 +34,13 @@ public class PlayerCamera : MonoBehaviour
 	private Coroutine visionCoroutine = null;
 	private bool IsVisionProccess => visionCoroutine != null;
 	private WaitForSeconds visionSeconds = new WaitForSeconds(0.25f);
+	private bool blockVision = false;
+
 
 	//cash
 	private PlayerUI playerUI;
 
-	private Item itemCashed = null;
+	private ItemModel itemCashed = null;
 	private bool checkExit = false;
 
 	//properties
@@ -69,8 +71,10 @@ public class PlayerCamera : MonoBehaviour
 	{
 		playerUI = Player.Instance.playerUI;
 
-		playerUI.buttonPickUp.onClicked += InspectorLook;
-		
+		playerUI.controlUI.buttonPickUp.onClicked += InspectorLook;
+
+		inspector.onStopInspect += ()=> { blockVision = false; };
+
 		StartVision();
 	}
 
@@ -86,6 +90,7 @@ public class PlayerCamera : MonoBehaviour
 	{
 		if(itemCashed && itemCashed.IsPickable)
 		{
+			blockVision = true;
 			inspector.SetItem(itemCashed);
 		}
 	}
@@ -102,22 +107,23 @@ public class PlayerCamera : MonoBehaviour
 	{
 		while(true)
 		{
+
 			Debug.DrawLine(Transform.position, Transform.position + (Transform.forward * rayDistance), Color.blue);
 
 			RaycastHit hit;
 			Ray ray = new Ray(Transform.position, Transform.forward);
 
-			if(Physics.Raycast(ray, out hit, rayDistance, castLayers))
+			if(Physics.Raycast(ray, out hit, rayDistance, castLayers) && blockVision == false)
 			{
-				Item item = hit.collider.GetComponent<Item>();
+				ItemModel item = hit.collider.GetComponent<ItemModel>();
 				if(item != null && item != itemCashed)
 				{
 					itemCashed = item;
 
-					playerUI.buttonPickUp.IsActive(true);
+					playerUI.controlUI.buttonPickUp.IsActive(true);
 
-					playerUI.targetPoint.ShowPoint();
-					playerUI.targetPoint.SetToolTipText(itemCashed.data.name).ShowToolTip();
+					playerUI.controlUI.targetPoint.ShowPoint();
+					playerUI.controlUI.targetPoint.SetToolTipText(itemCashed.scriptableData.data.name).ShowToolTip();
 					checkExit = true;
 				}
 			}
@@ -125,13 +131,14 @@ public class PlayerCamera : MonoBehaviour
 			{
 				if(checkExit)
 				{
-					playerUI.buttonPickUp.IsActive(false);
+					playerUI.controlUI.buttonPickUp.IsActive(false);
 
-					playerUI.targetPoint.HidePoint();
+					playerUI.controlUI.targetPoint.HidePoint();
 					itemCashed = null;
 					checkExit = false;
 				}
 			}
+
 			yield return visionSeconds;
 		}
 		StopVision();
