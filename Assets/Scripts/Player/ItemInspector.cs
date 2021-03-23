@@ -1,16 +1,29 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class ItemInspector : MonoBehaviour
 {
-    [SerializeField] private Camera cameraUI;
+	private static ItemInspector instance;
+	public static ItemInspector Instance
+	{
+		get
+		{
+			if(instance == null)
+			{
+				instance = FindObjectOfType<ItemInspector>();
+			}
+			return instance;
+		}
+	}
 
+
+	[SerializeField] private WindowItemInspector inspector;
+	[SerializeField] private Transform modelPlace;
+	[SerializeField] private Camera cam;
+	[Space]
 	[SerializeField] private float rotationSpeedX = 10f;
 	[SerializeField] private float rotationSpeedY = 10f;
-
-	public UnityAction onStopInspect;
 
 	private InspectAnimationType inspectType = InspectAnimationType.WorldToLocal;
 	
@@ -25,50 +38,29 @@ public class ItemInspector : MonoBehaviour
 	private bool isItemNeedDestroy = false;
 
 	//cash
-	private ItemModel currentItem;
+	private ItemObject currentItem;
 	private Transform itemTransform;
-
-	private Vector3 oldInspectPosition;
 
 	private Transform oldParent;
 	private Vector3 oldWorldPosition;
 	private Quaternion oldWorldRotation;
 
-	//properties
-	private Transform trans;
-	public Transform Transform
+	private void Awake()
 	{
-		get
-		{
-			if(trans == null)
-				trans = transform;
-			return trans;
-		}
+		inspector.onTakeIt += ItemTake;
+		inspector.onLeaveIt += ItemLeave;
 	}
 
-	private WindowItemInspector inspector;
-	private WindowItemInspector Inspector
+	public void SetItem(ItemObject item, InspectAnimationType inspectType)
 	{
-		get
-		{
-			if(inspector == null)
-			{
-				inspector = Player.Instance.playerUI.windowsUI.itemInspectorWindow;
-				inspector.onTakeIt += ItemTake;
-				inspector.onLeaveIt += ItemLeave;
-			}
-			return inspector;
-		}
-	}
-
-
-	public void SetItem(ItemModel item, InspectAnimationType type = InspectAnimationType.WorldToLocal)
-	{
-		if(!item) return;
+		if (item == null) { Debug.LogError("Error"); return; }
 
 		item.ColliderEnable(false);
 
-		inspectType = type;
+		Player.Instance.Lock();
+
+
+		this.inspectType = inspectType;
 
 		if(inspectType == InspectAnimationType.WorldToLocal)
 		{
@@ -79,16 +71,14 @@ public class ItemInspector : MonoBehaviour
 			oldWorldPosition = itemTransform.position;
 			oldWorldRotation = itemTransform.rotation;
 		}
-		else if(inspectType == InspectAnimationType.OnlyLocal)
-		{
-			currentItem = Instantiate(item, Transform);
-			itemTransform = currentItem.transform;
+		//else if(inspectType == InspectAnimationType.OnlyLocal)
+		//{
+		//	currentItem = Instantiate(item, modelPlace);
+		//	itemTransform = currentItem.transform;
 
-			itemTransform.localPosition = Vector3.zero;
-			itemTransform.localRotation = Quaternion.identity;
-		}
-
-		Player.Instance.playerUI.controlUI.BlockControl();
+		//	itemTransform.localPosition = Vector3.zero;
+		//	itemTransform.localRotation = Quaternion.identity;
+		//}
 
 		StartInspect();
 	}
@@ -104,28 +94,28 @@ public class ItemInspector : MonoBehaviour
 
 	private IEnumerator Inspect()
 	{
-		if(currentItem.itemAngle == ItemInspectorAngle.World)
+		//if(currentItem.itemAngle == ItemInspectorAngle.World)
+		//{
+		//	yield return LerpItem(itemTransform, modelPlace.position, itemTransform.rotation);
+		//}
+		//else
 		{
-			yield return LerpItem(itemTransform, Transform.position, itemTransform.rotation);
+			yield return LerpItem(itemTransform, modelPlace.position, modelPlace.rotation);//lerp item from world to local
 		}
-		else
-		{
-			yield return LerpItem(itemTransform, Transform.position, Transform.rotation);
-		}
-		itemTransform.SetParent(Transform);
+		itemTransform.SetParent(modelPlace);
 
-		Inspector.SetInformation(currentItem.scriptableData.data);
-		Inspector.ShowWindow();
+		inspector.SetInformation(currentItem.scriptableData.data);
+		inspector.ShowWindow();
 
 		yield return InspectItem();
 
-		Inspector.HideWindow();
+		inspector.HideWindow();
 
 		if(isItemNeedDestroy)
 			Destroy(itemTransform.gameObject);
 		else
 		{
-			yield return LerpItem(itemTransform, oldWorldPosition, oldWorldRotation);
+			yield return LerpItem(itemTransform, oldWorldPosition, oldWorldRotation);//lerp item back to world
 			itemTransform.SetParent(oldParent);
 		}
 
@@ -166,13 +156,12 @@ public class ItemInspector : MonoBehaviour
 				float rotX = Input.GetAxis("Mouse X") * rotationSpeedX;
 				float rotY = Input.GetAxis("Mouse Y") * rotationSpeedY;
 
-				Vector3 right = Vector3.Cross(cameraUI.transform.up, itemTransform.position - cameraUI.transform.position);
-				Vector3 up = Vector3.Cross(itemTransform.position - cameraUI.transform.position, right);
+				Vector3 right = Vector3.Cross(cam.transform.up, itemTransform.position - cam.transform.position);
+				Vector3 up = Vector3.Cross(itemTransform.position - cam.transform.position, right);
 				itemTransform.rotation = Quaternion.AngleAxis(-rotX, up) * itemTransform.rotation;
 				itemTransform.rotation = Quaternion.AngleAxis(rotY, right) * itemTransform.rotation;
 			}
 
-			oldInspectPosition = Input.mousePosition;
 			yield return null;
 		}
 	}
@@ -184,12 +173,10 @@ public class ItemInspector : MonoBehaviour
 			StopCoroutine(inspectCoutine);
 			inspectCoutine = null;
 
-			Player.Instance.playerUI.controlUI.UnBlockControl();
+			Player.Instance.UnLock();
 
 			currentItem.ColliderEnable(true);
 			currentItem = null;
-
-			onStopInspect?.Invoke();
 		}
 	}
 

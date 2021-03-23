@@ -9,7 +9,15 @@ public abstract class PointerTouch : MonoBehaviour, IPointerDownHandler, IPointe
     [SerializeField] private CanvasGroup canvasGroup;
 
     protected bool isEnable = true;
-    public bool IsEnable { get => isEnable; set => isEnable = !value; }
+    public bool IsEnable 
+    { 
+        get => isEnable;
+        set
+        {
+            isEnable = value;
+            canvasGroup.IsEnabled(isEnable);
+        } 
+    }
 
     protected bool isPressed;
     public bool IsPressed => isPressed;
@@ -25,7 +33,6 @@ public abstract class PointerTouch : MonoBehaviour, IPointerDownHandler, IPointe
         isPressed = true;
         onPressed?.Invoke();
     }
-
 
     public virtual void OnPointerUp(PointerEventData eventData)
     {
@@ -43,11 +50,11 @@ public abstract class PointerTouch : MonoBehaviour, IPointerDownHandler, IPointe
     [Button]
     private void OpenWindow()
     {
-        canvasGroup.IsEnabled(true, 0.7f);
+        IsEnable = true;
     }
     [Button]
     private void CloseWindow()
     {
-        canvasGroup.IsEnabled(false, 0.7f);
+        IsEnable = false;
     }
 }

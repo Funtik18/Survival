@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4125052494255077633}
   - component: {fileID: 4125052494254307623}
   - component: {fileID: 4125052494253177831}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bo__te001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 4125052494255077637}
   - component: {fileID: 4125052494254307621}
   - component: {fileID: 4125052494253177829}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylindre001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,15 +183,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4125052494255367463}
-  m_LocalRotation: {x: -0.035159554, y: -0.4343367, z: 0.07262263, w: 0.89712954}
-  m_LocalPosition: {x: 482.933, y: 0.163, z: 220.249}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 4125052494255077633}
   - {fileID: 4125052494255077637}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -51.667004, z: 9.2560005}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4125052494255367465
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -214,8 +214,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4125052494255367463}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df269a0c740b5684cb6d8c71d24dad7b, type: 3}
+  m_Script: {fileID: 11500000, guid: b14f35c3f0318c24f92b95d195ef140c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coll: {fileID: 4125052494255367465}
   itemAngle: 0
   scriptableData: {fileID: 11400000, guid: ade2ef5f57638e042ad17bfa5ede07f1, type: 2}

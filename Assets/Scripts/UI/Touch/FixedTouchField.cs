@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class FixedTouchField : PointerTouch
 {
-    public Vector2 Direction;
+    [HideInInspector] public Vector2 Direction;
 
     [HideInInspector] public Vector2 pointerOld;
     [HideInInspector] protected int pointerId;

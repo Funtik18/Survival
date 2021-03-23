@@ -22,12 +22,12 @@ public class PlayerUI : MonoBehaviour
 
 	private void OpenInventory()
 	{
-		controlUI.BlockControl();
+		Player.Instance.Lock();
 		windowsUI.inventoryWindow.ShowWindow();
 	}
 	private void CloseInventory()
 	{
-		controlUI.UnBlockControl();
+		Player.Instance.UnLock();
 		windowsUI.inventoryWindow.HideWindow();
 	}
 }

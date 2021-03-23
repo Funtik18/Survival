@@ -18,7 +18,7 @@ public class ItemData
 
 	[AssetList]
 	[InlineEditor(InlineEditorModes.GUIAndPreview)]
-	public ItemModel model;
+	public ItemObject model;
 
 	[TextArea(5, 5)]
 	public string description;

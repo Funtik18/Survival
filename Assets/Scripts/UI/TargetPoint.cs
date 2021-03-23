@@ -1,23 +1,26 @@
 ﻿using UnityEngine;
 
 using Sirenix.OdinInspector;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(CanvasGroup))]
 public class TargetPoint : MonoBehaviour
 {
-	[SerializeField] private CanvasGroup canvasGroup;
+	[SerializeField] private CanvasGroup pointCanvasGroup;
+	[Space]
 	[SerializeField] private CanvasGroup toolTipCanvasGroup;
 	[SerializeField] private TMPro.TextMeshProUGUI toolTipText;
-
+	[Space]
+	[SerializeField] private CanvasGroup loadCanvasGroup;
+	[SerializeField] private Image circleLoad;
 
 	public void ShowPoint()
 	{
-		canvasGroup.IsEnabled(true);
+		pointCanvasGroup.IsEnabled(true);
 	}
 	public void HidePoint()
 	{
 		HideToolTip();
-		canvasGroup.IsEnabled(false);
+		pointCanvasGroup.IsEnabled(false);
 		SetToolTipText("");
 	}
 
@@ -36,16 +39,27 @@ public class TargetPoint : MonoBehaviour
 		toolTipCanvasGroup.IsEnabled(false);
 	}
 
+	public void ShowCircleLoad()
+	{
+		loadCanvasGroup.IsEnabled(true);
+	}
+	public void HideCircleLoad()
+	{
+		loadCanvasGroup.IsEnabled(false);
+	}
+
 	[Button]
 	private void ShowAll()
 	{
-		canvasGroup.IsEnabled(true);
+		pointCanvasGroup.IsEnabled(true);
 		toolTipCanvasGroup.IsEnabled(true);
+		loadCanvasGroup.IsEnabled(true);
 	}
 	[Button]
 	private void HideAll()
 	{
-		canvasGroup.IsEnabled(false);
+		pointCanvasGroup.IsEnabled(false);
 		toolTipCanvasGroup.IsEnabled(false);
+		loadCanvasGroup.IsEnabled(false);
 	}
 }

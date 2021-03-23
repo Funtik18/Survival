@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class FixedTouchButton : PointerTouch 
 {
     [SerializeField] private Image button;
+    [SerializeField] private float maxAlpha = 0.7f;
 
     public override void OnPointerDown(PointerEventData eventData)
     {
@@ -12,9 +13,8 @@ public class FixedTouchButton : PointerTouch
 
         base.OnPointerDown(eventData);
 
-        button.color = new Color(0.7f, 0.7f, 0.7f, button.color.a);
+        button.color = new Color(0.7f, 0.7f, 0.7f, maxAlpha);
     }
-
 
     public override void OnPointerUp(PointerEventData eventData)
     {
@@ -22,12 +22,6 @@ public class FixedTouchButton : PointerTouch
 
         base.OnPointerUp(eventData);
 
-        button.color = new Color(1, 1, 1, button.color.a);
+        button.color = new Color(1, 1, 1, maxAlpha);
     }
-
-
-    public void IsActive(bool trigger)
-	{
-        gameObject.SetActive(trigger);
-	}
 }

@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
 		{
             currentSensitivity = touchSensitivity;
             currentSmoothTime = touchSmoothTime;
-            targetDelta = controlUI.touchField.Direction;
+            targetDelta = controlUI.fieldLook.Direction;
             targetDelta.Normalize();
         }
 

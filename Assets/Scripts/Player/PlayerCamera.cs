@@ -18,7 +18,6 @@ public class PlayerCamera : MonoBehaviour
 		}
 	}
 
-	[SerializeField] private ItemInspector inspector;
 	[SerializeField] private Camera playerCamera;
 	[SerializeField] private CameraShaker shaker;
 
@@ -33,15 +32,8 @@ public class PlayerCamera : MonoBehaviour
 
 	private Coroutine visionCoroutine = null;
 	private bool IsVisionProccess => visionCoroutine != null;
-	private WaitForSeconds visionSeconds = new WaitForSeconds(0.25f);
-	private bool blockVision = false;
-
-
-	//cash
-	private PlayerUI playerUI;
-
-	private ItemModel itemCashed = null;
-	private bool checkExit = false;
+	private WaitForSeconds visionSeconds = new WaitForSeconds(0.1f);
+	private bool isVisionBlocked = false;
 
 	//properties
 	private Transform trans;
@@ -69,32 +61,62 @@ public class PlayerCamera : MonoBehaviour
 
 	private void Awake()
 	{
-		playerUI = Player.Instance.playerUI;
-
-
-		inspector.onStopInspect += ()=> { blockVision = false; };
-
 		StartVision();
 	}
 
 	private void Update()
 	{
-		if(Input.GetKeyDown(KeyCode.E))
-		{
-			InspectorLook();
-		}
+		if(isVisionBlocked == false)
+			if(Input.GetKeyDown(KeyCode.E))//need cash
+			{
+				Interact();
+			}
 	}
 
-	private void InspectorLook()
+	private void Interact()
 	{
-		if(itemCashed && itemCashed.IsPickable)
+		if(currentCollider != null)
 		{
-			blockVision = true;
-			inspector.SetItem(itemCashed);
+			IInteractable interaction = currentCollider.GetComponent<IInteractable>();
+			if(interaction != null)
+			{
+				interaction.Interact();
+			}
+			else
+			{
+				Debug.LogError("Nelza");
+			}
 		}
 	}
 
 	#region Vision
+	private Collider currentCollider = null;
+	private Collider CurrentCollider
+    {
+		get => currentCollider;
+        set
+        {
+			if(value != currentCollider || value == null)
+            {
+				if(currentCollider != null)
+					currentCollider.GetComponent<IObservable>().EndObserve();
+
+				currentCollider = value;
+				
+				if (currentCollider != null)
+					currentCollider.GetComponent<IObservable>().StartObserve();
+			}
+		}
+	}
+	private void DisposeCollider()
+	{
+		if (CurrentCollider != null)
+		{
+			CurrentCollider = null;
+		}
+	}
+
+
 	private void StartVision()
 	{
 		if(!IsVisionProccess)
@@ -106,43 +128,24 @@ public class PlayerCamera : MonoBehaviour
 	{
 		while(true)
 		{
+			if(isVisionBlocked == false)
+            {
+				RaycastHit hit;
+				Ray ray = new Ray(Transform.position, Transform.forward);
 
-			Debug.DrawLine(Transform.position, Transform.position + (Transform.forward * rayDistance), Color.blue);
+				if (Physics.Raycast(ray, out hit, rayDistance, castLayers))
+					CurrentCollider = hit.collider;
+				else
+                    DisposeCollider();
 
-			RaycastHit hit;
-			Ray ray = new Ray(Transform.position, Transform.forward);
+                //Debug.DrawLine(Transform.position, Transform.position + (Transform.forward * rayDistance), Color.blue);
 
-			if(Physics.Raycast(ray, out hit, rayDistance, castLayers) && blockVision == false)
-			{
-				ItemModel item = hit.collider.GetComponent<ItemModel>();
-				if(item != null && item != itemCashed)
-				{
-					itemCashed = item;
-
-					playerUI.controlUI.buttonPickUp.IsActive(true);
-
-					playerUI.controlUI.targetPoint.ShowPoint();
-					playerUI.controlUI.targetPoint.SetToolTipText(itemCashed.scriptableData.data.name).ShowToolTip();
-					checkExit = true;
-				}
-			}
-			else
-			{
-				if(checkExit)
-				{
-					playerUI.controlUI.buttonPickUp.IsActive(false);
-
-					playerUI.controlUI.targetPoint.HidePoint();
-					itemCashed = null;
-					checkExit = false;
-				}
-			}
-
+            }
 			yield return visionSeconds;
 		}
 		StopVision();
 	}
-	private void StopVision()
+    private void StopVision()
 	{
 		if(IsVisionProccess)
 		{
@@ -180,4 +183,16 @@ public class PlayerCamera : MonoBehaviour
 		}
 	}
 	#endregion
+
+
+	public void LockVision()
+	{
+		isVisionBlocked = true;
+
+		DisposeCollider();
+	}
+	public void UnLockVision()
+	{
+		isVisionBlocked = false;
+	}
 }

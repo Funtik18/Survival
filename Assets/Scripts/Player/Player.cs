@@ -21,8 +21,6 @@ public class Player : MonoBehaviour
 	[SerializeField] private PlayerData data;
 	public PlayerStats stats;
 
-	[SerializeField] private ItemInspector itemInspector;
-	[Space]
 	[SerializeField] private PlayerInventory playerInventory;
 	[SerializeField] private PlayerController playerController;
 	public PlayerCamera playerCamera;
@@ -44,6 +42,11 @@ public class Player : MonoBehaviour
 		}
 	}
 
+
+	private bool isMoveLocked = false;
+	private bool isLookLocked = false;
+
+
 	private void Awake()
 	{
 		//stats = new PlayerStats(data.statsData);
@@ -55,22 +58,36 @@ public class Player : MonoBehaviour
 		playerController.Setup(Transform, playerCamera.Transform, playerUI.controlUI, isMobileControll);
 	}
 
-
 	private void Update()
 	{
-		if(playerUI.controlUI.IsMoveEnable)
+		if(isMoveLocked == false)
 			playerController.UpdateMovement();
 	}
 	private void LateUpdate()
 	{
-		if(playerUI.controlUI.IsLookEnable)
+		if(isLookLocked == false)
 			playerController.UpdateLook();
 	}
 
-	public void AddItem(ItemScriptableData data)
+	public void AddItem(ItemScriptableData item)
 	{
+		playerInventory.AddItem(item);
 	}
 
+	public void Lock()
+    {
+		isMoveLocked = true;
+		isLookLocked = true;
+        playerCamera.LockVision();
+        playerUI.controlUI.LockControl();
+    }
+	public void UnLock()
+    {
+		isMoveLocked = false;
+		isLookLocked = false;
+        playerCamera.UnLockVision();
+        playerUI.controlUI.UnLockControl();
+    }
 
 	private void CheckCursor()
 	{
