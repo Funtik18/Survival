@@ -22,8 +22,10 @@ public class ItemInspector : MonoBehaviour
 	[SerializeField] private Transform modelPlace;
 	[SerializeField] private Camera cam;
 	[Space]
-	[SerializeField] private float rotationSpeedX = 10f;
-	[SerializeField] private float rotationSpeedY = 10f;
+	[SerializeField] private float rotationSpeedXPC = 10f;
+	[SerializeField] private float rotationSpeedYPC = 10f;
+	[SerializeField] private float rotationSpeedXMobile = 0.1f;
+	[SerializeField] private float rotationSpeedYMobile = 0.1f;
 
 	private InspectAnimationType inspectType = InspectAnimationType.WorldToLocal;
 	
@@ -94,25 +96,34 @@ public class ItemInspector : MonoBehaviour
 
 	private IEnumerator Inspect()
 	{
-		//if(currentItem.itemAngle == ItemInspectorAngle.World)
-		//{
-		//	yield return LerpItem(itemTransform, modelPlace.position, itemTransform.rotation);
-		//}
-		//else
-		{
-			yield return LerpItem(itemTransform, modelPlace.position, modelPlace.rotation);//lerp item from world to local
-		}
 		itemTransform.SetParent(modelPlace);
 
 		inspector.SetInformation(currentItem.scriptableData.data);
 		inspector.ShowWindow();
 
-		yield return InspectItem();
+
+		//if(currentItem.itemAngle == ItemInspectorAngle.World)
+		//{
+		//	yield return LerpItem(itemTransform, modelPlace.position, itemTransform.rotation);
+		//}
+		//else
+		yield return LerpItem(itemTransform, modelPlace.position, modelPlace.rotation);//lerp item from world to local
+
+        if (GeneralSettings.IsPlatformMobile)
+        {
+			yield return InspectItemMobile();
+		}
+		else if (GeneralSettings.IsPlatformPC)
+        {
+			yield return InspectItemPC();
+		}
 
 		inspector.HideWindow();
 
-		if(isItemNeedDestroy)
+        if (isItemNeedDestroy)
+        {
 			Destroy(itemTransform.gameObject);
+		}
 		else
 		{
 			yield return LerpItem(itemTransform, oldWorldPosition, oldWorldRotation);//lerp item back to world
@@ -121,7 +132,6 @@ public class ItemInspector : MonoBehaviour
 
 		StopInspect();
 	}
-
 
 	/// <summary>
 	/// Анимация подбора и сброса предмета.
@@ -143,25 +153,31 @@ public class ItemInspector : MonoBehaviour
 		item.rotation = rotTo;
 	}
 
-	/// <summary>
-	/// Детальный осмотр предмета с поворотами по X и Y.
-	/// </summary>
-	/// <returns></returns>
-	private IEnumerator InspectItem()
+	private IEnumerator InspectItemPC()
 	{
 		while(isInspect)
 		{
 			if(Input.GetMouseButton(0))
+            {
+                float rotX = Input.GetAxis("Mouse X") * rotationSpeedXPC;
+                float rotY = Input.GetAxis("Mouse Y") * rotationSpeedYPC;
+
+                RotateItem(rotX, rotY);
+            }
+            yield return null;
+		}
+	}
+    private IEnumerator InspectItemMobile()
+	{
+		while (isInspect)
+		{
+			if (Input.touchCount > 0)
 			{
-				float rotX = Input.GetAxis("Mouse X") * rotationSpeedX;
-				float rotY = Input.GetAxis("Mouse Y") * rotationSpeedY;
+				float rotX = Input.touches[0].deltaPosition.x * rotationSpeedXMobile;
+				float rotY = Input.touches[0].deltaPosition.y * rotationSpeedYMobile;
 
-				Vector3 right = Vector3.Cross(cam.transform.up, itemTransform.position - cam.transform.position);
-				Vector3 up = Vector3.Cross(itemTransform.position - cam.transform.position, right);
-				itemTransform.rotation = Quaternion.AngleAxis(-rotX, up) * itemTransform.rotation;
-				itemTransform.rotation = Quaternion.AngleAxis(rotY, right) * itemTransform.rotation;
+				RotateItem(rotX, rotY);
 			}
-
 			yield return null;
 		}
 	}
@@ -180,6 +196,17 @@ public class ItemInspector : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Детальный осмотр предмета с поворотами по X и Y.
+	/// </summary>
+	/// <returns></returns>
+	private void RotateItem(float rotX, float rotY)
+	{
+		Vector3 right = Vector3.Cross(cam.transform.up, itemTransform.position - cam.transform.position);
+		Vector3 up = Vector3.Cross(itemTransform.position - cam.transform.position, right);
+		itemTransform.rotation = Quaternion.AngleAxis(-rotX, up) * itemTransform.rotation;
+		itemTransform.rotation = Quaternion.AngleAxis(rotY, right) * itemTransform.rotation;
+	}
 
 	private void ItemTake()
 	{
