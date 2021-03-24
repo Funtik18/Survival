@@ -5,6 +5,7 @@
 	public override void StartObserve()
 	{
 		base.StartObserve();
+		ControlUI.buttonSearch.onClicked.AddListener(Interact);
 		ControlUI.buttonSearch.IsEnable = true;
 		ControlUI.targetPoint.SetToolTipText(scriptableData.data.name).ShowToolTip();
 	}
@@ -12,6 +13,7 @@
     {
         base.EndObserve();
 		ControlUI.buttonSearch.IsEnable = false;
+		ControlUI.buttonSearch.onClicked.RemoveListener(Interact);
 	}
 
 	public override void Interact()

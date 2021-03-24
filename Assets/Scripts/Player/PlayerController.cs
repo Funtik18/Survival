@@ -8,11 +8,40 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private CharacterController characterController;
 
+    #region Properties
     private Transform ownerTransform;
+    private Transform OwnerTransform
+    {
+        get
+        {
+            if (ownerTransform == null)
+                ownerTransform = Player.Instance.transform;
+            return ownerTransform;
+        }
+    }
 
-    private Transform ownerCamera = null;
+    private Transform ownerCamera;
+    private Transform OwnerCamera
+    {
+        get
+        {
+            if(ownerCamera == null)
+                ownerCamera = Player.Instance.playerCamera.transform;
+            return ownerCamera;
+        }
+    }
 
     private PlayerControlUI controlUI;
+    private PlayerControlUI ControlUI
+    {
+        get
+        {
+            if (controlUI == null)
+                controlUI = Player.Instance.playerUI.controlUI;
+            return controlUI;
+        }
+    }
+    #endregion
 
     [Space]
     [SerializeField] private Vector2 pitchYMinMaxClamp = new Vector2(-90.0f, 45.0f);
@@ -38,7 +67,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxEndurance = 100;
     [ReadOnly] [SerializeField] private float currentEndurance;
 
-
     [SerializeField] private float gravity = -13.0f;
     [Range(0.0f, 0.5f)]
     [SerializeField] private float moveSmoothTime = 0.3f;
@@ -50,8 +78,6 @@ public class PlayerController : MonoBehaviour
     [Space]
     [ReadOnly] [SerializeField] private float currentSensitivity;
     [SerializeField] private float currentSmoothTime;
-
-    private bool isMobileControll = false;
 
     private bool speedUp = false;
 
@@ -67,82 +93,81 @@ public class PlayerController : MonoBehaviour
     private Vector2 targetDelta;
     private Vector2 targetDir;
 
-    [Space]
-    public float magnitude;
-    public float roughness;
-    public float fadeInTime;
-    public float fadeOutTime;
-
-
-    public void Setup(Transform owner, Transform cam, PlayerControlUI control, bool isMobileControll = false)
+    public void Setup()
 	{
-        this.isMobileControll = isMobileControll;
-        this.ownerCamera = cam;
-        this.ownerTransform = owner;
-        this.controlUI = control;
-
-        //speed
         currentSpeed = maxWalkSpeed;
     }
 
-    public void UpdateLook()
+    public void UpdatePCLook()
     {
-		if(!isMobileControll)
-		{
-            currentSensitivity = mouseSensitivity;
-            currentSmoothTime = mouseSmoothTime;
-            targetDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        }
-		else
-		{
-            currentSensitivity = touchSensitivity;
-            currentSmoothTime = touchSmoothTime;
-            targetDelta = controlUI.fieldLook.Direction;
-            targetDelta.Normalize();
-        }
+        currentSensitivity = mouseSensitivity;
+        currentSmoothTime = mouseSmoothTime;
+        targetDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        
+        UpdateLook();
+    }
+    public void UpdateMobileLook()
+    {
+        currentSensitivity = touchSensitivity;
+        currentSmoothTime = touchSmoothTime;
+        targetDelta = ControlUI.fieldLook.Direction;
+        targetDelta.Normalize();
 
-
-        currentMouseDelta = Vector2.SmoothDamp(currentMouseDelta, targetDelta, ref currentMouseDeltaVelocity, currentSmoothTime);
-
-        cameraPitch -= currentMouseDelta.y * currentSensitivity;
-        cameraPitch = Mathf.Clamp(cameraPitch, pitchYMinMaxClamp.x, pitchYMinMaxClamp.y);
-
-        ownerCamera.localEulerAngles = Vector3.right * cameraPitch;
-        ownerTransform.Rotate(Vector3.up * currentMouseDelta.x * currentSensitivity);
+        UpdateLook();
     }
 
-    public void UpdateMovement()
-    {
-        //direction move left right
-        if(!isMobileControll)
-            targetDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        else
-            targetDir = controlUI.joystickMove.Direction;
 
-		if(targetDir == Vector2.zero)
-		{
-			currentDir = Vector2.zero;
+    public void UpdatePCMovement()
+    {
+        targetDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+        if (targetDir == Vector2.zero)
+        {
+            currentDir = Vector2.zero;
 
             PlayerCamera.Instance.StartIdleShake();
         }
-		else
-		{
+        else
+        {
             targetDir.Normalize();
             currentDir = Vector2.SmoothDamp(currentDir, targetDir, ref currentDirVelocity, moveSmoothTime);
 
 
-            if(Input.GetKeyDown(KeyCode.LeftShift))
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 speedUp = true;
             }
-            else if(Input.GetKeyUp(KeyCode.LeftShift))
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
             {
                 speedTimePosition = 0;
-                currentSpeed = maxWalkSpeed; speedUp = false;
+                currentSpeed = maxWalkSpeed; 
+                speedUp = false;
             }
-            if(speedUp)
+        }
+
+
+        UpdateSlope();
+        UpdateGravity();
+        UpdateVelocity();
+    }
+    public void UpdateMobileMovement()
+    {
+        targetDir = ControlUI.joystickMove.Direction;
+
+        if (targetDir == Vector2.zero)
+        {
+            currentDir = Vector2.zero;
+
+            PlayerCamera.Instance.StartIdleShake();
+        }
+        else
+        {
+            targetDir.Normalize();
+            currentDir = Vector2.SmoothDamp(currentDir, targetDir, ref currentDirVelocity, moveSmoothTime);
+
+            if (speedUp)
             {
-                if(currentSpeed != maxRunSpeed)
+                if (currentSpeed != maxRunSpeed)
                 {
                     speedTimePosition += Time.deltaTime;
                     currentSpeed = Mathf.Lerp(maxWalkSpeed, maxRunSpeed, accelerationCurve.Evaluate(speedTimePosition));
@@ -150,23 +175,40 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        UpdateSlope();
+        UpdateGravity();
+        UpdateVelocity();
+    }
 
-        if(OnSlope())
+    private void UpdateLook()
+    {
+        currentMouseDelta = Vector2.SmoothDamp(currentMouseDelta, targetDelta, ref currentMouseDeltaVelocity, currentSmoothTime);
+
+        cameraPitch -= currentMouseDelta.y * currentSensitivity;
+        cameraPitch = Mathf.Clamp(cameraPitch, pitchYMinMaxClamp.x, pitchYMinMaxClamp.y);
+
+        OwnerCamera.localEulerAngles = Vector3.right * cameraPitch;
+        OwnerTransform.Rotate(Vector3.up * currentMouseDelta.x * currentSensitivity);
+    }
+
+    private void UpdateSlope()
+    {
+        if (OnSlope())
         {
             //currentSpeed = maxSlopeSpeed;
         }
-
-        //up down velocity
-        if(characterController.isGrounded)
+    }
+    private void UpdateGravity()
+    {
+        if (characterController.isGrounded)
             velocityY = 0.0f;
         velocityY += gravity * Time.deltaTime;
-
-        Vector3 velocity = (ownerTransform.forward * currentDir.y + ownerTransform.right * currentDir.x) * currentSpeed + Vector3.up * velocityY;
+    }
+    private void UpdateVelocity()
+    {
+        Vector3 velocity = (OwnerTransform.forward * currentDir.y + OwnerTransform.right * currentDir.x) * currentSpeed + Vector3.up * velocityY;
         characterController.Move(velocity * Time.deltaTime);
     }
-
-
-
 
 
     /// <summary>
@@ -177,7 +219,7 @@ public class PlayerController : MonoBehaviour
 	{
         RaycastHit hit;
 
-        if(Physics.Raycast(ownerTransform.position, Vector3.down, out hit, characterController.height / 2 * slopeForceRayLength))
+        if(Physics.Raycast(OwnerTransform.position, Vector3.down, out hit, characterController.height / 2 * slopeForceRayLength))
 		{
             if(hit.normal != Vector3.up)
                 return true;

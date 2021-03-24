@@ -55,18 +55,28 @@ public class Player : MonoBehaviour
 
 		CheckCursor();
 
-		playerController.Setup(Transform, playerCamera.Transform, playerUI.controlUI, isMobileControll);
+		playerController.Setup();
 	}
 
 	private void Update()
 	{
 		if(isMoveLocked == false)
-			playerController.UpdateMovement();
-	}
-	private void LateUpdate()
-	{
-		if(isLookLocked == false)
-			playerController.UpdateLook();
+        {
+			if(GeneralSettings.IsPlatformMobile)
+            {
+				Debug.LogError("Mobile");
+				playerController.UpdateMobileMovement();
+				playerController.UpdateMobileLook();
+
+			}
+			else if(GeneralSettings.IsPlatformPC)
+            {
+				Debug.LogError("PC");
+				playerController.UpdatePCMovement();
+				playerController.UpdatePCLook();
+
+			}
+		}
 	}
 
 	public void AddItem(ItemScriptableData item)

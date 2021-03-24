@@ -16,6 +16,7 @@
 	public override void StartObserve()
 	{
 		base.StartObserve();
+		ControlUI.buttonPickUp.onClicked.AddListener(Interact);
 		ControlUI.buttonPickUp.IsEnable = true;
 		ControlUI.targetPoint.SetToolTipText(scriptableData.data.name).ShowToolTip();
 	}
@@ -23,6 +24,7 @@
     {
         base.EndObserve();
 		ControlUI.buttonPickUp.IsEnable = false;
+		ControlUI.buttonPickUp.onClicked.RemoveListener(Interact);
 	}
 
 	public override void Interact()
