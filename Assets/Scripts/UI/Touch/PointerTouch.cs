@@ -19,8 +19,7 @@ public abstract class PointerTouch : MonoBehaviour, IPointerDownHandler, IPointe
         } 
     }
 
-    protected bool isPressed;
-    public bool IsPressed => isPressed;
+    public bool IsPressed { get; protected set; }
 
     public UnityEvent onPressed;
     public UnityEvent onUnPressed;
@@ -30,22 +29,22 @@ public abstract class PointerTouch : MonoBehaviour, IPointerDownHandler, IPointe
     {
         if(!IsEnable) return;
 
-        isPressed = true;
+        IsPressed = true;
         onPressed?.Invoke();
     }
-
     public virtual void OnPointerUp(PointerEventData eventData)
     {
         if(!IsEnable) return;
 
         onUnPressed?.Invoke();
 
-        if(isPressed)
+        if(IsPressed)
         {
-           onClicked?.Invoke();
-           isPressed = false;
+            onClicked?.Invoke();
+            IsPressed = false;
         }
     }
+
 
     [Button]
     private void OpenWindow()

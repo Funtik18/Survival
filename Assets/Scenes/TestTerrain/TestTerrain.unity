@@ -2755,6 +2755,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 6239723323395080558}
   scriptableData: {fileID: 11400000, guid: ef5499964622db44bb36dde37aa0b3b4, type: 2}
+  items:
+  - {fileID: 11400000, guid: 56315b17f5485bf46a602c1ac0412dea, type: 2}
+  - {fileID: 11400000, guid: 1e38920c091ef0844adcef1c28aece41, type: 2}
+  - {fileID: 11400000, guid: b96f1292f7824524f9011e4ed97ea957, type: 2}
+  - {fileID: 11400000, guid: ade2ef5f57638e042ad17bfa5ede07f1, type: 2}
+  saveTimeResult: 0
 --- !u!4 &6241122545084559329
 Transform:
   m_ObjectHideFlags: 0

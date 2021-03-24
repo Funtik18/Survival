@@ -13,7 +13,7 @@ public class FixedTouchButton : PointerTouch
 
         base.OnPointerDown(eventData);
 
-        button.color = new Color(0.7f, 0.7f, 0.7f, maxAlpha);
+        PressButton();
     }
 
     public override void OnPointerUp(PointerEventData eventData)
@@ -22,6 +22,15 @@ public class FixedTouchButton : PointerTouch
 
         base.OnPointerUp(eventData);
 
+        UnPressButton();
+    }
+
+    public virtual void PressButton()
+    {
+        button.color = new Color(0.7f, 0.7f, 0.7f, maxAlpha);
+    }
+    public virtual void UnPressButton()
+    {
         button.color = new Color(1, 1, 1, maxAlpha);
     }
 }

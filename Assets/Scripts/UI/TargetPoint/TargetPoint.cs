@@ -7,20 +7,19 @@ public class TargetPoint : MonoBehaviour
 {
 	[SerializeField] private CanvasGroup pointCanvasGroup;
 	[Space]
+	public HoldLoader holdLoader;
+	[Space]
 	[SerializeField] private CanvasGroup toolTipCanvasGroup;
 	[SerializeField] private TMPro.TextMeshProUGUI toolTipText;
-	[Space]
-	[SerializeField] private CanvasGroup loadCanvasGroup;
-	[SerializeField] private Image circleLoad;
 
 	public void ShowPoint()
 	{
-		pointCanvasGroup.IsEnabled(true);
+		pointCanvasGroup.IsEnabled(true, true);
 	}
 	public void HidePoint()
 	{
 		HideToolTip();
-		pointCanvasGroup.IsEnabled(false);
+		pointCanvasGroup.IsEnabled(false, true);
 		SetToolTipText("");
 	}
 
@@ -32,34 +31,29 @@ public class TargetPoint : MonoBehaviour
 
 	public void ShowToolTip()
 	{
-		toolTipCanvasGroup.IsEnabled(true);
+		toolTipCanvasGroup.IsEnabled(true, true);
 	}
 	public void HideToolTip()
 	{
-		toolTipCanvasGroup.IsEnabled(false);
+		toolTipCanvasGroup.IsEnabled(false, true);
 	}
 
-	public void ShowCircleLoad()
-	{
-		loadCanvasGroup.IsEnabled(true);
-	}
-	public void HideCircleLoad()
-	{
-		loadCanvasGroup.IsEnabled(false);
-	}
+
 
 	[Button]
 	private void ShowAll()
 	{
-		pointCanvasGroup.IsEnabled(true);
-		toolTipCanvasGroup.IsEnabled(true);
-		loadCanvasGroup.IsEnabled(true);
+		pointCanvasGroup.IsEnabled(true, true);
+		toolTipCanvasGroup.IsEnabled(true, true);
+
+		holdLoader.ShowLoader();
 	}
 	[Button]
 	private void HideAll()
 	{
-		pointCanvasGroup.IsEnabled(false);
-		toolTipCanvasGroup.IsEnabled(false);
-		loadCanvasGroup.IsEnabled(false);
+		pointCanvasGroup.IsEnabled(false, true);
+		toolTipCanvasGroup.IsEnabled(false, true);
+
+		holdLoader.HideLoader();
 	}
 }

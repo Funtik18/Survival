@@ -29,6 +29,6 @@
 
 	public override void Interact()
 	{
-		Inspector.SetItem(this, InspectAnimationType.WorldToLocal);
+		Inspector.SetItem(this);
 	}
 }

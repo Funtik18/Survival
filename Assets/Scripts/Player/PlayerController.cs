@@ -84,34 +84,33 @@ public class PlayerController : MonoBehaviour
     private float cameraPitch = 0.0f;
     private float velocityY = 0.0f;
 
-    private Vector2 currentDir = Vector2.zero;
+    private Vector2 currentDirection = Vector2.zero;
     private Vector2 currentDirVelocity = Vector2.zero;
 
     private Vector2 currentMouseDelta = Vector2.zero;
     private Vector2 currentMouseDeltaVelocity = Vector2.zero;
 
-    private Vector2 targetDelta;
-    private Vector2 targetDir;
+    private Vector2 targetLookDirection;
+    private Vector2 targetMoveDirection;
 
     public void Setup()
 	{
         currentSpeed = maxWalkSpeed;
     }
-
     public void UpdatePCLook()
     {
         currentSensitivity = mouseSensitivity;
         currentSmoothTime = mouseSmoothTime;
-        targetDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        
+        targetLookDirection = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+
         UpdateLook();
     }
     public void UpdateMobileLook()
     {
         currentSensitivity = touchSensitivity;
         currentSmoothTime = touchSmoothTime;
-        targetDelta = ControlUI.fieldLook.Direction;
-        targetDelta.Normalize();
+        targetLookDirection = ControlUI.fieldLook.Direction;
+        targetLookDirection.Normalize();
 
         UpdateLook();
     }
@@ -119,18 +118,18 @@ public class PlayerController : MonoBehaviour
 
     public void UpdatePCMovement()
     {
-        targetDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        targetMoveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-        if (targetDir == Vector2.zero)
+        if (targetMoveDirection == Vector2.zero)
         {
-            currentDir = Vector2.zero;
+            currentDirection = Vector2.zero;
 
             PlayerCamera.Instance.StartIdleShake();
         }
         else
         {
-            targetDir.Normalize();
-            currentDir = Vector2.SmoothDamp(currentDir, targetDir, ref currentDirVelocity, moveSmoothTime);
+            targetMoveDirection.Normalize();
+            currentDirection = Vector2.SmoothDamp(currentDirection, targetMoveDirection, ref currentDirVelocity, moveSmoothTime);
 
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -152,18 +151,18 @@ public class PlayerController : MonoBehaviour
     }
     public void UpdateMobileMovement()
     {
-        targetDir = ControlUI.joystickMove.Direction;
+        targetMoveDirection = ControlUI.joystickMove.Direction;
 
-        if (targetDir == Vector2.zero)
+        if (targetMoveDirection == Vector2.zero)
         {
-            currentDir = Vector2.zero;
+            currentDirection = Vector2.zero;
 
             PlayerCamera.Instance.StartIdleShake();
         }
         else
         {
-            targetDir.Normalize();
-            currentDir = Vector2.SmoothDamp(currentDir, targetDir, ref currentDirVelocity, moveSmoothTime);
+            targetMoveDirection.Normalize();
+            currentDirection = Vector2.SmoothDamp(currentDirection, targetMoveDirection, ref currentDirVelocity, moveSmoothTime);
 
             if (speedUp)
             {
@@ -182,7 +181,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateLook()
     {
-        currentMouseDelta = Vector2.SmoothDamp(currentMouseDelta, targetDelta, ref currentMouseDeltaVelocity, currentSmoothTime);
+        currentMouseDelta = Vector2.SmoothDamp(currentMouseDelta, targetLookDirection, ref currentMouseDeltaVelocity, currentSmoothTime);
 
         cameraPitch -= currentMouseDelta.y * currentSensitivity;
         cameraPitch = Mathf.Clamp(cameraPitch, pitchYMinMaxClamp.x, pitchYMinMaxClamp.y);
@@ -206,7 +205,7 @@ public class PlayerController : MonoBehaviour
     }
     private void UpdateVelocity()
     {
-        Vector3 velocity = (OwnerTransform.forward * currentDir.y + OwnerTransform.right * currentDir.x) * currentSpeed + Vector3.up * velocityY;
+        Vector3 velocity = (OwnerTransform.forward * currentDirection.y + OwnerTransform.right * currentDirection.x) * currentSpeed + Vector3.up * velocityY;
         characterController.Move(velocity * Time.deltaTime);
     }
 

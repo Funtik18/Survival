@@ -53,7 +53,7 @@ public class ItemInspector : MonoBehaviour
 		inspector.onLeaveIt += ItemLeave;
 	}
 
-	public void SetItem(ItemObject item, InspectAnimationType inspectType)
+	public void SetItem(ItemObject item)
 	{
 		if (item == null) { Debug.LogError("Error"); return; }
 
@@ -61,29 +61,33 @@ public class ItemInspector : MonoBehaviour
 
 		Player.Instance.Lock();
 
+		currentItem = item;
+		itemTransform = currentItem.transform;
 
-		this.inspectType = inspectType;
-
-		if(inspectType == InspectAnimationType.WorldToLocal)
-		{
-			currentItem = item;
-			itemTransform = currentItem.transform;
-
-			oldParent = itemTransform.parent;
-			oldWorldPosition = itemTransform.position;
-			oldWorldRotation = itemTransform.rotation;
-		}
-		//else if(inspectType == InspectAnimationType.OnlyLocal)
-		//{
-		//	currentItem = Instantiate(item, modelPlace);
-		//	itemTransform = currentItem.transform;
-
-		//	itemTransform.localPosition = Vector3.zero;
-		//	itemTransform.localRotation = Quaternion.identity;
-		//}
+		oldParent = itemTransform.parent;
+		oldWorldPosition = itemTransform.position;
+		oldWorldRotation = itemTransform.rotation;
 
 		StartInspect();
 	}
+	public void SetItem(ItemScriptableData itemData)
+    {
+		if (itemData == null) { Debug.LogError("Error"); return; }
+
+		Player.Instance.Lock();
+
+		currentItem = Instantiate(itemData.data.model, modelPlace);
+		currentItem.ColliderEnable(false);
+
+		itemTransform = currentItem.transform;
+
+        itemTransform.localPosition = Vector3.zero;
+        itemTransform.localRotation = Quaternion.identity;
+
+		StartInspect();
+	}
+
+
 	public void StartInspect()
 	{
 		if(!IsInspectProccess)

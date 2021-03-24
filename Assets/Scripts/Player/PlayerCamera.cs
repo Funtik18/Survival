@@ -64,31 +64,6 @@ public class PlayerCamera : MonoBehaviour
 		StartVision();
 	}
 
-	private void Update()
-	{
-		if(isVisionBlocked == false)
-			if(Input.GetKeyDown(KeyCode.E))//need cash
-			{
-				Interact();
-			}
-	}
-
-	private void Interact()
-	{
-		if(currentCollider != null)
-		{
-			IInteractable interaction = currentCollider.GetComponent<IInteractable>();
-			if(interaction != null)
-			{
-				interaction.Interact();
-			}
-			else
-			{
-				Debug.LogError("Nelza");
-			}
-		}
-	}
-
 	#region Vision
 	private Collider currentCollider = null;
 	private Collider CurrentCollider
@@ -184,7 +159,6 @@ public class PlayerCamera : MonoBehaviour
 	}
 	#endregion
 
-
 	public void LockVision()
 	{
 		isVisionBlocked = true;
@@ -196,3 +170,28 @@ public class PlayerCamera : MonoBehaviour
 		isVisionBlocked = false;
 	}
 }
+//private void Update()
+//{
+//	if (isVisionBlocked == false)
+//		if (Input.GetKey(KeyCode.E))//need cash
+//		{
+//			Debug.LogError("+++");
+//			Interact();
+//		}
+//}
+
+//private void Interact()
+//{
+//	if (currentCollider != null)
+//	{
+//		IInteractable interaction = currentCollider.GetComponent<IInteractable>();
+//		if (interaction != null)
+//		{
+//			interaction.Interact();
+//		}
+//		else
+//		{
+//			Debug.LogError("Nelza");
+//		}
+//	}
+//}

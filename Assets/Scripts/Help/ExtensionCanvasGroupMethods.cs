@@ -2,10 +2,10 @@
 
 public static class ExtensionCanvasGroupMethods
 {
-    public static void IsEnabled(this CanvasGroup canvasGroup, bool trigger, float maxAlpha = 1f)
+    public static void IsEnabled(this CanvasGroup canvasGroup, bool trigger, bool onlyAlpha = false, float maxAlpha = 1f)
     {
         canvasGroup.alpha = trigger? maxAlpha : 0;
-        canvasGroup.interactable = trigger;
-        canvasGroup.blocksRaycasts = trigger;
+        canvasGroup.interactable = onlyAlpha ? false : trigger;
+        canvasGroup.blocksRaycasts = onlyAlpha? false : trigger;
     }
 }

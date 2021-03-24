@@ -16,5 +16,5 @@ public class ContainerData
     public string name;
     [SuffixLabel("s", Overlay = true)]
     [Min(1f)]
-    public float openTime = 1f;
+    public float time = 1f;
 }

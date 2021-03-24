@@ -60,25 +60,32 @@ public class Player : MonoBehaviour
 
 	private void Update()
 	{
-		if(isMoveLocked == false)
-        {
-			if(GeneralSettings.IsPlatformMobile)
-            {
-				Debug.LogError("Mobile");
+		if (GeneralSettings.IsPlatformMobile)
+		{
+			Debug.LogError("Mobile");
+			if (isMoveLocked == false)
+			{
 				playerController.UpdateMobileMovement();
-				playerController.UpdateMobileLook();
-
 			}
-			else if(GeneralSettings.IsPlatformPC)
+            if (isLookLocked == false)
             {
-				Debug.LogError("PC");
+				playerController.UpdateMobileLook();
+			}
+		}
+		else if (GeneralSettings.IsPlatformPC)
+		{
+			Debug.LogError("PC");
+			if (isMoveLocked == false)
+			{
 				playerController.UpdatePCMovement();
+			}
+            if (isLookLocked == false)
+            {
 				playerController.UpdatePCLook();
-
 			}
 		}
 	}
-
+	
 	public void AddItem(ItemScriptableData item)
 	{
 		playerInventory.AddItem(item);
@@ -98,6 +105,20 @@ public class Player : MonoBehaviour
         playerCamera.UnLockVision();
         playerUI.controlUI.UnLockControl();
     }
+
+
+	public void LockMovement()
+    {
+		isMoveLocked = true;
+		isLookLocked = true;
+		playerUI.controlUI.LockControl();
+	}
+	public void UnLockMovement()
+    {
+		isMoveLocked = false;
+		isLookLocked = false;
+		playerUI.controlUI.UnLockControl();
+	}
 
 	private void CheckCursor()
 	{

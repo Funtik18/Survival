@@ -36,6 +36,7 @@ public class PlayerControlUI : MonoBehaviour
 	public void LockMove(bool trigger)
 	{
 		joystickMove.IsEnable = trigger;
+		joystickMove.ResetHandleInput();
 	}
 	#endregion
 }
