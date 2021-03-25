@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
 using Sirenix.OdinInspector;
-using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
@@ -21,15 +20,13 @@ public class Player : MonoBehaviour
 	[SerializeField] private PlayerData data;
 	public PlayerStats stats;
 
-	[SerializeField] private PlayerInventory playerInventory;
+	public PlayerInventory Inventory;
 	[SerializeField] private PlayerController playerController;
 	public PlayerCamera playerCamera;
 	public PlayerUI playerUI;
 
 	[Space]
 	[SerializeField] private bool isLockCursor = true;
-	[SerializeField] private bool isMobileControll = false;
-
 
 	private Transform trans;
 	public Transform Transform
@@ -49,7 +46,7 @@ public class Player : MonoBehaviour
 
 	private void Awake()
 	{
-		//stats = new PlayerStats(data.statsData);
+		Inventory.Init();
 
 		playerUI.Setup(this);
 
@@ -85,13 +82,9 @@ public class Player : MonoBehaviour
 			}
 		}
 	}
-	
-	public void AddItem(ItemScriptableData item)
-	{
-		playerInventory.AddItem(item);
-	}
 
-	public void Lock()
+    #region Lock
+    public void Lock()
     {
 		isMoveLocked = true;
 		isLookLocked = true;
@@ -106,7 +99,6 @@ public class Player : MonoBehaviour
         playerUI.controlUI.UnLockControl();
     }
 
-
 	public void LockMovement()
     {
 		isMoveLocked = true;
@@ -119,8 +111,9 @@ public class Player : MonoBehaviour
 		isLookLocked = false;
 		playerUI.controlUI.UnLockControl();
 	}
+    #endregion
 
-	private void CheckCursor()
+    private void CheckCursor()
 	{
 		if(isLockCursor)
 		{

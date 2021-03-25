@@ -6,8 +6,9 @@ using Sirenix.OdinInspector;
 public class ItemScriptableData : ScriptableObject
 {
 	[HideLabel]
-	public ItemData data;
+	public ItemData information;
 }
+
 [System.Serializable]
 public class ItemData
 {
@@ -22,4 +23,21 @@ public class ItemData
 
 	[TextArea(5, 5)]
 	public string description;
+
+	public bool isStackable = false;
+	[ShowIf("isStackable")]
+	[Min(0)]
+	public int maxStackSize = 1;
+}
+
+public class Item
+{
+	public System.Guid ID { get; protected set; }
+	public ItemScriptableData ScriptableItem { get; protected set; }
+
+	public Item(ItemScriptableData data)
+    {
+		ID = System.Guid.NewGuid();
+		ScriptableItem = data;
+	}
 }

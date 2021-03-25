@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb8d4614486cf84e82892915a6f652d, type: 3}
   m_Name: Can2
   m_EditorClassIdentifier: 
-  data:
+  information:
     name: Can "Bubble-Cola ZERO"
     itemSprite: {fileID: 21300000, guid: 5943e15187d4150409a20b617f5d9caf, type: 3}
     model: {fileID: 857920658658162906, guid: cc1ff813bd74d334792299795d503188, type: 3}
-    description: Bubble-Cola No Sugar, in some markets called Coca-Cola Zero Sugar,
-      is a new recipe being introduced around the world.
+    description: "Bubble-Cola No Sugar, in some markets called Coca-Cola Zero Sugar,\r 
+      is a new recipe being introduced around the world."
+    isStackable: 0
+    maxStackSize: 20

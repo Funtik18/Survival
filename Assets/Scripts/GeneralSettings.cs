@@ -13,7 +13,11 @@ public class GeneralSettings : MonoBehaviour
     {
         get
         {
-            return UnityEditor.EditorApplication.isRemoteConnected || Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer;
+#if UNITY_EDITOR
+            return UnityEditor.EditorApplication.isRemoteConnected;
+#else
+            return Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer;
+#endif
         }
     }
 }

@@ -76,7 +76,7 @@ public class ItemInspector : MonoBehaviour
 
 		Player.Instance.Lock();
 
-		currentItem = Instantiate(itemData.data.model, modelPlace);
+		currentItem = Instantiate(itemData.information.model, modelPlace);
 		currentItem.ColliderEnable(false);
 
 		itemTransform = currentItem.transform;
@@ -102,7 +102,7 @@ public class ItemInspector : MonoBehaviour
 	{
 		itemTransform.SetParent(modelPlace);
 
-		inspector.SetInformation(currentItem.scriptableData.data);
+		inspector.SetInformation(currentItem.scriptableData.information);
 		inspector.ShowWindow();
 
 
@@ -214,7 +214,7 @@ public class ItemInspector : MonoBehaviour
 
 	private void ItemTake()
 	{
-		Player.Instance.AddItem(currentItem.scriptableData);
+		Player.Instance.Inventory.AddItem(currentItem.scriptableData);
 
 		isItemNeedDestroy = true;
 		isInspect = false;

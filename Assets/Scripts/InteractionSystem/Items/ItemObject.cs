@@ -18,7 +18,7 @@
 		base.StartObserve();
 		ControlUI.buttonPickUp.onClicked.AddListener(Interact);
 		ControlUI.buttonPickUp.IsEnable = true;
-		ControlUI.targetPoint.SetToolTipText(scriptableData.data.name).ShowToolTip();
+		ControlUI.targetPoint.SetToolTipText(scriptableData.information.name).ShowToolTip();
 	}
     public override void EndObserve()
     {

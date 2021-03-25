@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class InventorySlotInteraction : MonoBehaviour, IPointerClickHandler 
+public class ContainerSlotInteractionUI : MonoBehaviour, IPointerClickHandler 
 {
 	public UnityAction onClick;
 

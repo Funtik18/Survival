@@ -8,7 +8,7 @@ public class ContainerObject : WorldObject
 {
     public ContainerScriptableData scriptableData;
 
-	[SerializeField] private List<ItemScriptableData> items = new List<ItemScriptableData>();
+	[SerializeField] private Inventory inventory;
 
 	public bool saveTimeResult = false;
 
@@ -100,6 +100,6 @@ public class ContainerObject : WorldObject
 
 	public override void Interact()
 	{
-		Inspector.SetItem(items[Random.Range(0, items.Count)]);
+		Inspector.SetItem(inventory.items[Random.Range(0, inventory.items.Count)].ScriptableItem);
 	}
 }

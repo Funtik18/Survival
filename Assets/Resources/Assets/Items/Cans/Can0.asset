@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb8d4614486cf84e82892915a6f652d, type: 3}
   m_Name: Can0
   m_EditorClassIdentifier: 
-  data:
+  information:
     name: Can "TonFa"
     itemSprite: {fileID: 21300000, guid: 5c06b386c6dbb3f4fa3afa2e8c021899, type: 3}
     model: {fileID: 5515372273730528173, guid: 5bc58297e700040418bd9a7d47c5b2a2, type: 3}
-    description: Bright, bubbly and popular, TonFa is the soft drink that intensifies
-      fun.
+    description: "Bright, bubbly and popular, TonFa is the soft drink that intensifies\r
+      fun."
+    isStackable: 0
+    maxStackSize: 20
