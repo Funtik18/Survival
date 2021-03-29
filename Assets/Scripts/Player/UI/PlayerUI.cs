@@ -7,8 +7,10 @@ public class PlayerUI : MonoBehaviour
 
 	public void Setup(Player player)
 	{
-		windowsUI.backpackWindow.primaryContainer.Setup(player.Inventory);
-		windowsUI.backpackWindow.primaryContainer.onItemChoosen += windowsUI.backpackWindow.itemInspector.SetItem;
+		windowsUI.itemInspectorWindow.Setup(player.itemInspector);
+
+		windowsUI.backpackWindow.primaryContainer.SubscribeInventory(player.Inventory);
+		
 
 		windowsUI.backpackWindow.onBack += CloseInventory;
 		controlUI.buttonInventory.onClicked.AddListener(OpenInventory);//скрыть
@@ -24,11 +26,11 @@ public class PlayerUI : MonoBehaviour
 	private void OpenInventory()
 	{
 		Player.Instance.Lock();
-		windowsUI.backpackWindow.ShowWindow();
+		windowsUI.backpackWindow.ShowBackpackInspector();
 	}
 	private void CloseInventory()
 	{
 		Player.Instance.UnLock();
-		windowsUI.backpackWindow.HideWindow();
+		windowsUI.backpackWindow.HideBackpack();
 	}
 }

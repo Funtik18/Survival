@@ -21,9 +21,11 @@ public class Player : MonoBehaviour
 	public PlayerStats stats;
 
 	public PlayerInventory Inventory;
-	[SerializeField] private PlayerController playerController;
+	public PlayerController playerController;
 	public PlayerCamera playerCamera;
 	public PlayerUI playerUI;
+
+	public ItemInspector itemInspector;
 
 	[Space]
 	[SerializeField] private bool isLockCursor = true;

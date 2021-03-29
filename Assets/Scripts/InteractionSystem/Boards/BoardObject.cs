@@ -5,6 +5,6 @@
     public override void StartObserve()
     {
         base.StartObserve();
-        ControlUI.targetPoint.SetToolTipText(scriptableData.data.description).ShowToolTip();
+        GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.data.description).ShowToolTip();
     }
 }

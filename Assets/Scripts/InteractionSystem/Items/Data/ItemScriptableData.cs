@@ -34,6 +34,7 @@ public class Item
 {
 	public System.Guid ID { get; protected set; }
 	public ItemScriptableData ScriptableItem { get; protected set; }
+	public ItemData ItemData => ScriptableItem.information;
 
 	public Item(ItemScriptableData data)
     {

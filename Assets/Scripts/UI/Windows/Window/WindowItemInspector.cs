@@ -17,8 +17,14 @@ public class WindowItemInspector : WindowUI
 
     private void Awake()
     {
-        takeItButton.onClick.AddListener(() => { onTakeIt?.Invoke(); });
-        leaveItButton.onClick.AddListener(() => { onLeaveIt?.Invoke(); });
+        takeItButton.onClick.AddListener(TakeIt);
+        leaveItButton.onClick.AddListener(LeaveIt);
+    }
+
+    public void Setup(ItemInspector inspector)
+    {
+        onTakeIt += inspector.ItemTake;
+        onLeaveIt += inspector.ItemLeave;
     }
 
     public void SetInformation(ItemData data)
@@ -26,4 +32,13 @@ public class WindowItemInspector : WindowUI
         itemTittle.text = data.name;
         itemDescription.text = data.description;
 	}
+
+    private void TakeIt()
+    {
+        onTakeIt?.Invoke();
+    }
+    private void LeaveIt()
+    {
+        onLeaveIt?.Invoke();
+    }
 }

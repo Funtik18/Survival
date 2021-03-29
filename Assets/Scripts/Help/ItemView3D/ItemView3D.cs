@@ -44,19 +44,19 @@ public class ItemView3D : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-		if(itemTransform)
-		{
-			float rotX = Input.GetAxis("Mouse X") * rotationSpeedX;
-			float rotY = Input.GetAxis("Mouse Y") * rotationSpeedY;
+	//private void Update()
+	//{
+	//	if(itemTransform)
+	//	{
+	//		float rotX = Input.GetAxis("Mouse X") * rotationSpeedX;
+	//		float rotY = Input.GetAxis("Mouse Y") * rotationSpeedY;
 
-			Vector3 right = Vector3.Cross(cam.transform.up, itemTransform.position - cam.transform.position);
-			Vector3 up = Vector3.Cross(itemTransform.position - cam.transform.position, right);
-			itemTransform.rotation = Quaternion.AngleAxis(-rotX, up) * itemTransform.rotation;
-			itemTransform.rotation = Quaternion.AngleAxis(rotY, right) * itemTransform.rotation;
-		}
-	}
+	//		Vector3 right = Vector3.Cross(cam.transform.up, itemTransform.position - cam.transform.position);
+	//		Vector3 up = Vector3.Cross(itemTransform.position - cam.transform.position, right);
+	//		itemTransform.rotation = Quaternion.AngleAxis(-rotX, up) * itemTransform.rotation;
+	//		itemTransform.rotation = Quaternion.AngleAxis(rotY, right) * itemTransform.rotation;
+	//	}
+	//}
 
 
 	//public void StartInspect()

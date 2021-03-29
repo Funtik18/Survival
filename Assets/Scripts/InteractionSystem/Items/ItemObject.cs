@@ -1,34 +1,34 @@
-﻿public class ItemObject : WorldObject
-{
-	public ItemScriptableData scriptableData;
+﻿using UnityEngine;
 
-	private ItemInspector inspector;
-	public ItemInspector Inspector
+public class ItemObject : WorldObject
+{
+	[SerializeField] private ItemScriptableData scriptableData;
+	[HideInInspector] public Item item;
+	public ItemData ItemData => item.ItemData;
+
+	private void Awake()
     {
-        get
-        {
-			if (inspector == null)
-				inspector = ItemInspector.Instance;
-			return inspector;
-		}
+		if (scriptableData == null) Debug.LogError("ItemError", this);
+
+		item = new Item(scriptableData);
     }
 
-	public override void StartObserve()
+    public override void StartObserve()
 	{
 		base.StartObserve();
-		ControlUI.buttonPickUp.onClicked.AddListener(Interact);
-		ControlUI.buttonPickUp.IsEnable = true;
-		ControlUI.targetPoint.SetToolTipText(scriptableData.information.name).ShowToolTip();
+		GeneralAvailability.ButtonPickUp.onClicked.AddListener(Interact);
+		GeneralAvailability.ButtonPickUp.IsEnable = true;
+		GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.information.name).ShowToolTip();
 	}
     public override void EndObserve()
     {
         base.EndObserve();
-		ControlUI.buttonPickUp.IsEnable = false;
-		ControlUI.buttonPickUp.onClicked.RemoveListener(Interact);
+		GeneralAvailability.ButtonPickUp.IsEnable = false;
+		GeneralAvailability.ButtonPickUp.onClicked.RemoveListener(Interact);
 	}
 
 	public override void Interact()
 	{
-		Inspector.SetItem(this);
+		GeneralAvailability.Inspector.SetItem(this);
 	}
 }

@@ -23,16 +23,36 @@ public class Inventory
 
     public bool AddItem(ItemScriptableData item)
     {
-        items.Add(new Item(item));
-        onCollectionChanged?.Invoke(items);
-        return true;
+        if(item != null)
+        {
+            items.Add(new Item(item));
+            onCollectionChanged?.Invoke(items);
+            return true;
+        }
+        return false;
     }
     public bool RemoveItem(Item item)
     {
-        if (items.Contains(item))
+        if(item != null)
         {
-            items.Remove(item);
-            onCollectionChanged?.Invoke(items);
+            if (items.Contains(item))
+            {
+                items.Remove(item);
+                onCollectionChanged?.Invoke(items);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool RemoveItems(List<Item> removers)
+    {
+        if(removers.Count > 0)
+        {
+            for (int i = 0; i < removers.Count; i++)
+            {
+                RemoveItem(removers[i]);
+            }
             return true;
         }
         return false;

@@ -40,19 +40,6 @@ public abstract class Object : MonoBehaviour
 			return coll;
 		}
 	}
-
-	private PlayerControlUI controlUI;
-	protected PlayerControlUI ControlUI
-	{
-		get
-		{
-			if(controlUI == null)
-			{
-				controlUI = Player.Instance.playerUI.controlUI;
-			}
-			return controlUI;
-		}
-	}
 }
 
 public abstract class WorldBoard : Object, IObservable
@@ -61,15 +48,14 @@ public abstract class WorldBoard : Object, IObservable
 
 	public virtual void StartObserve()
 	{
-		ControlUI.targetPoint.ShowPoint();
+		GeneralAvailability.TargetPoint.ShowPoint();
 	}
 	public virtual void Observe() { }
 	public virtual void EndObserve()
 	{
-		ControlUI.targetPoint.HidePoint();
+		GeneralAvailability.TargetPoint.HidePoint();
 	}
 }
-
 
 public abstract class WorldObject : Object, IPerceptible
 {
@@ -78,12 +64,12 @@ public abstract class WorldObject : Object, IPerceptible
 
 	public virtual void StartObserve()
 	{
-		ControlUI.targetPoint.ShowPoint();
+		GeneralAvailability.TargetPoint.ShowPoint();
 	}
 	public virtual void Observe() { }
 	public virtual void EndObserve()
 	{
-		ControlUI.targetPoint.HidePoint();
+		GeneralAvailability.TargetPoint.HidePoint();
 	}
 
 	public virtual void Interact() {
@@ -93,13 +79,4 @@ public abstract class WorldObject : Object, IPerceptible
 	{
 		Collider.enabled = trigger;
 	}
-}
-
-
-
-public enum InteractionType
-{
-	Failed,
-	Press,
-	Hold,
 }

@@ -1,24 +1,14 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.Events;
 
 public class ItemInspector : MonoBehaviour
 {
-	private static ItemInspector instance;
-	public static ItemInspector Instance
-	{
-		get
-		{
-			if(instance == null)
-			{
-				instance = FindObjectOfType<ItemInspector>();
-			}
-			return instance;
-		}
-	}
+	public UnityAction onItemTake;
+	public UnityAction onItemLeave;
 
-
-	[SerializeField] private WindowItemInspector inspector;
 	[SerializeField] private Transform modelPlace;
 	[SerializeField] private Camera cam;
 	[Space]
@@ -33,106 +23,136 @@ public class ItemInspector : MonoBehaviour
 	private float thresholdAngle = 0.1f;
 
 	//coroutine
+	private List<Item> cashItemsToDelete = new List<Item>();
+
+	public bool IsInspectItem { get; private set; }
+
+	private Coroutine reviewCoroutine = null;
+	public bool IsReviewProccess => reviewCoroutine != null;
+
 	private Coroutine inspectCoutine = null;
 	public bool IsInspectProccess => inspectCoutine != null;
 
-	private bool isInspect = false;
-	private bool isItemNeedDestroy = false;
-
 	//cash
-	private ItemObject currentItem;
-	private Transform itemTransform;
+	private Inventory inventory;
+
+	private Item item;
+	private ItemObject itemObject;
+	private Transform ItemTransform => itemObject.transform;
 
 	private Transform oldParent;
 	private Vector3 oldWorldPosition;
 	private Quaternion oldWorldRotation;
 
-	private void Awake()
+    public void SetItem(ItemObject itemObject)
 	{
-		inspector.onTakeIt += ItemTake;
-		inspector.onLeaveIt += ItemLeave;
-	}
+		GeneralAvailability.Player.Lock();
+		
+		this.itemObject = itemObject;
 
-	public void SetItem(ItemObject item)
-	{
-		if (item == null) { Debug.LogError("Error"); return; }
+		SetupItem(itemObject.item);
 
-		item.ColliderEnable(false);
+		onItemTake = FromWorldTake;
+		onItemLeave = ToWorldLeave;
 
-		Player.Instance.Lock();
-
-		currentItem = item;
-		itemTransform = currentItem.transform;
-
-		oldParent = itemTransform.parent;
-		oldWorldPosition = itemTransform.position;
-		oldWorldRotation = itemTransform.rotation;
 
 		StartInspect();
 	}
-	public void SetItem(ItemScriptableData itemData)
+	public void ItemsReview(Inventory from)
+	{
+		this.inventory = from;
+
+		onItemTake = FromInventoryTake;
+		onItemLeave = ToInventoryLeave;
+
+		StartReview();
+	}
+
+	private void SetupItem(Item item, bool instantiateModel = false, InspectAnimationType inspect = InspectAnimationType.WorldToLocal)
     {
-		if (itemData == null) { Debug.LogError("Error"); return; }
+		this.item = item;
 
-		Player.Instance.Lock();
+		if (instantiateModel)
+			this.itemObject = Instantiate(this.item.ItemData.model, modelPlace);
 
-		currentItem = Instantiate(itemData.information.model, modelPlace);
-		currentItem.ColliderEnable(false);
+		if(inspect == InspectAnimationType.WorldToLocal)
+        {
+			oldParent = ItemTransform.parent;
+			oldWorldPosition = ItemTransform.position;
+			oldWorldRotation = ItemTransform.rotation;
+		}
+		else if(inspect == InspectAnimationType.OnlyLocal)
+        {
+			ItemTransform.localPosition = Vector3.zero;
+			ItemTransform.localRotation = Quaternion.identity;
+		}
 
-		itemTransform = currentItem.transform;
-
-        itemTransform.localPosition = Vector3.zero;
-        itemTransform.localRotation = Quaternion.identity;
-
-		StartInspect();
+		itemObject.ColliderEnable(false);
+		OpenUI();
 	}
 
 
-	public void StartInspect()
+	#region Review
+	private void StartReview()
+    {
+        if (!IsReviewProccess)
+        {
+			reviewCoroutine = StartCoroutine(Review());
+		}
+    }
+	private IEnumerator Review()
+    {
+		List<Item> items = inventory.items;
+
+        foreach (var item in items)
+        {
+			SetupItem(item, true, InspectAnimationType.OnlyLocal);
+			StartInspect();
+
+			while (IsInspectProccess)
+			{
+				Debug.LogError("Inspect");
+				yield return null;
+			}
+
+			Debug.LogError("OUT");
+		}
+
+		inventory.RemoveItems(cashItemsToDelete);
+		cashItemsToDelete.Clear();
+		CloseUI();
+		StopReview();
+	}
+	private void StopReview()
+    {
+        if (IsReviewProccess)
+        {
+			StopCoroutine(reviewCoroutine);
+			reviewCoroutine = null;
+		}
+    }
+	#endregion
+
+	#region Inspect
+	private void StartInspect()
 	{
 		if(!IsInspectProccess)
 		{
-			isInspect = true;
-			isItemNeedDestroy = false;
 			inspectCoutine = StartCoroutine(Inspect());
 		}
 	}
-
 	private IEnumerator Inspect()
 	{
-		itemTransform.SetParent(modelPlace);
+		yield return LerpItem(ItemTransform, modelPlace.position, modelPlace.rotation, 0.3f);//lerp item from world to local
+		ItemTransform.SetParent(modelPlace);
 
-		inspector.SetInformation(currentItem.scriptableData.information);
-		inspector.ShowWindow();
+		yield return InspectItem();
 
+		ItemTransform.SetParent(oldParent);
+		yield return LerpItem(ItemTransform, oldWorldPosition, oldWorldRotation, 0.3f);//lerp item back to world
 
-		//if(currentItem.itemAngle == ItemInspectorAngle.World)
-		//{
-		//	yield return LerpItem(itemTransform, modelPlace.position, itemTransform.rotation);
-		//}
-		//else
-		yield return LerpItem(itemTransform, modelPlace.position, modelPlace.rotation);//lerp item from world to local
-
-        if (GeneralSettings.IsPlatformMobile)
-        {
-			yield return InspectItemMobile();
-		}
-		else if (GeneralSettings.IsPlatformPC)
-        {
-			yield return InspectItemPC();
-		}
-
-		inspector.HideWindow();
-
-        if (isItemNeedDestroy)
-        {
-			Destroy(itemTransform.gameObject);
-		}
-		else
-		{
-			yield return LerpItem(itemTransform, oldWorldPosition, oldWorldRotation);//lerp item back to world
-			itemTransform.SetParent(oldParent);
-		}
+		itemObject.ColliderEnable(true);
+		Dispose();
 
 		StopInspect();
 	}
@@ -151,15 +171,33 @@ public class ItemInspector : MonoBehaviour
 		{
 			item.position = Vector3.Lerp(item.position, posTo, t);
 			item.rotation = Quaternion.Slerp(item.rotation, rotTo, t);
-			yield return null;
+			yield return new WaitForFixedUpdate();
 		}
 		item.position = posTo;
 		item.rotation = rotTo;
 	}
 
+	#region InspectItem
+	/// <summary>
+	/// Берём X Y и записываем в RotateItem
+	/// </summary>
+	/// <returns></returns>
+	private IEnumerator InspectItem()
+    {
+		IsInspectItem = true;
+
+		if (GeneralSettings.IsPlatformMobile)
+		{
+			yield return InspectItemMobile();
+		}
+		else if (GeneralSettings.IsPlatformPC)
+		{
+			yield return InspectItemPC();
+		}
+	}
 	private IEnumerator InspectItemPC()
 	{
-		while(isInspect)
+		while(IsInspectItem)
 		{
 			if(Input.GetMouseButton(0))
             {
@@ -173,7 +211,7 @@ public class ItemInspector : MonoBehaviour
 	}
     private IEnumerator InspectItemMobile()
 	{
-		while (isInspect)
+		while (IsInspectItem)
 		{
 			if (Input.touchCount > 0)
 			{
@@ -185,44 +223,112 @@ public class ItemInspector : MonoBehaviour
 			yield return null;
 		}
 	}
+    #endregion
 
-	public void StopInspect()
+    private void StopInspect()
 	{
 		if(IsInspectProccess)
 		{
 			StopCoroutine(inspectCoutine);
 			inspectCoutine = null;
 
-			Player.Instance.UnLock();
-
-			currentItem.ColliderEnable(true);
-			currentItem = null;
+			IsInspectItem = false;
 		}
 	}
+    #endregion
 
-	/// <summary>
-	/// Детальный осмотр предмета с поворотами по X и Y.
-	/// </summary>
-	/// <returns></returns>
-	private void RotateItem(float rotX, float rotY)
+    /// <summary>
+    /// Детальный осмотр предмета с поворотами по X и Y.
+    /// </summary>
+    /// <returns></returns>
+    private void RotateItem(float rotX, float rotY)
 	{
-		Vector3 right = Vector3.Cross(cam.transform.up, itemTransform.position - cam.transform.position);
-		Vector3 up = Vector3.Cross(itemTransform.position - cam.transform.position, right);
-		itemTransform.rotation = Quaternion.AngleAxis(-rotX, up) * itemTransform.rotation;
-		itemTransform.rotation = Quaternion.AngleAxis(rotY, right) * itemTransform.rotation;
+		Vector3 right = Vector3.Cross(cam.transform.up, ItemTransform.position - cam.transform.position);
+		Vector3 up = Vector3.Cross(ItemTransform.position - cam.transform.position, right);
+		ItemTransform.rotation = Quaternion.AngleAxis(-rotX, up) * ItemTransform.rotation;
+		ItemTransform.rotation = Quaternion.AngleAxis(rotY, right) * ItemTransform.rotation;
 	}
 
-	private void ItemTake()
-	{
-		Player.Instance.Inventory.AddItem(currentItem.scriptableData);
 
-		isItemNeedDestroy = true;
-		isInspect = false;
+	private void OpenUI()
+    {
+		GeneralAvailability.Player.Lock();
+
+		GeneralAvailability.InspectorWindow.SetInformation(item.ItemData);
+		GeneralAvailability.InspectorWindow.ShowWindow();
 	}
-	private void ItemLeave()
+	private void CloseUI()
+    {
+		GeneralAvailability.Player.UnLock();
+
+		GeneralAvailability.InspectorWindow.HideWindow();
+	}
+
+
+	#region Take Leave
+	public void ItemTake()
 	{
-		isItemNeedDestroy = false;
-		isInspect = false;
+		onItemTake?.Invoke();
+	}
+	public void ItemLeave()
+	{
+		onItemLeave?.Invoke();
+	}
+
+	private void FromWorldTake()
+    {
+		GeneralAvailability.PlayerInventory.AddItem(item.ScriptableItem);
+
+		CloseUI();
+
+		StopInspect();
+
+		if (itemObject)
+		{
+			Destroy(itemObject.gameObject);
+		}
+		Dispose();
+	}
+	private void ToWorldLeave()
+    {
+		CloseUI();
+		IsInspectItem = false;
+	}
+	private void FromInventoryTake()
+	{
+		GeneralAvailability.PlayerInventory.AddItem(item.ScriptableItem);
+
+		StopInspect();
+
+		cashItemsToDelete.Add(item);
+
+        if (itemObject)
+		{
+			Destroy(itemObject.gameObject);
+		}
+		Dispose();
+	}
+	private void ToInventoryLeave()
+	{
+		StopInspect();
+
+		if (itemObject)
+		{
+			Destroy(itemObject.gameObject);
+		}
+		Dispose();
+	}
+	#endregion
+
+
+	private void Dispose()
+    {
+		itemObject = null;
+		item = null;
+
+		oldParent = null;
+		oldWorldPosition = Vector3.zero;
+		oldWorldRotation = Quaternion.identity;
 	}
 }
 public enum InspectAnimationType

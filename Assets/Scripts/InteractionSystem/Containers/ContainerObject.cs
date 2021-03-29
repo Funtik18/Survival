@@ -1,6 +1,4 @@
-﻿
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 
 using UnityEngine;
 
@@ -8,78 +6,80 @@ public class ContainerObject : WorldObject
 {
     public ContainerScriptableData scriptableData;
 
-	[SerializeField] private Inventory inventory;
+	[SerializeField] private Inventory containerInventory;
 
+	public bool isInspected = false;
 	public bool saveTimeResult = false;
-
-	private ItemInspector inspector;
-	public ItemInspector Inspector
-	{
-		get
-		{
-			if (inspector == null)
-				inspector = ItemInspector.Instance;
-			return inspector;
-		}
-	}
-
-	private HoldLoader loader;
-	private HoldLoader Loader
-    {
-        get
-        {
-			if(loader == null)
-				loader = ControlUI.targetPoint.holdLoader;
-			return loader;
-        }
-    }
-
 
 	private Coroutine holdCoroutine = null;
 	private bool IsHoldProccess => holdCoroutine != null;
 
-	public override void StartObserve()
+    private void Awake()
+    {
+		containerInventory.Init();//изменить
+	}
+
+    public override void StartObserve()
 	{
 		base.StartObserve();
-		ControlUI.buttonSearch.onPressed.AddListener(StartHold);
-		ControlUI.buttonSearch.onUnPressed.AddListener(StopHold);
-		ControlUI.buttonSearch.IsEnable = true;
-		ControlUI.targetPoint.SetToolTipText(scriptableData.data.name).ShowToolTip();
-	}
+
+		GeneralAvailability.ButtonSearch.IsEnable = true;
+
+        if (isInspected)
+        {
+			GeneralAvailability.ButtonSearch.onClicked.AddListener(OpenContainer);
+        }
+        else
+        {
+			GeneralAvailability.ButtonSearch.onPressed.AddListener(StartHold);
+			GeneralAvailability.ButtonSearch.onUnPressed.AddListener(StopHold);
+        }
+		GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.data.name).ShowToolTip();
+    }
     public override void EndObserve()
     {
         base.EndObserve();
-		ControlUI.buttonSearch.IsEnable = false;
-		ControlUI.buttonSearch.onPressed.RemoveListener(StartHold);
-		ControlUI.buttonSearch.onUnPressed.RemoveListener(StopHold);
-	}
+		GeneralAvailability.ButtonSearch.IsEnable = false;
+
+        if (isInspected)
+        {
+			GeneralAvailability.ButtonSearch.onClicked.RemoveListener(OpenContainer);
+        }
+        else
+        {
+			GeneralAvailability.ButtonSearch.onPressed.RemoveListener(StartHold);
+			GeneralAvailability.ButtonSearch.onUnPressed.RemoveListener(StopHold);
+        }
+    }
 
 	private void StartHold()
     {
         if (!IsHoldProccess)
         {
-			Player.Instance.LockMovement();
+			GeneralAvailability.Player.LockMovement();
 
 			holdCoroutine = StartCoroutine(Hold());
 		}
     }
 	private IEnumerator Hold()
     {
-		Loader.ShowLoader();
+        GeneralAvailability.Loader.ShowLoader();
 
-		float startTime = Time.time;
-		float maxTime = scriptableData.data.time;
-		float currentTime = Time.time - startTime;
-		while (currentTime <= maxTime)
+        float startTime = Time.time;
+        float maxTime = scriptableData.data.time;
+        float currentTime = Time.time - startTime;
+        while (currentTime <= maxTime)
         {
-			Loader.LoaderFillAmount = currentTime / maxTime;
+            GeneralAvailability.Loader.LoaderFillAmount = currentTime / maxTime;
 
-			currentTime = Time.time - startTime;
+            currentTime = Time.time - startTime;
 
-			yield return null;
-		}
+            yield return null;
+        }
 
-		ControlUI.buttonSearch.UnPressButton();
+        GeneralAvailability.ButtonSearch.UnPressButton();
+
+        isInspected = true;
 
 		Interact();
 
@@ -92,14 +92,20 @@ public class ContainerObject : WorldObject
 			StopCoroutine(holdCoroutine);
             holdCoroutine = null;
 
-			Loader.HideLoader();
-		
-			Player.Instance.UnLockMovement();
+            GeneralAvailability.Loader.HideLoader();
+
+            Player.Instance.UnLockMovement();
 		}
 	}
 
+	private void OpenContainer()
+    {
+        GeneralAvailability.BackpackWindow.secondaryContainer.SubscribeInventory(containerInventory);
+        GeneralAvailability.BackpackWindow.ShowBackpackWithContainer();
+    }
+
 	public override void Interact()
 	{
-		Inspector.SetItem(inventory.items[Random.Range(0, inventory.items.Count)].ScriptableItem);
+        GeneralAvailability.Inspector.ItemsReview(containerInventory);
 	}
 }

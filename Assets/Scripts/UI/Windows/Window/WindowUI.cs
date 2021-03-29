@@ -10,13 +10,15 @@ public abstract class WindowUI : MonoBehaviour
 {
     [SerializeField] private CanvasGroup canvasGroup;
 
-    public void ShowWindow()
+    public WindowUI ShowWindow()
 	{
 		canvasGroup.IsEnabled(true);
+		return this;
 	}
-	public void HideWindow()
+	public WindowUI HideWindow()
 	{
 		canvasGroup.IsEnabled(false);
+		return this;
 	}
 
 	[Button]
