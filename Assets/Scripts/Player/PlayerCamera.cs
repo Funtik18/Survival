@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 using EZCameraShake;
+using System.Linq;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -23,20 +25,23 @@ public class PlayerCamera : MonoBehaviour
 
 	[SerializeField] private LayerMask interactLayers;
 	[Space]
+	[SerializeField] private float maxRayDistance = 5f;
 	[SerializeField] private float rayDistance = 5f;
+	[SerializeField] private float sphereRadius = 1f;
 
-	//coroutines
+	[HideInInspector] public List<Collider> collidersIntersects = new List<Collider>();
+
+	#region Coroutines
 	private Coroutine shakeCoroutine = null;
 	private bool IsShakeProccess => shakeCoroutine != null;
 
 	private Coroutine visionCoroutine = null;
 	public bool IsVisionProccess => visionCoroutine != null;
 	private WaitForSeconds visionSeconds = new WaitForSeconds(0.1f);
-	private bool isVisionBlocked = false;
+    #endregion
 
-
-	#region Properties
-	private Transform trans;
+    #region Properties
+    private Transform trans;
 	public Transform Transform
 	{
 		get
@@ -46,6 +51,7 @@ public class PlayerCamera : MonoBehaviour
 			return trans;
 		}
 	}
+	public bool IsVisionBlocked { get; private set; }
 
 	private CameraShakeInstance HandheldCamera
 	{
@@ -58,8 +64,9 @@ public class PlayerCamera : MonoBehaviour
 			return c;
 		}
 	}
-    #endregion
+	#endregion
 
+	private Vector3 lastHitPoint;
 
     private void Awake()
 	{
@@ -104,17 +111,37 @@ public class PlayerCamera : MonoBehaviour
 	{
 		while(true)
 		{
-			if (isVisionBlocked == false)
+			if (IsVisionBlocked == false)
             {
 				RaycastHit hit;
 				Ray ray = new Ray(Transform.position, Transform.forward);
 
-				if (Physics.Raycast(ray, out hit, rayDistance, interactLayers))
-					CurrentCollider = hit.collider;
-				else
-                    DisposeCollider();
+                //каст для мира
+                if (Physics.Raycast(ray, out hit, maxRayDistance))
+                {
+                    lastHitPoint = hit.point;
 
+                    collidersIntersects.Clear();
+                    collidersIntersects.AddRange(Physics.OverlapSphere(hit.point, sphereRadius, interactLayers));
+                    if (collidersIntersects.Count > 0)
+                        GeneralAvailability.TargetPoint.ShowPoint();
+                    else
+                        GeneralAvailability.TargetPoint.HidePoint();
 
+                    //каст для интерактивных объектов
+                    if (Physics.Raycast(ray, out hit, rayDistance, interactLayers))
+					{
+						CurrentCollider = hit.collider;
+					}
+					else
+					{
+						DisposeCollider();
+					}
+                }
+                else
+                {
+                    GeneralAvailability.TargetPoint.HidePoint();
+                }
 
                 //Debug.DrawLine(Transform.position, Transform.position + (Transform.forward * rayDistance), Color.blue);
 
@@ -134,13 +161,13 @@ public class PlayerCamera : MonoBehaviour
 
 	public void LockVision()
 	{
-		isVisionBlocked = true;
+		IsVisionBlocked = true;
 
 		DisposeCollider();
 	}
 	public void UnLockVision()
 	{
-		isVisionBlocked = false;
+		IsVisionBlocked = false;
 	}
 	#endregion
 
@@ -171,5 +198,24 @@ public class PlayerCamera : MonoBehaviour
 			shakeCoroutine = null;
 		}
 	}
-    #endregion
+	#endregion
+
+
+	private void OnDrawGizmos()
+	{
+		if (IsVisionBlocked == false)
+		{
+			Color sphereColor = Color.red;
+			sphereColor.a = 0.1f;
+			Gizmos.color = sphereColor;
+			Gizmos.DrawSphere(lastHitPoint, sphereRadius);
+
+			Gizmos.color = Color.red;
+			for (int i = 0; i < collidersIntersects.Count; i++)
+			{
+				if(collidersIntersects[i] != null)
+				Gizmos.DrawLine(lastHitPoint, collidersIntersects[i].transform.position);
+			}
+		}
+	}
 }

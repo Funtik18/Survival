@@ -23,8 +23,9 @@ public class ItemObject : WorldObject
     public override void EndObserve()
     {
         base.EndObserve();
+		GeneralAvailability.TargetPoint.HideToolTip();
 		GeneralAvailability.ButtonPickUp.IsEnable = false;
-		GeneralAvailability.ButtonPickUp.onClicked += Interact;
+		GeneralAvailability.ButtonPickUp.onClicked -= Interact;
 	}
 
 	public override void Interact()

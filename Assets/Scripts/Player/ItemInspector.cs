@@ -46,18 +46,17 @@ public class ItemInspector : MonoBehaviour
 
     public void SetItem(ItemObject itemObject)
 	{
-		GeneralAvailability.Player.Lock();
-		
-		this.itemObject = itemObject;
+        GeneralAvailability.Player.Lock();
 
-		SetupItem(itemObject.item);
+        this.itemObject = itemObject;
 
-		onItemTake = FromWorldTake;
-		onItemLeave = ToWorldLeave;
+        SetupItem(itemObject.item);
 
+        onItemTake = FromWorldTake;
+        onItemLeave = ToWorldLeave;
 
-		StartInspect();
-	}
+        StartInspect();
+    }
 	public void ItemsReview(Inventory from)
 	{
 		this.inventory = from;
@@ -111,11 +110,8 @@ public class ItemInspector : MonoBehaviour
 
 			while (IsInspectProccess)
 			{
-				Debug.LogError("Inspect");
 				yield return null;
 			}
-
-			Debug.LogError("OUT");
 		}
 
 		inventory.RemoveItems(cashItemsToDelete);

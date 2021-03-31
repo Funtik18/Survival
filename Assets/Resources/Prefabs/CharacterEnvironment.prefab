@@ -8251,7 +8251,10 @@ MonoBehaviour:
   interactLayers:
     serializedVersion: 2
     m_Bits: 512
-  rayDistance: 5
+  maxRayDistance: 5
+  rayDistance: 3
+  sphereRadius: 1
+  collidersIntersects: []
 --- !u!114 &2972885084427468037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8265,13 +8268,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 1553796857109049969}
-  prefab: {fileID: 8284457906460856250, guid: e9bd13dae4d6ce247abadaa72f0de541, type: 3}
+  buildingPrefab: {fileID: 6702973592513474889, guid: fc7ec1852d6b7704c940c68c548b628e,
+    type: 3}
   acceptMaterial: {fileID: 2100000, guid: d2d953ba20b106f4db83ff6b2f3e1959, type: 2}
   rejectMaterial: {fileID: 2100000, guid: b1d43350a6b123246a0844f75e6d6eaa, type: 2}
   groundLayers:
     serializedVersion: 2
     m_Bits: 3072
-  rayDistance: 5
+  rayDistance: 3
   rayUpDistance: 1
   anglePlacement: 60
 --- !u!1 &8778757718920347358

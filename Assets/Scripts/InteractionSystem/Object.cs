@@ -40,6 +40,11 @@ public abstract class Object : MonoBehaviour
 			return coll;
 		}
 	}
+
+	public void ColliderEnable(bool trigger)
+	{
+		Collider.enabled = trigger;
+	}
 }
 
 public abstract class WorldBoard : Object, IObservable
@@ -51,10 +56,7 @@ public abstract class WorldBoard : Object, IObservable
 		GeneralAvailability.TargetPoint.ShowPoint();
 	}
 	public virtual void Observe() { }
-	public virtual void EndObserve()
-	{
-		GeneralAvailability.TargetPoint.HidePoint();
-	}
+	public virtual void EndObserve() { }
 }
 
 public abstract class WorldObject : Object, IPerceptible
@@ -64,19 +66,13 @@ public abstract class WorldObject : Object, IPerceptible
 
 	public virtual void StartObserve()
 	{
-		GeneralAvailability.TargetPoint.ShowPoint();
+		GeneralAvailability.TargetPoint.ShowToolTip();
 	}
 	public virtual void Observe() { }
-	public virtual void EndObserve()
+	public virtual void EndObserve() 
 	{
-		GeneralAvailability.TargetPoint.HidePoint();
+		GeneralAvailability.TargetPoint.HideToolTip();
 	}
 
-	public virtual void Interact() {
-	}
-
-	public void ColliderEnable(bool trigger)
-	{
-		Collider.enabled = trigger;
-	}
+	public virtual void Interact() { }
 }

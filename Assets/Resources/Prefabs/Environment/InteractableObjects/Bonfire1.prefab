@@ -14287,6 +14287,7 @@ GameObject:
   - component: {fileID: 8284457906463921082}
   - component: {fileID: 8284457906462790010}
   - component: {fileID: 8284457906460856133}
+  - component: {fileID: 2250553063792350719}
   m_Layer: 0
   m_Name: Bonfire1
   m_TagString: Untagged
@@ -14370,3 +14371,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.244071, y: 0.14114603, z: 1.315939}
   m_Center: {x: -0.06, y: 0.07027006, z: 0}
+--- !u!114 &2250553063792350719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8284457906460856250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1cbb52e37775544f8274553d8cc0520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coll: {fileID: 8284457906460856133}
+  filters:
+  - {fileID: 8284457906463921082}

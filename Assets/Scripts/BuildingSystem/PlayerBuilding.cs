@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Sirenix.OdinInspector;
+
 public class PlayerBuilding : MonoBehaviour
 {
 	[SerializeField] private PlayerCamera playerCamera;
 	[Space]
-	[SerializeField] private GameObject prefab;
-	private Mesh Mesh => prefab.GetComponent<MeshFilter>().sharedMesh;
+	[AssetList]
+	[SerializeField] private Building buildingPrefab;
 
 	[SerializeField] private Material acceptMaterial;
 	[SerializeField] private Material rejectMaterial;
@@ -23,18 +25,25 @@ public class PlayerBuilding : MonoBehaviour
 	public bool IsBuildingProccess => buildCoroutine != null;
 	private WaitForSeconds buildingSeconds = new WaitForSeconds(0.05f);
 
-
-	private bool isCanBuild = false;
+	public bool IsCanBuild{ get; private set; }
 
 	private Vector3 SpherePoint => playerCamera.Transform.position + (playerCamera.Transform.forward * rayDistance);
 
 	#region Cash
+	private List<Collider> collidersIntersects;
+
 	private RaycastHit lastHit;
 
 	private Vector3 lastPosition;
 	private Quaternion lastRotation;
 	private float lastAngle;
     #endregion
+
+    private void Awake()
+    {
+		collidersIntersects = playerCamera.collidersIntersects;
+	}
+
 
     private void Update()
 	{
@@ -44,14 +53,15 @@ public class PlayerBuilding : MonoBehaviour
 		}
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (IsBuildingProccess && isCanBuild)
+            if (IsBuildingProccess && IsCanBuild)
             {
 				StopBuild();
-				Transform obj = Instantiate(prefab).transform;
+
+				Transform obj = Instantiate(buildingPrefab).transform;
 				obj.position = lastPosition;
 				obj.rotation = lastRotation;
 			}
-        }
+		}
 	}
 
 
@@ -74,6 +84,7 @@ public class PlayerBuilding : MonoBehaviour
 			RaycastHit hit;
 
 			Ray ray = new Ray(playerCamera.Transform.position, playerCamera.Transform.forward);
+
 			//первый чек проверяет на максимум до rayDistance
 			if (CheckCast(ray, out hit, rayDistance) == false)
             {
@@ -99,9 +110,13 @@ public class PlayerBuilding : MonoBehaviour
 
 	private void DrawMesh(bool trigger)
     {
-		isCanBuild = trigger;
+		IsCanBuild = trigger;
 
-		Graphics.DrawMesh(Mesh, lastPosition, lastRotation, isCanBuild ? acceptMaterial : rejectMaterial, 0);
+        for (int i = 0; i < buildingPrefab.filters.Count; i++)
+        {
+			Mesh mesh = buildingPrefab.filters[i].sharedMesh;
+			Graphics.DrawMesh(mesh, lastPosition, lastRotation, IsCanBuild ? acceptMaterial : rejectMaterial, 0);
+		}
 	}
 
 
