@@ -21,8 +21,7 @@ public class PlayerCamera : MonoBehaviour
 	[SerializeField] private Camera playerCamera;
 	[SerializeField] private CameraShaker shaker;
 
-	[SerializeField] private LayerMask castLayers;
-
+	[SerializeField] private LayerMask interactLayers;
 	[Space]
 	[SerializeField] private float rayDistance = 5f;
 
@@ -31,11 +30,12 @@ public class PlayerCamera : MonoBehaviour
 	private bool IsShakeProccess => shakeCoroutine != null;
 
 	private Coroutine visionCoroutine = null;
-	private bool IsVisionProccess => visionCoroutine != null;
+	public bool IsVisionProccess => visionCoroutine != null;
 	private WaitForSeconds visionSeconds = new WaitForSeconds(0.1f);
 	private bool isVisionBlocked = false;
 
-	//properties
+
+	#region Properties
 	private Transform trans;
 	public Transform Transform
 	{
@@ -58,14 +58,16 @@ public class PlayerCamera : MonoBehaviour
 			return c;
 		}
 	}
+    #endregion
 
-	private void Awake()
+
+    private void Awake()
 	{
 		StartVision();
 	}
 
-	#region Vision
-	private Collider currentCollider = null;
+    #region Vision
+    private Collider currentCollider = null;
 	private Collider CurrentCollider
     {
 		get => currentCollider;
@@ -91,7 +93,6 @@ public class PlayerCamera : MonoBehaviour
 		}
 	}
 
-
 	private void StartVision()
 	{
 		if(!IsVisionProccess)
@@ -103,15 +104,17 @@ public class PlayerCamera : MonoBehaviour
 	{
 		while(true)
 		{
-			if(isVisionBlocked == false)
+			if (isVisionBlocked == false)
             {
 				RaycastHit hit;
 				Ray ray = new Ray(Transform.position, Transform.forward);
 
-				if (Physics.Raycast(ray, out hit, rayDistance, castLayers))
+				if (Physics.Raycast(ray, out hit, rayDistance, interactLayers))
 					CurrentCollider = hit.collider;
 				else
                     DisposeCollider();
+
+
 
                 //Debug.DrawLine(Transform.position, Transform.position + (Transform.forward * rayDistance), Color.blue);
 
@@ -127,6 +130,17 @@ public class PlayerCamera : MonoBehaviour
 			StopCoroutine(visionCoroutine);
 			visionCoroutine = null;
 		}
+	}
+
+	public void LockVision()
+	{
+		isVisionBlocked = true;
+
+		DisposeCollider();
+	}
+	public void UnLockVision()
+	{
+		isVisionBlocked = false;
 	}
 	#endregion
 
@@ -157,41 +171,5 @@ public class PlayerCamera : MonoBehaviour
 			shakeCoroutine = null;
 		}
 	}
-	#endregion
-
-	public void LockVision()
-	{
-		isVisionBlocked = true;
-
-		DisposeCollider();
-	}
-	public void UnLockVision()
-	{
-		isVisionBlocked = false;
-	}
+    #endregion
 }
-//private void Update()
-//{
-//	if (isVisionBlocked == false)
-//		if (Input.GetKey(KeyCode.E))//need cash
-//		{
-//			Debug.LogError("+++");
-//			Interact();
-//		}
-//}
-
-//private void Interact()
-//{
-//	if (currentCollider != null)
-//	{
-//		IInteractable interaction = currentCollider.GetComponent<IInteractable>();
-//		if (interaction != null)
-//		{
-//			interaction.Interact();
-//		}
-//		else
-//		{
-//			Debug.LogError("Nelza");
-//		}
-//	}
-//}

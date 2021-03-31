@@ -10,27 +10,46 @@ public class PlayerUI : MonoBehaviour
 		windowsUI.itemInspectorWindow.Setup(player.itemInspector);
 
 		windowsUI.backpackWindow.primaryContainer.SubscribeInventory(player.Inventory);
-		
-
 		windowsUI.backpackWindow.onBack += CloseInventory;
-		controlUI.buttonInventory.onClicked.AddListener(OpenInventory);//скрыть
 
-		//controlUI.buttonPickUp.onClicked.AddListener(InspectorLook);
 
-		//controlUI.buttonSpeedUp.onPressed.AddListener(() => { speedUp = true; });
-		//controlUI.buttonSpeedUp.onUnPressed.AddListener(() => { currentSpeed = maxWalkSpeed; speedUp = false; });
+		controlUI.buttonOpenRadialMenu.onPressed += OpenRadialMenu;
+		controlUI.buttonCloseRadialMenu.onPressed += CloseRadialMenu;
 
-		//controlUI.endurance.Setup(player.stats.Endurance);
+
+        //controlUI.buttonPickUp.onClicked.AddListener(InspectorLook);
+
+        //controlUI.buttonSpeedUp.onPressed.AddListener(() => { speedUp = true; });
+        //controlUI.buttonSpeedUp.onUnPressed.AddListener(() => { currentSpeed = maxWalkSpeed; speedUp = false; });
+
+        //controlUI.endurance.Setup(player.stats.Endurance);
+    }
+
+
+
+	public void OpenRadialMenu()
+    {
+		GeneralAvailability.Player.Lock();
+		controlUI.buttonCloseRadialMenu.OpenWindow();
+		controlUI.radialMenu.OpenRadialMenu();
+	}
+	public void CloseRadialMenu()
+    {
+		GeneralAvailability.Player.UnLock();
+		controlUI.radialMenu.CloseRadialMenu();
+		controlUI.buttonCloseRadialMenu.CloseWindow();
 	}
 
-	private void OpenInventory()
+	public void OpenInventory()
 	{
-		Player.Instance.Lock();
+		GeneralAvailability.Player.Lock();
 		windowsUI.backpackWindow.ShowBackpackInspector();
 	}
-	private void CloseInventory()
+	public void CloseInventory()
 	{
-		Player.Instance.UnLock();
+		GeneralAvailability.Player.UnLock();
 		windowsUI.backpackWindow.HideBackpack();
+
+		CloseRadialMenu();
 	}
 }

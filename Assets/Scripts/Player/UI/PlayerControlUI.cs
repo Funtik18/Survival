@@ -10,9 +10,12 @@ public class PlayerControlUI : MonoBehaviour
 	public TargetPoint targetPoint;
 	public Joystick joystickMove;
 	public FixedTouchField fieldLook;
+	public RadialMenu radialMenu;
 
 	[Title("Buttons")]
-	public FixedTouchButton buttonInventory;
+	public PointerTouch buttonOpenRadialMenu;
+	public PointerTouch buttonCloseRadialMenu;
+	[Space]
 	public FixedTouchButton buttonPickUp;
 	public FixedTouchButton buttonSearch;
 	public FixedTouchButton buttonSpeedUp;

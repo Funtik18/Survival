@@ -27,12 +27,12 @@ public class ContainerObject : WorldObject
 
         if (isInspected)
         {
-			GeneralAvailability.ButtonSearch.onClicked.AddListener(OpenContainer);
+			GeneralAvailability.ButtonSearch.onClicked += OpenContainer;
         }
         else
         {
-			GeneralAvailability.ButtonSearch.onPressed.AddListener(StartHold);
-			GeneralAvailability.ButtonSearch.onUnPressed.AddListener(StopHold);
+			GeneralAvailability.ButtonSearch.onPressed += StartHold;
+			GeneralAvailability.ButtonSearch.onUnPressed += StopHold;
         }
 		GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.data.name).ShowToolTip();
     }
@@ -43,12 +43,12 @@ public class ContainerObject : WorldObject
 
         if (isInspected)
         {
-			GeneralAvailability.ButtonSearch.onClicked.RemoveListener(OpenContainer);
+			GeneralAvailability.ButtonSearch.onClicked -= OpenContainer;
         }
         else
         {
-			GeneralAvailability.ButtonSearch.onPressed.RemoveListener(StartHold);
-			GeneralAvailability.ButtonSearch.onUnPressed.RemoveListener(StopHold);
+			GeneralAvailability.ButtonSearch.onPressed -= StartHold;
+			GeneralAvailability.ButtonSearch.onUnPressed -= StopHold;
         }
     }
 
