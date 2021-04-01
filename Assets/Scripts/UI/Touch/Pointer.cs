@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// Используется для кастомного взаимодействия с ui
 /// </summary>
-public class Pointer : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
+public class Pointer : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     protected bool isEnable = true;
     public virtual bool IsEnable
@@ -16,21 +16,27 @@ public class Pointer : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IP
 
     public bool IsPressed { get; protected set; }
 
-    public UnityAction onHoverEnter;
-    public UnityAction onHoverExit;
-
-    public UnityAction onPressed;
-    public UnityAction onUnPressed;
-    public UnityAction onClicked;
+    public UnityEvent onPressed;
+    public UnityEvent onUnPressed;
+    public UnityEvent onClicked;
 
     public virtual void OnPointerDown(PointerEventData eventData)
+    {
+        PressButton();
+    }
+    public virtual void OnPointerUp(PointerEventData eventData)
+    {
+        UnPressButton();
+    }
+
+    public void PressButton()
     {
         if (!IsEnable) return;
 
         IsPressed = true;
         onPressed?.Invoke();
     }
-    public virtual void OnPointerUp(PointerEventData eventData)
+    public void UnPressButton()
     {
         if (!IsEnable) return;
 
@@ -43,17 +49,21 @@ public class Pointer : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IP
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void AddPressListener(UnityAction action)
     {
-        if (!IsEnable) return;
-
-        onHoverEnter?.Invoke();
+        onPressed.AddListener(action);
+    }
+    public void RemovePressListener(UnityAction action)
+    {
+        onPressed.RemoveListener(action);
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public void AddUnPressListener(UnityAction action)
     {
-        if (!IsEnable) return;
-
-        onHoverExit?.Invoke();
+        onUnPressed.AddListener(action);
+    }
+    public void RemoveUnPressListener(UnityAction action)
+    {
+        onUnPressed.RemoveListener(action);
     }
 }

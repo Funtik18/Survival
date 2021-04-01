@@ -6,6 +6,7 @@ using Sirenix.OdinInspector;
 
 public class WindowsUI : MonoBehaviour
 {
+	public WindowBuild buildingWindow;
 	public WindowItemInspector itemInspectorWindow;
 	public WindowBackpack backpackWindow;
 

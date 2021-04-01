@@ -8,23 +8,33 @@ public class PIRadialOption : MonoBehaviour
 {
     public UnityAction onChoosen;
 
+    [HideInInspector] public RadialOptionData Data { get; private set; }
+
     [SerializeField] private PointerButton button;
     [SerializeField] private Image icon;
 
     private void Awake()
     {
-        button.onPressed = Choosen;
+        button.AddPressListener(Choosen);
     }
 
-    public void SetIcon(Sprite sprite)
+    public void SetData(RadialOptionData data)
     {
-        icon.enabled = sprite == null ? false : true;
+        this.Data = data;
 
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        Sprite sprite = Data == null ? null : Data.scriptableData.optionIcon;
+        icon.enabled = sprite == null ? false : true;
         icon.sprite = sprite;
     }
 
     public void Choosen()
     {
         onChoosen?.Invoke();
+        Data.EventInvoke();
     }
 }

@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
 	public PlayerStats stats;
 
 	public PlayerInventory Inventory;
+	public Build Build;
+
 	public PlayerController playerController;
 	public PlayerCamera playerCamera;
 	public PlayerUI playerUI;
@@ -49,6 +51,7 @@ public class Player : MonoBehaviour
 	private void Awake()
 	{
 		Inventory.Init();
+		Build.Init(this);
 
 		playerUI.Setup(this);
 

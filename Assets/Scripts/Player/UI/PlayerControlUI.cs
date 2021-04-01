@@ -13,12 +13,8 @@ public class PlayerControlUI : MonoBehaviour
 	public RadialMenu radialMenu;
 
 	[Title("Buttons")]
-	public PointerTouch buttonOpenRadialMenu;
-	public PointerTouch buttonCloseRadialMenu;
-	[Space]
-	public FixedTouchButton buttonPickUp;
-	public FixedTouchButton buttonSearch;
-	public FixedTouchButton buttonSpeedUp;
+	public InteractionButton buttonInteraction;
+	public CustomButton buttonSpeedUp;
 
 	#region Lock
 	public void LockControl()

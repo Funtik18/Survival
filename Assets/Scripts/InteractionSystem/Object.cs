@@ -64,6 +64,19 @@ public abstract class WorldObject : Object, IPerceptible
 	public virtual bool IsObservable => Collider.enabled;
 	public virtual bool IsInteractable => Collider.enabled;
 
+	private InteractionButton button;
+	protected InteractionButton Button
+	{
+		get
+		{
+			if (button == null)
+			{
+				button = GeneralAvailability.ButtonInteraction;
+			}
+			return button;
+		}
+	}
+
 	public virtual void StartObserve()
 	{
 		GeneralAvailability.TargetPoint.ShowToolTip();

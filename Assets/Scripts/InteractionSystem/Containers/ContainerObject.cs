@@ -23,32 +23,35 @@ public class ContainerObject : WorldObject
 	{
 		base.StartObserve();
 
-		GeneralAvailability.ButtonSearch.IsEnable = true;
-
         if (isInspected)
         {
-			GeneralAvailability.ButtonSearch.onClicked += OpenContainer;
+            Button.SetIconOnInteraction();
+            Button.pointer.AddPressListener(OpenContainer);
         }
         else
         {
-			GeneralAvailability.ButtonSearch.onPressed += StartHold;
-			GeneralAvailability.ButtonSearch.onUnPressed += StopHold;
+            Button.SetIconOnSearch();
+            Button.pointer.AddPressListener(StartHold);
+            Button.pointer.AddUnPressListener(StopHold);
         }
-		GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.data.name).ShowToolTip();
+
+        Button.OpenButton();
+
+        GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.data.name).ShowToolTip();
     }
     public override void EndObserve()
     {
         base.EndObserve();
-		GeneralAvailability.ButtonSearch.IsEnable = false;
+        Button.CloseButton();
 
         if (isInspected)
         {
-			GeneralAvailability.ButtonSearch.onClicked -= OpenContainer;
+            Button.pointer.RemovePressListener(OpenContainer);
         }
         else
         {
-			GeneralAvailability.ButtonSearch.onPressed -= StartHold;
-			GeneralAvailability.ButtonSearch.onUnPressed -= StopHold;
+            Button.pointer.RemovePressListener(StartHold);
+            Button.pointer.RemoveUnPressListener(StopHold);
         }
     }
 
@@ -77,7 +80,7 @@ public class ContainerObject : WorldObject
             yield return null;
         }
 
-        GeneralAvailability.ButtonSearch.UnPressButton();
+        Button.pointer.UnPressButton();
 
         isInspected = true;
 

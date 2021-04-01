@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Sirenix.OdinInspector;
+using UnityEngine.Events;
 
-public class PlayerBuilding : MonoBehaviour
+[System.Serializable]
+public class Build
 {
-	[SerializeField] private PlayerCamera playerCamera;
-	[Space]
-	[AssetList]
-	[SerializeField] private Building buildingPrefab;
+	public UnityAction<BuildingObject> onStartBuild;
+	public UnityAction onEndBuild;
+
 
 	[SerializeField] private Material acceptMaterial;
 	[SerializeField] private Material rejectMaterial;
@@ -20,6 +21,12 @@ public class PlayerBuilding : MonoBehaviour
 	[SerializeField] private float rayUpDistance = 1f;
 	[Range(-90, 90)]
 	[SerializeField] private float anglePlacement = 60f;
+
+	private Player player;
+	private PlayerCamera playerCamera;
+
+	private BuildingObject currentBuilding;
+	private Transform currentTransform => currentBuilding.transform;
 
 	private Coroutine buildCoroutine = null;
 	public bool IsBuildingProccess => buildCoroutine != null;
@@ -39,45 +46,64 @@ public class PlayerBuilding : MonoBehaviour
 	private float lastAngle;
     #endregion
 
-    private void Awake()
+    public void Init(Player player)
     {
+		this.player = player;
+		this.playerCamera = player.playerCamera;
 		collidersIntersects = playerCamera.collidersIntersects;
 	}
 
-
-    private void Update()
+	public void BuildBuilding(BuildingObject building)
 	{
-		if (Input.GetKeyDown(KeyCode.F))
-		{
-			StartBuild();
-		}
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (IsBuildingProccess && IsCanBuild)
-            {
-				StopBuild();
+		if (building == null) return;
 
-				Transform obj = Instantiate(buildingPrefab).transform;
-				obj.position = lastPosition;
-				obj.rotation = lastRotation;
-			}
+		playerCamera.LockVision();
+
+		currentBuilding = CreateBuilding(building);
+
+		onStartBuild?.Invoke(currentBuilding);
+
+		StartBuild();
+	}
+	public void PlacementBuilding()
+    {
+		if (IsBuildingProccess && IsCanBuild)
+		{
+			StopBuild();
+
+			currentTransform.position = lastPosition;
+			currentTransform.rotation = lastRotation;
+
+			currentBuilding.SetMaterialOnBasic();
 		}
 	}
 
+	private BuildingObject CreateBuilding(BuildingObject building)
+    {
+		BuildingObject buildingCreated = GameObject.Instantiate(building);
+		return buildingCreated;
+	}
+	private void Dispose()
+    {
+		if (currentBuilding != null)
+        {
+			GameObject.Destroy(currentBuilding.gameObject);
+        }
+    }
 
 	#region Building
 	private void StartBuild()
 	{
 		if (!IsBuildingProccess)
 		{
-			buildCoroutine = StartCoroutine(Build());
+			buildCoroutine = player.StartCoroutine(Building());
         }
         else
         {
 			StopBuild();
 		}
 	}
-	private IEnumerator Build()
+	private IEnumerator Building()
 	{
 		while (true)
 		{
@@ -101,9 +127,20 @@ public class PlayerBuilding : MonoBehaviour
 	{
 		if (IsBuildingProccess)
 		{
-			StopCoroutine(buildCoroutine);
+			player.StopCoroutine(buildCoroutine);
 			buildCoroutine = null;
+
+			playerCamera.UnLockVision();
+
+			onEndBuild?.Invoke();
 		}
+	}
+
+	public void BreakBuild()
+    {
+		StopBuild();
+
+		Dispose();
 	}
 	#endregion
 
@@ -112,11 +149,10 @@ public class PlayerBuilding : MonoBehaviour
     {
 		IsCanBuild = trigger;
 
-        for (int i = 0; i < buildingPrefab.filters.Count; i++)
-        {
-			Mesh mesh = buildingPrefab.filters[i].sharedMesh;
-			Graphics.DrawMesh(mesh, lastPosition, lastRotation, IsCanBuild ? acceptMaterial : rejectMaterial, 0);
-		}
+		currentTransform.position = lastPosition;
+		currentTransform.rotation = lastRotation;
+
+		currentBuilding.SetMaterial(IsCanBuild ? acceptMaterial : rejectMaterial);
 	}
 
 
@@ -129,7 +165,7 @@ public class PlayerBuilding : MonoBehaviour
 			lastRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
 			lastAngle = 90 - (Vector3.Angle(Vector3.up, hit.normal));
 
-			if (CheckPlacementAngle(lastAngle))
+			if (CheckPlacementAngle(lastAngle) && !currentBuilding.IsIntersects)
 				DrawMesh(true);
             else
 				DrawMesh(false);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FixedMenuTouchButton : PointerTouch
+public class BuildingScriptableData : ScriptableObject
 {
- 
+    
 }

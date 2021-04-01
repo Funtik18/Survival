@@ -23,28 +23,22 @@ public class PIRadialMenu : MonoBehaviour
 
     [SerializeField] private List<PIRadialOption> options = new List<PIRadialOption>();
 
-    public void Setup(RadialOptionData[] optionsData)
+    public void Setup(List<RadialOptionData> optionsData)
     {
-        int count = 0;
-        for (int i = 0; i < optionsData.Length; i++)
-        {
-            if (!optionsData[i].IsNull)
-            {
-                count++;
-            }
-        }
-
-        optionCount = count;
+        optionCount = optionsData.Count;
         UpdateMenu();
 
-        for (int i = 0; i < options.Count; i++)
+        for (int i = 0; i < optionCount; i++)
         {
-            options[i].onChoosen += optionsData[i].EventInvoke;
-            options[i].SetIcon(optionsData[i].optionIcon);
+            RadialOptionData data = optionsData[i];
+            options[i].SetData(data);
+
+            if (data.isEnd)
+                options[i].onChoosen += RadialMenu.Instance.CloseRadialMenu;
+            else
+                options[i].onChoosen += CloseMenu;
         }
     }
-
-
     private void GetAllOptions()
     {
         foreach (Transform child in transform)
@@ -52,6 +46,7 @@ public class PIRadialMenu : MonoBehaviour
             options.Add(child.GetComponent<PIRadialOption>());
         }
     }
+
     [Button]
     private void DisposeOptions()
     {

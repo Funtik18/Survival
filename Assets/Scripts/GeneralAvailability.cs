@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GeneralAvailability : MonoBehaviour
 {
+    //Player
     private static Player player;
     public static Player Player
     {
@@ -30,7 +31,21 @@ public class GeneralAvailability : MonoBehaviour
         }
     }
 
+    //Build
+    private static Build build;
+    public static Build Build
+    {
+        get
+        {
+            if(build == null)
+            {
+                build = Player.Build;
+            }
+            return build;
+        }
+    }
 
+    //Inspector
     private static ItemInspector inspector;
     public static ItemInspector Inspector
     {
@@ -88,27 +103,14 @@ public class GeneralAvailability : MonoBehaviour
         }
     }
 
-
-
-    private static FixedTouchButton buttonPickUp;
-    public static FixedTouchButton ButtonPickUp
+    private static InteractionButton buttonInteraction;
+    public static InteractionButton ButtonInteraction
     {
         get
         {
-            if (buttonPickUp == null)
-                buttonPickUp = Player.playerUI.controlUI.buttonPickUp;
-            return buttonPickUp;
-        }
-    }
-
-    private static FixedTouchButton buttonSearch;
-    public static FixedTouchButton ButtonSearch
-    {
-        get
-        {
-            if (buttonSearch == null)
-                buttonSearch = Player.playerUI.controlUI.buttonSearch;
-            return buttonSearch;
+            if (buttonInteraction == null)
+                buttonInteraction = Player.playerUI.controlUI.buttonInteraction;
+            return buttonInteraction;
         }
     }
 }

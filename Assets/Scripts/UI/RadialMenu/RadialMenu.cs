@@ -7,53 +7,97 @@ using UnityEngine.Events;
 
 public class RadialMenu : MonoBehaviour
 {
-    [SerializeField] private PIRadialMenu primaryMenu;
+    private static RadialMenu instance;
+    public static RadialMenu Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+                instance = FindObjectOfType<RadialMenu>();
+            }
+            return instance;
+        }
+    }
 
-    [ListDrawerSettings(HideAddButton = true, HideRemoveButton = true, ShowIndexLabels = true)]
-    public RadialOptionData[] options = new RadialOptionData[10];
+    [SerializeField] private Menus menus;
+
+    [SerializeField] private CustomButton buttonOpen;
+    [SerializeField] private CustomButton buttonClose;
 
     private void Awake()
     {
-        primaryMenu.Setup(options);
+        menus.Setup();
+
+        buttonOpen.pointer.AddPressListener(OpenRadialMenu);
+        buttonClose.pointer.AddPressListener(CloseRadialMenu);
     }
-
-
 
     [Button]
     public void OpenRadialMenu()
     {
-        primaryMenu.OpenMenu();
+        GeneralAvailability.Player.Lock();
+        buttonClose.OpenButton();
+        menus.menues[0].Open();//primary menu
     }
     [Button]
     public void CloseRadialMenu()
     {
-        primaryMenu.CloseMenu();
+        menus.Close();
+        buttonClose.CloseButton();
+        GeneralAvailability.Player.UnLock();
     }
-}
-[System.Serializable]
-public class RadialOptionData
-{
-    [PreviewField(Alignment = ObjectFieldAlignment.Left)]
-    public Sprite optionIcon;
-    public UnityEvent unityEvent;
 
-    public bool IsNull
+    [System.Serializable]
+    public class Menus 
     {
-        get
+        public List<Menu> menues = new List<Menu>();
+
+        [Button]
+        public void Setup()
         {
-            for (int i = 0; i < unityEvent.GetPersistentEventCount(); i++)
+            for (int i = 0; i < menues.Count; i++)
             {
-                if (unityEvent.GetPersistentTarget(i) != null)
-                {
-                    return false;
-                }
+                menues[i].Setup();
             }
-            return true;
+        }
+
+        public void Close()
+        {
+            for (int i = 0; i < menues.Count; i++)
+            {
+                menues[i].Close();
+            }
         }
     }
-
-    public void EventInvoke()
+    [System.Serializable]
+    public class Menu 
     {
-        unityEvent?.Invoke();
+        public PIRadialMenu menu;
+        [ListDrawerSettings(HideAddButton = true, ShowIndexLabels = true)]
+        public List<RadialOptionData> options = new List<RadialOptionData>();
+
+        public void Setup()
+        {
+            menu.Setup(options);
+        }
+
+        [Button]
+        private void AddOption()
+        {
+            options.Add(null);
+        }
+
+
+        [Button]
+        public void Open()
+        {
+            menu.OpenMenu();
+        }
+        [Button]
+        public void Close()
+        {
+            menu.CloseMenu();
+        }
     }
 }

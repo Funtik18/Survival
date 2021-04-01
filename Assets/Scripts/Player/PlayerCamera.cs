@@ -163,6 +163,8 @@ public class PlayerCamera : MonoBehaviour
 	{
 		IsVisionBlocked = true;
 
+		GeneralAvailability.TargetPoint.HidePoint();
+
 		DisposeCollider();
 	}
 	public void UnLockVision()

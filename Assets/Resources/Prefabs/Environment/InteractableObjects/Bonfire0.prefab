@@ -127,7 +127,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -4827,7 +4827,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -9554,7 +9554,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -14241,7 +14241,6 @@ GameObject:
   - component: {fileID: 6608333490451829777}
   - component: {fileID: 6608333490441294775}
   - component: {fileID: 6608333490440663373}
-  - component: {fileID: 6608333490441823967}
   m_Layer: 0
   m_Name: FireLight
   m_TagString: Untagged
@@ -14270,7 +14269,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6608333490452092375}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
@@ -14340,20 +14339,6 @@ LensFlare:
     serializedVersion: 2
     m_Bits: 6
   m_Directional: 0
---- !u!114 &6608333490441823967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6608333490452092375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b59ba2dd37a24045bbb1e4c7a2d96fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minIntensity: 1.5
-  maxIntensity: 2.5
 --- !u!1 &7986179049098056019
 GameObject:
   m_ObjectHideFlags: 0
@@ -14366,7 +14351,8 @@ GameObject:
   - component: {fileID: 7986179049097252179}
   - component: {fileID: 7986179049096122259}
   - component: {fileID: 7986179049098056108}
-  - component: {fileID: 6702973592513474889}
+  - component: {fileID: 6257519062031983793}
+  - component: {fileID: 5036798095164836453}
   m_Layer: 0
   m_Name: Bonfire0
   m_TagString: Untagged
@@ -14381,8 +14367,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7986179049098056019}
-  m_LocalRotation: {x: 1.0658141e-14, y: -0.91793174, z: 8.526513e-14, w: 0.39673835}
-  m_LocalPosition: {x: -33.974804, y: -0.36463258, z: 149.30396}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6505143314459198694}
@@ -14390,7 +14376,7 @@ Transform:
   - {fileID: 6608333490451797497}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -133.251, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7986179049097252179
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -14449,9 +14435,25 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.244071, y: 0.14114603, z: 1.315939}
-  m_Center: {x: -0.06, y: 0.07027006, z: 0}
---- !u!114 &6702973592513474889
+  m_Size: {x: 1.244071, y: 0.28228986, z: 1.315939}
+  m_Center: {x: 0, y: 0.14084196, z: 0}
+--- !u!54 &6257519062031983793
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7986179049098056019}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &5036798095164836453
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14460,10 +14462,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 7986179049098056019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1cbb52e37775544f8274553d8cc0520, type: 3}
+  m_Script: {fileID: 11500000, guid: 2aec9280c1bc3a64899ed6c042178c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   coll: {fileID: 7986179049098056108}
-  filters:
-  - {fileID: 7986179049097252179}
-  - {fileID: 7919917450531310403}
+  ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+  renderers:
+  - {fileID: 7986179049096122259}
+  - {fileID: 5336138546279808905}
+  particles:
+  - {fileID: 6608333490433524371}
+  - {fileID: 6608333490433518997}
+  - {fileID: 6608333490433450445}
+  bonfireLight: {fileID: 6608333490441294775}
+  minIntensity: 1.5
+  maxIntensity: 2.5
