@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class BuildingObject : WorldObject
 {
+    [SerializeField] private bool isPlacement = false;
+    public bool IsPlacement { get => isPlacement; set => isPlacement = value; }
+
+    [SerializeField] private BuildingScriptableData data;
+
     [SerializeField] private LayerMask ignoreLayers;
 
     [SerializeField] private List<MeshRenderer> renderers = new List<MeshRenderer>();
@@ -14,7 +19,7 @@ public class BuildingObject : WorldObject
 
     public bool IsIntersects => collidersIntersects.Count > 0;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         for (int i = 0; i < renderers.Count; i++)
         {
@@ -24,6 +29,8 @@ public class BuildingObject : WorldObject
 
     private void OnTriggerEnter(Collider other)
     {
+        if (IsPlacement) return;
+
         if (!collidersIntersects.Contains(other))
         {
             if(((1 << other.gameObject.layer) & ignoreLayers) == 0)
@@ -35,6 +42,8 @@ public class BuildingObject : WorldObject
     }
     private void OnTriggerExit(Collider other)
     {
+        if (IsPlacement) return;
+
         if (collidersIntersects.Contains(other))
         {
             collidersIntersects.Remove(other);
@@ -54,14 +63,26 @@ public class BuildingObject : WorldObject
         {
             renderers[i].sharedMaterial = materialsBasic[i];
         }
+
+        IsPlacement = true;
     }
 
 
     public override void StartObserve()
     {
-        base.StartObserve();
-        Button.SetIconOnInteraction();
-        Button.OpenButton();
-        //GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.information.name).ShowToolTip();
+        if (IsPlacement)
+        {
+            base.StartObserve();
+            Button.SetIconOnInteraction();
+            Button.OpenButton();
+
+            GeneralAvailability.TargetPoint.SetToolTipText(data.name).ShowToolTip();
+        }
+    }
+
+    public override void EndObserve()
+    {
+        base.EndObserve();
+        Button.CloseButton();
     }
 }

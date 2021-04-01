@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingScriptableData : ScriptableObject
+[CreateAssetMenu(fileName = "BuildingScriptableData", menuName = "Buildings/Building")]
+public class BuildingScriptableData : ObjectScriptableData
 {
     
 }

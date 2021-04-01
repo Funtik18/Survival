@@ -14353,7 +14353,7 @@ GameObject:
   - component: {fileID: 7986179049098056108}
   - component: {fileID: 6257519062031983793}
   - component: {fileID: 5036798095164836453}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bonfire0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14466,6 +14466,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coll: {fileID: 7986179049098056108}
+  isPlacement: 0
+  data: {fileID: 11400000, guid: ca65d2aa580f68f4391ac4daa7be488f, type: 2}
   ignoreLayers:
     serializedVersion: 2
     m_Bits: 1024

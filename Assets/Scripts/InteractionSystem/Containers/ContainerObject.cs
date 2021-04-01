@@ -37,22 +37,18 @@ public class ContainerObject : WorldObject
 
         Button.OpenButton();
 
-        GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.data.name).ShowToolTip();
+        GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.name).ShowToolTip();
     }
     public override void EndObserve()
     {
         base.EndObserve();
+
+        StopHold();
         Button.CloseButton();
 
-        if (isInspected)
-        {
-            Button.pointer.RemovePressListener(OpenContainer);
-        }
-        else
-        {
-            Button.pointer.RemovePressListener(StartHold);
-            Button.pointer.RemoveUnPressListener(StopHold);
-        }
+        Button.pointer.RemovePressListener(OpenContainer);
+        Button.pointer.RemovePressListener(StartHold);
+        Button.pointer.RemoveUnPressListener(StopHold);
     }
 
 	private void StartHold()
@@ -69,7 +65,7 @@ public class ContainerObject : WorldObject
         GeneralAvailability.Loader.ShowLoader();
 
         float startTime = Time.time;
-        float maxTime = scriptableData.data.time;
+        float maxTime = scriptableData.time;
         float currentTime = Time.time - startTime;
         while (currentTime <= maxTime)
         {

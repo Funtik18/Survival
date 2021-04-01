@@ -35,7 +35,7 @@ public class ItemInspectorUI : MonoBehaviour
 
 		if(currentItem != null)
 		{
-			ItemData data = currentItem.ScriptableItem.information;
+			ItemScriptableData data = currentItem.ScriptableItem;
 
 			itemTittle.text = data.name;
 			itemDescription.text = data.description;

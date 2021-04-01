@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BonfireBuilding : BuildingObject
 {
+    [SerializeField] private bool isEnableOnAwake = false;
+
     [SerializeField] private List<ParticleSystem> particles = new List<ParticleSystem>();
     [Space]
     [SerializeField] private Light bonfireLight;
@@ -15,17 +17,25 @@ public class BonfireBuilding : BuildingObject
     private bool isEnable = false;
     private float randomValue;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        if (isEnableOnAwake)
+            EnableParticles();
+    }
+
     private void Update()
     {
         if (isEnable)
         {
-            randomValue = Random.Range(0.0f, 65000f);
             bonfireLight.intensity = Mathf.Lerp(minIntensity, maxIntensity, Mathf.PerlinNoise(randomValue, Time.time));
         }
     }
 
     public void EnableParticles()
     {
+        randomValue = Random.Range(0.0f, 65000f);
+
         for (int i = 0; i < particles.Count; i++)
         {
             particles[i].Play();
@@ -42,5 +52,25 @@ public class BonfireBuilding : BuildingObject
         {
             particles[i].Stop();
         }
+    }
+
+    public override void StartObserve()
+    {
+        Button.pointer.AddPressListener(EnableDisable);
+        base.StartObserve();
+
+    }
+    public override void EndObserve()
+    {
+        base.EndObserve();
+        Button.pointer.RemovePressListener(EnableDisable);
+    }
+
+    private void EnableDisable()
+    {
+        if (isEnable)
+            DisableParticles();
+        else
+            EnableParticles();
     }
 }

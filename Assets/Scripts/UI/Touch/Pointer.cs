@@ -66,4 +66,13 @@ public class Pointer : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         onUnPressed.RemoveListener(action);
     }
+
+    public void AddClickListener(UnityAction action)
+    {
+        onClicked.AddListener(action);
+    }
+    public void RemoveClickListener(UnityAction action)
+    {
+        onClicked.RemoveListener(action);
+    }
 }

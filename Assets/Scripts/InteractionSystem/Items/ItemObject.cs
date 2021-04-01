@@ -4,7 +4,6 @@ public class ItemObject : WorldObject
 {
 	[SerializeField] private ItemScriptableData scriptableData;
 	[HideInInspector] public Item item;
-	public ItemData ItemData => item.ItemData;
 
 	private void Awake()
     {
@@ -19,7 +18,7 @@ public class ItemObject : WorldObject
 		Button.pointer.AddPressListener(Interact);
 		Button.SetIconOnPickUp();
 		Button.OpenButton();
-		GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.information.name).ShowToolTip();
+		GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.name).ShowToolTip();
 	}
     public override void EndObserve()
     {

@@ -27,7 +27,7 @@ public class WindowItemInspector : WindowUI
         onLeaveIt += inspector.ItemLeave;
     }
 
-    public void SetInformation(ItemData data)
+    public void SetInformation(ItemScriptableData data)
 	{
         itemTittle.text = data.name;
         itemDescription.text = data.description;

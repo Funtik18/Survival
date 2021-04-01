@@ -145,7 +145,7 @@ public class Build
 	#endregion
 
 
-	private void DrawMesh(bool trigger)
+	private void Draw(bool trigger)
     {
 		IsCanBuild = trigger;
 
@@ -166,9 +166,9 @@ public class Build
 			lastAngle = 90 - (Vector3.Angle(Vector3.up, hit.normal));
 
 			if (CheckPlacementAngle(lastAngle) && !currentBuilding.IsIntersects)
-				DrawMesh(true);
+				Draw(true);
             else
-				DrawMesh(false);
+				Draw(false);
 
 			return true;
 		}

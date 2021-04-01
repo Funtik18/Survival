@@ -8119,9 +8119,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7731010911795585639}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &8043620607206107827
 MonoBehaviour:
@@ -8139,6 +8139,7 @@ MonoBehaviour:
   pointer: {fileID: 6239836851386451599}
   icon: {fileID: 1340337524023325494}
   interaction: {fileID: 21300000, guid: 733c91660df2a61459e38a20d2c0d4d9, type: 3}
+  search: {fileID: 0}
   pickUp: {fileID: 21300000, guid: 8f4f77a472ee30a4f85bd32ba05dcbd1, type: 3}
 --- !u!1 &8483104636971082856
 GameObject:

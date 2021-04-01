@@ -38,7 +38,7 @@ public class ContainerSlotUI : MonoBehaviour
 
 		if(!IsEmpty)
 		{
-			itemIcon.sprite = item.ScriptableItem.information.itemSprite;
+			itemIcon.sprite = item.ScriptableItem.itemSprite;
 		}
 	}
 
