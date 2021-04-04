@@ -16,5 +16,6 @@ MonoBehaviour:
   description: Just wooden stick.
   itemSprite: {fileID: 21300000, guid: 53e78cbc896497641bbd35a1b3ba869d, type: 3}
   model: {fileID: 7377232241679480192, guid: aa7eb1f4eaa471d4986cfe67c0203a06, type: 3}
-  isStackable: 0
-  maxStackSize: 1
+  weight: 0.25
+  isBreakable: 0
+  stackSize: 10

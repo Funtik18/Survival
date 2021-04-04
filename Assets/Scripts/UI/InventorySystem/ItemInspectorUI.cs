@@ -18,7 +18,7 @@ public class ItemInspectorUI : MonoBehaviour
 	[SerializeField] private ItemView3D view3D;
 
 	//cash
-	private Item currentItem;
+	private ContainerSlotUI currentSlot;
 
 	private void Awake()
 	{
@@ -29,13 +29,13 @@ public class ItemInspectorUI : MonoBehaviour
 		SetItem(null);
 	}
 
-	public void SetItem(Item item)
+	public void SetItem(ContainerSlotUI slot)
 	{
-		currentItem = item;
+		currentSlot = slot;
 
-		if(currentItem != null)
+		if(currentSlot != null && !currentSlot.IsEmpty)
 		{
-			ItemScriptableData data = currentItem.ScriptableItem;
+			ItemScriptableData data = currentSlot.item.itemData.scriptableData;
 
 			itemTittle.text = data.name;
 			itemDescription.text = data.description;
@@ -60,15 +60,14 @@ public class ItemInspectorUI : MonoBehaviour
 
 	private void Use()
     {
-		onUse?.Invoke(currentItem);
+		onUse?.Invoke(currentSlot.item);
 	}
 	private void Actions()
     {
-		onActions?.Invoke(currentItem);
+		onActions?.Invoke(currentSlot.item);
 	}
 	private void Drop()
     {
-		onDrop?.Invoke(currentItem);
-		SetItem(null);
+		onDrop?.Invoke(currentSlot.item);
 	}
 }

@@ -10,22 +10,54 @@ public class Inventory
     public UnityAction<List<Item>> onCollectionChanged;
 
     [ListDrawerSettings(ShowIndexLabels = true)]
-    [SerializeField] private List<ItemScriptableData> initItems = new List<ItemScriptableData>();
+    [SerializeField] private List<ItemData> initItems = new List<ItemData>();
     [HideInInspector] public List<Item> items = new List<Item>();
 
     public void Init()
     {
         for (int i = 0; i < initItems.Count; i++)
         {
-            AddItem(initItems[i]);
+            //AddItem(initItems[i]);
         }
     }
 
-    public bool AddItem(ItemScriptableData item)
+    public bool AddItem(ItemData itemData)
     {
-        if(item != null)
+        if(itemData != null)
         {
-            items.Add(new Item(item));
+            Item findedItem = items.FindLast((x) => itemData.scriptableData == x.itemData.scriptableData);
+
+            if(findedItem != null)//если нашёл тот же айтем
+            {
+                ItemData findedData = findedItem.itemData;
+
+                int findedDataMaxSize = findedData.scriptableData.stackSize;
+                if (findedData.CurrentStackSize < findedDataMaxSize) // если у айтема которого нашли есть свободное место
+                {
+                    int count = findedData.CurrentStackSize + itemData.CurrentStackSize;
+                    if (count <= findedDataMaxSize)
+                    {
+                        findedData.CurrentStackSize += itemData.CurrentStackSize;
+                    }
+                    else
+                    {
+                        findedData.CurrentStackSize = findedDataMaxSize;
+
+                        Item newItem = new Item(itemData);
+                        newItem.itemData.CurrentStackSize = count % findedDataMaxSize;
+                        items.Add(newItem);
+                    }
+                }
+                else//последний айтем полный
+                {
+                    items.Add(new Item(itemData));
+                }
+            }
+            else
+            {
+                items.Add(new Item(itemData));
+            }
+
             onCollectionChanged?.Invoke(items);
             return true;
         }

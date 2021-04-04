@@ -2,14 +2,14 @@
 
 public class ItemObject : WorldObject
 {
-	[SerializeField] private ItemScriptableData scriptableData;
+	[SerializeField] private ItemData itemData;
 	[HideInInspector] public Item item;
 
 	private void Awake()
     {
-		if (scriptableData == null) Debug.LogError("ItemError", this);
+		if (itemData == null) Debug.LogError("ItemError", this);
 
-		item = new Item(scriptableData);
+		item = new Item(itemData);
     }
 
     public override void StartObserve()
@@ -18,7 +18,7 @@ public class ItemObject : WorldObject
 		Button.pointer.AddPressListener(Interact);
 		Button.SetIconOnPickUp();
 		Button.OpenButton();
-		GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.name).ShowToolTip();
+		GeneralAvailability.TargetPoint.SetToolTipText(itemData.scriptableData.name).ShowToolTip();
 	}
     public override void EndObserve()
     {

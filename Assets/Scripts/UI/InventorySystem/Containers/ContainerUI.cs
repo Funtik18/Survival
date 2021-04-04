@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ContainerUI : MonoBehaviour
 {
-	public UnityAction<Item> onItemChoosen;
+	public UnityAction<ContainerSlotUI> onSlotChoosen;
 
 	[SerializeField] private ContainerGridUI grid;
 
@@ -12,7 +12,7 @@ public class ContainerUI : MonoBehaviour
 
     private void Awake()
     {
-        grid.onItemChoosen += ItemChoosen;
+        grid.onSlotChoosen += SlotChoosen;
     }
 
     public void SubscribeInventory(Inventory inventory)
@@ -31,8 +31,18 @@ public class ContainerUI : MonoBehaviour
         }
     }
 
-	private void ItemChoosen(Item item)
+    public void RefreshContainer()
     {
-		onItemChoosen?.Invoke(item);
+        grid.RefreshScroll();
+        RefreshSlots();
+    }
+    public void RefreshSlots()
+    {
+        grid.UnChooseLastSlot();
+    }
+
+    private void SlotChoosen(ContainerSlotUI slot)
+    {
+		onSlotChoosen?.Invoke(slot); 
 	}
 }

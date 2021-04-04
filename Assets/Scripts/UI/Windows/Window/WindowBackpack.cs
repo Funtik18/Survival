@@ -25,15 +25,15 @@ public class WindowBackpack : WindowUI
 
 	public void ShowBackpackInspector()
     {
-		primaryContainer.onItemChoosen = itemInspector.SetItem;//события для осмотра предмета
+		primaryContainer.onSlotChoosen = itemInspector.SetItem;//события для осмотра предмета
 
 		OpenItemInspector();
 		ShowWindow();
 	}
 	public void ShowBackpackWithContainer()
     {
-		primaryContainer.onItemChoosen = (x) => ItemShift(primaryContainer, secondaryContainer, x);
-		secondaryContainer.onItemChoosen = (x) => ItemShift(secondaryContainer, primaryContainer, x);
+		primaryContainer.onSlotChoosen = (x) => ItemShift(primaryContainer, secondaryContainer, x.item);
+		secondaryContainer.onSlotChoosen = (x) => ItemShift(secondaryContainer, primaryContainer, x.item);
 
 		OpenSecondaryContainer();
 		ShowWindow();
@@ -43,7 +43,9 @@ public class WindowBackpack : WindowUI
         if (itemInspector.gameObject.activeSelf)
         {
 			itemInspector.SetItem(null);
-        }else if (secondaryContainer.gameObject.activeSelf)
+			primaryContainer.RefreshContainer();
+		}
+		else if (secondaryContainer.gameObject.activeSelf)
         {
 			secondaryContainer.UnSubscribeInventory();
 		}
@@ -68,15 +70,32 @@ public class WindowBackpack : WindowUI
     {
         if (x != null)
         {
-            to.currentInventory.AddItem(x.ScriptableItem);
+            to.currentInventory.AddItem(x.itemData);
             from.currentInventory.RemoveItem(x);
         }
     }
 
     private void DropItem(Item item)
     {
-        Player.Instance.Inventory.RemoveItem(item);
-    }
+		ItemData itemData = item.itemData;
+		if(itemData.CurrentStackSize > 1)
+        {
+			if(itemData.CurrentStackSize > 4)
+            {
+				GeneralAvailability.ExchangerWindow.SetItem(item);
+            }
+            else
+            {
+				itemData.CurrentStackSize--;
+            }
+		}
+        else
+        {
+			GeneralAvailability.PlayerInventory.RemoveItem(item);
+			primaryContainer.RefreshSlots();
+			itemInspector.SetItem(null);
+		}
+	}
 
 	private void Back()
     {

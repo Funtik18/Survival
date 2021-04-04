@@ -80,6 +80,17 @@ public class GeneralAvailability : MonoBehaviour
         }
     }
 
+    private static WindowExchanger exchangerWindow;
+    public static WindowExchanger ExchangerWindow
+    {
+        get
+        {
+            if (exchangerWindow == null)
+                exchangerWindow = Player.playerUI.windowsUI.exchangerWindow;
+            return exchangerWindow;
+        }
+    }
+
 
     private static TargetPoint targetPoint;
     public static TargetPoint TargetPoint

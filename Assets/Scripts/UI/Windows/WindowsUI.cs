@@ -9,6 +9,7 @@ public class WindowsUI : MonoBehaviour
 	public WindowBuild buildingWindow;
 	public WindowItemInspector itemInspectorWindow;
 	public WindowBackpack backpackWindow;
+	public WindowExchanger exchangerWindow;
 
 	[Button]
 	private void OpenInspector()

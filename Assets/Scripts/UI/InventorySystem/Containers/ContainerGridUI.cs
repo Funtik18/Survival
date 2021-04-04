@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 
 public class ContainerGridUI : MonoBehaviour
 {
-	public UnityAction<Item> onItemChoosen;
+	public UnityAction<ContainerSlotUI> onSlotChoosen;
 	private UnityAction onSlotsChanged;
 
 	[SerializeField] private ScrollRect scrollrect;
@@ -76,8 +76,20 @@ public class ContainerGridUI : MonoBehaviour
 		}
     }
 
-    #region Private
-    private void PutItems(List<Item> items)
+	public void RefreshScroll()
+    {
+		scrollrect.verticalScrollbar.value = 0;
+	}
+
+	public void UnChooseLastSlot()
+	{
+		if (lastChoosenSlot != null)
+			lastChoosenSlot.UnChoose();
+	}
+
+
+	#region Private
+	private void PutItems(List<Item> items)
     {
 		for (int i = 0; i < items.Count; i++)
 		{
@@ -176,9 +188,16 @@ public class ContainerGridUI : MonoBehaviour
         }
     }
 
-	private void ChooseSlot(Item data)
+	private ContainerSlotUI lastChoosenSlot = null;
+	private void ChooseSlot(ContainerSlotUI slot)
 	{
-		onItemChoosen?.Invoke(data);
+		UnChooseLastSlot();
+		lastChoosenSlot = slot;
+
+		if (!lastChoosenSlot.IsEmpty)
+			lastChoosenSlot.Choose();
+
+		onSlotChoosen?.Invoke(lastChoosenSlot);
 	}
 
 	[Button]

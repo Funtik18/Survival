@@ -72,7 +72,7 @@ public class ItemInspector : MonoBehaviour
 		this.item = item;
 
 		if (instantiateModel)
-			this.itemObject = Instantiate(this.item.ScriptableItem.model, modelPlace);
+			this.itemObject = Instantiate(this.item.itemData.scriptableData.model, modelPlace);
 
 		if(inspect == InspectAnimationType.WorldToLocal)
         {
@@ -250,7 +250,7 @@ public class ItemInspector : MonoBehaviour
     {
 		GeneralAvailability.Player.Lock();
 
-		GeneralAvailability.InspectorWindow.SetInformation(item.ScriptableItem);
+		GeneralAvailability.InspectorWindow.SetInformation(item.itemData.scriptableData);
 		GeneralAvailability.InspectorWindow.ShowWindow();
 	}
 	private void CloseUI()
@@ -273,7 +273,7 @@ public class ItemInspector : MonoBehaviour
 
 	private void FromWorldTake()
     {
-		GeneralAvailability.PlayerInventory.AddItem(item.ScriptableItem);
+		GeneralAvailability.PlayerInventory.AddItem(item.itemData);
 
 		CloseUI();
 
@@ -292,7 +292,7 @@ public class ItemInspector : MonoBehaviour
 	}
 	private void FromInventoryTake()
 	{
-		GeneralAvailability.PlayerInventory.AddItem(item.ScriptableItem);
+		GeneralAvailability.PlayerInventory.AddItem(item.itemData);
 
 		StopInspect();
 

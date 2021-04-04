@@ -139,8 +139,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coll: {fileID: 6348414978470309685}
-  itemAngle: 0
-  scriptableData: {fileID: 11400000, guid: 56315b17f5485bf46a602c1ac0412dea, type: 2}
+  itemData:
+    scriptableData: {fileID: 11400000, guid: 56315b17f5485bf46a602c1ac0412dea, type: 2}
+    currentStackSize: 1
+    currentDurrability: 100
 --- !u!1 &6348414978470309686
 GameObject:
   m_ObjectHideFlags: 0
