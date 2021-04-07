@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class ContainerUI : MonoBehaviour
 {
-	public UnityAction<ContainerSlotUI> onSlotChoosen;
+    public UnityAction onUpdated;
 
-	[SerializeField] private ContainerGridUI grid;
+    public UnityAction<ContainerSlotUI> onSlotChoosen;
 
-	[HideInInspector] public Inventory currentInventory;
+
+    [SerializeField] private ContainerGridUI grid;
+
+    [HideInInspector] public Inventory currentInventory;
 
     private void Awake()
     {
@@ -17,16 +20,16 @@ public class ContainerUI : MonoBehaviour
 
     public void SubscribeInventory(Inventory inventory)
     {
-		currentInventory = inventory;
+        currentInventory = inventory;
 
-		currentInventory.onCollectionChanged += grid.PutItemsList;
+        currentInventory.onCollectionChanged += UpdateGrid;
         grid.PutItemsList(currentInventory.items);
-	}
-	public void UnSubscribeInventory()
+    }
+    public void UnSubscribeInventory()
     {
         if (currentInventory != null)
         {
-            currentInventory.onCollectionChanged -= grid.PutItemsList;
+            currentInventory.onCollectionChanged -= UpdateGrid;
             currentInventory = null;
         }
     }
@@ -34,11 +37,14 @@ public class ContainerUI : MonoBehaviour
     public void RefreshContainer()
     {
         grid.RefreshScroll();
-        RefreshSlots();
-    }
-    public void RefreshSlots()
-    {
         grid.UnChooseLastSlot();
+    }
+
+    private void UpdateGrid(List<Item> items)
+    {
+        grid.PutItemsList(items);
+
+        onUpdated?.Invoke();
     }
 
     private void SlotChoosen(ContainerSlotUI slot)

@@ -20,6 +20,7 @@ public class WindowBackpack : WindowUI
 	private void Awake()
 	{
 		itemInspector.onDrop += DropItem;
+		primaryContainer.onUpdated += RefreshItemInspector;
 		buttonBack.onClick.AddListener(Back);
 	}
 
@@ -64,7 +65,10 @@ public class WindowBackpack : WindowUI
 		itemInspector.gameObject.SetActive(false);
 	}
 
-
+	public void RefreshItemInspector()
+    {
+		itemInspector.SetItem(null);
+	}
 
 	private static void ItemShift(ContainerUI from, ContainerUI to, Item x)
     {
@@ -86,14 +90,12 @@ public class WindowBackpack : WindowUI
             }
             else
             {
-				itemData.CurrentStackSize--;
-            }
+				GeneralAvailability.PlayerInventory.RemoveItem(item, 1);
+			}
 		}
         else
         {
 			GeneralAvailability.PlayerInventory.RemoveItem(item);
-			primaryContainer.RefreshSlots();
-			itemInspector.SetItem(null);
 		}
 	}
 

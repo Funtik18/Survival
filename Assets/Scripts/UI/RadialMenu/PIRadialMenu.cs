@@ -39,6 +39,16 @@ public class PIRadialMenu : MonoBehaviour
                 options[i].onChoosen += CloseMenu;
         }
     }
+
+    public void RefreshMenu()
+    {
+        for (int i = 0; i < options.Count; i++)
+        {
+            options[i].UpdateUI();
+        }
+    }
+
+
     private void GetAllOptions()
     {
         foreach (Transform child in transform)

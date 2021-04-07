@@ -11,6 +11,8 @@ public class WindowsUI : MonoBehaviour
 	public WindowBackpack backpackWindow;
 	public WindowExchanger exchangerWindow;
 
+	public WindowIgnition ignitionWindow;
+
 	[Button]
 	private void OpenInspector()
     {

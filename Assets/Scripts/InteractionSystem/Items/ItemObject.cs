@@ -15,17 +15,17 @@ public class ItemObject : WorldObject
     public override void StartObserve()
 	{
 		base.StartObserve();
-		Button.pointer.AddPressListener(Interact);
-		Button.SetIconOnPickUp();
-		Button.OpenButton();
+		InteractionButton.pointer.AddPressListener(Interact);
+		InteractionButton.SetIconOnPickUp();
+		InteractionButton.OpenButton();
 		GeneralAvailability.TargetPoint.SetToolTipText(itemData.scriptableData.name).ShowToolTip();
 	}
     public override void EndObserve()
     {
         base.EndObserve();
 		GeneralAvailability.TargetPoint.HideToolTip();
-		Button.CloseButton();
-		Button.pointer.RemovePressListener(Interact);
+		InteractionButton.CloseButton();
+		InteractionButton.pointer.RemovePressListener(Interact);
 	}
 
 	public override void Interact()

@@ -9,9 +9,14 @@ public class PlayerUI : MonoBehaviour
 	{
 		windowsUI.itemInspectorWindow.Setup(player.itemInspector);
 		windowsUI.buildingWindow.Setup(player.Build);
+		windowsUI.ignitionWindow.Setup(player.Inventory);
+
 
 		windowsUI.backpackWindow.primaryContainer.SubscribeInventory(player.Inventory);
 		windowsUI.backpackWindow.onBack += CloseInventory;
+
+		windowsUI.ignitionWindow.onBack += CloseIgnition;
+		windowsUI.ignitionWindow.onIgnitionCompletely += OpenControlUI;
 
         //controlUI.buttonSpeedUp.onPressed.AddListener(() => { speedUp = true; });
         //controlUI.buttonSpeedUp.onUnPressed.AddListener(() => { currentSpeed = maxWalkSpeed; speedUp = false; });
@@ -21,12 +26,35 @@ public class PlayerUI : MonoBehaviour
 
 	public void OpenInventory()
 	{
-		GeneralAvailability.Player.Lock();
+		CloseControlUI();
 		windowsUI.backpackWindow.ShowBackpackInspector();
 	}
 	public void CloseInventory()
 	{
-		GeneralAvailability.Player.UnLock();
 		windowsUI.backpackWindow.HideBackpack();
+		OpenControlUI();
+	}
+
+	public void OpenIgnition(FireBuilding fireBuilding)
+    {
+		CloseControlUI();
+		windowsUI.ignitionWindow.SetBuilding(fireBuilding);
+	}
+	public void CloseIgnition()
+    {
+		windowsUI.ignitionWindow.HideWindow();
+		OpenControlUI();
+	}
+
+
+	public void OpenControlUI()
+    {
+		GeneralAvailability.Player.UnLock();
+		controlUI.ShowWindow();
+	}
+	public void CloseControlUI()
+    {
+		controlUI.HideWindow();
+		GeneralAvailability.Player.Lock();
 	}
 }

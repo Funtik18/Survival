@@ -11,9 +11,6 @@ public class ContainerObject : WorldObject
 	public bool isInspected = false;
 	public bool saveTimeResult = false;
 
-	private Coroutine holdCoroutine = null;
-	private bool IsHoldProccess => holdCoroutine != null;
-
     private void Awake()
     {
 		containerInventory.Init();//изменить
@@ -24,18 +21,11 @@ public class ContainerObject : WorldObject
 		base.StartObserve();
 
         if (isInspected)
-        {
-            Button.SetIconOnInteraction();
-            Button.pointer.AddPressListener(OpenContainer);
-        }
+            SetButtonOnInteraction();
         else
-        {
-            Button.SetIconOnSearch();
-            Button.pointer.AddPressListener(StartHold);
-            Button.pointer.AddUnPressListener(StopHold);
-        }
+            SetButtonOnSearch();
 
-        Button.OpenButton();
+        InteractionButton.OpenButton();
 
         GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.name).ShowToolTip();
     }
@@ -43,61 +33,12 @@ public class ContainerObject : WorldObject
     {
         base.EndObserve();
 
-        StopHold();
-        Button.CloseButton();
+        InteractionButton.CloseButton();
 
-        Button.pointer.RemovePressListener(OpenContainer);
-        Button.pointer.RemovePressListener(StartHold);
-        Button.pointer.RemoveUnPressListener(StopHold);
+        InteractionButton.pointer.Clear();
     }
 
-	private void StartHold()
-    {
-        if (!IsHoldProccess)
-        {
-			GeneralAvailability.Player.LockMovement();
-
-			holdCoroutine = StartCoroutine(Hold());
-		}
-    }
-	private IEnumerator Hold()
-    {
-        GeneralAvailability.Loader.ShowLoader();
-
-        float startTime = Time.time;
-        float maxTime = scriptableData.time;
-        float currentTime = Time.time - startTime;
-        while (currentTime <= maxTime)
-        {
-            GeneralAvailability.Loader.LoaderFillAmount = currentTime / maxTime;
-
-            currentTime = Time.time - startTime;
-
-            yield return null;
-        }
-
-        Button.pointer.UnPressButton();
-
-        isInspected = true;
-
-		Interact();
-
-		StopHold();
-	}
-	private void StopHold()
-    {
-        if (IsHoldProccess)
-        {
-			StopCoroutine(holdCoroutine);
-            holdCoroutine = null;
-
-            GeneralAvailability.Loader.HideLoader();
-
-            Player.Instance.UnLockMovement();
-		}
-	}
-
-	private void OpenContainer()
+    private void OpenContainer()
     {
         GeneralAvailability.BackpackWindow.secondaryContainer.SubscribeInventory(containerInventory);
         GeneralAvailability.BackpackWindow.ShowBackpackWithContainer();
@@ -105,6 +46,53 @@ public class ContainerObject : WorldObject
 
 	public override void Interact()
 	{
-        GeneralAvailability.Inspector.ItemsReview(containerInventory);
-	}
+        if (containerInventory.IsEmpty)
+            SetButtonOnInteraction();
+        else
+            GeneralAvailability.Inspector.ItemsReview(containerInventory);
+    }
+
+    private void SetButtonOnInteraction()
+    {
+        InteractionButton.SetIconOnInteraction();
+        InteractionButton.pointer.AddPressListener(OpenContainer);
+    }
+    private void SetButtonOnSearch()
+    {
+        InteractionButton.SetIconOnSearch();
+
+        PointerHold holder = InteractionButton.pointer;
+        holder.SetupHold(scriptableData.time);
+        holder.AddHoldStartListener(StartHold);
+        holder.AddHoldChangeListener(ChangeHold);
+        holder.AddHoldBreakListener(BreakHold);
+        holder.AddHoldStopListener(StopHold);
+    }
+
+    private void StartHold()
+    {
+        GeneralAvailability.Player.LockMovement();
+        GeneralAvailability.Loader.ShowLoader();
+
+    }
+    private void ChangeHold(float value)
+    {
+        GeneralAvailability.Loader.LoaderFillAmount = value;
+    }
+    private void BreakHold(float time)
+    {
+        GeneralAvailability.Loader.HideLoader();
+        Player.Instance.UnLockMovement();
+
+        InteractionButton.pointer.SetupHold(scriptableData.time);
+    }
+    private void StopHold()
+    {
+        isInspected = true;
+
+        GeneralAvailability.Loader.HideLoader();
+        Player.Instance.UnLockMovement();
+
+        Interact();
+    }
 }

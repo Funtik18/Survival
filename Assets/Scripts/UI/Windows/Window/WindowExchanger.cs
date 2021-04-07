@@ -56,11 +56,12 @@ public class WindowExchanger : WindowUI
 
     private void Ok()
     {
-        currentItem.itemData.CurrentStackSize -= (int)slider.value; 
+        GeneralAvailability.PlayerInventory.RemoveItem(currentItem, (int)slider.value);
+        //currentItem.itemData.CurrentStackSize -= (int)slider.value; 
     }
     private void All()
     {
-
+        GeneralAvailability.PlayerInventory.RemoveItem(currentItem);
     }
     private void Cancel()
     {

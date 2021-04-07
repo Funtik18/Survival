@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class WindowBuild : WindowUI
 {
-    [SerializeField] private CustomButton buttonAccept;
-    [SerializeField] private CustomButton buttonReject;
+    [SerializeField] private CustomPointer buttonAccept;
+    [SerializeField] private CustomPointer buttonReject;
 
     private Build build;
 

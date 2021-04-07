@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -12,6 +10,8 @@ public class PIRadialOption : MonoBehaviour
 
     [SerializeField] private PointerButton button;
     [SerializeField] private Image icon;
+
+    [SerializeField] private Image prohibition;
 
     private void Awake()
     {
@@ -25,11 +25,28 @@ public class PIRadialOption : MonoBehaviour
         UpdateUI();
     }
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
-        Sprite sprite = Data == null ? null : Data.scriptableData.optionIcon;
-        icon.enabled = sprite == null ? false : true;
-        icon.sprite = sprite;
+        if( Data != null)
+        {
+            Sprite sprite = Data.scriptableData.optionIcon;
+            icon.enabled = sprite == null ? false : true;
+            icon.sprite = sprite;
+            if (Data.scriptableData is RadialOptionBuildingSD buildingSD)
+            {
+                BuildingObject obj = buildingSD.building;
+
+                bool isProhibition = obj == null ? false : !obj.IsCanBeBuild;
+                prohibition.enabled = isProhibition;
+                button.IsEnable = !isProhibition;
+            }
+        }
+        else
+        {
+            icon.enabled = false;
+            prohibition.enabled = false;
+            button.IsEnable = false;
+        }
     }
 
     public void Choosen()

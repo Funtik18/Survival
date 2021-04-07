@@ -22,29 +22,29 @@ public class RadialMenu : MonoBehaviour
 
     [SerializeField] private Menus menus;
 
-    [SerializeField] private CustomButton buttonOpen;
-    [SerializeField] private CustomButton buttonClose;
+    [SerializeField] private CustomPointer pointerOpen;
+    [SerializeField] private CustomPointer pointerClose;
 
     private void Awake()
     {
         menus.Setup();
 
-        buttonOpen.pointer.AddPressListener(OpenRadialMenu);
-        buttonClose.pointer.AddPressListener(CloseRadialMenu);
+        pointerOpen.pointer.AddPressListener(OpenRadialMenu);
+        pointerClose.pointer.AddPressListener(CloseRadialMenu);
     }
 
     [Button]
     public void OpenRadialMenu()
     {
         GeneralAvailability.Player.Lock();
-        buttonClose.OpenButton();
+        pointerClose.OpenButton();
         menus.menues[0].Open();//primary menu
     }
     [Button]
     public void CloseRadialMenu()
     {
         menus.Close();
-        buttonClose.CloseButton();
+        pointerClose.CloseButton();
         GeneralAvailability.Player.UnLock();
     }
 

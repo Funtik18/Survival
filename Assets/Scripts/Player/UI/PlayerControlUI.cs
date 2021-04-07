@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-public class PlayerControlUI : MonoBehaviour
+public class PlayerControlUI : WindowUI
 {
 	public EnduranceUI endurance;
 

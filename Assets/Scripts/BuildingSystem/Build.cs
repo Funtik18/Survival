@@ -74,7 +74,7 @@ public class Build
 			currentTransform.position = lastPosition;
 			currentTransform.rotation = lastRotation;
 
-			currentBuilding.SetMaterialOnBasic();
+			currentBuilding.Place();
 		}
 	}
 
@@ -154,7 +154,6 @@ public class Build
 
 		currentBuilding.SetMaterial(IsCanBuild ? acceptMaterial : rejectMaterial);
 	}
-
 
 	private bool CheckCast(Ray ray, out RaycastHit hit, float distance)
 	{

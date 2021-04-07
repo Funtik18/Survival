@@ -46,6 +46,7 @@ public class ContainerGridUI : MonoBehaviour
 
     public void PutItemsList(List<Item> items)
     {
+		UnChooseLastSlot();
 		DisposeSlots();
 
 		int rows = Mathf.CeilToInt((float)items.Count / CurrentColumns);

@@ -32,7 +32,7 @@ public class ContainerSlotUI : MonoBehaviour
 
 	public bool IsEmpty => item == null;
 
-	private ItemScriptableData ItemScriptableData => item.itemData.scriptableData;
+	private ItemSD ItemScriptableData => item.itemData.scriptableData;
 
 
     private void OnEnable()

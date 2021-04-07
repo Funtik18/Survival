@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Sirenix.OdinInspector;
+
 public class BuildingObject : WorldObject
 {
-    [SerializeField] private bool isPlacement = false;
-    public bool IsPlacement { get => isPlacement; set => isPlacement = value; }
-
-    [SerializeField] private BuildingScriptableData data;
-
-    [SerializeField] private LayerMask ignoreLayers;
-
+    [PropertyOrder(-1)]
+    [SerializeField] protected bool isPlacement = false;
+    [SerializeField] protected BuildingScriptableData data;
+    [SerializeField] protected LayerMask ignoreLayers;
     [SerializeField] private List<MeshRenderer> renderers = new List<MeshRenderer>();
 
-    private List<Collider> collidersIntersects = new List<Collider>();
-
-    private List<Material> materialsBasic = new List<Material>();
-
+    public bool IsPlacement { get => isPlacement; set => isPlacement = value; }
     public bool IsIntersects => collidersIntersects.Count > 0;
+    public virtual bool IsCanBeBuild => true;
+
+    private List<Collider> collidersIntersects = new List<Collider>();
+    private List<Material> materialsBasic = new List<Material>();
 
     protected virtual void Awake()
     {
@@ -50,6 +50,18 @@ public class BuildingObject : WorldObject
         }
     }
 
+    public virtual void Place()
+    {
+        SetMaterial();
+
+        IsPlacement = true;
+
+        if (data.isImmediatelyCalculation)
+        {
+
+        }
+    }
+
     public void SetMaterial(Material material)
     {
         for (int i = 0; i < renderers.Count; i++)
@@ -57,32 +69,28 @@ public class BuildingObject : WorldObject
             renderers[i].sharedMaterial = material;
         }
     }
-    public void SetMaterialOnBasic()
+    public void SetMaterial()
     {
         for (int i = 0; i < renderers.Count; i++)
         {
             renderers[i].sharedMaterial = materialsBasic[i];
         }
-
-        IsPlacement = true;
     }
-
-
+   
     public override void StartObserve()
     {
         if (IsPlacement)
         {
             base.StartObserve();
-            Button.SetIconOnInteraction();
-            Button.OpenButton();
+            InteractionButton.SetIconOnInteraction();
+            InteractionButton.OpenButton();
 
             GeneralAvailability.TargetPoint.SetToolTipText(data.name).ShowToolTip();
         }
     }
-
     public override void EndObserve()
     {
         base.EndObserve();
-        Button.CloseButton();
+        InteractionButton.CloseButton();
     }
 }

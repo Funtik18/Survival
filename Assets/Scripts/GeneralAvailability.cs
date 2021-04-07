@@ -18,6 +18,20 @@ public class GeneralAvailability : MonoBehaviour
         }
     }
 
+    private static PlayerUI playerUI;
+    public static PlayerUI PlayerUI
+    {
+        get
+        {
+            if (playerUI == null)
+            {
+                playerUI = Player.playerUI;
+            }
+            return playerUI;
+        }
+    }
+
+
     private static Inventory playerInventory;
     public static Inventory PlayerInventory
     {

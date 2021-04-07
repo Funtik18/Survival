@@ -3990,8 +3990,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 7964232088865907180}
   itemData:
-    scriptableData: {fileID: 11400000, guid: c30907d5c4a0cf94db43993c0a02f373, type: 2}
-    currentStackSize: 20
+    scriptableData: {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
+    currentStackSize: 45
     currentDurrability: 100
 --- !u!1001 &7394442007188003831
 PrefabInstance:

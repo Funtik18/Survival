@@ -139,6 +139,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 2064889813560497519}
   itemData:
-    scriptableData: {fileID: 11400000, guid: 197fbbf9a25161140aa9bdea1c4847c9, type: 2}
+    scriptableData: {fileID: 11400000, guid: eb604291a260dd141a7d52087a07b208, type: 2}
     currentStackSize: 1
     currentDurrability: 100

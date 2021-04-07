@@ -35,7 +35,7 @@ public class ItemInspectorUI : MonoBehaviour
 
 		if(currentSlot != null && !currentSlot.IsEmpty)
 		{
-			ItemScriptableData data = currentSlot.item.itemData.scriptableData;
+			ItemSD data = currentSlot.item.itemData.scriptableData;
 
 			itemTittle.text = data.name;
 			itemDescription.text = data.description;

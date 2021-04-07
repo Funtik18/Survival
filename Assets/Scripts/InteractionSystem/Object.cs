@@ -65,7 +65,7 @@ public abstract class WorldObject : Object, IPerceptible
 	public virtual bool IsInteractable => Collider.enabled;
 
 	private InteractionButton button;
-	protected InteractionButton Button
+	protected InteractionButton InteractionButton
 	{
 		get
 		{
