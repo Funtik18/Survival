@@ -121,7 +121,7 @@ public class IgnitionRequirementUI : WindowUI
         {
             ItemData item = items[CurrentIndex].itemData;
 
-            indicatorText.text = (CurrentIndex + 1) + " of " + items[CurrentIndex].itemData.CurrentStackSize;
+            indicatorText.text = "1 of " + items[CurrentIndex].itemData.CurrentStackSize;//fix it;
 
             itemHelperText.text = itemText.text;
             itemText.text = item.scriptableData.objectName;

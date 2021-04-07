@@ -140,22 +140,20 @@ public class WindowIgnition : WindowUI
     {
         requirementsValues.Exchange();
 
-        GeneralTime.Instance.time.isStopped = true;
-        Times t = GeneralTime.Instance.time.globalTime;
+        GeneralTime.Instance.IsStopped = true;
+        Times global = GeneralTime.Instance.globalTime;
 
-        Debug.LogError("A = " + t.ToStringSimplification() + "  B = " + kindleTime.ToStringSimplification());
-
-        int aTime = t.GetAllSeconds();
+        int aTime = global.GetAllSeconds();
         int bTime = aTime + kindleTime.GetAllSeconds();
-        int lerp = 0;
+        int secs = 0;
 
         float currentTime = Time.deltaTime;
-        while (currentTime < 5f)
+        while (currentTime < 1f)
         {
-            float progress = currentTime / 5f;
+            float progress = currentTime / 1f;
 
-            lerp = (int) Mathf.Lerp(aTime, bTime, progress);
-            GeneralTime.Instance.time.globalTime.SetTimeBySeconds(lerp);
+            secs = (int)Mathf.Lerp(aTime, bTime, progress);
+            GeneralTime.Instance.ChangeTimeOn(secs);
 
             barRadial.UpdateUI(progress);
             onIgnitionProgress?.Invoke(progress);
@@ -165,7 +163,7 @@ public class WindowIgnition : WindowUI
             yield return null;
         }
 
-        GeneralTime.Instance.time.isStopped = false;
+        GeneralTime.Instance.IsStopped = false;
 
         fireBuilding.EnableParticles();
 

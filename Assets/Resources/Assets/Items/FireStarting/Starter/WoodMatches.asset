@@ -22,9 +22,9 @@ MonoBehaviour:
   chance: 5
   KindleTime:
     days: 0
-    hours: 0
+    hours: 3
     minutes: 30
-    seconds: 0
+    seconds: 15
   addFireTime:
     days: 0
     hours: 0

@@ -621,29 +621,29 @@ MonoBehaviour:
   weightText: {fileID: 6661325838294431966}
   interaction: {fileID: 1704442582913084896}
   abstractSprites:
-  - {fileID: -626815665952532365, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: 1539287210690517546, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: 8993141202345461811, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: 8672563292680936044, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: 5945958038623383535, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: -7861460480325351318, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: -3579831444187410774, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: 6454456425665205854, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: -3857910758552821406, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: 4325542450882938165, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: 2067396541423670555, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: 5201868462820041342, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: -1730791401079884258, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: 1191404047658708714, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: -5502125879500240060, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: 6785498069938550139, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: 5471269127361546197, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: 5908673824648678241, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: -167408054493538020, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: -5860178910999026532, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: 7586398302731884738, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: -8025244743944878785, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
-  - {fileID: -6267222871414844268, guid: f09862cae7bb74c44bfcb61b45f8c37e, type: 3}
+  - {fileID: -1642753191866112758, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: 2337673926233965490, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: -3417427693011826171, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: 2755766346221800820, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: -5448036960486366723, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: -4116211786327801373, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: 1103226032343324955, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: 8695845828535409572, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: 3428546898057195682, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: -6585988166609027475, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: -2077665649895084597, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: 6700405475142563010, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: 9221419689708525029, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: 7211021333393394251, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: 2700728426562095905, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: 31322455531825926, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: 4454456485126474923, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: -906162343074290018, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: -9031540826324618829, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: 1456412098129826187, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: 6764011170369465549, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: -1953409264627412929, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
+  - {fileID: -158579820645925152, guid: ef8e18f237a339940b37075e44ecb93d, type: 3}
 --- !u!1 &2921278314505147124
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,7 +963,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5908673824648678241, guid: f09862cae7bb74c44bfcb61b45f8c37e,
+  m_Sprite: {fileID: -1642753191866112758, guid: ef8e18f237a339940b37075e44ecb93d,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0
