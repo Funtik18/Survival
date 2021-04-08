@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ProgressBarRadialPercent : ProgressBarRadial
+public class ProgressBarRadialPercent : ProgressBarBasic
 {
     [SerializeField] private TMPro.TextMeshProUGUI loadingText;
 

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TargetPoint : MonoBehaviour
 {
-	[SerializeField] private ProgressBarRadial radialBar;
+	[SerializeField] private ProgressBarBasic radialBar;
 	[Space]
 	[SerializeField] private Image point;
 	[SerializeField] private TMPro.TextMeshProUGUI toolTipText;
