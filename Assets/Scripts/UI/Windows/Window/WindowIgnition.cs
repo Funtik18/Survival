@@ -7,7 +7,6 @@ public class WindowIgnition : WindowUI
 {
     public UnityAction onBack;
     public UnityAction onIgnitionCompletely;
-    public UnityAction<float> onIgnitionProgress;
 
     [SerializeField] private ProgressBarRadial barRadial;
     [Space]
@@ -25,7 +24,10 @@ public class WindowIgnition : WindowUI
     private FireBuilding fireBuilding;
 
     private bool isCanIgnition = false;
+    private float holdTime = 1f;
     private Times kindleTime;
+
+    private Times fireDuration;
 
     private IgnitionRequirements requirementsValues;
 
@@ -94,7 +96,7 @@ public class WindowIgnition : WindowUI
         #endregion
 
         float baseChance = 40;
-        Times fireDuration = fuel == null ? new Times() : fuel.addFireTime;
+        fireDuration = fuel == null ? new Times() : fuel.addFireTime;
 
         float successChance;
         if(starter == null)
@@ -107,14 +109,22 @@ public class WindowIgnition : WindowUI
             if (accelerant != null) successChance += accelerant.chance;
             successChance = Mathf.Clamp(successChance, 0, 100);
 
-            kindleTime = starter.KindleTime;
+            kindleTime = starter.kindleTime;
+
+            if(accelerant != null)
+            {
+                holdTime = accelerant.holdTime;
+            }
+            else
+            {
+                holdTime = starter.holdTime;
+            }
         }
 
         baseChanceText.text = baseChance + "%";
-        estimatedFireText.text = starter == null ? "-" : starter.KindleTime.ToStringSimplification();
+        estimatedFireText.text = starter == null ? "-" : starter.kindleTime.ToStringSimplification();
         estimatedFireDurationText.text = fireDuration.ToStringSimplification();
         chanceSuccessText.text = successChance + "%";
-
 
         isCanIgnition = starter != null && tinder != null && fuel != null;
     }
@@ -148,15 +158,14 @@ public class WindowIgnition : WindowUI
         int secs = 0;
 
         float currentTime = Time.deltaTime;
-        while (currentTime < 1f)
+        while (currentTime < holdTime)
         {
-            float progress = currentTime / 1f;
+            float progress = currentTime / holdTime;
 
             secs = (int)Mathf.Lerp(aTime, bTime, progress);
             GeneralTime.Instance.ChangeTimeOn(secs);
 
             barRadial.UpdateUI(progress);
-            onIgnitionProgress?.Invoke(progress);
 
             currentTime += Time.deltaTime;
 
@@ -165,7 +174,7 @@ public class WindowIgnition : WindowUI
 
         GeneralTime.Instance.IsStopped = false;
 
-        fireBuilding.EnableParticles();
+        fireBuilding.StartFire(fireDuration);
 
         onIgnitionCompletely?.Invoke();
 
@@ -192,10 +201,10 @@ public class WindowIgnition : WindowUI
     {
         public UnityAction onChanged;
 
-        public Requirements starters;
-        public Requirements tinders;
-        public Requirements fuels;
-        public Requirements accelerants;
+        public RequirementsItem starters;
+        public RequirementsItem tinders;
+        public RequirementsItem fuels;
+        public RequirementsItem accelerants;
 
         private Inventory inventory;
 
@@ -215,10 +224,10 @@ public class WindowIgnition : WindowUI
         }
         public void Setup()
         {
-            starters = new Requirements(inventory.GetAllBySD<FireStarterSD>());
-            tinders = new Requirements(inventory.GetAllBySD<FireTinderSD>());
-            fuels = new Requirements(inventory.GetAllBySD<FireFuelSD>());
-            accelerants = new Requirements(inventory.GetAllBySD<FireAccelerantSD>());
+            starters = new RequirementsItem(inventory.GetAllBySD<FireStarterSD>());
+            tinders = new RequirementsItem(inventory.GetAllBySD<FireTinderSD>());
+            fuels = new RequirementsItem(inventory.GetAllBySD<FireFuelSD>());
+            accelerants = new RequirementsItem(inventory.GetAllBySD<FireAccelerantSD>());
 
             starters.onValueChanged += Change;
             tinders.onValueChanged += Change;
@@ -228,7 +237,6 @@ public class WindowIgnition : WindowUI
 
         public void Exchange()
         {
-
             inventory.RemoveItem(starters.CurrentItem, 1);
             inventory.RemoveItem(tinders.CurrentItem, 1);
             inventory.RemoveItem(fuels.CurrentItem, 1);
@@ -241,7 +249,7 @@ public class WindowIgnition : WindowUI
         }
     }
 }
-public class Requirements
+public class RequirementsItem
 {
     public UnityAction onValueChanged;
 
@@ -273,7 +281,7 @@ public class Requirements
         }
     }
 
-    public Requirements(List<Item> requirements)
+    public RequirementsItem(List<Item> requirements)
     {
         this.requirements = requirements;
     }

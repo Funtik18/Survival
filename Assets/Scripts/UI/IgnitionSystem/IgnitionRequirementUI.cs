@@ -23,13 +23,13 @@ public class IgnitionRequirementUI : WindowUI
     [SerializeField] private bool isInverse = false;
     [SerializeField] private Animator animator;
 
-    private Requirements requirements;
+    private RequirementsItem requirements;
     private int CurrentIndex { get => requirements.CurrentIndex; set => requirements.CurrentIndex = value; }
     private List<Item> items => requirements.requirements;
 
     private List<IndicatorUI> indicators = new List<IndicatorUI>();
 
-    public void Setup(Requirements requirements, int defaultIndex = 0)
+    public void Setup(RequirementsItem requirements, int defaultIndex = 0)
     {
         this.requirements = requirements;
 
@@ -121,7 +121,7 @@ public class IgnitionRequirementUI : WindowUI
         {
             ItemData item = items[CurrentIndex].itemData;
 
-            indicatorText.text = "1 of " + items[CurrentIndex].itemData.CurrentStackSize;//fix it;
+            indicatorText.text = "1 of " + items[CurrentIndex].itemData.StackSize;//fix it;
 
             itemHelperText.text = itemText.text;
             itemText.text = item.scriptableData.objectName;

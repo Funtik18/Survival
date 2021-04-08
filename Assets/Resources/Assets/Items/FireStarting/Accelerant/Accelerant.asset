@@ -20,3 +20,4 @@ MonoBehaviour:
   isBreakable: 1
   stackSize: 1
   chance: 0
+  holdTime: 1

@@ -82,9 +82,9 @@ public class WindowBackpack : WindowUI
     private void DropItem(Item item)
     {
 		ItemData itemData = item.itemData;
-		if(itemData.CurrentStackSize > 1)
+		if(itemData.StackSize > 1)
         {
-			if(itemData.CurrentStackSize > 4)
+			if(itemData.StackSize > 4)
             {
 				GeneralAvailability.ExchangerWindow.SetItem(item);
             }

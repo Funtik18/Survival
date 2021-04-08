@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Funly.SkyStudio;
 using Sirenix.OdinInspector;
+using UnityEngine.Events;
 
 public class GeneralTime : MonoBehaviour
 {
@@ -34,6 +35,10 @@ public class GeneralTime : MonoBehaviour
 
     private WaitForSeconds seconds;
 
+    private List<TimeAction> actions = new List<TimeAction>();
+
+
+
     private void OnEnable()
     {
         StartTime();
@@ -52,13 +57,24 @@ public class GeneralTime : MonoBehaviour
         while (true)
         {
             globalTime.seconds += 1;
-
             globalTime.CheckTime();
 
             yield return seconds;
 
             if(globalTime.seconds == 0)
                 UpdateCycle();
+
+            for (int i = 0; i < actions.Count; i++)
+            {
+                TimeAction timeAction = actions[i];
+
+                timeAction.InvokeCallBack(globalTime);
+
+                if (timeAction.Check(globalTime))
+                {
+                    actions.Remove(timeAction);
+                }
+            }
 
             while (IsStopped)
                 yield return null;
@@ -87,6 +103,22 @@ public class GeneralTime : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Создать события по времени. Если пришло время то выполняется событие.
+    /// </summary>
+    public void AddActionByTime(UnityAction action, UnityAction<Times> callBack, Times futureTime)
+    {
+        if(globalTime < futureTime)
+        {
+            TimeAction timeAction = new TimeAction(action, futureTime);
+            actions.Add(timeAction);
+        }
+        else
+        {
+            Debug.LogError("FUTURE TIME ERROR");
+        }
+    }
+
     [Button]
     private void ResetTime()
     {
@@ -110,5 +142,41 @@ public class GeneralTime : MonoBehaviour
     public override string ToString()
     {
         return globalTime.ToString();
+    }
+
+
+
+
+    public class TimeAction
+    {
+        private UnityAction action;
+        private UnityAction<Times> callBack;
+        private Times time;
+
+        public TimeAction(UnityAction action, Times time)
+        {
+            this.action = action;
+            this.time = time;
+        }
+
+        public bool Check(Times times)
+        {
+            Debug.LogError(times.ToStringSimplification() + " >= " + time.ToStringSimplification());
+
+            if (times >= time)
+            {
+                Invoke();
+                return true;
+            }
+            return false;
+        }
+        public void Invoke()
+        {
+            action?.Invoke();
+        }
+        public void InvokeCallBack(Times time)
+        {
+            callBack?.Invoke(time);
+        }
     }
 }

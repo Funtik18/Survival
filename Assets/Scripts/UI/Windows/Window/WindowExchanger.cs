@@ -32,7 +32,7 @@ public class WindowExchanger : WindowUI
     {
         currentItem = item;
 
-        float maxCount = currentItem.itemData.CurrentStackSize;
+        float maxCount = currentItem.itemData.StackSize;
         slider.maxValue = maxCount;
         slider.value = maxCount / 2;
 

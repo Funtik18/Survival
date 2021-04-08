@@ -338,9 +338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SkyProfile: {fileID: 0}
   m_SkyTime: 0.22
-  automaticTimeIncrement: 0
   copySkyProfile: 0
-  automaticIncrementSpeed: 0.051
   sunOrbit: {fileID: 114599126574159370}
   moonOrbit: {fileID: 114963704082176422}
   weatherController: {fileID: 114015547075376014}

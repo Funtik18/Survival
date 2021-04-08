@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 using Sirenix.OdinInspector;
 
@@ -12,6 +10,7 @@ public class WindowsUI : MonoBehaviour
 	public WindowExchanger exchangerWindow;
 
 	public WindowIgnition ignitionWindow;
+	public WindowHarvesting harvestingWindow;
 
 	[Button]
 	private void OpenInspector()

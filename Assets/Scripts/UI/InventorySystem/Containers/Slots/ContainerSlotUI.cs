@@ -98,7 +98,7 @@ public class ContainerSlotUI : MonoBehaviour
 			ShowHideItemCount(false);
 		else
 		{
-			countText.text = "x" + item.itemData.CurrentStackSize;
+			countText.text = "x" + item.itemData.StackSize;
 			ShowHideItemCount(true);
 		}
 	}

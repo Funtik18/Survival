@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
+using Sirenix.OdinInspector;
 
 public class DEBUG : MonoBehaviour
 {
-	[SerializeField] private TMPro.TextMeshProUGUI txtFPS;
+    [SerializeField] private Image background;
+    [SerializeField] private TMPro.TextMeshProUGUI txtFPS;
 	[SerializeField] private TMPro.TextMeshProUGUI txtTIME;
 
     private void Update()

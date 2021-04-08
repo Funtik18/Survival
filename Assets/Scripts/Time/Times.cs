@@ -8,6 +8,7 @@ using Sirenix.OdinInspector;
 public struct Times
 {
     [SuffixLabel("d", true)]
+    [Min(0)]
     public int days;
     [SuffixLabel("h", true)]
     [Range(0, 24)]
@@ -18,6 +19,8 @@ public struct Times
     [SuffixLabel("s", true)]
     [Range(0, 60)]
     public int seconds;
+
+    public int allSeconds;
 
     public void RandomHours()
     {
@@ -123,6 +126,43 @@ public struct Times
         currTime.CheckTime();
 
         return currTime;
+    }
+
+    public static bool operator !=(Times time0, Times time1)
+    {
+        if (time0.days != time1.days || time0.hours != time1.hours || time0.minutes != time1.minutes || time0.seconds != time1.seconds)
+            return true;
+        return false;
+    }
+    public static bool operator ==(Times time0, Times time1)
+    {
+        if (time0.days == time1.days && time0.hours == time1.hours && time0.minutes == time1.minutes && time0.seconds == time1.seconds)
+            return true;
+        return false;
+    }
+
+    public static bool operator <=(Times time0, Times time1)
+    {
+        if (time0 < time1)
+            return true;
+
+        return time0 == time1;
+    }
+    public static bool operator >=(Times time0, Times time1)
+    {
+        if (time0 > time1)
+            return true;
+
+        return time0 == time1;
+    }
+
+    public static bool operator >(Times time0, Times time1)
+    {
+        return time0.GetAllSeconds() > time1.GetAllSeconds();
+    }
+    public static bool operator <(Times time0, Times time1)
+    {
+        return time0.GetAllSeconds() < time1.GetAllSeconds();
     }
 
     public override string ToString()

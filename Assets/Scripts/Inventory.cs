@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Sirenix.OdinInspector;
 using System.Linq;
+using System;
 
 [System.Serializable]
 public class Inventory
@@ -19,8 +20,6 @@ public class Inventory
 
     public bool ContainsType<SD>() => items.FirstOrDefault((x) => x.itemData.scriptableData is SD) != null;
 
-
-
     public void Init()
     {
         for (int i = 0; i < initItems.Count; i++)
@@ -33,33 +32,36 @@ public class Inventory
     {
         if (itemData != null)
         {
-            Item findedItem = items.FindLast((x) => itemData.scriptableData == x.itemData.scriptableData);
+            List<Item> findedSameItems = GetAllBySD(itemData.scriptableData);
 
-            if (findedItem != null)//если нашёл тот же айтем
+            if(findedSameItems.Count > 0)
             {
-                ItemData findedData = findedItem.itemData;
-
-                int findedDataMaxSize = findedData.scriptableData.stackSize;
-                if (findedData.CurrentStackSize < findedDataMaxSize) // если у айтема которого нашли есть свободное место
+                for (int i = 0; i < findedSameItems.Count; i++)
                 {
-                    int count = findedData.CurrentStackSize + itemData.CurrentStackSize;
-                    if (count <= findedDataMaxSize)
-                    {
-                        findedData.CurrentStackSize += itemData.CurrentStackSize;
-                    }
-                    else
-                    {
-                        findedData.CurrentStackSize = findedDataMaxSize;
+                    ItemData findedData = findedSameItems[i].itemData;
+                    int difference = findedData.StackDiffrence;
 
-                        Item newItem = new Item(itemData);
-                        newItem.itemData.CurrentStackSize = count % findedDataMaxSize;
-                        items.Add(newItem);
+                    if (difference != 0)
+                    {
+                        if(itemData.StackSize >= difference)
+                        {
+                            itemData.StackSize -= difference;
+                            findedData.StackSize += difference;
+                        }
+                        else
+                        {
+                            if (itemData.StackSize == 0) break;//maybe delete
+
+                            findedData.StackSize += itemData.StackSize;
+                            itemData.StackSize -= itemData.StackSize;
+                        }
                     }
+                    
+                    if (itemData.StackSize == 0) break;
                 }
-                else//последний айтем полный
-                {
+
+                if(itemData.StackSize > 0)
                     items.Add(new Item(itemData));
-                }
             }
             else
             {
@@ -70,6 +72,36 @@ public class Inventory
             return true;
         }
         return false;
+        //if (findedItem != null)//если нашёл тот же айтем
+        //{
+        //    ItemData findedData = findedItem.itemData;
+
+        //    int findedDataMaxSize = findedData.scriptableData.stackSize;
+        //    if (findedData.CurrentStackSize < findedDataMaxSize) // если у айтема которого нашли есть свободное место
+        //    {
+        //        int count = findedData.CurrentStackSize + itemData.CurrentStackSize;
+        //        if (count <= findedDataMaxSize)
+        //        {
+        //            findedData.CurrentStackSize += itemData.CurrentStackSize;
+        //        }
+        //        else
+        //        {
+        //            findedData.CurrentStackSize = findedDataMaxSize;
+
+        //            Item newItem = new Item(itemData);
+        //            newItem.itemData.CurrentStackSize = count % findedDataMaxSize;
+        //            items.Add(newItem);
+        //        }
+        //    }
+        //    else//последний айтем полный
+        //    {
+        //        items.Add(new Item(itemData));
+        //    }
+        //}
+        //else
+        //{
+        //    items.Add(new Item(itemData));
+        //}
     }
     public bool RemoveItem(Item item, int count)
     {
@@ -77,9 +109,9 @@ public class Inventory
         {
             ItemData data = item.itemData;
 
-            if (data.CurrentStackSize > count && count > 0)
+            if (data.StackSize > count && count > 0)
             {
-                data.CurrentStackSize -= count;
+                data.StackSize -= count;
             }
             else
             {
@@ -117,6 +149,7 @@ public class Inventory
         return false;
     }
 
+    public List<Item> GetAllBySD(ItemSD sd) => items.FindAll((x) => x.itemData.scriptableData == sd);
     public List<Item> GetAllBySD<SD>() => items.FindAll((x) => x.itemData.scriptableData is SD);
 }
 
