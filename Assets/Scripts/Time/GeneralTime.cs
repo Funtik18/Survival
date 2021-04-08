@@ -21,10 +21,14 @@ public class GeneralTime : MonoBehaviour
         }
     }
 
+    [OnValueChanged("UpdateTimeToSeconds")]
     public Times globalTime;
+
 
     [InfoBox("Time Flow = 1f / timeFlow")]
     public float timeFlow = 12f;
+
+    public int frequenceCycleSeconds = 300;
 
     [SerializeField] private TimeOfDayController controller;
 
@@ -56,12 +60,11 @@ public class GeneralTime : MonoBehaviour
     {
         while (true)
         {
-            globalTime.seconds += 1;
-            globalTime.CheckTime();
+            globalTime.TotalSeconds += 1;
 
             yield return seconds;
 
-            if(globalTime.seconds == 0)
+            if(globalTime.TotalSeconds % frequenceCycleSeconds == 0)
                 UpdateCycle();
 
             for (int i = 0; i < actions.Count; i++)
@@ -91,17 +94,11 @@ public class GeneralTime : MonoBehaviour
         }
     }
 
-    public void ChangeTimeOn(Times time)
-    {
-        globalTime = time;
-        UpdateCycle();
-    }
     public void ChangeTimeOn(int secs)
     {
-        globalTime.SetTimeBySeconds(secs);
+        globalTime.TotalSeconds = secs;
         UpdateCycle();
     }
-
 
     /// <summary>
     /// Создать события по времени. Если пришло время то выполняется событие.
@@ -110,7 +107,7 @@ public class GeneralTime : MonoBehaviour
     {
         if(globalTime < futureTime)
         {
-            TimeAction timeAction = new TimeAction(action, futureTime);
+            TimeAction timeAction = new TimeAction(action, callBack, futureTime);
             actions.Add(timeAction);
         }
         else
@@ -119,6 +116,11 @@ public class GeneralTime : MonoBehaviour
         }
     }
 
+    private void UpdateTimeToSeconds()
+    {
+        globalTime.CheckTimeSeconds();
+        UpdateCycle();
+    }
     [Button]
     private void ResetTime()
     {
@@ -128,12 +130,10 @@ public class GeneralTime : MonoBehaviour
     [Button]
     private void RandomTime()
     {
-        globalTime.RandomHours();
-        globalTime.RandomMinutes();
-        globalTime.RandomSeconds();
+        globalTime.RandomTime();
         UpdateCycle();
     }
-    [Button]
+
     private void UpdateCycle()
     {
         controller.skyTime = globalTime.GetDayPercent();
@@ -144,25 +144,21 @@ public class GeneralTime : MonoBehaviour
         return globalTime.ToString();
     }
 
-
-
-
     public class TimeAction
     {
         private UnityAction action;
         private UnityAction<Times> callBack;
         private Times time;
 
-        public TimeAction(UnityAction action, Times time)
+        public TimeAction(UnityAction action, UnityAction<Times> callBack, Times time)
         {
             this.action = action;
+            this.callBack = callBack;
             this.time = time;
         }
 
         public bool Check(Times times)
         {
-            Debug.LogError(times.ToStringSimplification() + " >= " + time.ToStringSimplification());
-
             if (times >= time)
             {
                 Invoke();

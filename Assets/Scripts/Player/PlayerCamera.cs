@@ -73,8 +73,10 @@ public class PlayerCamera : MonoBehaviour
 		StartVision();
 	}
 
-    #region Vision
-    private Collider currentCollider = null;
+	#region Vision
+	private IObservable Observable => currentCollider.GetComponent<IObservable>();//need cash
+
+	private Collider currentCollider = null;
 	private Collider CurrentCollider
     {
 		get => currentCollider;
@@ -83,12 +85,16 @@ public class PlayerCamera : MonoBehaviour
 			if(value != currentCollider || value == null)
             {
 				if(currentCollider != null)
-					currentCollider.GetComponent<IObservable>().EndObserve();
+					Observable.EndObserve();
 
 				currentCollider = value;
-				
+
 				if (currentCollider != null)
-					currentCollider.GetComponent<IObservable>().StartObserve();
+					Observable.StartObserve();
+            }
+            else
+            {
+				Observable?.Observe();
 			}
 		}
 	}

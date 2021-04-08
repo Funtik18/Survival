@@ -117,17 +117,6 @@ public class GeneralAvailability : MonoBehaviour
         }
     }
 
-    private static HoldLoader loader;
-    public static HoldLoader Loader
-    {
-        get
-        {
-            if (loader == null)
-                loader = TargetPoint.holdLoader;
-            return loader;
-        }
-    }
-
     private static InteractionButton buttonInteraction;
     public static InteractionButton ButtonInteraction
     {

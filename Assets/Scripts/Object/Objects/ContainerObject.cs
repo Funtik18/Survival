@@ -72,16 +72,16 @@ public class ContainerObject : WorldObject
     private void StartHold()
     {
         GeneralAvailability.Player.LockMovement();
-        GeneralAvailability.Loader.ShowLoader();
+        GeneralAvailability.TargetPoint.ShowBar();
 
     }
     private void ChangeHold(float value)
     {
-        GeneralAvailability.Loader.LoaderFillAmount = value;
+        GeneralAvailability.TargetPoint.SetBarValue(value);
     }
     private void BreakHold(float time)
     {
-        GeneralAvailability.Loader.HideLoader();
+        GeneralAvailability.TargetPoint.HideBar();
         Player.Instance.UnLockMovement();
 
         InteractionButton.pointer.SetupHold(scriptableData.time);
@@ -90,7 +90,7 @@ public class ContainerObject : WorldObject
     {
         isInspected = true;
 
-        GeneralAvailability.Loader.HideLoader();
+        GeneralAvailability.TargetPoint.HideBar();
         Player.Instance.UnLockMovement();
 
         Interact();

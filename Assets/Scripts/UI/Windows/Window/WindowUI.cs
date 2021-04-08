@@ -12,13 +12,13 @@ public abstract class WindowUI : MonoBehaviour
 
 	public bool IsOpened { get; private set; }
 
-    public void ShowWindow()
+    public virtual void ShowWindow()
 	{
 		canvasGroup.IsEnabled(true);
 
 		IsOpened = true;
 	}
-	public void HideWindow()
+	public virtual void HideWindow()
 	{
 		canvasGroup.IsEnabled(false);
 

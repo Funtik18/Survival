@@ -20,6 +20,8 @@ public class FireBuilding : BuildingObject
     private Times fireDuration;
     private Times fireEnd;
 
+    private Times current;
+
     protected bool isEnable = false;
     protected float randomValue;
 
@@ -48,18 +50,13 @@ public class FireBuilding : BuildingObject
             this.fireDuration = fireDuration;
             this.fireEnd = fireStart + fireDuration;
 
-            Debug.LogError(fireStart.ToStringSimplification() + "  " + fireEnd.ToStringSimplification());
-
             GeneralTime.Instance.AddActionByTime(StopFire, UpdateFire, fireEnd);
             EnableParticles();
         }
     }
     public void UpdateFire(Times time)
     {
-        int endSeconds = fireEnd.GetAllSeconds();
-        int timeSeconds = time.GetAllSeconds();
-
-        Debug.LogError("Осталось = " + (Mathf.Abs(endSeconds - timeSeconds)));
+        current = fireEnd - time;
     }
     public void StopFire()
     {
@@ -74,11 +71,29 @@ public class FireBuilding : BuildingObject
     public override void StartObserve()
     {
         base.StartObserve();
+        if (isEnable)
+        {
+            if(isEnableOnAwake)
+                GeneralAvailability.TargetPoint.SetTooltipAddText(current.ToStringSimplification(isInfinity : true)).ShowAddToolTip();
+            else
+                GeneralAvailability.TargetPoint.SetTooltipAddText(current.ToStringSimplification(true)).ShowAddToolTip();
+        }
         View();
+    }
+    public override void Observe()
+    {
+        if (isEnable)
+        {
+            base.Observe();
+            
+            if(!isEnableOnAwake)
+                GeneralAvailability.TargetPoint.SetTooltipAddText(current.ToStringSimplification(true));
+        }
     }
     public override void EndObserve()
     {
         base.EndObserve();
+        GeneralAvailability.TargetPoint.HideAddToolTip();
         InteractionButton.pointer.RemoveAllPressListeners();
     }
 
@@ -93,7 +108,6 @@ public class FireBuilding : BuildingObject
     {
         GeneralAvailability.PlayerUI.OpenIgnition(this);
     }
-
 
     public void EnableParticles()
     {

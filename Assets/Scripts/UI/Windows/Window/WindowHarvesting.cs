@@ -8,7 +8,7 @@ public class WindowHarvesting : WindowUI
     public UnityAction onBack;
     public UnityAction onHarvestingCompletely;
 
-    [SerializeField] private ProgressBarRadial barRadial;
+    [SerializeField] private ProgressBarRadialPercent barRadial;
     [Space]
     [SerializeField] private Pointer background;
     [SerializeField] private CustomPointer buttonBack;
@@ -78,8 +78,8 @@ public class WindowHarvesting : WindowUI
         GeneralTime.Instance.IsStopped = true;
         Times global = GeneralTime.Instance.globalTime;
 
-        int aTime = global.GetAllSeconds();
-        int bTime = aTime + kindleTime.GetAllSeconds();
+        int aTime = global.TotalSeconds;
+        int bTime = aTime + kindleTime.TotalSeconds;
         int secs = 0;
 
         float currentTime = Time.deltaTime;
@@ -90,7 +90,7 @@ public class WindowHarvesting : WindowUI
             secs = (int)Mathf.Lerp(aTime, bTime, progress);
             GeneralTime.Instance.ChangeTimeOn(secs);
 
-            barRadial.UpdateUI(progress);
+            barRadial.FillAmount = progress;
 
             currentTime += Time.deltaTime;
 
