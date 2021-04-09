@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.UI;
 using UnityEngine;
-using UnityEngine.UI;
 
 using Sirenix.OdinInspector;
 
@@ -11,7 +9,6 @@ public class ProgressBar : MonoBehaviour
     [ShowIf("useNumText")]
     [SerializeField] private TMPro.TextMeshProUGUI numText;
     [ShowIf("useNumText")]
-    [SerializeField] private ProgressBarExtension extension;
     [SerializeField] private bool useNumText = false;
     [Space]
     [ShowIf("useText")]
@@ -22,7 +19,6 @@ public class ProgressBar : MonoBehaviour
     [SerializeField] private Image icon;
     [SerializeField] private bool useIcon = false;
 
-
     private void Awake()
     {
         if (!useIcon && icon) icon.enabled = false;
@@ -30,33 +26,22 @@ public class ProgressBar : MonoBehaviour
         if (!useNumText && numText) numText.enabled = false;
     }
 
-
     public float FillAmount
     {
         get => bar.fillAmount;
-        set
-        {
-            bar.fillAmount = value;
+        set => bar.fillAmount = value;
+    }
 
-            if (useNumText)
-                numText.text = (Mathf.CeilToInt(value * 100)) + GetExtention();
-        }
+    public void UpdateFillAmount(float value, string expresion = "")
+    {
+        FillAmount = value;
+        
+        if (useNumText)
+            numText.text = (Mathf.CeilToInt(value * 100)) + expresion;
     }
 
     public void SetColor(Color color)
     {
         bar.color = color;
     }
-
-    private string GetExtention()
-    {
-        if (extension == ProgressBarExtension.Precent)
-            return "%";
-        return "";
-    }
-}
-public enum ProgressBarExtension
-{
-    None,
-    Precent,
 }

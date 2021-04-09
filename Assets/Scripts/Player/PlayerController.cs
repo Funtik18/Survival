@@ -8,6 +8,38 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private CharacterController characterController;
 
+    [Title("Angle")]
+    [SerializeField] private Vector2 pitchYMinMaxClamp = new Vector2(-90.0f, 45.0f);
+
+    [Title("Sensitivity-Smooth")]
+    [SerializeField] private float mouseSensitivity = 3.5f;
+    [SerializeField] private float touchSensitivity = 1.5f;
+    [Range(0.0f, 0.5f)]
+    [SerializeField] private float touchSmoothTime = 0.03f;
+    [Range(0.0f, 0.5f)]
+    [SerializeField] private float mouseSmoothTime = 0.03f;
+    [Space]
+    [Range(0.0f, 0.5f)]
+    [SerializeField] private float moveSmoothTime = 0.3f;
+    [Space]
+    [SerializeField] private float gravity = -13.0f;
+
+    [Title("Stats")]
+    [SerializeField] private float staminaSpeedSpending = 10f;
+    [SerializeField] private float staminaSpeedStandRecovering = 3f;
+    [SerializeField] private float staminaSpeedWalkingRecovering = 1f;
+
+    [Title("Speed")]
+    [SerializeField] private AnimationCurve accelerationCurve;
+    [SerializeField] private float maxRunSpeed = 5.5f;
+    [SerializeField] private float maxWalkSpeed = 3.0f;
+    [SerializeField] private float maxSlopeSpeed = 2.0f;
+    [ReadOnly] [SerializeField] private float currentSpeed = 0;
+
+    [Title("Slope")]
+    [SerializeField] private float slopeForce;
+    [SerializeField] private float slopeForceRayLength;
+
     #region Properties
     private Transform ownerTransform;
     private Transform OwnerTransform
@@ -25,7 +57,7 @@ public class PlayerController : MonoBehaviour
     {
         get
         {
-            if(ownerCamera == null)
+            if (ownerCamera == null)
                 ownerCamera = Player.Instance.playerCamera.transform;
             return ownerCamera;
         }
@@ -43,46 +75,18 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    [Space]
-    [SerializeField] private Vector2 pitchYMinMaxClamp = new Vector2(-90.0f, 45.0f);
+    private StatStamina stamina;
+    private PlayerStates states;
 
-    [SerializeField] private float mouseSensitivity = 3.5f;
-    [SerializeField] private float touchSensitivity = 1.5f;
-
-    [Range(0.0f, 0.5f)]
-    [SerializeField] private float touchSmoothTime = 0.03f;
-    [Range(0.0f, 0.5f)]
-    [SerializeField] private float mouseSmoothTime = 0.03f;
-
-    [Space]
-    [Title("Speed")]
-    [SerializeField] private AnimationCurve accelerationCurve;
-    [SerializeField] private float maxRunSpeed = 5.5f;
-    [SerializeField] private float maxWalkSpeed = 3.0f;
-    [SerializeField] private float maxSlopeSpeed = 2.0f;
-    [ReadOnly] [SerializeField] private float currentSpeed = 0;
+    private bool isSpeedUpBlocked = false;
+    private bool isSpeedUp = false;
     private float speedTimePosition;
-
-    [Title("Endurance")]
-    [SerializeField] private float maxEndurance = 100;
-    [ReadOnly] [SerializeField] private float currentEndurance;
-
-    [SerializeField] private float gravity = -13.0f;
-    [Range(0.0f, 0.5f)]
-    [SerializeField] private float moveSmoothTime = 0.3f;
-
-    [Space]
-    [SerializeField] private float slopeForce;
-    [SerializeField] private float slopeForceRayLength;
-
-    [Space]
-    [ReadOnly] [SerializeField] private float currentSensitivity;
-    [SerializeField] private float currentSmoothTime;
-
-    private bool speedUp = false;
 
     private float cameraPitch = 0.0f;
     private float velocityY = 0.0f;
+
+    private float currentSensitivity;
+    private float currentSmoothTime;
 
     private Vector2 currentDirection = Vector2.zero;
     private Vector2 currentDirVelocity = Vector2.zero;
@@ -93,8 +97,10 @@ public class PlayerController : MonoBehaviour
     private Vector2 targetLookDirection;
     private Vector2 targetMoveDirection;
 
-    public void Setup()
+    public void Setup(PlayerStats stats, PlayerStates states)
 	{
+        this.states = states;
+        this.stamina = stats.Stamina;
         currentSpeed = maxWalkSpeed;
     }
     public void UpdatePCLook()
@@ -133,15 +139,9 @@ public class PlayerController : MonoBehaviour
 
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                speedUp = true;
-            }
+                SpeedUp();
             else if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                speedTimePosition = 0;
-                currentSpeed = maxWalkSpeed; 
-                speedUp = false;
-            }
+                SpeedDown();
         }
 
 
@@ -164,7 +164,7 @@ public class PlayerController : MonoBehaviour
             targetMoveDirection.Normalize();
             currentDirection = Vector2.SmoothDamp(currentDirection, targetMoveDirection, ref currentDirVelocity, moveSmoothTime);
 
-            if (speedUp)
+            if (isSpeedUp)
             {
                 if (currentSpeed != maxRunSpeed)
                 {
@@ -178,6 +178,25 @@ public class PlayerController : MonoBehaviour
         UpdateGravity();
         UpdateVelocity();
     }
+
+    public void SpeedUp()
+    {
+        if (!isSpeedUpBlocked)
+        {
+            isSpeedUp = true;
+        }
+        else
+        {
+            SpeedDown();
+        }
+    }
+    public void SpeedDown()
+    {
+        isSpeedUp = false;
+        speedTimePosition = 0;
+        currentSpeed = maxWalkSpeed;
+    }
+
 
     private void UpdateLook()
     {
@@ -205,7 +224,34 @@ public class PlayerController : MonoBehaviour
     }
     private void UpdateVelocity()
     {
+        if(currentDirection != Vector2.zero)
+        {
+            if (isSpeedUp)
+            {
+                states.CurrentState = PlayerState.Sprinting;
+                stamina.CurrentValue -= staminaSpeedSpending * Time.deltaTime;
+            }
+            else
+            {
+                states.CurrentState = PlayerState.Walking;
+                if(!stamina.IsFull)
+                    stamina.CurrentValue += staminaSpeedWalkingRecovering * Time.deltaTime;
+            }
+        }
+        else
+        {
+            states.CurrentState = PlayerState.Standing;
+            if(!stamina.IsFull)
+                stamina.CurrentValue += staminaSpeedStandRecovering * Time.deltaTime;
+        }
+        isSpeedUpBlocked = stamina.IsEmpty;
+
+        if(isSpeedUp && isSpeedUpBlocked)
+            SpeedDown();
+
+
         Vector3 velocity = (OwnerTransform.forward * currentDirection.y + OwnerTransform.right * currentDirection.x) * currentSpeed + Vector3.up * velocityY;
+
         characterController.Move(velocity * Time.deltaTime);
     }
 

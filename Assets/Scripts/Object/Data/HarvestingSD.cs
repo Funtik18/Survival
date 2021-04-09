@@ -13,7 +13,11 @@ public class HarvestingSD : ObjectSD
     [Tooltip("Сколько секунд собирать.")]
     [Min(1f)]
     public float holdTime = 5f;
+    [SuffixLabel("cal", true)]
+    [Min(0)]
+    public float howManyCalories = 10;
     public Times howLong;
+    
 
     public List<ItemData> items = new List<ItemData>();
     public List<ItemSD> tools = new List<ItemSD>();

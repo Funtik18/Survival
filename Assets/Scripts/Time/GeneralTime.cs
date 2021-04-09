@@ -28,7 +28,7 @@ public class GeneralTime : MonoBehaviour
     [InfoBox("Time Flow = 1f / timeFlow")]
     public float timeFlow = 12f;
 
-    public int frequenceCycleSeconds = 300;
+    public int frequenceCycleSeconds = 300;//каждые 5 минут обновление
 
     [SerializeField] private TimeOfDayController controller;
 
@@ -39,9 +39,8 @@ public class GeneralTime : MonoBehaviour
 
     private WaitForSeconds seconds;
 
-    private List<TimeAction> actions = new List<TimeAction>();
-
-
+    private List<ActionByTime> actionsByTime = new List<ActionByTime>();
+    private UnityEvent actions = new UnityEvent();
 
     private void OnEnable()
     {
@@ -67,18 +66,8 @@ public class GeneralTime : MonoBehaviour
             if(globalTime.TotalSeconds % frequenceCycleSeconds == 0)
                 UpdateCycle();
 
-            for (int i = 0; i < actions.Count; i++)
-            {
-                TimeAction timeAction = actions[i];
-
-                timeAction.InvokeCallBack(globalTime);
-
-                if (timeAction.Check(globalTime))
-                {
-                    actions.Remove(timeAction);
-                }
-            }
-
+            UpdateActions();
+            
             while (IsStopped)
                 yield return null;
         }
@@ -98,6 +87,7 @@ public class GeneralTime : MonoBehaviour
     {
         globalTime.TotalSeconds = secs;
         UpdateCycle();
+        UpdateActions();
     }
 
     /// <summary>
@@ -107,13 +97,17 @@ public class GeneralTime : MonoBehaviour
     {
         if(globalTime < futureTime)
         {
-            TimeAction timeAction = new TimeAction(action, callBack, futureTime);
-            actions.Add(timeAction);
+            ActionByTime timeAction = new ActionByTime(action, callBack, futureTime);
+            actionsByTime.Add(timeAction);
         }
         else
         {
             Debug.LogError("FUTURE TIME ERROR");
         }
+    }
+    public void AddAction(UnityAction action)
+    {
+        actions.AddListener(action);
     }
 
     private void UpdateTimeToSeconds()
@@ -139,18 +133,35 @@ public class GeneralTime : MonoBehaviour
         controller.skyTime = globalTime.GetDayPercent();
     }
 
+    private void UpdateActions()
+    {
+        actions?.Invoke();
+
+        for (int i = 0; i < actionsByTime.Count; i++)
+        {
+            ActionByTime timeAction = actionsByTime[i];
+
+            timeAction.InvokeCallBack(globalTime);
+
+            if (timeAction.Check(globalTime))
+            {
+                actionsByTime.Remove(timeAction);
+            }
+        }
+    }
+
     public override string ToString()
     {
         return globalTime.ToString();
     }
 
-    public class TimeAction
+    public class ActionByTime
     {
         private UnityAction action;
         private UnityAction<Times> callBack;
         private Times time;
 
-        public TimeAction(UnityAction action, UnityAction<Times> callBack, Times time)
+        public ActionByTime(UnityAction action, UnityAction<Times> callBack, Times time)
         {
             this.action = action;
             this.callBack = callBack;
@@ -173,6 +184,19 @@ public class GeneralTime : MonoBehaviour
         public void InvokeCallBack(Times time)
         {
             callBack?.Invoke(time);
+        }
+    }
+    public class TimeAction
+    {
+        private UnityAction action;
+
+        public TimeAction(UnityAction action)
+        {
+            this.action = action;
+        }
+        public void Invoke()
+        {
+            action?.Invoke();
         }
     }
 }

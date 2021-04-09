@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerControlUI : WindowUI
 {
-	public EnduranceUI endurance;
-
 	[Title("Control")]
 	public TargetPoint targetPoint;
 	public Joystick joystickMove;
@@ -14,7 +12,13 @@ public class PlayerControlUI : WindowUI
 
 	[Title("Buttons")]
 	public InteractionButton buttonInteraction;
-	public CustomButton buttonSpeedUp;
+	public CustomPointer buttonSpeedUp;
+
+	public void Setup(PlayerController playerController)
+    {
+		buttonSpeedUp.pointer.AddPressListener(playerController.SpeedUp);
+		buttonSpeedUp.pointer.AddUnPressListener(playerController.SpeedDown);
+	}
 
 	#region Lock
 	public void LockControl()

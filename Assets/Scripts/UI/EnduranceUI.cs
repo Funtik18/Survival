@@ -22,14 +22,14 @@ public class EnduranceUI : MonoBehaviour
         get => currentPenalty.fillAmount;
     }
 
-    private Bar bar;
+    //private Bar bar;
 
-    public void Setup(Bar bar)
-    {
-        this.bar = bar;
+    //public void Setup(Bar bar)
+    //{
+    //    this.bar = bar;
 
-        UpdateEndurance();
-    }
+    //    UpdateEndurance();
+    //}
 
     private void UpdateEndurance()
 	{

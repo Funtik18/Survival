@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
+
+using UnityEngine;
 using UnityEngine.Events;
 
 public abstract class Attribute
 {
 	public abstract string ValueString { get; }
-	public UnityAction onValueChanged;
+	public UnityAction<string> onValueChanged;
 
-	public void UpdateAttribute()
+	public virtual void UpdateAttribute()
 	{
-		onValueChanged?.Invoke();
+		onValueChanged?.Invoke(ValueString);
 	}
 }
 
@@ -69,14 +71,98 @@ public abstract class Stat : AttributeModifiable
 		this.baseValue = baseValue;
 	}
 }
-
-
-public class StatEndurance : Stat
+public abstract class StatBar : Stat
 {
-	public StatEndurance(float baseValue) : base(baseValue) { }
+	public UnityAction<float> onCurrentValueChanged;
+	public UnityAction<float> onPercentValueChanged;
+
+	public bool IsFull => CurrentValue == Value;
+	public bool IsEmpty => CurrentValue == 0;
+
+	private float currentValue;
+	public float CurrentValue
+    {
+		get => currentValue;
+        set
+        {
+			currentValue = Mathf.Clamp(value, 0, Value);
+
+			UpdateAttribute();
+		}
+    }
+
+	public float PercentValue => CurrentValue / Value;
+
+	public StatBar(float baseValue, float currentValue) : base(baseValue) 
+	{
+		CurrentValue = currentValue;
+	}
+
+    public override void UpdateAttribute()
+    {
+        base.UpdateAttribute();
+		onCurrentValueChanged?.Invoke(currentValue);
+		onPercentValueChanged?.Invoke(PercentValue);
+	}
+}
+public class StatStamina : StatBar
+{
+	public StatStamina(float baseValue, float currentValue) : base(baseValue, currentValue) { }
+}
+public class StatCondition : StatBar
+{
+	public StatCondition(float baseValue, float currentValue) : base(baseValue, currentValue) { }
+}
+public class StatWarmth : StatBar
+{
+	public WarmthState state = WarmthState.Warm;
+	public StatWarmth(float baseValue, float currentValue) : base(baseValue, currentValue) { }
+}
+public class StatFatigue : StatBar
+{
+	public FatigueState state = FatigueState.Rested;
+	public StatFatigue(float baseValue, float currentValue) : base(baseValue, currentValue) { }
+}
+public class StatHungred : StatBar
+{
+	public HungredState state = HungredState.Full;
+	public StatHungred(float baseValue, float currentValue) : base(baseValue, currentValue) { }
+}
+public class StatThirst : StatBar
+{
+	public ThirstState state = ThirstState.Slaked;
+	public StatThirst(float baseValue, float currentValue) : base(baseValue, currentValue) { }
 }
 
-public class StatSpeed : Stat
+public enum WarmthState 
 {
-	public StatSpeed(float baseValue) : base(baseValue) {}
+	Warm,
+	Chilled,
+	Cold,
+	Numb,
+	Freezing,
+}
+public enum FatigueState
+{
+	Rested,
+	Winded,
+	Tired,
+	Drained,
+	Exhausted,
+}
+public enum HungredState 
+{
+	Full,
+	Peckish,
+	Hungry,
+	Ravenous,
+	Starving,
+}
+public enum ThirstState
+{
+	Slaked,
+	DryMouth,
+	Thirsty,
+	Parched,
+	Dehydrated,
 }
