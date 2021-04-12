@@ -73,8 +73,8 @@ Material:
     - _GradientFadeBegin: -0.123
     - _GradientFadeEnd: 0.38999978
     - _GradientFadeMiddlePosition: 0.561
-    - _HorizonFogDensity: 0.181
-    - _HorizonFogLength: 0.141
+    - _HorizonFogDensity: 0.5
+    - _HorizonFogLength: 0.079
     - _HorizonScaleFactor: 0.7
     - _MoonEdgeFade: 0.1
     - _MoonHDRBoost: 1
@@ -121,7 +121,7 @@ Material:
     - _GradientSkyLowerColor: {r: 0.22123703, g: 0.3220588, b: 0.4852941, a: 1}
     - _GradientSkyMiddleColor: {r: 0, g: 0.072037496, b: 0.19117647, a: 1}
     - _GradientSkyUpperColor: {r: 0.0055147037, g: 0.04094827, b: 0.125, a: 1}
-    - _HorizonFogColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HorizonFogColor: {r: 0.57796365, g: 0.60338193, b: 0.6415094, a: 1}
     - _MoonColor: {r: 0.97794116, g: 0.8656244, b: 0.49616134, a: 1}
     - _MoonPosition: {r: -0.37006715, g: 0.92900485, b: 0.00059049745, a: 0}
     - _MoonSpriteDimensions: {r: 0, g: 0, b: 0, a: 0}

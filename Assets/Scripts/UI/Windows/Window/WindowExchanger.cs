@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class WindowExchanger : WindowUI
 {
+    public UnityAction<Item, int> onOk;
+    public UnityAction<Item> onAll;
+    public UnityAction onCancel;
+
     private Item currentItem;
 
     [SerializeField] private Button buttonLeft;
@@ -54,14 +59,15 @@ public class WindowExchanger : WindowUI
 
     private void Ok()
     {
-        GeneralAvailability.PlayerInventory.RemoveItem(currentItem, (int)slider.value);
+        onOk?.Invoke(currentItem, (int)slider.value);
     }
     private void All()
     {
-        GeneralAvailability.PlayerInventory.RemoveItem(currentItem);
+        onAll?.Invoke(currentItem);
     }
     private void Cancel()
     {
         HideWindow();
+        onCancel?.Invoke();
     }
 }

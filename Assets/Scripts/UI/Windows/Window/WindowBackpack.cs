@@ -12,6 +12,7 @@ public class WindowBackpack : WindowUI
 	public ContainerUI secondaryContainer;
 	public ItemInspectorUI itemInspector;
 
+	[SerializeField] private TMPro.TextMeshProUGUI weight;
 	[Title("Buttons")]
 	[SerializeField] private Button buttonBack;
 
@@ -23,6 +24,7 @@ public class WindowBackpack : WindowUI
 		itemInspector.onActions += ActionsWith;
 		itemInspector.onDrop += DropItem;
 		primaryContainer.onUpdated += RefreshItemInspector;
+		primaryContainer.onUpdated += RefreshWeight;
 		buttonBack.onClick.AddListener(Back);
 
 		opportunities = GeneralAvailability.Player.Opportunities;
@@ -68,10 +70,15 @@ public class WindowBackpack : WindowUI
 		itemInspector.gameObject.SetActive(false);
 	}
 
-	public void RefreshItemInspector()
+	private void RefreshItemInspector()
     {
 		itemInspector.SetItem(null);
 	}
+	private void RefreshWeight()
+    {
+		weight.text = primaryContainer.currentInventory.GetWeight() + " / " + "30" + "KG";
+	}
+
 
 	private static void ItemShift(ContainerUI from, ContainerUI to, Item item)
     {

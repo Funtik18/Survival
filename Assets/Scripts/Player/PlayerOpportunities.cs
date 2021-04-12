@@ -11,6 +11,8 @@ public class PlayerOpportunities
 	private PlayerUI ui;
 	private Inventory inventory;
 
+	private WindowExchanger exchanger;
+
 	private Coroutine useCoroutine = null;
 	public bool IsUseProccess => useCoroutine != null;
 
@@ -19,6 +21,10 @@ public class PlayerOpportunities
 		this.owner = player;
 		this.ui = player.UI;
 		this.inventory = player.Inventory;
+
+		this.exchanger = ui.windowsUI.exchangerWindow;
+		exchanger.onOk += RemoveItem;
+		exchanger.onAll += RemoveItem;
 
 		thirst = player.Stats.Thirst;
 		hungred = player.Stats.Hungred;
@@ -30,19 +36,18 @@ public class PlayerOpportunities
 		if (itemData.StackSize > 1)
 		{
 			if (itemData.StackSize > 4)
-			{
-				ui.windowsUI.exchangerWindow.SetItem(item);
-			}
+				exchanger.SetItem(item);
 			else
-			{
-				inventory.RemoveItem(item, 1);
-			}
+				RemoveItem(item, 1);
 		}
 		else
-		{
-			inventory.RemoveItem(item);
-		}
+			RemoveItem(item);
 	}
+	public void DestroyItem(Item item)
+    {
+		inventory.RemoveItem(item);
+    }
+
 
 	public void UseItem(Item item)
 	{
@@ -98,7 +103,7 @@ public class PlayerOpportunities
 		ui.conditionUI.conditionWindow.hungred.EnableCondition(false);
 		ui.conditionUI.conditionWindow.thirst.EnableCondition(false);
 
-		DropItem(item);
+		DestroyItem(item);
 
 		StopUse();
 	}
@@ -112,5 +117,24 @@ public class PlayerOpportunities
 			ui.barHight.HideBar();
 			ui.HideBreakButton().onClick.RemoveAllListeners();
 		}
+	}
+
+	private void RemoveItem(Item item, int count)
+	{
+		inventory.RemoveItem(item, count);
+		CreateWorldItem(item, count);
+	}
+	private void RemoveItem(Item item)
+	{
+		RemoveItem(item, item.itemData.StackSize);
+	}
+	private void CreateWorldItem(Item item, int count)
+    {
+  //      for (int i = 0; i < count; i++)
+  //      {
+		//	ItemObject worldItem = GameObject.Instantiate(item.itemData.scriptableData.model);
+		//	worldItem.SetData(item.itemData);
+		//	worldItem.transform.position = owner.transform.position;
+		//}
 	}
 }

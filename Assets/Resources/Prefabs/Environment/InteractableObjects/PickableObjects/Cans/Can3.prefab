@@ -222,3 +222,4 @@ MonoBehaviour:
     scriptableData: {fileID: 11400000, guid: f09381bc1579d9f498ec0956cf1c7d09, type: 2}
     currentStackSize: 1
     currentDurrability: 100
+    currentCalories: 250

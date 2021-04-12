@@ -17,7 +17,6 @@ public class Inventory
 
     public bool IsEmpty => items.Count == 0;
 
-
     public bool ContainsType<SD>() => items.FirstOrDefault((x) => x.itemData.scriptableData is SD) != null;
 
     public void Init()
@@ -117,6 +116,18 @@ public class Inventory
             return true;
         }
         return false;
+    }
+
+    public float GetWeight()//оптимизировать
+    {
+        float weight = 0f;
+        for (int i = 0; i < items.Count; i++)
+        {
+            ItemDataWrapper data = items[i].itemData;
+
+            weight += data.StackSize * data.scriptableData.weight;
+        }
+        return weight;
     }
 
     public List<Item> GetAllBySD(ItemSD sd) => items.FindAll((x) => x.itemData.scriptableData == sd);

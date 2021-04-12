@@ -7,12 +7,22 @@ public class ItemObject : WorldObject
 
 	private void Awake()
     {
-		if (itemData == null) Debug.LogError("ItemError", this);
+		SetData(itemData);
+	}
 
-		item = new Item(itemData);
-    }
+	public void SetData(ItemDataWrapper data)
+    {
+		if (item == null)
+		{
+			item = new Item(data);
+		}
+        else
+        {
+			item.itemData = data;
+        }
+	}
 
-    public override void StartObserve()
+	public override void StartObserve()
 	{
 		base.StartObserve();
 		InteractionButton.pointer.AddPressListener(Interact);

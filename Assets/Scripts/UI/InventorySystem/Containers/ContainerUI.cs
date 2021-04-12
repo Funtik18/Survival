@@ -8,8 +8,9 @@ public class ContainerUI : MonoBehaviour
 
     public UnityAction<ContainerSlotUI> onSlotChoosen;
 
-
     [SerializeField] private ContainerGridUI grid;
+    [SerializeField] private TMPro.TextMeshProUGUI weightText;
+
 
     [HideInInspector] public Inventory currentInventory;
 
@@ -23,7 +24,7 @@ public class ContainerUI : MonoBehaviour
         currentInventory = inventory;
 
         currentInventory.onCollectionChanged += UpdateGrid;
-        grid.PutItemsList(currentInventory.items);
+        UpdateGrid(currentInventory.items);
     }
     public void UnSubscribeInventory()
     {
@@ -44,7 +45,14 @@ public class ContainerUI : MonoBehaviour
     {
         grid.PutItemsList(items);
 
+        UpdateWeight();
+
         onUpdated?.Invoke();
+    }
+
+    private void UpdateWeight()
+    {
+        weightText.text = currentInventory.GetWeight() + " KG";
     }
 
     private void SlotChoosen(ContainerSlotUI slot)
