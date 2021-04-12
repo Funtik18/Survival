@@ -2,7 +2,7 @@
 
 public class ItemObject : WorldObject
 {
-	[SerializeField] private ItemData itemData;
+	[SerializeField] private ItemDataWrapper itemData;
 	[HideInInspector] public Item item;
 
 	private void Awake()

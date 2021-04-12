@@ -119,14 +119,14 @@ public class IgnitionRequirementUI : WindowUI
     {
         if (items.Count > 0)
         {
-            ItemData item = items[CurrentIndex].itemData;
+            ItemDataWrapper itemData = items[CurrentIndex].itemData;
 
             indicatorText.text = "1 of " + items[CurrentIndex].itemData.StackSize;//fix it;
 
             itemHelperText.text = itemText.text;
-            itemText.text = item.scriptableData.objectName;
+            itemText.text = itemData.scriptableData.objectName;
 
-            itemIcon.sprite = item.scriptableData.itemSprite;
+            itemIcon.sprite = itemData.scriptableData.itemSprite;
             itemIcon.enabled = true;
 
             rejectIcon.enabled = false;

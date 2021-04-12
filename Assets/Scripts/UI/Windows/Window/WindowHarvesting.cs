@@ -8,7 +8,7 @@ public class WindowHarvesting : WindowUI
     public UnityAction onBack;
     public UnityAction onHarvestingCompletely;
 
-    [SerializeField] private ProgressBarRadialPercent barRadial;
+    [SerializeField] private ProgressBar barRadial;
     [Space]
     [SerializeField] private Pointer background;
     [SerializeField] private CustomPointer buttonBack;
@@ -69,7 +69,7 @@ public class WindowHarvesting : WindowUI
         HideWindow();
         if (!IsHoldIgnitionProccess)
         {
-            barRadial.ShowWindow();
+            barRadial.ShowBar();
             holdIgnitionCoroutine = StartCoroutine(Hold());
         }
     }
@@ -90,7 +90,7 @@ public class WindowHarvesting : WindowUI
             secs = (int)Mathf.Lerp(aTime, bTime, progress);
             GeneralTime.Instance.ChangeTimeOn(secs);
 
-            barRadial.FillAmount = progress;
+            barRadial.UpdateFillAmount(progress, "%");
 
             currentTime += Time.deltaTime;
 
@@ -112,7 +112,7 @@ public class WindowHarvesting : WindowUI
             StopCoroutine(holdIgnitionCoroutine);
             holdIgnitionCoroutine = null;
 
-            barRadial.HideWindow();
+            barRadial.HideBar();
         }
     }
 
@@ -120,7 +120,7 @@ public class WindowHarvesting : WindowUI
     {
         for (int i = 0; i < harvesting.data.items.Count; i++)
         {
-            ItemData copyItem = harvesting.data.items[i].Copy();
+            ItemDataWrapper copyItem = harvesting.data.items[i].Copy();
 
             inventory.AddItem(copyItem);
         }

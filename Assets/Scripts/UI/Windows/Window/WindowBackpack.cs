@@ -1,10 +1,8 @@
-﻿using Sirenix.OdinInspector;
-
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine;
+
+using Sirenix.OdinInspector;
 
 public class WindowBackpack : WindowUI
 {
@@ -17,11 +15,17 @@ public class WindowBackpack : WindowUI
 	[Title("Buttons")]
 	[SerializeField] private Button buttonBack;
 
+	private PlayerOpportunities opportunities;
+
 	private void Awake()
 	{
+		itemInspector.onUse += UseItem;
+		itemInspector.onActions += ActionsWith;
 		itemInspector.onDrop += DropItem;
 		primaryContainer.onUpdated += RefreshItemInspector;
 		buttonBack.onClick.AddListener(Back);
+
+		opportunities = GeneralAvailability.Player.Opportunities;
 	}
 
 	public void ShowBackpackInspector()
@@ -53,7 +57,6 @@ public class WindowBackpack : WindowUI
 		HideWindow();
 	}
 
-
 	public void OpenItemInspector()
 	{
 		secondaryContainer.gameObject.SetActive(false);
@@ -70,33 +73,27 @@ public class WindowBackpack : WindowUI
 		itemInspector.SetItem(null);
 	}
 
-	private static void ItemShift(ContainerUI from, ContainerUI to, Item x)
+	private static void ItemShift(ContainerUI from, ContainerUI to, Item item)
     {
-        if (x != null)
+        if (item != null)
         {
-            to.currentInventory.AddItem(x.itemData);
-            from.currentInventory.RemoveItem(x);
+            to.currentInventory.AddItem(item.itemData);
+            from.currentInventory.RemoveItem(item);
         }
     }
 
+
+	private void UseItem(Item item)
+    {
+		opportunities.UseItem(item);
+	}
+	private void ActionsWith(Item item)
+    {
+
+    }
     private void DropItem(Item item)
     {
-		ItemData itemData = item.itemData;
-		if(itemData.StackSize > 1)
-        {
-			if(itemData.StackSize > 4)
-            {
-				GeneralAvailability.ExchangerWindow.SetItem(item);
-            }
-            else
-            {
-				GeneralAvailability.PlayerInventory.RemoveItem(item, 1);
-			}
-		}
-        else
-        {
-			GeneralAvailability.PlayerInventory.RemoveItem(item);
-		}
+		opportunities.DropItem(item);
 	}
 
 	private void Back()

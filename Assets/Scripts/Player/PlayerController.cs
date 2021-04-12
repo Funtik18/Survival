@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
         get
         {
             if (controlUI == null)
-                controlUI = Player.Instance.playerUI.controlUI;
+                controlUI = Player.Instance.UI.controlUI;
             return controlUI;
         }
     }

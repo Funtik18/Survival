@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TargetPoint : MonoBehaviour
 {
-	[SerializeField] private ProgressBarBasic radialBar;
+	[SerializeField] private ProgressBar radialBar;
 	[Space]
 	[SerializeField] private Image point;
 	[SerializeField] private TMPro.TextMeshProUGUI toolTipText;
@@ -24,7 +24,7 @@ public class TargetPoint : MonoBehaviour
 
 	public TargetPoint SetBarValue(float value)
     {
-		radialBar.FillAmount = value;
+		radialBar.UpdateFillAmount(value);
 		return this;
     }
 
@@ -54,12 +54,12 @@ public class TargetPoint : MonoBehaviour
 	[Button]
 	public void ShowBar()
 	{
-		radialBar.ShowWindow();
+		radialBar.ShowBar();
 	}
 	[Button]
 	public void HideBar()
 	{
-		radialBar.HideWindow();
+		radialBar.HideBar();
 	}
 
 	[Button]

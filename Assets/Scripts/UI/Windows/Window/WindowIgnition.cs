@@ -8,7 +8,7 @@ public class WindowIgnition : WindowUI
     public UnityAction onBack;
     public UnityAction onIgnitionCompletely;
 
-    [SerializeField] private ProgressBarRadialPercent barRadial;
+    [SerializeField] private ProgressBar barRadial;
     [Space]
     [SerializeField] private Pointer background;
     [SerializeField] private CustomPointer buttonBack;
@@ -134,10 +134,10 @@ public class WindowIgnition : WindowUI
     {
         if (isCanIgnition)
         {
-            HideWindow();
+            HideWindow();//
             if (!IsHoldIgnitionProccess)
             {
-                barRadial.ShowWindow();
+                barRadial.ShowBar();
                 holdIgnitionCoroutine = StartCoroutine(Hold());
             }
         }
@@ -167,7 +167,7 @@ public class WindowIgnition : WindowUI
             secs = (int)Mathf.Lerp(aTime, bTime, progress);
             GeneralTime.Instance.ChangeTimeOn(secs);
 
-            barRadial.FillAmount = progress;
+            barRadial.UpdateFillAmount(progress, "%");
 
             currentTime += Time.deltaTime;
 
@@ -189,7 +189,7 @@ public class WindowIgnition : WindowUI
             StopCoroutine(holdIgnitionCoroutine);
             holdIgnitionCoroutine = null;
 
-            barRadial.HideWindow();
+            barRadial.HideBar();
         }
     }
 

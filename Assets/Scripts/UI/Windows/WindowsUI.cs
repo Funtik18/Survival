@@ -7,8 +7,12 @@ public class WindowsUI : MonoBehaviour
 	public WindowBuild buildingWindow;
 	public WindowItemInspector itemInspectorWindow;
 	public WindowBackpack backpackWindow;
-	public WindowExchanger exchangerWindow;
 
+	[Space]
+	public WindowExchanger exchangerWindow;
+	public WindowResting restingWindow;
+	
+	[Space]
 	public WindowIgnition ignitionWindow;
 	public WindowHarvesting harvestingWindow;
 

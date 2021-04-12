@@ -12,7 +12,7 @@ public class Inventory
     public UnityAction<List<Item>> onCollectionChanged;
 
     [ListDrawerSettings(ShowIndexLabels = true)]
-    [SerializeField] private List<ItemData> initItems = new List<ItemData>();
+    [SerializeField] private List<ItemDataWrapper> initItems = new List<ItemDataWrapper>();
     [HideInInspector] public List<Item> items = new List<Item>();
 
     public bool IsEmpty => items.Count == 0;
@@ -28,7 +28,7 @@ public class Inventory
         }
     }
 
-    public bool AddItem(ItemData itemData)
+    public bool AddItem(ItemDataWrapper itemData)
     {
         if (itemData != null)
         {
@@ -38,7 +38,7 @@ public class Inventory
             {
                 for (int i = 0; i < findedSameItems.Count; i++)
                 {
-                    ItemData findedData = findedSameItems[i].itemData;
+                    ItemDataWrapper findedData = findedSameItems[i].itemData;
                     int difference = findedData.StackDiffrence;
 
                     if (difference != 0)
@@ -72,42 +72,12 @@ public class Inventory
             return true;
         }
         return false;
-        //if (findedItem != null)//если нашёл тот же айтем
-        //{
-        //    ItemData findedData = findedItem.itemData;
-
-        //    int findedDataMaxSize = findedData.scriptableData.stackSize;
-        //    if (findedData.CurrentStackSize < findedDataMaxSize) // если у айтема которого нашли есть свободное место
-        //    {
-        //        int count = findedData.CurrentStackSize + itemData.CurrentStackSize;
-        //        if (count <= findedDataMaxSize)
-        //        {
-        //            findedData.CurrentStackSize += itemData.CurrentStackSize;
-        //        }
-        //        else
-        //        {
-        //            findedData.CurrentStackSize = findedDataMaxSize;
-
-        //            Item newItem = new Item(itemData);
-        //            newItem.itemData.CurrentStackSize = count % findedDataMaxSize;
-        //            items.Add(newItem);
-        //        }
-        //    }
-        //    else//последний айтем полный
-        //    {
-        //        items.Add(new Item(itemData));
-        //    }
-        //}
-        //else
-        //{
-        //    items.Add(new Item(itemData));
-        //}
     }
     public bool RemoveItem(Item item, int count)
     {
         if (item != null)
         {
-            ItemData data = item.itemData;
+            ItemDataWrapper data = item.itemData;
 
             if (data.StackSize > count && count > 0)
             {

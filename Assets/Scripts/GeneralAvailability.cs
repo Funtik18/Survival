@@ -25,7 +25,7 @@ public class GeneralAvailability : MonoBehaviour
         {
             if (playerUI == null)
             {
-                playerUI = Player.playerUI;
+                playerUI = Player.UI;
             }
             return playerUI;
         }
@@ -78,7 +78,7 @@ public class GeneralAvailability : MonoBehaviour
         get
         {
             if (inspectorWindow == null)
-                inspectorWindow = Player.playerUI.windowsUI.itemInspectorWindow;
+                inspectorWindow = Player.UI.windowsUI.itemInspectorWindow;
             return inspectorWindow;
         }
     }
@@ -89,7 +89,7 @@ public class GeneralAvailability : MonoBehaviour
         get
         {
             if (backpackWindow == null)
-                backpackWindow = Player.playerUI.windowsUI.backpackWindow;
+                backpackWindow = Player.UI.windowsUI.backpackWindow;
             return backpackWindow;
         }
     }
@@ -100,7 +100,7 @@ public class GeneralAvailability : MonoBehaviour
         get
         {
             if (exchangerWindow == null)
-                exchangerWindow = Player.playerUI.windowsUI.exchangerWindow;
+                exchangerWindow = Player.UI.windowsUI.exchangerWindow;
             return exchangerWindow;
         }
     }
@@ -112,7 +112,7 @@ public class GeneralAvailability : MonoBehaviour
         get
         {
             if (targetPoint == null)
-                targetPoint = Player.playerUI.controlUI.targetPoint;
+                targetPoint = Player.UI.controlUI.targetPoint;
             return targetPoint;
         }
     }
@@ -123,7 +123,7 @@ public class GeneralAvailability : MonoBehaviour
         get
         {
             if (buttonInteraction == null)
-                buttonInteraction = Player.playerUI.controlUI.buttonInteraction;
+                buttonInteraction = Player.UI.controlUI.buttonInteraction;
             return buttonInteraction;
         }
     }

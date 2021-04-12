@@ -2,6 +2,7 @@
 
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -18,51 +19,41 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	[SerializeField] private PlayerData data;
-	public PlayerStats stats;
+	[SerializeField] private PlayerData Data;
+	public PlayerStats Stats;
 
-	public PlayerStates states;
+	public PlayerOpportunities Opportunities;
+	public PlayerStates States;
 	public PlayerInventory Inventory;
 	public Build Build;
 
-	public PlayerController playerController;
+	public PlayerController Controller;
 	public PlayerCamera playerCamera;
-	public PlayerUI playerUI;
+	public PlayerUI UI;
 
-	public ItemInspector itemInspector;
+	public ItemInspector itemInspector;//make it
 
 	[Space]
 	[SerializeField] private bool isLockCursor = true;
 
-	private Transform trans;
-	public Transform Transform
-	{
-		get
-		{
-			if(trans == null)
-				trans = transform;
-			return trans;
-		}
-	}
-
-
 	private bool isMoveLocked = false;
 	private bool isLookLocked = false;
 
-
 	private void Awake()
 	{
-		stats = new PlayerStats(data.statsData);
-		states.AddAction(SwapStateChanged);
+		Stats = new PlayerStats(Data.statsData);
+		States.AddAction(SwapStateChanged);
+
+		Controller.Setup(Stats, States);
 
 		Inventory.Init();
 		Build.Init(this);
 
-		playerController.Setup(stats, states);
-
 		GeneralTime.Instance.AddAction(UpdateStats);
 
-		playerUI.Setup(this);
+		UI.Setup(this);
+
+		Opportunities.Setup(this);
 
 		CheckCursor();
 	}
@@ -74,11 +65,11 @@ public class Player : MonoBehaviour
 			Debug.LogError("Mobile");
 			if (isMoveLocked == false)
 			{
-				playerController.UpdateMobileMovement();
+				Controller.UpdateMobileMovement();
 			}
             if (isLookLocked == false)
             {
-				playerController.UpdateMobileLook();
+				Controller.UpdateMobileLook();
 			}
 		}
 		else if (GeneralSettings.IsPlatformPC)
@@ -86,17 +77,17 @@ public class Player : MonoBehaviour
 			Debug.LogError("PC");
 			if (isMoveLocked == false)
 			{
-				playerController.UpdatePCMovement();
+				Controller.UpdatePCMovement();
 			}
             if (isLookLocked == false)
             {
-				playerController.UpdatePCLook();
+				Controller.UpdatePCLook();
 			}
 		}
 	}
 
-    #region Stats
-    private UnityAction onStats; 
+	#region Stats
+	private UnityAction onStats; 
 	private void SwapStateChanged(PlayerState state)
     {
 		onStats = null;
@@ -134,48 +125,48 @@ public class Player : MonoBehaviour
 
 	private void ConditionFormule()
     {
-		if (stats.Warmth.CurrentValue == 0)
+		if (Stats.Warmth.CurrentValue == 0)
 		{
-			stats.Condition.CurrentValue -= (stats.Condition.Value * 4.5f) / 86400f;//-450.0%/d or ~18.75%/h
+			Stats.Condition.CurrentValue -= (Stats.Condition.Value * 4.5f) / 86400f;//-450.0%/d or ~18.75%/h
 		}
-		if (stats.Fatigue.CurrentValue == 0)
+		if (Stats.Fatigue.CurrentValue == 0)
 		{
-			stats.Condition.CurrentValue -= (stats.Condition.Value * 0.25f) / 86400f;//-25.0%/d or ~1.04%/h
+			Stats.Condition.CurrentValue -= (Stats.Condition.Value * 0.25f) / 86400f;//-25.0%/d or ~1.04%/h
 		}
-		if (stats.Hungred.CurrentValue == 0)
+		if (Stats.Hungred.CurrentValue == 0)
         {
-			stats.Condition.CurrentValue -= (stats.Condition.Value * 0.25f) / 86400f;//-25.0%/d or ~1.04%/h
+			Stats.Condition.CurrentValue -= (Stats.Condition.Value * 0.25f) / 86400f;//-25.0%/d or ~1.04%/h
 		}
-		if (stats.Thirst.CurrentValue == 0)
+		if (Stats.Thirst.CurrentValue == 0)
 		{
-			stats.Condition.CurrentValue -= (stats.Condition.Value * 0.5f) / 86400f;//-50.0%/d or ~2.08%/h
+			Stats.Condition.CurrentValue -= (Stats.Condition.Value * 0.5f) / 86400f;//-50.0%/d or ~2.08%/h
 		}
 	}
 
 	private void AwakeFormule()
 	{
-		stats.Thirst.CurrentValue -= stats.Thirst.Value / (8f * 3600f);//100% / 8h or 12.5%/h
+		Stats.Thirst.CurrentValue -= Stats.Thirst.Value / (8f * 3600f);//100% / 8h or 12.5%/h
 	}
 	private void SleepingFormule()
 	{
-		stats.Hungred.CurrentValue -= 75f / 3600f;//75 cal/h
-		stats.Thirst.CurrentValue -= stats.Thirst.Value / (12f * 3600f);//100% / 12h or ~8.33%/h
+		Stats.Hungred.CurrentValue -= 75f / 3600f;//75 cal/h
+		Stats.Thirst.CurrentValue -= Stats.Thirst.Value / (12f * 3600f);//100% / 12h or ~8.33%/h
 	}
 	private void StandingFormule()
     {
-		stats.Hungred.CurrentValue -= 125f / 3600f;//125 cal/h
+		Stats.Hungred.CurrentValue -= 125f / 3600f;//125 cal/h
 
 		AwakeFormule();
 	}
 	private void WalkingFormule()
 	{
-		stats.Hungred.CurrentValue -= 200f / 3600f;//200 cal/h
+		Stats.Hungred.CurrentValue -= 200f / 3600f;//200 cal/h
 
 		AwakeFormule();
 	}
 	private void SprintingFormule()
 	{
-		stats.Hungred.CurrentValue -= 400f / 3600f;//400 cal/h
+		Stats.Hungred.CurrentValue -= 400f / 3600f;//400 cal/h
 
 		AwakeFormule();
 	}
@@ -187,31 +178,37 @@ public class Player : MonoBehaviour
 		isMoveLocked = true;
 		isLookLocked = true;
         playerCamera.LockVision();
-        playerUI.controlUI.LockControl();
+        UI.controlUI.LockControl();
     }
 	public void UnLock()
     {
 		isMoveLocked = false;
 		isLookLocked = false;
         playerCamera.UnLockVision();
-        playerUI.controlUI.UnLockControl();
+        UI.controlUI.UnLockControl();
     }
 
 	public void LockMovement()
     {
 		isMoveLocked = true;
 		isLookLocked = true;
-		playerUI.controlUI.LockControl();
+		UI.controlUI.LockControl();
 	}
 	public void UnLockMovement()
     {
 		isMoveLocked = false;
 		isLookLocked = false;
-		playerUI.controlUI.UnLockControl();
+		UI.controlUI.UnLockControl();
 	}
     #endregion
 
-    private void CheckCursor()
+	private float Normalize(float value, float min, float max)
+	{
+		float normalized = (value - min) / (max - min);
+		return normalized;
+	}
+
+	private void CheckCursor()
 	{
 		if(isLockCursor)
 		{

@@ -10,11 +10,15 @@ public class ItemInspectorUI : MonoBehaviour
 
 	[SerializeField] private TMPro.TextMeshProUGUI itemTittle;
 	[SerializeField] private TMPro.TextMeshProUGUI itemDescription;
-
+	[Space]
 	[SerializeField] private Button buttonUse;
 	[SerializeField] private Button buttonActions;
 	[SerializeField] private Button buttonDrop;
-
+	[Space]
+	[SerializeField] private TMPro.TextMeshProUGUI useText;
+	[SerializeField] private TMPro.TextMeshProUGUI actionsText;
+	[SerializeField] private TMPro.TextMeshProUGUI dropText;
+	[Space]
 	[SerializeField] private ItemView3D view3D;
 
 	//cash
@@ -35,14 +39,14 @@ public class ItemInspectorUI : MonoBehaviour
 
 		if(currentSlot != null && !currentSlot.IsEmpty)
 		{
-			ItemSD data = currentSlot.item.itemData.scriptableData;
+			ItemSD data = currentSlot.ScriptableData;
 
 			itemTittle.text = data.name;
 			itemDescription.text = data.description;
 
-			buttonDrop.gameObject.SetActive(true);
-
 			view3D.InstantiateModel(data.model);
+
+			CheckItemType(data);
 		}
 		else
 		{
@@ -57,6 +61,26 @@ public class ItemInspectorUI : MonoBehaviour
 		}
 	}
 
+
+	private void CheckItemType(ItemSD item)
+    {
+		buttonDrop.gameObject.SetActive(true);
+	
+		if(item is ConsuableItemSD consuable)
+        {
+
+			if(consuable is PotionItemSD)
+            {
+				useText.text = "DRINK";
+			}
+			else if(consuable is FoodItemSD)
+            {
+				useText.text = "EAT";
+			}
+
+			buttonUse.gameObject.SetActive(true);
+		}
+	}
 
 	private void Use()
     {

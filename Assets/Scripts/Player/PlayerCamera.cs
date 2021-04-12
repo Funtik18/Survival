@@ -146,7 +146,8 @@ public class PlayerCamera : MonoBehaviour
                 }
                 else
                 {
-                    GeneralAvailability.TargetPoint.HidePoint();
+					DisposeCollider();
+					GeneralAvailability.TargetPoint.HidePoint();
                 }
 
                 //Debug.DrawLine(Transform.position, Transform.position + (Transform.forward * rayDistance), Color.blue);

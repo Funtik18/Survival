@@ -18,7 +18,7 @@ public class HarvestingSD : ObjectSD
     public float howManyCalories = 10;
     public Times howLong;
     
-
-    public List<ItemData> items = new List<ItemData>();
+    //награда
+    public List<ItemDataWrapper> items = new List<ItemDataWrapper>();
     public List<ItemSD> tools = new List<ItemSD>();
 }

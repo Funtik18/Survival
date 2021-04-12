@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class WindowExchanger : WindowUI
@@ -57,7 +55,6 @@ public class WindowExchanger : WindowUI
     private void Ok()
     {
         GeneralAvailability.PlayerInventory.RemoveItem(currentItem, (int)slider.value);
-        //currentItem.itemData.CurrentStackSize -= (int)slider.value; 
     }
     private void All()
     {

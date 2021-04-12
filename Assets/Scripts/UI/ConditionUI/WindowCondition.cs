@@ -2,23 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConditionUI : WindowUI
+public class WindowCondition : MonoBehaviour
 {
-    [SerializeField] private ProgressBarLimiting enduranceBar;
-    [Space]
     [SerializeField] private ProgressBar warmthBar;
     [SerializeField] private ProgressBar fatigueBar;
     [SerializeField] private ProgressBar hungredBar;
     [SerializeField] private ProgressBar thirstBar;
     [Space]
-    [SerializeField] private TMPro.TextMeshProUGUI colories;
-    [SerializeField] private TMPro.TextMeshProUGUI temperature;
-    [SerializeField] private TMPro.TextMeshProUGUI condition;
+    [SerializeField] private TMPro.TextMeshProUGUI caloriesText;
+    [SerializeField] private TMPro.TextMeshProUGUI temperatureText;
+    [SerializeField] private TMPro.TextMeshProUGUI conditionText;
+    [Space]
+    public ConditionElementUI warmth;
+    public ConditionElementUI fatigue;
+    public ConditionElementUI hungred;
+    public ConditionElementUI thirst;
+    public ConditionElementUI calories;
+    public ConditionElementUI temperature;
+    public ConditionElementUI condition;
 
     public void Setup(PlayerStats stats)
     {
-        stats.Stamina.onPercentValueChanged += UpdateStamina;
-
         stats.Condition.onCurrentValueChanged += UpdateCondition;
 
         stats.Warmth.onPercentValueChanged += UpdateWarmth;
@@ -29,9 +33,6 @@ public class ConditionUI : WindowUI
         stats.Hungred.onPercentValueChanged += UpdateHungred;
 
         stats.Thirst.onPercentValueChanged += UpdateThirst;
-
-
-        UpdateStamina(stats.Stamina.PercentValue);
 
         UpdateCondition(stats.Condition.CurrentValue);
 
@@ -45,35 +46,47 @@ public class ConditionUI : WindowUI
         UpdateThirst(stats.Thirst.PercentValue);
     }
 
-    private void UpdateStamina(float value)
+    public void ShowAll()
     {
-        enduranceBar.UpdateFillAmount(value, 0);
+        warmth.EnableCondition();
+        fatigue.EnableCondition();
+        hungred.EnableCondition();
+        thirst.EnableCondition();
+        calories.EnableCondition();
+        temperature.EnableCondition();
+        condition.EnableCondition();
+    }
+    public void HideAll()
+    {
+        warmth.EnableCondition(false);
+        fatigue.EnableCondition(false);
+        hungred.EnableCondition(false);
+        thirst.EnableCondition(false);
+        calories.EnableCondition(false);
+        temperature.EnableCondition(false);
+        condition.EnableCondition(false);
     }
 
     private void UpdateCondition(float value)
     {
-        condition.text = (int)value + "%";
+        conditionText.text = (int)value + "%";
     }
-
     private void UpdateWarmth(float value)
     {
         warmthBar.UpdateFillAmount(value, "%");
     }
-
     private void UpdateFatigue(float value)
     {
         fatigueBar.UpdateFillAmount(value, "%");
     }
-
     private void UpdateHungred(float value)
     {
         hungredBar.UpdateFillAmount(value, "%");
     }
     private void UpdateColories(float value)
     {
-        colories.text = (int)value + "cal";
+        caloriesText.text = (int)value + "Kcal";
     }
-
     private void UpdateThirst(float value)
     {
         thirstBar.UpdateFillAmount(value, "%");

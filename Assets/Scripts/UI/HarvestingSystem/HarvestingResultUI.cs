@@ -9,9 +9,9 @@ public class HarvestingResultUI : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI itemCount;
     [SerializeField] private TMPro.TextMeshProUGUI itemName;
 
-    private ItemData item;
+    private ItemDataWrapper item;
 
-    public void SetItem(ItemData item)
+    public void SetItem(ItemDataWrapper item)
     {
         this.item = item;
 

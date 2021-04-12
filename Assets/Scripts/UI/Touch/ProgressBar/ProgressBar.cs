@@ -8,7 +8,6 @@ public class ProgressBar : MonoBehaviour
     [SerializeField] private Image bar;
     [ShowIf("useNumText")]
     [SerializeField] private TMPro.TextMeshProUGUI numText;
-    [ShowIf("useNumText")]
     [SerializeField] private bool useNumText = false;
     [Space]
     [ShowIf("useText")]
@@ -18,6 +17,9 @@ public class ProgressBar : MonoBehaviour
     [ShowIf("useIcon")]
     [SerializeField] private Image icon;
     [SerializeField] private bool useIcon = false;
+    [ShowIf("useCanvasGroup")]
+    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private bool useCanvasGroup = false;
 
     private void Awake()
     {
@@ -43,5 +45,22 @@ public class ProgressBar : MonoBehaviour
     public void SetColor(Color color)
     {
         bar.color = color;
+    }
+
+
+    [ShowIf("useCanvasGroup")]
+    [Button]
+    public void ShowBar()
+    {
+        if(useCanvasGroup)
+            canvasGroup.IsEnabled(true);
+    }
+
+    [ShowIf("useCanvasGroup")]
+    [Button]
+    public void HideBar()
+    {
+        if(useCanvasGroup)
+            canvasGroup.IsEnabled(false);
     }
 }

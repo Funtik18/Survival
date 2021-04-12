@@ -32,7 +32,7 @@ public class ContainerSlotUI : MonoBehaviour
 
 	public bool IsEmpty => item == null;
 
-	private ItemSD ItemScriptableData => item.itemData.scriptableData;
+	public ItemSD ScriptableData => item.itemData.scriptableData;
 
 
     private void OnEnable()
@@ -77,16 +77,16 @@ public class ContainerSlotUI : MonoBehaviour
     {
 		isItemEqupedImage.enabled = false;
 
-		itemIcon.sprite = ItemScriptableData.itemSprite;
+		itemIcon.sprite = ScriptableData.itemSprite;
 		itemIcon.enabled = true;
 
 		abstractImage.sprite = abstractSprites[Random.Range(0, abstractSprites.Count)];
 		abstractImage.enabled = true;
 
-		weightText.text = ItemScriptableData.weight + "KG";
+		weightText.text = ScriptableData.weight + "KG";
 		ShowHideItemWeight(true);
 
-		if (ItemScriptableData.isBreakable)
+		if (ScriptableData.isBreakable)
 		{
 			durabilityText.text = item.itemData.CurrentDurrability + "%";
 			ShowHideItemDurability(true);

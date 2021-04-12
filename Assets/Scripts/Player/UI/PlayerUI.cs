@@ -1,16 +1,23 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
 	public PlayerControlUI controlUI;
 	public ConditionUI conditionUI;
 	public WindowsUI windowsUI;
+	[Space]
+	public ProgressBar barLow;
+	public ProgressBar barHight;
+	[Space]
+	public Button buttonBreak;
+	public GameObject panelBreak;
 
 	public void Setup(Player player)
 	{
-		controlUI.Setup(player.playerController);
+		controlUI.Setup(player.Controller);
 
-		conditionUI.Setup(player.stats);
+		conditionUI.Setup(player.Stats);
 
 		windowsUI.itemInspectorWindow.Setup(player.itemInspector);
 		windowsUI.buildingWindow.Setup(player.Build);
@@ -31,11 +38,13 @@ public class PlayerUI : MonoBehaviour
 	public void OpenInventory()
 	{
 		CloseControlUI();
+		CloseConditionUI();
 		windowsUI.backpackWindow.ShowBackpackInspector();
 	}
 	public void CloseInventory()
 	{
 		windowsUI.backpackWindow.HideBackpack();
+		OpenConditionUI();
 		OpenControlUI();
 	}
 
@@ -53,12 +62,25 @@ public class PlayerUI : MonoBehaviour
 	public void OpenIgnition(FireBuilding fireBuilding)
     {
 		CloseControlUI();
+		CloseConditionUI();
 		windowsUI.ignitionWindow.SetBuilding(fireBuilding);
 	}
 	public void CloseIgnition()
     {
 		windowsUI.ignitionWindow.HideWindow();
 		OpenControlUI();
+		OpenConditionUI();
+	}
+
+	public void OpenConditionUI()
+    {
+		conditionUI.ShowStamina();
+		conditionUI.ShowCondition();
+	}
+	public void CloseConditionUI()
+    {
+		conditionUI.HideStamina();
+		conditionUI.HideCondition();
 	}
 
 	public void OpenControlUI()
@@ -70,5 +92,27 @@ public class PlayerUI : MonoBehaviour
     {
 		controlUI.HideWindow();
 		GeneralAvailability.Player.Lock();
+	}
+
+	public void OpenResting()
+    {
+		CloseControlUI();
+		windowsUI.restingWindow.ShowWindow();
+	}
+	public void CloseResting()
+    {
+
+    }
+
+
+	public Button ShowBreakButton()
+    {
+		panelBreak.SetActive(true);
+		return buttonBreak;
+    }
+	public Button HideBreakButton()
+    {
+		panelBreak.SetActive(false);
+		return buttonBreak;
 	}
 }

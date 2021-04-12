@@ -1,0 +1,131 @@
+﻿using UnityEngine.Events;
+using UnityEngine;
+
+using Sirenix.OdinInspector;
+
+public class Item
+{
+	public System.Guid ID { get; protected set; }
+
+	public ItemDataWrapper itemData;
+
+	public Item(ItemDataWrapper itemData)
+	{
+		ID = System.Guid.NewGuid();
+
+		this.itemData = itemData;
+	}
+}
+[System.Serializable]
+public class ItemDataWrapper
+{
+	public UnityAction onDataChanged;
+
+	[Required]
+	public ItemSD scriptableData;
+
+	[MaxValue("MaxStackSize")]
+	[Min(1)]
+	[SerializeField] protected int currentStackSize = 1;
+	public int StackSize
+	{
+		get => currentStackSize;
+		set
+		{
+			currentStackSize = value;
+			onDataChanged?.Invoke();
+		}
+	}
+
+	[MinValue("Durrability")]
+	[Range(0f, 100f)]
+	[SerializeField] protected float currentDurrability = 100f;
+	public float CurrentDurrability
+	{
+		get => currentDurrability;
+		set
+		{
+			currentDurrability = value;
+			onDataChanged?.Invoke();
+		}
+	}
+
+	[ShowIf("IsConsumable")]
+	[MaxValue("Calories")]
+	[Min(0)]
+	[SerializeField] protected float currentCalories;
+	public float CurrentCalories
+	{
+		get => currentCalories;
+		set
+		{
+			currentCalories = value;
+			onDataChanged?.Invoke();
+		}
+	}
+
+	public bool IsFully => StackSize == scriptableData.stackSize;
+	public int StackDiffrence => scriptableData.stackSize - StackSize;
+
+	private float MaxStackSize
+	{
+		get
+		{
+			if (scriptableData != null)
+			{
+				return scriptableData.stackSize;
+			}
+			return 1;
+		}
+	}
+	private float Durrability
+	{
+		get
+		{
+			if (scriptableData != null)
+			{
+				return scriptableData.isBreakable ? 0 : 100f;
+			}
+			return 100f;
+		}
+	}
+
+	private float Calories
+	{
+		get
+		{
+			if (scriptableData != null)
+			{
+				if (scriptableData is ConsuableItemSD consuable)
+                {
+					return Mathf.Clamp(currentCalories, 0, consuable.calories);
+				}
+			}
+			return 0;
+		}
+	}
+
+	private bool IsConsumable
+    {
+        get
+        {
+			if(scriptableData != null)
+            {
+				return scriptableData is ConsuableItemSD;
+            }
+			return false;
+        }
+    }
+
+
+	public ItemDataWrapper Copy()
+	{
+		ItemDataWrapper data = new ItemDataWrapper();
+		data.scriptableData = scriptableData;
+
+		data.currentStackSize = StackSize;
+		data.currentDurrability = CurrentDurrability;
+
+		return data;
+	}
+}
