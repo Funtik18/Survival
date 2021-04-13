@@ -3,7 +3,7 @@ using UnityEngine;
 
 using Sirenix.OdinInspector;
 
-public class ItemSD : ObjectSD
+public abstract class ItemSD : ObjectSD
 {
 	[PreviewField]
 	public Sprite itemSprite;
@@ -16,6 +16,7 @@ public class ItemSD : ObjectSD
 	public float weight = 0.01f;
 
 	public bool isCanned = false;
+	[Tooltip("Значит продукт портится - ломается")]
 	public bool isBreakable = true;
 
 	[Min(1)]

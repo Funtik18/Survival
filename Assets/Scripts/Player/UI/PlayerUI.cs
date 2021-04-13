@@ -33,6 +33,8 @@ public class PlayerUI : MonoBehaviour
 
 		windowsUI.ignitionWindow.onBack += CloseIgnition;
 		windowsUI.ignitionWindow.onIgnitionCompletely += OpenControlUI;
+
+		windowsUI.fireMenuWindow.onBack += CloseFireMenu;
     }
 
 	public void OpenInventory()
@@ -51,12 +53,14 @@ public class PlayerUI : MonoBehaviour
 	public void OpenHarvesting(HarvestingObject harvesting)
     {
 		CloseControlUI();
+		CloseConditionUI();
 		windowsUI.harvestingWindow.SetHarvesting(harvesting);
 	}
 	public void CloseHarvesting()
     {
 		windowsUI.harvestingWindow.HideWindow();
 		OpenControlUI();
+		OpenConditionUI();
 	}
 
 	public void OpenIgnition(FireBuilding fireBuilding)
@@ -68,6 +72,19 @@ public class PlayerUI : MonoBehaviour
 	public void CloseIgnition()
     {
 		windowsUI.ignitionWindow.HideWindow();
+		OpenControlUI();
+		OpenConditionUI();
+	}
+
+	public void OpenFireMenu(CamfireBuilding camfireBuilding)
+    {
+		CloseControlUI();
+		CloseConditionUI();
+		windowsUI.fireMenuWindow.Setup(GeneralAvailability.PlayerInventory, camfireBuilding);
+	}
+	public void CloseFireMenu()
+    {
+		windowsUI.fireMenuWindow.HideWindow();
 		OpenControlUI();
 		OpenConditionUI();
 	}

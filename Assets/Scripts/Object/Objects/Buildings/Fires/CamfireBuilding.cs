@@ -36,6 +36,6 @@ public class CamfireBuilding : FireBuilding
 
     private void OpenCookingWindow()
     {
-        Debug.LogError("Cooking");
+        GeneralAvailability.PlayerUI.OpenFireMenu(this);
     }
 }

@@ -88,20 +88,6 @@ namespace Michsky.UI.ModernUIPack
             }
         }
 
-        public enum Type
-        {
-            Horizontal,
-            Vertical,
-            Diamond
-        }
-
-        public enum Blend
-        {
-            Override,
-            Add,
-            Multiply
-        }
-
         public override void ModifyMesh(VertexHelper helper)
         {
             if (!IsActive() || helper.currentVertCount == 0)
@@ -469,5 +455,18 @@ namespace Michsky.UI.ModernUIPack
                 case Blend.Multiply: return colorA * colorB;
             }
         }
+    }
+    public enum Type
+    {
+        Horizontal,
+        Vertical,
+        Diamond
+    }
+
+    public enum Blend
+    {
+        Override,
+        Add,
+        Multiply
     }
 }

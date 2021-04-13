@@ -14,6 +14,7 @@ public class WindowsUI : MonoBehaviour
 	
 	[Space]
 	public WindowIgnition ignitionWindow;
+	public WindowFireMenu fireMenuWindow;
 	public WindowHarvesting harvestingWindow;
 
 	[Button]

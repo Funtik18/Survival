@@ -22,4 +22,4 @@ MonoBehaviour:
   isBreakable: 1
   stackSize: 1
   calories: 250
-  hydration: -30
+  hydration: 30

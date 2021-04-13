@@ -4,6 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerOpportunities
 {
+	[SerializeField] private float useTimeByKg = 15f;
+
 	private StatThirst thirst;
 	private StatHungred hungred;
 
@@ -48,29 +50,48 @@ public class PlayerOpportunities
 		inventory.RemoveItem(item);
     }
 
-
-	public void UseItem(Item item)
+    #region Use
+    public void UseItem(Item item)
 	{
 		ItemSD data = item.itemData.scriptableData;
 
 		if (data is ConsuableItemSD consuable)
 		{
-			ui.ShowBreakButton().onClick.AddListener(StopUse);
-			ui.barHight.ShowBar();
+            if (IsCanGetIt(consuable))
+            {
+				ui.ShowBreakButton().onClick.AddListener(StopUse);
+				ui.barHight.ShowBar();
 
-			useCoroutine = owner.StartCoroutine(Use(item, consuable));
+				useCoroutine = owner.StartCoroutine(Use(item, consuable));
+            }
+            else
+            {
+				Debug.LogError("I can not take it");
+            }
 		}
 	}
 	private IEnumerator Use(Item item, ConsuableItemSD consuable)
 	{
-		// onchange вызывается и обновляет айтем
 		ItemDataWrapper data = item.itemData;
 
-		ui.conditionUI.conditionWindow.hungred.EnableCondition(true);
-		ui.conditionUI.conditionWindow.thirst.EnableCondition(true);
+		if(consuable is WaterItemSD water)
+			yield return UseWater(data, consuable.hydration);
+        else
+			yield return UseConsuable(data, consuable.calories, consuable.hydration);
 
+		DestroyItem(item);
+
+		StopUse();
+	}
+	private IEnumerator UseConsuable(ItemDataWrapper data, float calories, float hydration)
+    {
+		//ui
+		ui.conditionUI.conditionWindow.thirst.EnableCondition(true);
+		ui.conditionUI.conditionWindow.hungred.EnableCondition(true);
+
+		//lerp parametrs
 		float maxCalories = data.CurrentCalories;
-		float maxHydration = (maxCalories / consuable.calories) * (thirst.Value * (consuable.hydration / 100f));
+		float maxHydration = (maxCalories / calories) * (thirst.Value * (hydration / 100f));
 
 		float startCalories = hungred.CurrentValue;
 		float startHydration = thirst.CurrentValue;
@@ -78,9 +99,13 @@ public class PlayerOpportunities
 		float endCalories = startCalories + maxCalories;
 		float endHydration = startHydration + maxHydration;
 
-		float time = 0;
-		float duration = 15f * (maxCalories / 1000f);
+		float startWeight = data.CurrentWeight;
+		float endWeight = 0.05f;
 
+		float time = 0;
+		float duration = useTimeByKg * (maxCalories / 1000f);//1kg
+
+		//time duration cycle
 		while (time < duration)
 		{
 			float normalStep = time / duration;
@@ -88,25 +113,71 @@ public class PlayerOpportunities
 			thirst.CurrentValue = Mathf.Lerp(startHydration, endHydration, normalStep);
 			hungred.CurrentValue = Mathf.Lerp(startCalories, endCalories, normalStep);
 			data.CurrentCalories = Mathf.Lerp(maxCalories, 0, normalStep);
+			data.CurrentWeight = Mathf.Lerp(startWeight, endWeight, normalStep);
 
 			time += Time.deltaTime;
 
 			ui.barHight.UpdateFillAmount(normalStep, "%");
 
-			yield return null;
+			if (thirst.IsConcreteFull && hungred.IsConcreteFull)
+			{
+				StopUse();
+				yield break;
+			}
+			else
+				yield return null;
 		}
+
+		//end
 		data.CurrentCalories = 0;
+		data.CurrentWeight = endWeight;
 
 		thirst.CurrentValue = endHydration;
 		hungred.CurrentValue = endCalories;
-
-		ui.conditionUI.conditionWindow.hungred.EnableCondition(false);
-		ui.conditionUI.conditionWindow.thirst.EnableCondition(false);
-
-		DestroyItem(item);
-
-		StopUse();
 	}
+	private IEnumerator UseWater(ItemDataWrapper data, float hydration)
+    {
+		//ui
+		ui.conditionUI.conditionWindow.thirst.EnableCondition(true);
+
+		//lerp parametrs
+		float startWeight = data.CurrentWeight;
+		float endWeight = data.MinimumWeight;
+
+		float maxHydration = ((startWeight - endWeight) / (data.scriptableData.weight - endWeight)) * (thirst.Value * (hydration / 100f));
+
+		float startHydration = thirst.CurrentValue;
+		float endHydration = startHydration + maxHydration;
+
+		float time = 0;
+		float duration = useTimeByKg * ((startWeight - endWeight));//1L = 1kg
+
+		//time duration cycle
+		while(time < duration)
+        {
+			float normalStep = time / duration;
+
+			thirst.CurrentValue = Mathf.Lerp(startHydration, endHydration, normalStep);
+			data.CurrentWeight = Mathf.Lerp(startWeight, endWeight, normalStep);
+
+			time += Time.deltaTime;
+			
+			ui.barHight.UpdateFillAmount(normalStep, "%");
+			
+			if (thirst.IsConcreteFull)
+            {
+				StopUse();
+				yield break;
+			}
+			else
+				yield return null;
+		}
+
+		//end
+		data.CurrentWeight = endWeight;
+		thirst.CurrentValue = endHydration;
+	}
+
 	private void StopUse()
 	{
 		if (IsUseProccess)
@@ -114,12 +185,31 @@ public class PlayerOpportunities
 			owner.StopCoroutine(useCoroutine);
 			useCoroutine = null;
 
+			ui.conditionUI.conditionWindow.hungred.EnableCondition(false);
+			ui.conditionUI.conditionWindow.thirst.EnableCondition(false);
+
 			ui.barHight.HideBar();
 			ui.HideBreakButton().onClick.RemoveAllListeners();
 		}
 	}
+    
+	private bool IsCanGetIt(ConsuableItemSD consuable)
+    {
+		if(consuable is WaterItemSD)
+        {
+			if (thirst.IsFull)
+				return false;
+        }
+        else
+        {
+			if (thirst.IsFull && hungred.IsFull)
+				return false;
+        }
+		return true;
+    }
+	#endregion
 
-	private void RemoveItem(Item item, int count)
+    private void RemoveItem(Item item, int count)
 	{
 		inventory.RemoveItem(item, count);
 		CreateWorldItem(item, count);

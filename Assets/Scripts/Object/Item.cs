@@ -53,6 +53,7 @@ public class ItemDataWrapper
 	[ShowIf("IsConsumable")]
 	[MaxValue("Calories")]
 	[Min(0)]
+	[OnValueChanged("WeightDependCalories")]
 	[SerializeField] protected float currentCalories;
 	public float CurrentCalories
 	{
@@ -64,8 +65,30 @@ public class ItemDataWrapper
 		}
 	}
 
+	[ShowIf("IsConsumable")]
+	[MaxValue("VarialceWeight")]
+	[MinValue("minimumWeight")]
+	[SerializeField] protected float currentWeight;
+	public float CurrentWeight
+    {
+		get => currentWeight;
+        set
+        {
+			currentWeight = value;
+			onDataChanged?.Invoke();
+        }
+    }
+
+	[ShowIf("IsWater")]
+	[MaxValue("MinWeight")]
+	[Min(0)]
+	[SerializeField] protected float minimumWeight;
+	public float MinimumWeight => minimumWeight;
+
+
 	public bool IsFully => StackSize == scriptableData.stackSize;
 	public int StackDiffrence => scriptableData.stackSize - StackSize;
+
 
 	private float MaxStackSize
 	{
@@ -105,6 +128,27 @@ public class ItemDataWrapper
 		}
 	}
 
+	private void WeightDependCalories()
+    {
+		if (IsConsumable && !IsWater)
+			currentWeight = (float)System.Math.Round(scriptableData.weight * (CurrentCalories / (scriptableData as ConsuableItemSD).calories), 2);
+	}
+
+	private float VarialceWeight
+    {
+        get
+        {
+			return Mathf.Clamp(currentWeight, minimumWeight, scriptableData.weight);
+        }
+    }
+	private float MinWeight
+    {
+        get
+        {
+			return Mathf.Clamp(minimumWeight, 0, scriptableData.weight);
+        }
+    }
+
 	private bool IsConsumable
     {
         get
@@ -115,6 +159,18 @@ public class ItemDataWrapper
             }
 			return false;
         }
+    }
+
+	private bool IsWater
+    {
+        get
+        {
+			if (scriptableData != null)
+			{
+				return scriptableData is WaterItemSD;
+			}
+			return false;
+		}
     }
 
 

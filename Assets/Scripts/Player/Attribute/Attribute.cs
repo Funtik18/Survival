@@ -76,7 +76,8 @@ public abstract class StatBar : Stat
 	public UnityAction<float> onCurrentValueChanged;
 	public UnityAction<float> onPercentValueChanged;
 
-	public bool IsFull => CurrentValue == Value;
+	public bool IsConcreteFull => CurrentValue == Value;
+	public bool IsFull => Value - CurrentValue <= Value * 0.05f;
 	public bool IsEmpty => CurrentValue == 0;
 
 	private float currentValue;
