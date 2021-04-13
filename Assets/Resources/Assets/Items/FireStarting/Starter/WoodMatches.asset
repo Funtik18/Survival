@@ -16,7 +16,10 @@ MonoBehaviour:
   description: Very Nice Signal Light Match Boxes - True American is rough shape!
   itemSprite: {fileID: 21300000, guid: 27e438fec90b786499cb2cbb31525717, type: 3}
   model: {fileID: 6754295538599365157, guid: 36cf0dd8187e8ea40b9841613935d787, type: 3}
+  viewPosition: {x: 0, y: 0, z: -0.7}
+  viewRotation: {x: 0, y: 0, z: 0, w: 1}
   weight: 0.1
+  isCanned: 0
   isBreakable: 0
   stackSize: 45
   chance: 5

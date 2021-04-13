@@ -16,6 +16,8 @@ MonoBehaviour:
   description: can des
   itemSprite: {fileID: 21300000, guid: c383b50be52287d47b0790eee95c730a, type: 3}
   model: {fileID: 1998052492219975940, guid: 9293acc495797e346976fa33031d5e10, type: 3}
+  viewPosition: {x: 0, y: 0, z: 0}
+  viewRotation: {x: 0, y: 0, z: 0, w: 1}
   weight: 0.5
   isCanned: 1
   isBreakable: 1

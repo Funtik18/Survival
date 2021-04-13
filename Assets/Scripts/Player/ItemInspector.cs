@@ -19,7 +19,7 @@ public class ItemInspector : MonoBehaviour
 
 	private InspectAnimationType inspectType = InspectAnimationType.WorldToLocal;
 	
-	private float thresholdDistacnce = 0.05f;
+	private float thresholdDistacnce = 0.1f;
 	private float thresholdAngle = 0.1f;
 
 	//coroutine
@@ -139,7 +139,9 @@ public class ItemInspector : MonoBehaviour
 	}
 	private IEnumerator Inspect()
 	{
-		yield return LerpItem(ItemTransform, modelPlace.position, modelPlace.rotation, 0.3f);//lerp item from world to local
+		//yield return LerpItem(ItemTransform, modelPlace.position, modelPlace.rotation, 0.3f);//lerp item from world to local
+
+		yield return LerpItem(ItemTransform, modelPlace.TransformPoint(item.itemData.scriptableData.viewPosition), item.itemData.scriptableData.viewRotation, 0.25f);//lerp item from world to local
 		ItemTransform.SetParent(modelPlace);
 
 		yield return InspectItem();
@@ -157,20 +159,54 @@ public class ItemInspector : MonoBehaviour
 	/// Анимация подбора и сброса предмета.
 	/// </summary>
 	/// <param name="item">Трансформ предмета которого подбираем.</param>
-	/// <param name="posTo">К какому вектору позиции стремится.</param>
-	/// <param name="rotTo">К какому квантариону стремиться.</param>
-	/// <param name="t"></param>
+	/// <param name="endPosition">К какому вектору позиции стремится.</param>
+	/// <param name="endRotation">К какому квантариону стремиться.</param>
+	/// <param name="duration"></param>
 	/// <returns></returns>
-	private IEnumerator LerpItem(Transform item, Vector3 posTo, Quaternion rotTo, float t = 0.2f)
+	private IEnumerator LerpItem(Transform item, Vector3 endPosition, Quaternion endRotation, float duration = 0.2f, bool isWorld = true)
 	{
-		while((posTo - item.position).magnitude >= thresholdDistacnce || Quaternion.Angle(item.rotation, rotTo) >= thresholdAngle)
-		{
-			item.position = Vector3.Lerp(item.position, posTo, t);
-			item.rotation = Quaternion.Slerp(item.rotation, rotTo, t);
-			yield return new WaitForFixedUpdate();
+		Vector3 startPosition;
+		Quaternion startRotation;
+
+		float time = 0;
+
+		if (isWorld)
+        {
+			startPosition = item.position;
+			startRotation = item.localRotation;
+
+			while (time < duration)
+			{
+				float normalStep = time / duration;
+
+				item.position = Vector3.Lerp(startPosition, endPosition, normalStep);
+				item.rotation = Quaternion.Lerp(startRotation, endRotation, normalStep);
+
+				time += Time.deltaTime;
+
+				yield return null;
+			}
+			item.position = endPosition;
+			item.rotation = endRotation;
+        }
+        else
+        {
+			startPosition = item.localPosition;
+			startRotation = item.localRotation;
+
+			while (time < duration)
+			{
+				float normalStep = time / duration;
+
+				item.localPosition = Vector3.Lerp(startPosition, endPosition, normalStep);
+				item.localRotation = Quaternion.Lerp(startRotation, endRotation, normalStep);
+
+				time += Time.deltaTime;
+				yield return null;
+			}
+			item.localPosition = endPosition;
+			item.localRotation = endRotation;
 		}
-		item.position = posTo;
-		item.rotation = rotTo;
 	}
 
 	#region InspectItem
