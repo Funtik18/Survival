@@ -6,6 +6,8 @@ public class CustomPointer : CustomUI
 {
     public Pointer pointer;
 
+    public bool IsEnable => pointer.IsEnable;
+
     public override void OpenButton()
     {
         pointer.IsEnable = true;

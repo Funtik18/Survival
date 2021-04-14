@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 8733857217668988141}
   itemData:
-    scriptableData: {fileID: 11400000, guid: f3490695ce30c2b42851eb4e44fe080a, type: 2}
+    scriptableData: {fileID: 11400000, guid: b4459d87d4ff9da429b95f7f319ee8d5, type: 2}
     currentStackSize: 1
     currentDurrability: 100
     currentCalories: 250

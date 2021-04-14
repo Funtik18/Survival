@@ -132,6 +132,20 @@ public class Inventory
 
     public List<Item> GetAllBySD(ItemSD sd) => items.FindAll((x) => x.itemData.scriptableData == sd);
     public List<Item> GetAllBySD<SD>() => items.FindAll((x) => x.itemData.scriptableData is SD);
+
+    public List<Item> GetAllFood(bool onlyCookableFood = false)
+    {
+        List<Item> finded = null;
+
+        if (onlyCookableFood)
+            finded = items.FindAll((x) => x.itemData.scriptableData is FoodItemSD && (x.itemData.scriptableData as FoodItemSD).isCookable == true);
+        else
+            finded = items.FindAll((x) => x.itemData.scriptableData is FoodItemSD);
+
+        return finded;
+    }
+
+
 }
 
 [System.Serializable]

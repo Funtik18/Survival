@@ -50,6 +50,12 @@ public class ItemDataWrapper
 		}
 	}
 
+	[Range(-200f, 200f)]
+	[OnValueChanged("Temperature")]
+	[SerializeField] protected float currentTemperature = 0f;
+	[ReadOnly] public ConsumableState consumableState = ConsumableState.Chilled;
+
+
 	[ShowIf("IsConsumable")]
 	[MaxValue("Calories")]
 	[Min(0)]
@@ -85,10 +91,32 @@ public class ItemDataWrapper
 	[SerializeField] protected float minimumWeight;
 	public float MinimumWeight => minimumWeight;
 
-
 	public bool IsFully => StackSize == scriptableData.stackSize;
 	public int StackDiffrence => scriptableData.stackSize - StackSize;
 
+	private void Temperature()
+    {
+        if (currentTemperature > 60f && currentTemperature <= 200f)
+        {
+			consumableState = ConsumableState.Hot;
+        }
+		else if (currentTemperature > 30f && currentTemperature <= 60) 
+		{
+			consumableState = ConsumableState.Warm;
+		}
+		else if (currentTemperature >= 15f && currentTemperature <= 30f)
+		{
+			consumableState = ConsumableState.Chilled;
+		} 
+		else if (currentTemperature >= -5f && currentTemperature < 15f)
+        {
+			consumableState = ConsumableState.Cold;
+        }
+        else
+        {
+			consumableState = ConsumableState.Freezing;
+		}
+	}
 
 	private float MaxStackSize
 	{
@@ -184,4 +212,12 @@ public class ItemDataWrapper
 
 		return data;
 	}
+}
+public enum ConsumableState
+{
+	Hot,
+	Warm,
+	Chilled,
+	Cold,
+	Freezing,
 }

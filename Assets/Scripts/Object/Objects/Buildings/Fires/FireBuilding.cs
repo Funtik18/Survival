@@ -16,6 +16,8 @@ public class FireBuilding : BuildingObject
     [Range(0f, 8f)]
     [SerializeField] protected float maxIntensity = 2.5f;
 
+    [SerializeField] private List<CookingSlot> slots = new List<CookingSlot>();
+
     private Times fireStart;
     private Times fireDuration;
     private Times fireEnd;
@@ -38,8 +40,35 @@ public class FireBuilding : BuildingObject
         {
             bonfireLight.intensity = Mathf.Lerp(minIntensity, maxIntensity, Mathf.PerlinNoise(randomValue, Time.time));
         }
+        if (isEnableOnAwake)
+        {
+            UpdateItem();
+        }
     }
 
+    public bool AddItem(Item item)
+    {
+        for (int i = 0; i < slots.Count; i++)
+        {
+            if (slots[i].IsEmpty)
+            {
+                slots[i].SetItem(item);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void UpdateItem()
+    {
+        for (int i = 0; i < slots.Count; i++)
+        {
+            slots[i].UpdateItem();
+        }
+    }
+
+    #region Fire
     public void StartFire(Times fireDuration)
     {
         if (!isEnable)
@@ -57,6 +86,8 @@ public class FireBuilding : BuildingObject
     public void UpdateFire(Times time)
     {
         current = fireEnd - time;
+
+        UpdateItem();
     }
     public void StopFire()
     {
@@ -66,8 +97,9 @@ public class FireBuilding : BuildingObject
             isEnable = false;
         }
     }
+    #endregion
 
-
+    #region Observe
     public override void StartObserve()
     {
         base.StartObserve();
@@ -99,15 +131,22 @@ public class FireBuilding : BuildingObject
 
     protected virtual void View()
     {
-        if (!isEnable)
+        if (isEnable)
+            InteractionButton.pointer.AddPressListener(OpenCookingWindow);
+        else
             InteractionButton.pointer.AddPressListener(OpenIgnitionWindow);
     }
-
 
     protected void OpenIgnitionWindow()
     {
         GeneralAvailability.PlayerUI.OpenIgnition(this);
     }
+    private void OpenCookingWindow()
+    {
+        GeneralAvailability.PlayerUI.OpenFireMenu(this);
+    }
+    #endregion
+
 
     public void EnableParticles()
     {

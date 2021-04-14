@@ -12,19 +12,37 @@ public abstract class ItemSD : ObjectSD
 	[InlineEditor(InlineEditorModes.GUIAndPreview)]
 	public ItemObject model;
 	[Space]
-	public Vector3 viewPosition = Vector3.zero;
-	public Quaternion viewRotation = new Quaternion(0, 0, 0, 1);
-	[Space]
+	public ItemWorldOrientation orientation;
 
+	[Space]
 	[Range(0.01f, 99.99f)]
 	public float weight = 0.01f;
 
-	public bool isCanned = false;
+	[Min(1)]
+	public int stackSize = 1;
+
 	[Tooltip("Значит продукт портится - ломается")]
 	public bool isBreakable = true;
 
-	[Min(1)]
-	public int stackSize = 1;
+	[ShowIf("isBreakable")]
+	[Range(0, 100)]
+	[SuffixLabel("%/day")]
+	public float decayOverTime = 0f;
+	[ShowIf("isBreakable")]
+	[Range(0, 100)]
+	[SuffixLabel("%/day")]
+	public float decayInside = 0f;
+	[ShowIf("isBreakable")]
+	[Range(0, 100)]
+	[SuffixLabel("%/day")]
+	public float decayOutsie = 0f;
+
+	[System.Serializable]
+    public class ItemWorldOrientation 
+	{
+		public Vector3 position = Vector3.zero;
+		public Quaternion rotation = Quaternion.identity;
+	}
 }
 
 public enum ItemRarity

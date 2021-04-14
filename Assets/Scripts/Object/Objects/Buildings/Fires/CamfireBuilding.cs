@@ -25,17 +25,4 @@ public class CamfireBuilding : FireBuilding
 
         OpenIgnitionWindow();
     }
-
-    protected override void View()
-    {
-        if (isEnable)
-            InteractionButton.pointer.AddPressListener(OpenCookingWindow);
-        else
-            InteractionButton.pointer.AddPressListener(OpenIgnitionWindow);
-    }
-
-    private void OpenCookingWindow()
-    {
-        GeneralAvailability.PlayerUI.OpenFireMenu(this);
-    }
 }

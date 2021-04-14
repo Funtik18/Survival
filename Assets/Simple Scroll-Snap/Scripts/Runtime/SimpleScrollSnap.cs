@@ -23,7 +23,6 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         public int nearestPanel;
 
         public GameObject[] panels;
-        public Toggle[] toggles;
 
         public MovementType movementType = MovementType.Fixed;
         public MovementAxis movementAxis = MovementAxis.Horizontal;
@@ -237,28 +236,28 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             }
 
             // Pagination
-            if (pagination != null)
-            {
-                toggles = pagination.GetComponentsInChildren<Toggle>();
-                for (int i = 0; i < toggles.Length; i++)
-                {
-                    if (toggles[i] != null)
-                    {
-                        toggles[i].isOn = (i == startingPanel);
-                        toggles[i].interactable = (i != targetPanel);
-                        int panelNum = i;
+            //if (pagination != null)
+            //{
+            //    toggles = pagination.GetComponentsInChildren<Toggle>();
+            //    for (int i = 0; i < toggles.Length; i++)
+            //    {
+            //        if (toggles[i] != null)
+            //        {
+            //            toggles[i].isOn = (i == startingPanel);
+            //            toggles[i].interactable = (i != targetPanel);
+            //            int panelNum = i;
 
-                        toggles[i].onValueChanged.RemoveAllListeners();
-                        toggles[i].onValueChanged.AddListener(delegate
-                        {
-                            if (toggles[panelNum].isOn && toggleNavigation)
-                            {
-                                GoToPanel(panelNum);
-                            }
-                        });
-                    }
-                }
-            }
+            //            toggles[i].onValueChanged.RemoveAllListeners();
+            //            toggles[i].onValueChanged.AddListener(delegate
+            //            {
+            //                if (toggles[panelNum].isOn && toggleNavigation)
+            //                {
+            //                    GoToPanel(panelNum);
+            //                }
+            //            });
+            //        }
+            //    }
+            //}
         }
 
         private Vector2 DisplacementFromCenter(int index)
@@ -516,17 +515,17 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             selected = true;
             onPanelSelected.Invoke();
 
-            if (pagination != null)
-            {
-                for (int i = 0; i < toggles.Length; i++)
-                {
-                    if (toggles[i] != null)
-                    {
-                        toggles[i].isOn = (i == targetPanel);
-                        toggles[i].interactable = (i != targetPanel);
-                    }
-                }
-            }
+            //if (pagination != null)
+            //{
+            //    for (int i = 0; i < toggles.Length; i++)
+            //    {
+            //        if (toggles[i] != null)
+            //        {
+            //            toggles[i].isOn = (i == targetPanel);
+            //            toggles[i].interactable = (i != targetPanel);
+            //        }
+            //    }
+            //}
 
             if (hardSnap)
             {

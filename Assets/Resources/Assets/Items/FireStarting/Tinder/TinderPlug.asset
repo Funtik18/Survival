@@ -17,8 +17,9 @@ MonoBehaviour:
     dry bark or needles, etc.) required to start a fire.
   itemSprite: {fileID: 21300000, guid: bf8e00c8bf6f7e048be3baa611303956, type: 3}
   model: {fileID: 7545982160548433704, guid: 75f1237ec125ecf4e9d2c6e0293e637f, type: 3}
-  viewPosition: {x: 0, y: 0, z: 0}
-  viewRotation: {x: 0, y: 0, z: 0, w: 1}
+  orientation:
+    position: {x: 0, y: 0, z: -0.51}
+    rotation: {x: 0.64316845, y: -0.4446618, z: -0.13851163, w: -0.6078033}
   weight: 0.1
   isCanned: 0
   isBreakable: 0

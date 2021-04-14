@@ -6,7 +6,7 @@ public class MenuChooseItemUI : MonoBehaviour
 {
     public UnityAction<MenuChooseItemUI> onChoosen;
 
-    [SerializeField] private Toggle toggle;
+    public Toggle toggle;
     [SerializeField] private Image icon;
 
     public Item item;
@@ -16,9 +16,10 @@ public class MenuChooseItemUI : MonoBehaviour
         toggle.onValueChanged.AddListener(Choosen);
     }
 
-    public void Setup(Item item)
+    public void Setup(Item item, UnityAction<MenuChooseItemUI> action)
     {
         this.item = item;
+        onChoosen = action;
 
         UpdateUI();
     }

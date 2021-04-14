@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+
+using UnityEngine;
 
 public class ItemObject : WorldObject
 {
@@ -41,5 +43,21 @@ public class ItemObject : WorldObject
 	public override void Interact()
 	{
 		GeneralAvailability.Inspector.SetItem(this);
+	}
+
+
+	[Button]
+	private void SaveGlobalOrientation()
+    {
+		SavePosition();
+		SaveRotation();
+	}
+	private void SavePosition()
+    {
+		itemData.scriptableData.orientation.position = transform.localPosition;
+    }
+	private void SaveRotation()
+    {
+		itemData.scriptableData.orientation.rotation = transform.localRotation;
 	}
 }

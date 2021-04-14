@@ -17,8 +17,9 @@ MonoBehaviour:
     is a new recipe being introduced around the world.
   itemSprite: {fileID: 21300000, guid: 5943e15187d4150409a20b617f5d9caf, type: 3}
   model: {fileID: 857920658658162906, guid: cc1ff813bd74d334792299795d503188, type: 3}
-  viewPosition: {x: 0, y: 0, z: 0}
-  viewRotation: {x: 0, y: 0, z: 0, w: 1}
+  orientation:
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: -0.22368808, y: -0.492003, z: -0.047156617, w: 0.8400434}
   weight: 0.25
   isCanned: 0
   isBreakable: 1

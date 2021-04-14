@@ -17,8 +17,9 @@ MonoBehaviour:
     taste that gives you the ultimate cut-through refreshment."
   itemSprite: {fileID: 21300000, guid: 2abbbf0ba6739314995caaad1cd90ae0, type: 3}
   model: {fileID: 6175048884332802669, guid: c4f8b467a47c4604fb675e3f97474f45, type: 3}
-  viewPosition: {x: 0, y: 0, z: 0}
-  viewRotation: {x: 0, y: 0, z: 0, w: 1}
+  orientation:
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: -0.22368808, y: -0.492003, z: -0.047156617, w: 0.8400434}
   weight: 0.25
   isCanned: 0
   isBreakable: 1

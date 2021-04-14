@@ -17,8 +17,9 @@ MonoBehaviour:
     fun.
   itemSprite: {fileID: 21300000, guid: 5c06b386c6dbb3f4fa3afa2e8c021899, type: 3}
   model: {fileID: 5515372273730528173, guid: 5bc58297e700040418bd9a7d47c5b2a2, type: 3}
-  viewPosition: {x: 0, y: 0, z: 0}
-  viewRotation: {x: 0, y: 0, z: 0, w: 1}
+  orientation:
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: -0.22368808, y: -0.492003, z: -0.047156617, w: 0.8400434}
   weight: 0.25
   isCanned: 0
   isBreakable: 1

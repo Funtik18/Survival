@@ -139,10 +139,8 @@ public class ItemInspector : MonoBehaviour
 	}
 	private IEnumerator Inspect()
 	{
-		//yield return LerpItem(ItemTransform, modelPlace.position, modelPlace.rotation, 0.3f);//lerp item from world to local
-
-		yield return LerpItem(ItemTransform, modelPlace.TransformPoint(item.itemData.scriptableData.viewPosition), item.itemData.scriptableData.viewRotation, 0.25f);//lerp item from world to local
 		ItemTransform.SetParent(modelPlace);
+		yield return LerpItem(ItemTransform, item.itemData.scriptableData.orientation.position, item.itemData.scriptableData.orientation.rotation, 0.25f, true);//lerp item from world to local
 
 		yield return InspectItem();
 
@@ -163,17 +161,38 @@ public class ItemInspector : MonoBehaviour
 	/// <param name="endRotation">К какому квантариону стремиться.</param>
 	/// <param name="duration"></param>
 	/// <returns></returns>
-	private IEnumerator LerpItem(Transform item, Vector3 endPosition, Quaternion endRotation, float duration = 0.2f, bool isWorld = true)
+	private IEnumerator LerpItem(Transform item, Vector3 endPosition, Quaternion endRotation, float duration = 0.2f, bool isLocal = false)
 	{
 		Vector3 startPosition;
 		Quaternion startRotation;
 
-		float time = 0;
+		if (isLocal)
+        {
+			startPosition = item.localPosition;
+			startRotation = item.localRotation;
 
-		if (isWorld)
+			float time = 0;
+
+			while (time < duration)
+			{
+				float normalStep = time / duration;
+
+				item.localPosition = Vector3.Lerp(startPosition, endPosition, normalStep);
+				item.localRotation = Quaternion.Lerp(startRotation, endRotation, normalStep);
+
+				time += Time.deltaTime;
+
+				yield return null;
+			}
+			item.localPosition = endPosition;
+			item.localRotation = endRotation;
+		}
+        else
         {
 			startPosition = item.position;
-			startRotation = item.localRotation;
+			startRotation = item.rotation;
+
+			float time = 0;
 
 			while (time < duration)
 			{
@@ -188,24 +207,6 @@ public class ItemInspector : MonoBehaviour
 			}
 			item.position = endPosition;
 			item.rotation = endRotation;
-        }
-        else
-        {
-			startPosition = item.localPosition;
-			startRotation = item.localRotation;
-
-			while (time < duration)
-			{
-				float normalStep = time / duration;
-
-				item.localPosition = Vector3.Lerp(startPosition, endPosition, normalStep);
-				item.localRotation = Quaternion.Lerp(startRotation, endRotation, normalStep);
-
-				time += Time.deltaTime;
-				yield return null;
-			}
-			item.localPosition = endPosition;
-			item.localRotation = endRotation;
 		}
 	}
 

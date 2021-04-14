@@ -17,8 +17,9 @@ MonoBehaviour:
     marketer of non-alcoholic beverage concentrates and syrups."'
   itemSprite: {fileID: 21300000, guid: d7aca12c69f9a1c44a0f34e97087d7ed, type: 3}
   model: {fileID: 4125052494255367462, guid: 4225a114799221344834137747e7ed51, type: 3}
-  viewPosition: {x: 0, y: 0, z: 0}
-  viewRotation: {x: 0, y: 0, z: 0, w: 1}
+  orientation:
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: -0.22368808, y: -0.492003, z: -0.047156617, w: 0.8400434}
   weight: 0.25
   isCanned: 0
   isBreakable: 1

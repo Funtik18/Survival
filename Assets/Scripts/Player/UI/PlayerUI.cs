@@ -76,11 +76,11 @@ public class PlayerUI : MonoBehaviour
 		OpenConditionUI();
 	}
 
-	public void OpenFireMenu(CamfireBuilding camfireBuilding)
+	public void OpenFireMenu(FireBuilding fireBuilding)
     {
 		CloseControlUI();
 		CloseConditionUI();
-		windowsUI.fireMenuWindow.Setup(GeneralAvailability.PlayerInventory, camfireBuilding);
+		windowsUI.fireMenuWindow.Setup(GeneralAvailability.PlayerInventory, fireBuilding);
 	}
 	public void CloseFireMenu()
     {
