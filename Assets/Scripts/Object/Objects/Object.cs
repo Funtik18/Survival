@@ -1,29 +1,34 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
-public abstract class Object : MonoBehaviour
+namespace DS 
 {
-	[SerializeField] private Collider coll;
-	public Collider Collider
+	[RequireComponent(typeof(Collider))]
+	public abstract class Object : MonoBehaviour
 	{
-		get
+		[SerializeField] private Collider coll;
+		public Collider Collider
 		{
-			if(coll == null)
-				coll = GetComponent<Collider>();
-			return coll;
+			get
+			{
+				if (coll == null)
+					coll = GetComponent<Collider>();
+				return coll;
+			}
+		}
+
+		public void ColliderEnable(bool trigger)
+		{
+			Collider.enabled = trigger;
 		}
 	}
-
-	public void ColliderEnable(bool trigger)
-	{
-		Collider.enabled = trigger;
-	}
 }
+
+
 
 /// <summary>
 /// Мировой объект, на котороый можно только посмотреть
 /// </summary>
-public abstract class WorldBoard : Object, IObservable
+public abstract class WorldBoard : DS.Object, IObservable
 {
 	public virtual bool IsObservable => Collider.enabled;
 
@@ -38,7 +43,7 @@ public abstract class WorldBoard : Object, IObservable
 /// <summary>
 ///	Мировой объект, это объект с которым можно взаимодействовать
 /// </summary>
-public abstract class WorldObject : Object, IPerceptible
+public abstract class WorldObject : DS.Object, IPerceptible
 {
 	public virtual bool IsObservable => Collider.enabled;
 	public virtual bool IsInteractable => Collider.enabled;
