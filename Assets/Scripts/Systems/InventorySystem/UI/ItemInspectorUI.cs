@@ -66,7 +66,7 @@ public class ItemInspectorUI : MonoBehaviour
     {
 		buttonDrop.gameObject.SetActive(true);
 	
-		if(item is ConsuableItemSD consuable)
+		if(item is ConsumableItemSD consuable)
         {
 
 			if(consuable is PotionItemSD)

@@ -32,10 +32,7 @@ public abstract class WorldBoard : DS.Object, IObservable
 {
 	public virtual bool IsObservable => Collider.enabled;
 
-	public virtual void StartObserve()
-	{
-		GeneralAvailability.TargetPoint.ShowPoint();
-	}
+	public virtual void StartObserve() { }
 	public virtual void Observe() { }
 	public virtual void EndObserve() { }
 }

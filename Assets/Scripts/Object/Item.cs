@@ -147,7 +147,7 @@ public class ItemDataWrapper
 		{
 			if (scriptableData != null)
 			{
-				if (scriptableData is ConsuableItemSD consuable)
+				if (scriptableData is ConsumableItemSD consuable)
                 {
 					return Mathf.Clamp(currentCalories, 0, consuable.calories);
 				}
@@ -159,7 +159,7 @@ public class ItemDataWrapper
 	private void WeightDependCalories()
     {
 		if (IsConsumable && !IsWater)
-			currentWeight = (float)System.Math.Round(scriptableData.weight * (CurrentCalories / (scriptableData as ConsuableItemSD).calories), 2);
+			currentWeight = (float)System.Math.Round(scriptableData.weight * (CurrentCalories / (scriptableData as ConsumableItemSD).calories), 2);
 	}
 
 	private float VarialceWeight
@@ -183,7 +183,7 @@ public class ItemDataWrapper
         {
 			if(scriptableData != null)
             {
-				return scriptableData is ConsuableItemSD;
+				return scriptableData is ConsumableItemSD;
             }
 			return false;
         }

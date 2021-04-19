@@ -21,9 +21,13 @@ public class GeneralTime : MonoBehaviour
         }
     }
 
+    public UnityAction onDay;
+    public UnityAction onHour;
+    public UnityAction onMinute;
+    public UnityAction onSeconde;
+
     [OnValueChanged("UpdateTimeToSeconds")]
     public Times globalTime;
-
 
     [InfoBox("Time Flow = 1f / timeFlow")]
     public float timeFlow = 12f;
@@ -39,8 +43,7 @@ public class GeneralTime : MonoBehaviour
 
     private WaitForSeconds seconds;
 
-    private List<ActionByTime> actionsByTime = new List<ActionByTime>();
-    private UnityEvent actions = new UnityEvent();
+    [SerializeField] private List<TimeUnityEvent> events = new List<TimeUnityEvent>();
 
     private void OnEnable()
     {
@@ -90,24 +93,9 @@ public class GeneralTime : MonoBehaviour
         UpdateActions();
     }
 
-    /// <summary>
-    /// Создать события по времени. Если пришло время то выполняется событие.
-    /// </summary>
-    public void AddActionByTime(UnityAction action, UnityAction<Times> callBack, Times futureTime)
+    public void AddEvent(TimeUnityEvent unityEvent)
     {
-        if(globalTime < futureTime)
-        {
-            ActionByTime timeAction = new ActionByTime(action, callBack, futureTime);
-            actionsByTime.Add(timeAction);
-        }
-        else
-        {
-            Debug.LogError("FUTURE TIME ERROR");
-        }
-    }
-    public void AddAction(UnityAction action)
-    {
-        actions.AddListener(action);
+        events.Add(unityEvent);
     }
 
     private void UpdateTimeToSeconds()
@@ -130,24 +118,54 @@ public class GeneralTime : MonoBehaviour
 
     private void UpdateCycle()
     {
-        controller.skyTime = globalTime.GetDayPercent();
+        controller.skyTime = globalTime.GetSkyPercent();
     }
 
     private void UpdateActions()
     {
-        actions?.Invoke();
+        onSeconde?.Invoke();
 
-        for (int i = 0; i < actionsByTime.Count; i++)
+        if (globalTime.TotalSeconds % 60 == 0)
         {
-            ActionByTime timeAction = actionsByTime[i];
+            onMinute?.Invoke();
+        }
+        if (globalTime.TotalSeconds % 3600 == 0)
+        {
+            onHour?.Invoke();
+        }
+        if (globalTime.TotalSeconds % 86400 == 0)
+        {
+            onDay?.Invoke();
+        }
 
-            timeAction.InvokeCallBack(globalTime);
+        for (int i = 0; i < events.Count; i++)
+        {
+            TimeUnityEvent unityEvent = events[i];
 
-            if (timeAction.Check(globalTime))
+            if (unityEvent.IsNeedDelete)
             {
-                actionsByTime.Remove(timeAction);
+                events.Remove(unityEvent);
+            }
+            else
+            {
+                unityEvent.CheckInvoke(globalTime);
             }
         }
+
+        //actions?.Invoke();
+        //actionsTimes?.Invoke(globalTime);
+
+        //for (int i = 0; i < actionsByTime.Count; i++)
+        //{
+        //    ActionByTime timeAction = actionsByTime[i];
+
+        //    timeAction.InvokeCallBack(globalTime);
+
+        //    if (timeAction.Check(globalTime))
+        //    {
+        //        actionsByTime.Remove(timeAction);
+        //    }
+        //}
     }
 
     public override string ToString()
@@ -155,48 +173,77 @@ public class GeneralTime : MonoBehaviour
         return globalTime.ToString();
     }
 
-    public class ActionByTime
+    [System.Serializable]
+    public class TimeUnityEvent
     {
-        private UnityAction action;
-        private UnityAction<Times> callBack;
-        private Times time;
+        [SerializeField] private UnityAction<Times> callback;
 
-        public ActionByTime(UnityAction action, UnityAction<Times> callBack, Times time)
+        [SerializeField] private EventType eventType = EventType.ExecuteEveryTime;
+
+        [Space]
+        [HideLabel]
+        [SerializeField] private Times time;
+        [SerializeField] private UnityEvent events;
+
+        private UnityAction onEnd;
+
+        private bool isNeedDelete = false;
+        public bool IsNeedDelete => isNeedDelete;
+
+        public void AddEvent(EventType eventType, Times time, UnityAction action = null, UnityAction<Times> callback = null, UnityAction onEnd = null)
         {
-            this.action = action;
-            this.callBack = callBack;
+            this.eventType = eventType;
+
             this.time = time;
+
+            if(action != null)
+                events.AddListener(action);
+            this.callback += callback;
+            this.onEnd += onEnd;
         }
 
-        public bool Check(Times times)
+        public void CheckInvoke(Times globalTime)
         {
-            if (times >= time)
+            if(eventType == EventType.ExecuteEveryTime)
             {
-                Invoke();
-                return true;
+                if(globalTime.TotalSeconds % time.TotalSeconds == 0)
+                {
+                    Invoke(globalTime);
+                }
             }
-            return false;
+            else
+            {
+                if(globalTime > time)
+                {
+                    isNeedDelete = true;
+                    onEnd?.Invoke();
+                }
+                else
+                {
+                    Invoke(globalTime);
+                }
+            }
         }
-        public void Invoke()
-        {
-            action?.Invoke();
-        }
-        public void InvokeCallBack(Times time)
-        {
-            callBack?.Invoke(time);
-        }
-    }
-    public class TimeAction
-    {
-        private UnityAction action;
 
-        public TimeAction(UnityAction action)
+        private void Invoke(Times time)
         {
-            this.action = action;
+            Invoke();
+            InvokeCallBack(time);
         }
-        public void Invoke()
+
+        private void Invoke()
         {
-            action?.Invoke();
+            events?.Invoke();
+        }
+        private void InvokeCallBack(Times time)
+        {
+            callback?.Invoke(time);
+        }
+
+        public enum EventType
+        {
+            ExecuteEveryTime,//выполнять всегда в это время
+            ExecuteInTime,//выполнять пока не наступит это время
         }
     }
 }

@@ -79,7 +79,11 @@ public class FireBuilding : BuildingObject
             this.fireDuration = fireDuration;
             this.fireEnd = fireStart + fireDuration;
 
-            GeneralTime.Instance.AddActionByTime(StopFire, UpdateFire, fireEnd);
+
+            GeneralTime.TimeUnityEvent unityEvent = new GeneralTime.TimeUnityEvent();
+            unityEvent.AddEvent(GeneralTime.TimeUnityEvent.EventType.ExecuteInTime, fireEnd, null, UpdateFire, StopFire);
+            GeneralTime.Instance.AddEvent(unityEvent);
+
             EnableParticles();
         }
     }

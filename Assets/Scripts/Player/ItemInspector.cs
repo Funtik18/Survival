@@ -71,10 +71,15 @@ public class ItemInspector : MonoBehaviour
     {
 		this.item = item;
 
-		if (instantiateModel)
-			this.itemObject = Instantiate(this.item.itemData.scriptableData.model, modelPlace);
+		ItemSD sd = this.item.itemData.scriptableData;
 
-		if(inspect == InspectAnimationType.WorldToLocal)
+
+		if (instantiateModel)
+        {
+			this.itemObject = Instantiate(sd.model, modelPlace);
+		}
+
+		if (inspect == InspectAnimationType.WorldToLocal)
         {
 			oldParent = ItemTransform.parent;
 			oldWorldPosition = ItemTransform.position;
@@ -82,8 +87,8 @@ public class ItemInspector : MonoBehaviour
 		}
 		else if(inspect == InspectAnimationType.OnlyLocal)
         {
-			ItemTransform.localPosition = Vector3.zero;
-			ItemTransform.localRotation = Quaternion.identity;
+			ItemTransform.position = sd.orientation.position;
+			ItemTransform.rotation = sd.orientation.rotation;
 		}
 
 		itemObject.ColliderEnable(false);

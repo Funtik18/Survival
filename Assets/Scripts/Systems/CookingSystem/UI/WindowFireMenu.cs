@@ -36,9 +36,9 @@ public class WindowFireMenu : WindowUI
     {
         this.fire = camfireBuilding;
 
-        List<Item> fuelItems = inventory.GetAllBySD<ConsuableItemSD>();
+        List<Item> fuelItems = inventory.GetAllBySD<ConsumableItemSD>();
         List<Item> cookingItems = inventory.GetAllFood(true);
-        List<Item> boilingItems = inventory.GetAllBySD<ConsuableItemSD>();
+        List<Item> boilingItems = inventory.GetAllBySD<ConsumableItemSD>();
 
         menuPrimary.buttonFuel.Reject();
 

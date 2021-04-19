@@ -12,7 +12,7 @@ public class Inventory
     public UnityAction<List<Item>> onCollectionChanged;
 
     [ListDrawerSettings(ShowIndexLabels = true)]
-    [SerializeField] private List<ItemDataWrapper> initItems = new List<ItemDataWrapper>();
+    public List<ItemDataWrapper> initItems = new List<ItemDataWrapper>();
     [HideInInspector] public List<Item> items = new List<Item>();
 
     public bool IsEmpty => items.Count == 0;
@@ -25,6 +25,7 @@ public class Inventory
         {
             AddItem(initItems[i]);
         }
+        //initItems.Clear();
     }
 
     public bool AddItem(ItemDataWrapper itemData)

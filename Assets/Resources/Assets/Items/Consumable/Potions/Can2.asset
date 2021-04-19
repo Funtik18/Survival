@@ -21,8 +21,11 @@ MonoBehaviour:
     position: {x: 0, y: 0, z: 0}
     rotation: {x: -0.22368808, y: -0.492003, z: -0.047156617, w: 0.8400434}
   weight: 0.25
-  isCanned: 0
-  isBreakable: 1
   stackSize: 1
+  isBreakable: 1
+  decayOverTime: 0
+  decayInside: 0
+  decayOutsie: 0
+  isCookable: 0
   calories: 250
   hydration: 30

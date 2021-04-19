@@ -52,7 +52,10 @@ public class ContainerUI : MonoBehaviour
 
     private void UpdateWeight()
     {
-        weightText.text = currentInventory.GetWeight() + " KG";
+        if(weightText != null)
+        {
+            weightText.text = currentInventory.GetWeight() + " KG";
+        }
     }
 
     private void SlotChoosen(ContainerSlotUI slot)

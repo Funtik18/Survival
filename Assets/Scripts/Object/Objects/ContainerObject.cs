@@ -6,10 +6,17 @@ public class ContainerObject : WorldObject
 {
     public ContainerSD scriptableData;
 
-	[SerializeField] private Inventory containerInventory;
+    public Inventory containerInventory;
 
 	public bool isInspected = false;
-	public bool saveTimeResult = false;
+	//public bool saveTimeResult = false;
+
+    private Coroutine holdCoroutine = null;
+    public bool IsHoldProccess => holdCoroutine != null;
+
+    private float endTime = 4f;
+    private float currentTime;
+
 
     private void Awake()
     {
@@ -35,7 +42,7 @@ public class ContainerObject : WorldObject
 
         InteractionButton.CloseButton();
 
-        InteractionButton.pointer.Clear();
+        InteractionButton.pointer.RemoveAllListeners();
     }
 
     private void OpenContainer()
@@ -61,38 +68,50 @@ public class ContainerObject : WorldObject
     {
         InteractionButton.SetIconOnSearch();
 
-        PointerHold holder = InteractionButton.pointer;
-        holder.SetupHold(scriptableData.time);
-        holder.AddHoldStartListener(StartHold);
-        holder.AddHoldChangeListener(ChangeHold);
-        holder.AddHoldBreakListener(BreakHold);
-        holder.AddHoldStopListener(StopHold);
+        InteractionButton.pointer.AddPressListener(StartHold);
+        InteractionButton.pointer.AddUnPressListener(StopHold);
     }
 
-    private void StartHold()
+    public void StartHold()
     {
-        GeneralAvailability.Player.LockMovement();
-        GeneralAvailability.TargetPoint.ShowBar();
+        if (!IsHoldProccess)
+        {
+            GeneralAvailability.Player.LockMovement();
+            GeneralAvailability.TargetPoint.ShowBar();
+            holdCoroutine = StartCoroutine(Hold(endTime));
+        }
+    }
+    private IEnumerator Hold(float maxTime)
+    {
+        float startTime = Time.time;
+        currentTime = Time.time - startTime;
+        while (currentTime <= maxTime)
+        {
+            GeneralAvailability.TargetPoint.SetBarValue(currentTime / maxTime);
 
-    }
-    private void ChangeHold(float value)
-    {
-        GeneralAvailability.TargetPoint.SetBarValue(value);
-    }
-    private void BreakHold(float time)
-    {
-        GeneralAvailability.TargetPoint.HideBar();
-        Player.Instance.UnLockMovement();
+            currentTime = Time.time - startTime;
 
-        InteractionButton.pointer.SetupHold(scriptableData.time);
-    }
-    private void StopHold()
-    {
+            yield return null;
+        }
+
+        InteractionButton.pointer.RemoveAllListeners();
         isInspected = true;
 
-        GeneralAvailability.TargetPoint.HideBar();
-        Player.Instance.UnLockMovement();
+        StopHold();
+    }
+    public void StopHold()
+    {
+        if (IsHoldProccess)
+        {
+            StopCoroutine(holdCoroutine);
+            holdCoroutine = null;
 
-        Interact();
+            GeneralAvailability.TargetPoint.HideBar();
+            GeneralAvailability.Player.UnLockMovement();
+            if (isInspected)
+            {
+                Interact();
+            }
+        }
     }
 }

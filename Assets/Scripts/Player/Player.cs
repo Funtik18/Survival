@@ -34,6 +34,28 @@ public class Player : MonoBehaviour
 	public ItemInspector itemInspector;//make it
 
 	[Space]
+	[Range(-100f, 100f)]
+	public float airResistance = 0f;
+	[Range(-100f, 100f)]
+	public float windResistance = 0f;
+	[Range(0, 100f)]
+	public float clothing = 0f;
+
+	//[ShowInInspector]
+	//public float AirFeels => Mathf.Clamp(controller.Air.airTemperature - (controller.Air.airTemperature * airResistance / 100f), -100f, 50f);
+	//[ShowInInspector]
+	//public float WindFeels => Mathf.Min(controller.Wind.windchill - (controller.Wind.windchill * windResistance / 100f), 0);
+
+	////если > 0 получаем тепло
+	////если <= 0 теряет тепло
+	//[ShowInInspector]
+	//public float FeelsLike => AirFeels + WindFeels + clothing;//+ bonuses
+	
+
+	//private GeneralTemperature.WeatherController controller;
+
+
+	[Space]
 	[SerializeField] private bool isLockCursor = true;
 
 	private bool isMoveLocked = false;
@@ -49,7 +71,7 @@ public class Player : MonoBehaviour
 		Inventory.Init();
 		Build.Init(this);
 
-		GeneralTime.Instance.AddAction(UpdateStats);
+		GeneralTime.Instance.onSeconde += UpdateStats;
 
 		UI.Setup(this);
 
@@ -85,6 +107,25 @@ public class Player : MonoBehaviour
 			}
 		}
 	}
+
+
+	public void ChangePosition(Vector3 position, Quaternion rotation)
+    {
+		StartCoroutine(SetPosition(position, rotation));
+	}
+
+	private IEnumerator SetPosition(Vector3 position, Quaternion rotation)
+    {
+		Lock();
+
+		transform.position = position;
+		transform.rotation = rotation;
+		yield return null;
+		
+		UnLock();
+	}
+
+
 
 	#region Stats
 	private UnityAction onStats; 

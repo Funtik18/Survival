@@ -2,7 +2,6 @@
 
 using UnityEngine;
 
-[CreateAssetMenu]
 public class ClothingItemSD : ItemSD
 {
 	[ShowIf("isBreakable")]

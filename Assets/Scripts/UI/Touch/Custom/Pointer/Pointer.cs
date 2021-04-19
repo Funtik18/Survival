@@ -104,4 +104,12 @@ public class Pointer : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         onDoublePressed.RemoveAllListeners();
     }
+
+
+    public void RemoveAllListeners()
+    {
+        RemoveAllPressListeners();
+        RemoveAllUnPressListeners();
+        RemoveAllDoublePressListeners();
+    }
 }

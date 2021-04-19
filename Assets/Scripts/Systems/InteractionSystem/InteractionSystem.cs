@@ -27,4 +27,3 @@ public interface IPullable
 }
 
 public interface IPerceptible : IObservable, IInteractable { }
-

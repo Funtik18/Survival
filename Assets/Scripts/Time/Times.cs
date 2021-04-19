@@ -4,6 +4,8 @@ using UnityEngine;
 
 using Sirenix.OdinInspector;
 using System;
+using System.Globalization;
+using UnityEngine.Events;
 
 [System.Serializable]
 public struct Times
@@ -24,6 +26,26 @@ public struct Times
     [SuffixLabel("s", true)]
     [Range(0, 60)]
     public int seconds;
+
+    public TimesState State
+    {
+        get
+        {
+            if (hours >= 6 && hours <= 12)
+            {
+                return TimesState.Morning;
+            }
+            else if (hours > 12 && hours <= 17)
+            {
+                return TimesState.Afternoon;
+            }
+            else if (hours > 17 && hours <= 20)
+            {
+                return TimesState.Evening;
+            }
+            return TimesState.Night;
+        }
+    }
 
     [ReadOnly]
     [SerializeField] private int totalSeconds;
@@ -64,7 +86,11 @@ public struct Times
         seconds = span.Seconds;
     }
 
-    public float GetDayPercent() => TotalSeconds / 86400f;
+    public float GetSkyPercent() => TotalSeconds / 86400f;
+
+    public float GetDayPercent() => GetSkyPercent() % 1;
+
+
     public int GetAllMinutes() => TotalSeconds / 60;
 
     public void UpdateTimeFromSky(float skyTime)
@@ -158,4 +184,14 @@ public struct Times
         return result;
     }
     #endregion
+
+
+    public enum TimesState
+    {
+        Morning,
+        Noon,
+        Afternoon,
+        Evening,
+        Night,
+    }
 }

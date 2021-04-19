@@ -16,6 +16,12 @@ public class PlayerStats
 	public StatHungred Hungred;
 	public StatThirst Thirst;
 
+
+   
+
+
+
+
 	public PlayerStats(PlayerStatsData data)
 	{
 		this.data = data;

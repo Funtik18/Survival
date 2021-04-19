@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 using Sirenix.OdinInspector;
 
-public class InteractionButton : CustomHolder
+public class InteractionButton : CustomPointer
 {
     [SerializeField] private Image icon;
 

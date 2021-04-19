@@ -55,7 +55,7 @@ public class PlayerOpportunities
 	{
 		ItemSD data = item.itemData.scriptableData;
 
-		if (data is ConsuableItemSD consuable)
+		if (data is ConsumableItemSD consuable)
 		{
             if (IsCanGetIt(consuable))
             {
@@ -70,7 +70,7 @@ public class PlayerOpportunities
             }
 		}
 	}
-	private IEnumerator Use(Item item, ConsuableItemSD consuable)
+	private IEnumerator Use(Item item, ConsumableItemSD consuable)
 	{
 		ItemDataWrapper data = item.itemData;
 
@@ -193,7 +193,7 @@ public class PlayerOpportunities
 		}
 	}
     
-	private bool IsCanGetIt(ConsuableItemSD consuable)
+	private bool IsCanGetIt(ConsumableItemSD consuable)
     {
 		if(consuable is WaterItemSD)
         {
