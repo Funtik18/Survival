@@ -4,6 +4,9 @@ using UnityEngine;
 
 using Sirenix.OdinInspector;
 
+/// <summary>
+///	Все характеристики персонажа.
+/// </summary>
 public class PlayerStats
 {
 	public PlayerStatsData data;
@@ -15,12 +18,6 @@ public class PlayerStats
 	public StatFatigue Fatigue;
 	public StatHungred Hungred;
 	public StatThirst Thirst;
-
-
-   
-
-
-
 
 	public PlayerStats(PlayerStatsData data)
 	{

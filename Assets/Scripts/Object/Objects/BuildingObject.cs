@@ -10,16 +10,18 @@ public class BuildingObject : WorldObject<BuildingSD>
 {
     [PropertyOrder(-1)]
     [SerializeField] protected bool isPlacement = false;
+    [PropertyOrder(1)]
     [SerializeField] protected LayerMask ignoreLayers;
+    [PropertyOrder(2)]
     [SerializeField] private List<MeshRenderer> renderers = new List<MeshRenderer>();
+
+    private List<Collider> collidersIntersects = new List<Collider>();
+    private List<Material> materialsBasic = new List<Material>();
 
     public bool IsIntersects => collidersIntersects.Count > 0;
     public virtual bool IsCanBeBuild => true;
 
     public bool IsPlacement { get => isPlacement; set => isPlacement = value; }
-
-    private List<Collider> collidersIntersects = new List<Collider>();
-    private List<Material> materialsBasic = new List<Material>();
 
     protected virtual void Awake()
     {
@@ -72,20 +74,20 @@ public class BuildingObject : WorldObject<BuildingSD>
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (IsPlacement) return;
 
         if (!collidersIntersects.Contains(other))
         {
+            Debug.LogError(other.name);
             if (((1 << other.gameObject.layer) & ignoreLayers) == 0)
             {
                 collidersIntersects.Add(other);
             }
-
         }
     }
-    private void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if (IsPlacement) return;
 

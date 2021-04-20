@@ -49,7 +49,7 @@ public class Build
     public void Init(Player player)
     {
 		this.player = player;
-		this.playerCamera = player.playerCamera;
+		this.playerCamera = player.Camera;
 		collidersIntersects = playerCamera.collidersIntersects;
 	}
 
@@ -151,6 +151,8 @@ public class Build
 
 		currentTransform.position = lastPosition;
 		currentTransform.rotation = lastRotation;
+
+		currentBuilding.IsPlacement = false;
 
 		currentBuilding.SetMaterial(IsCanBuild ? acceptMaterial : rejectMaterial);
 	}

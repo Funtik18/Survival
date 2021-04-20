@@ -35,10 +35,7 @@ public class RandomContainer : MonoBehaviour
         if (useRandomCount)
             constCount = Random.Range(randomCount.x, randomCount.y + 1);
 
-        if (ItemsSD.Instance == null)
-            Debug.LogError("Items == null");
-
-        List<ItemSD> items = ItemsSD.Instance.GetRandomContainer(constCount);
+        List<ItemSD> items = ItemsData.Instance.GetRandomContainer(constCount);
         List<ItemDataWrapper> itemsData = new List<ItemDataWrapper>();
 
         for (int i = 0; i < items.Count; i++)

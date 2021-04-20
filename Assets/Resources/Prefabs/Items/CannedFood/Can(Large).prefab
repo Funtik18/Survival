@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7546580100846837701}
   - component: {fileID: 4299764042535329353}
   - component: {fileID: 1998052492219975940}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: Can(Large)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,6 +111,8 @@ MonoBehaviour:
     scriptableData: {fileID: 11400000, guid: 3c3f027af864f36418b7e8767860fcd1, type: 2}
     currentStackSize: 1
     currentDurrability: 100
+    currentTemperature: 0
+    consumableState: 2
     currentCalories: 250
     currentWeight: 0.5
     minimumWeight: 0

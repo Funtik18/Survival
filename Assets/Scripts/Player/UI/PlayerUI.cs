@@ -17,7 +17,7 @@ public class PlayerUI : MonoBehaviour
 	{
 		controlUI.Setup(player.Controller);
 
-		conditionUI.Setup(player.Stats);
+		conditionUI.Setup(player.Status);
 
 		windowsUI.itemInspectorWindow.Setup(player.itemInspector);
 		windowsUI.buildingWindow.Setup(player.Build);
@@ -88,6 +88,13 @@ public class PlayerUI : MonoBehaviour
 		OpenControlUI();
 		OpenConditionUI();
 	}
+	public void BreakFireMenu()
+    {
+		windowsUI.fireMenuWindow.Out();
+		OpenControlUI();
+		OpenConditionUI();
+	}
+
 
 	public void OpenConditionUI()
     {

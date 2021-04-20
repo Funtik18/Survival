@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 857920658658452729}
   - component: {fileID: 857920658661319897}
   - component: {fileID: 857920658660353561}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: Cylindre001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 857920658658452731}
   - component: {fileID: 857920658658162885}
   - component: {fileID: 857920658658162906}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: Can2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,6 +143,8 @@ MonoBehaviour:
     scriptableData: {fileID: 11400000, guid: c8e0ded6803c21a47af46b163f153743, type: 2}
     currentStackSize: 1
     currentDurrability: 100
+    currentTemperature: 0
+    consumableState: 2
     currentCalories: 250
     currentWeight: 0.25
     minimumWeight: 0
@@ -157,7 +159,7 @@ GameObject:
   - component: {fileID: 857920658658452733}
   - component: {fileID: 857920658661319899}
   - component: {fileID: 857920658660353563}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: Bo__te001
   m_TagString: Untagged
   m_Icon: {fileID: 0}

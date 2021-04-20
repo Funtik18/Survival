@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 
 using Sirenix.OdinInspector;
-using UnityEngine.Events;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
-	private static Player instance;
+    #region Properties
+    private static Player instance;
 	public static Player Instance
 	{
 		get
@@ -19,41 +20,28 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	[SerializeField] private PlayerData Data;
-	public PlayerStats Stats;
+	[SerializeField] private PlayerStatus status;
+	public PlayerStatus Status => status;
 
-	public PlayerOpportunities Opportunities;
-	public PlayerStates States;
-	public PlayerInventory Inventory;
-	public Build Build;
+	[SerializeField] private Inventory inventory;
+	public Inventory Inventory => inventory;
 
-	public PlayerController Controller;
-	public PlayerCamera playerCamera;
-	public PlayerUI UI;
+	[SerializeField] private Build build;
+	public Build Build => build;
+
+	[SerializeField] private PlayerController controller;
+	public PlayerController Controller => controller;
+
+	[SerializeField] private PlayerCamera camera;
+	public PlayerCamera Camera => camera;
+
+	[SerializeField] private PlayerUI ui;
+	public PlayerUI UI => ui;
+	#endregion
+
+	public float radius;
 
 	public ItemInspector itemInspector;//make it
-
-	[Space]
-	[Range(-100f, 100f)]
-	public float airResistance = 0f;
-	[Range(-100f, 100f)]
-	public float windResistance = 0f;
-	[Range(0, 100f)]
-	public float clothing = 0f;
-
-	//[ShowInInspector]
-	//public float AirFeels => Mathf.Clamp(controller.Air.airTemperature - (controller.Air.airTemperature * airResistance / 100f), -100f, 50f);
-	//[ShowInInspector]
-	//public float WindFeels => Mathf.Min(controller.Wind.windchill - (controller.Wind.windchill * windResistance / 100f), 0);
-
-	////если > 0 получаем тепло
-	////если <= 0 теряет тепло
-	//[ShowInInspector]
-	//public float FeelsLike => AirFeels + WindFeels + clothing;//+ bonuses
-	
-
-	//private GeneralTemperature.WeatherController controller;
-
 
 	[Space]
 	[SerializeField] private bool isLockCursor = true;
@@ -63,19 +51,13 @@ public class Player : MonoBehaviour
 
 	private void Awake()
 	{
-		Stats = new PlayerStats(Data.statsData);
-		States.AddAction(SwapStateChanged);
+		Status.Init(this);
 
-		Controller.Setup(Stats, States);
-
+		Controller.Init(this);
+		
 		Inventory.Init();
-		Build.Init(this);
-
-		GeneralTime.Instance.onSeconde += UpdateStats;
-
 		UI.Setup(this);
-
-		Opportunities.Setup(this);
+		Build.Init(this);
 
 		CheckCursor();
 	}
@@ -125,107 +107,19 @@ public class Player : MonoBehaviour
 		UnLock();
 	}
 
-
-
-	#region Stats
-	private UnityAction onStats; 
-	private void SwapStateChanged(PlayerState state)
-    {
-		onStats = null;
-
-		switch (state)
-        {
-			case PlayerState.Sleeping:
-			{
-				onStats += SleepingFormule;
-			}
-			break;
-			case PlayerState.Standing:
-			{
-				onStats += StandingFormule;
-			}
-			break;
-			case PlayerState.Walking:
-			{
-				onStats += WalkingFormule;
-			}
-			break;
-			case PlayerState.Sprinting:
-			{
-				onStats += SprintingFormule;
-			}
-			break;
-		}
-	}
-	private void UpdateStats()
-	{
-		onStats?.Invoke();
-
-		ConditionFormule();
-	}
-
-	private void ConditionFormule()
-    {
-		if (Stats.Warmth.CurrentValue == 0)
-		{
-			Stats.Condition.CurrentValue -= (Stats.Condition.Value * 4.5f) / 86400f;//-450.0%/d or ~18.75%/h
-		}
-		if (Stats.Fatigue.CurrentValue == 0)
-		{
-			Stats.Condition.CurrentValue -= (Stats.Condition.Value * 0.25f) / 86400f;//-25.0%/d or ~1.04%/h
-		}
-		if (Stats.Hungred.CurrentValue == 0)
-        {
-			Stats.Condition.CurrentValue -= (Stats.Condition.Value * 0.25f) / 86400f;//-25.0%/d or ~1.04%/h
-		}
-		if (Stats.Thirst.CurrentValue == 0)
-		{
-			Stats.Condition.CurrentValue -= (Stats.Condition.Value * 0.5f) / 86400f;//-50.0%/d or ~2.08%/h
-		}
-	}
-
-	private void AwakeFormule()
-	{
-		Stats.Thirst.CurrentValue -= Stats.Thirst.Value / (8f * 3600f);//100% / 8h or 12.5%/h
-	}
-	private void SleepingFormule()
-	{
-		Stats.Hungred.CurrentValue -= 75f / 3600f;//75 cal/h
-		Stats.Thirst.CurrentValue -= Stats.Thirst.Value / (12f * 3600f);//100% / 12h or ~8.33%/h
-	}
-	private void StandingFormule()
-    {
-		Stats.Hungred.CurrentValue -= 125f / 3600f;//125 cal/h
-
-		AwakeFormule();
-	}
-	private void WalkingFormule()
-	{
-		Stats.Hungred.CurrentValue -= 200f / 3600f;//200 cal/h
-
-		AwakeFormule();
-	}
-	private void SprintingFormule()
-	{
-		Stats.Hungred.CurrentValue -= 400f / 3600f;//400 cal/h
-
-		AwakeFormule();
-	}
-	#endregion
-
 	#region Lock
 	public void Lock()
     {
 		isMoveLocked = true;
 		isLookLocked = true;
-        playerCamera.LockVision();
+        camera.LockVision();
         UI.controlUI.LockControl();
     }
 	public void UnLock()
     {
 		isMoveLocked = false;
 		isLookLocked = false;
-        playerCamera.UnLockVision();
+        camera.UnLockVision();
         UI.controlUI.UnLockControl();
     }
 
@@ -242,12 +136,6 @@ public class Player : MonoBehaviour
 		UI.controlUI.UnLockControl();
 	}
     #endregion
-
-	private float Normalize(float value, float min, float max)
-	{
-		float normalized = (value - min) / (max - min);
-		return normalized;
-	}
 
 	private void CheckCursor()
 	{

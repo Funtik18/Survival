@@ -77,7 +77,7 @@ public class ContainerObject : WorldObject
         if (!IsHoldProccess)
         {
             GeneralAvailability.Player.LockMovement();
-            GeneralAvailability.TargetPoint.ShowBar();
+            GeneralAvailability.TargetPoint.ShowLowBar();
             holdCoroutine = StartCoroutine(Hold(endTime));
         }
     }
@@ -87,7 +87,7 @@ public class ContainerObject : WorldObject
         currentTime = Time.time - startTime;
         while (currentTime <= maxTime)
         {
-            GeneralAvailability.TargetPoint.SetBarValue(currentTime / maxTime);
+            GeneralAvailability.TargetPoint.SetBarLowValue(currentTime / maxTime);
 
             currentTime = Time.time - startTime;
 
@@ -106,7 +106,7 @@ public class ContainerObject : WorldObject
             StopCoroutine(holdCoroutine);
             holdCoroutine = null;
 
-            GeneralAvailability.TargetPoint.HideBar();
+            GeneralAvailability.TargetPoint.HideLowBar();
             GeneralAvailability.Player.UnLockMovement();
             if (isInspected)
             {

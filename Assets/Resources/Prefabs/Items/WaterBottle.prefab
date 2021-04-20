@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7873127054822239715}
   - component: {fileID: 8521385709362072628}
   - component: {fileID: 8521385709362072629}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: WaterBottle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,6 +111,8 @@ MonoBehaviour:
     scriptableData: {fileID: 11400000, guid: fe3f6e012c3127b4cb3b18f174143b35, type: 2}
     currentStackSize: 1
     currentDurrability: 100
+    currentTemperature: 0
+    consumableState: 2
     currentCalories: 0
     currentWeight: 2.15
     minimumWeight: 0.15

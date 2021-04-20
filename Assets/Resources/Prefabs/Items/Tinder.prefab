@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8459663302759728336}
   - component: {fileID: 7378841526895359664}
   - component: {fileID: 7545982160548433704}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: Tinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,3 +111,8 @@ MonoBehaviour:
     scriptableData: {fileID: 11400000, guid: 17e656c3d1536434d9999bfc47cc4941, type: 2}
     currentStackSize: 1
     currentDurrability: 100
+    currentTemperature: 0
+    consumableState: 2
+    currentCalories: 0
+    currentWeight: 0
+    minimumWeight: 0

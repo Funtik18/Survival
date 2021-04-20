@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         get
         {
             if (ownerTransform == null)
-                ownerTransform = Player.Instance.transform;
+                ownerTransform = GeneralAvailability.Player.transform;
             return ownerTransform;
         }
     }
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         get
         {
             if (ownerCamera == null)
-                ownerCamera = Player.Instance.playerCamera.transform;
+                ownerCamera = GeneralAvailability.Player.Camera.transform;
             return ownerCamera;
         }
     }
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
         get
         {
             if (controlUI == null)
-                controlUI = Player.Instance.UI.controlUI;
+                controlUI = GeneralAvailability.PlayerUI.controlUI;
             return controlUI;
         }
     }
@@ -97,10 +97,10 @@ public class PlayerController : MonoBehaviour
     private Vector2 targetLookDirection;
     private Vector2 targetMoveDirection;
 
-    public void Setup(PlayerStats stats, PlayerStates states)
+    public void Init(Player player)
 	{
-        this.states = states;
-        this.stamina = stats.Stamina;
+        this.states = player.Status.states;
+        this.stamina = player.Status.stats.Stamina;
         currentSpeed = maxWalkSpeed;
     }
     public void UpdatePCLook()

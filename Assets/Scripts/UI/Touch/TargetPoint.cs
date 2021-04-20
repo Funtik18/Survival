@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class TargetPoint : MonoBehaviour
 {
-	[SerializeField] private ProgressBar radialBar;
+	[SerializeField] private ProgressBar radialBarLow;
+	[SerializeField] private ProgressBar radialBarHight;
 	[Space]
 	[SerializeField] private Image point;
 	[SerializeField] private TMPro.TextMeshProUGUI toolTipText;
@@ -22,11 +23,16 @@ public class TargetPoint : MonoBehaviour
 		return this;
 	}
 
-	public TargetPoint SetBarValue(float value)
+	public TargetPoint SetBarLowValue(float value, string expresion = "")
     {
-		radialBar.UpdateFillAmount(value);
+		radialBarLow.UpdateFillAmount(value, expresion);
 		return this;
     }
+	public TargetPoint SetBarHightValue(float value, string expresion = "")
+	{
+		radialBarHight.UpdateFillAmount(value, expresion);
+		return this;
+	}
 
 
 	[Button]
@@ -52,14 +58,25 @@ public class TargetPoint : MonoBehaviour
 	}
 
 	[Button]
-	public void ShowBar()
+	public void ShowLowBar()
 	{
-		radialBar.ShowBar();
+		radialBarLow.ShowBar();
 	}
 	[Button]
-	public void HideBar()
+	public void HideLowBar()
 	{
-		radialBar.HideBar();
+		radialBarLow.HideBar();
+	}
+
+	[Button]
+	public void ShowHightBar()
+	{
+		radialBarHight.ShowBar();
+	}
+	[Button]
+	public void HideHightBar()
+	{
+		radialBarHight.HideBar();
 	}
 
 	[Button]
@@ -77,7 +94,7 @@ public class TargetPoint : MonoBehaviour
 	public void ShowAll()
     {
 		ShowPoint();
-		ShowBar();
+		ShowLowBar();
 		ShowToolTip();
 		ShowAddToolTip();
 	}
@@ -85,7 +102,7 @@ public class TargetPoint : MonoBehaviour
 	public void HideAll()
 	{
 		HidePoint();
-		HideBar();
+		HideLowBar();
 		HideToolTip();
 		HideAddToolTip();
 	}

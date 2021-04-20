@@ -28,8 +28,8 @@ public class PlayerOpportunities
 		exchanger.onOk += RemoveItem;
 		exchanger.onAll += RemoveItem;
 
-		thirst = player.Stats.Thirst;
-		hungred = player.Stats.Hungred;
+		thirst = player.Status.stats.Thirst;
+		hungred = player.Status.stats.Hungred;
 	}
 
 	public void DropItem(Item item)

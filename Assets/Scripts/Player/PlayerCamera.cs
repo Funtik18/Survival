@@ -22,8 +22,9 @@ public class PlayerCamera : MonoBehaviour
 
 	[SerializeField] private Camera playerCamera;
 	[SerializeField] private CameraShaker shaker;
-
+	[Space]
 	[SerializeField] private LayerMask interactLayers;
+	[SerializeField] private LayerMask ignoringLayers;
 	[Space]
 	[SerializeField] private float maxRayDistance = 5f;
 	[SerializeField] private float rayDistance = 5f;
@@ -123,7 +124,7 @@ public class PlayerCamera : MonoBehaviour
 				Ray ray = new Ray(Transform.position, Transform.forward);
 
                 //каст для мира
-                if (Physics.Raycast(ray, out hit, maxRayDistance))
+                if (Physics.Raycast(ray, out hit, maxRayDistance, ~ignoringLayers))
                 {
                     lastHitPoint = hit.point;
 
@@ -208,7 +209,6 @@ public class PlayerCamera : MonoBehaviour
 		}
 	}
 	#endregion
-
 
 	private void OnDrawGizmos()
 	{

@@ -6,13 +6,15 @@ public class ConditionUI : WindowUI
     [Space]
     public WindowCondition conditionWindow;
 
-    public void Setup(PlayerStats stats)
+    public void Setup(PlayerStatus status)
     {
-        stats.Stamina.onPercentValueChanged += UpdateStamina;
+        StatStamina stamina = status.stats.Stamina;
 
-        UpdateStamina(stats.Stamina.PercentValue);
+        stamina.onPercentValueChanged += UpdateStamina;
 
-        conditionWindow.Setup(stats);
+        UpdateStamina(stamina.PercentValue);
+
+        conditionWindow.Setup(status);
     }
 
     public void ShowStamina()

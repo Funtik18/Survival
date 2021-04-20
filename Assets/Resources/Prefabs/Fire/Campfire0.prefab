@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7986179049098546547}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &812788214851788910
 BoxCollider:
@@ -88,7 +88,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7986179049098546547}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5016209498041984568
 BoxCollider:
@@ -146,7 +146,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7986179049098546547}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4456665618414312904
 BoxCollider:
@@ -14448,7 +14448,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.7372549, b: 0.34509805, a: 1}
-  m_Intensity: 2
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -14543,7 +14543,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7986179049098546547}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &6267776125876665260
 BoxCollider:
@@ -14606,6 +14606,7 @@ Transform:
   - {fileID: 6505143314459198694}
   - {fileID: 6608333490451829777}
   - {fileID: 6608333490451797497}
+  - {fileID: 1806939632186819624}
   - {fileID: 5029327041991425004}
   - {fileID: 8867725777406385225}
   - {fileID: 5259819360570851093}
@@ -14711,15 +14712,117 @@ MonoBehaviour:
   - {fileID: 7986179049096122259}
   - {fileID: 5336138546279808905}
   isEnableOnAwake: 0
+  interactLayers:
+    serializedVersion: 2
+    m_Bits: 4352
   particles:
   - {fileID: 6608333490433524371}
   - {fileID: 6608333490433518997}
   - {fileID: 6608333490433450445}
-  bonfireLight: {fileID: 6608333490441294775}
-  minIntensity: 1.5
-  maxIntensity: 2.5
   slots:
   - {fileID: 1114830657188898562}
   - {fileID: 6979249400828764404}
   - {fileID: 5087780658498446250}
   - {fileID: 3078091726616266898}
+  maxTemperature: 80
+  maxFireTime:
+    days: 0
+    hours: 12
+    minutes: 0
+    seconds: 0
+    totalSeconds: 0
+  bonfireLight: {fileID: 6608333490441294775}
+  maxIntensity0: 1.5
+  maxIntensity1: 2.5
+  maxIntensity2: 2.5
+  zone: {fileID: 631160428551129343}
+--- !u!1 &8731754588875256759
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1806939632186819624}
+  - component: {fileID: 705229951127217698}
+  - component: {fileID: 631160428551129343}
+  m_Layer: 0
+  m_Name: Zone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1806939632186819624
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8731754588875256759}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_Children: []
+  m_Father: {fileID: 7986179049098546547}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &705229951127217698
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8731754588875256759}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &631160428551129343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8731754588875256759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094967ee5752f324ba165b5433fee748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  temperatureDistanceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  temperatureInZone: 0
+  minSize: {x: 0, y: 0, z: 0}
+  maxSize: {x: 3, y: 3, z: 3}
+  size: 1
+  isEnable: 0
+  intersectLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  collidersIntersects: []

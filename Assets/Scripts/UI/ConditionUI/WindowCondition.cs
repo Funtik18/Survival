@@ -21,8 +21,10 @@ public class WindowCondition : MonoBehaviour
     public ConditionElementUI temperature;
     public ConditionElementUI condition;
 
-    public void Setup(PlayerStats stats)
+    public void Setup(PlayerStatus status)
     {
+        PlayerStats stats = status.stats;
+
         stats.Condition.onCurrentValueChanged += UpdateCondition;
 
         stats.Warmth.onPercentValueChanged += UpdateWarmth;
@@ -34,6 +36,8 @@ public class WindowCondition : MonoBehaviour
 
         stats.Thirst.onPercentValueChanged += UpdateThirst;
 
+        status.onFeelsLikeChanged += UpdateFeelsLike;
+
         UpdateCondition(stats.Condition.CurrentValue);
 
         UpdateWarmth(stats.Warmth.PercentValue);
@@ -44,6 +48,8 @@ public class WindowCondition : MonoBehaviour
         UpdateColories(stats.Hungred.CurrentValue);
 
         UpdateThirst(stats.Thirst.PercentValue);
+
+        UpdateFeelsLike(status.FeelsLike);
     }
 
     public void ShowAll()
@@ -85,10 +91,15 @@ public class WindowCondition : MonoBehaviour
     }
     private void UpdateColories(float value)
     {
-        caloriesText.text = (int)value + "Kcal";
+        caloriesText.text = (int)value + SymbolCollector.KCAL;
     }
     private void UpdateThirst(float value)
     {
         thirstBar.UpdateFillAmount(value, "%");
+    }
+
+    private void UpdateFeelsLike(float value)
+    {
+        temperatureText.text = (int)value + " " + SymbolCollector.CELSIUS;
     }
 }

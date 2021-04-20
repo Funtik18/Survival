@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6758983146330748405}
   - component: {fileID: 4408943967623979535}
   - component: {fileID: 1845051801863963909}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: "Bo\xEEte001"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 3557939897795354578}
   - component: {fileID: 3557939897798778868}
   - component: {fileID: 3557939897797778740}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cylindre001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3557939897795354580}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: CanOverCrushed2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

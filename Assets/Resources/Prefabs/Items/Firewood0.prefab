@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 939680686878115206}
   - component: {fileID: 3093614730609884783}
   - component: {fileID: 4255220098208754859}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Firewood0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,4 +111,8 @@ MonoBehaviour:
     scriptableData: {fileID: 11400000, guid: 91c735e4a219fd040a357fb76b5d1f72, type: 2}
     currentStackSize: 1
     currentDurrability: 100
+    currentTemperature: 0
+    consumableState: 2
     currentCalories: 0
+    currentWeight: 0
+    minimumWeight: 0

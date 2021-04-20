@@ -4,7 +4,6 @@ using Sirenix.OdinInspector;
 
 public abstract class FireSD : ItemSD
 {
-
     [Title("Benefit")]
     [SuffixLabel("%", true)]
     [Range(-100f, 100f)]

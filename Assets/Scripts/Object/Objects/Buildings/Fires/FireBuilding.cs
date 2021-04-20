@@ -8,21 +8,40 @@ public class FireBuilding : BuildingObject
 {
     [PropertyOrder(-1)]
     [SerializeField] protected bool isEnableOnAwake = false;
+    
+    [PropertyOrder(1)]
+    [SerializeField] private LayerMask interactLayers;
+
+    [PropertyOrder(2)]
     [SerializeField] protected List<ParticleSystem> particles = new List<ParticleSystem>();
+    [PropertyOrder(2)]
+    [SerializeField] private List<CookingSlot> slots = new List<CookingSlot>();
+    [Space]
+    [SerializeField] private float maxTemperature = 80;
+    [SerializeField] private Times maxFireTime = new Times() { hours = 12 };
     [Space]
     [SerializeField] protected Light bonfireLight;
     [Range(0f, 8f)]
-    [SerializeField] protected float minIntensity = 1.5f;
+    [SerializeField] protected float maxIntensity0 = 1.5f;
     [Range(0f, 8f)]
-    [SerializeField] protected float maxIntensity = 2.5f;
+    [SerializeField] protected float maxIntensity1 = 2.5f;
+    [Range(0f, 8f)]
+    [SerializeField] protected float maxIntensity2 = 2.5f;
 
-    [SerializeField] private List<CookingSlot> slots = new List<CookingSlot>();
+    [SerializeField] private WeatherZone zone;
+
+    private string ToolTip => currentTime.ToStringSimplification(true) + " " + System.Math.Round(currentTemperature, 1) + SymbolCollector.CELSIUS;
+
+    private float currentTemperature;
+    public float CurrentTemperature => currentTemperature;
+
+    private float targetTemperature;
 
     private Times fireStart;
     private Times fireDuration;
     private Times fireEnd;
 
-    private Times current;
+    private Times currentTime;
 
     protected bool isEnable = false;
     protected float randomValue;
@@ -31,36 +50,43 @@ public class FireBuilding : BuildingObject
     {
         base.Awake();
         if (isEnableOnAwake)
+        {
             EnableParticles();
+        }
     }
 
     private void Update()
     {
-        if (isEnable)
-        {
-            bonfireLight.intensity = Mathf.Lerp(minIntensity, maxIntensity, Mathf.PerlinNoise(randomValue, Time.time));
-        }
+        //if (isEnable)
+        //{
+        //    float value = Mathf.Lerp(minIntensity, maxIntensity, Mathf.PerlinNoise(randomValue, Time.time));
+        //    bonfireLight.intensity = value;
+        //    warmRadius = value;
+        //}
         if (isEnableOnAwake)
         {
-            UpdateItem();
+            //UpdateItems();
+            //UpdateEnvironment();
         }
     }
 
     public bool AddItem(Item item)
     {
-        for (int i = 0; i < slots.Count; i++)
+        ItemDataWrapper data = item.itemData;
+        ItemSD itemSD = data.scriptableData;
+        if (itemSD is FireFuelSD fuelSD)
         {
-            if (slots[i].IsEmpty)
-            {
-                slots[i].SetItem(item);
-                return true;
-            }
-        }
+            fireEnd += fuelSD.addFireTime;
+            targetTemperature += fuelSD.addTemperature;
+            unityEvent.SetTime(fireEnd);
 
+            return true;
+        }
         return false;
     }
 
-    private void UpdateItem()
+
+    private void UpdateItems()
     {
         for (int i = 0; i < slots.Count; i++)
         {
@@ -68,30 +94,71 @@ public class FireBuilding : BuildingObject
         }
     }
 
+    private void SetTemperature(float temperature)
+    {
+        currentTemperature = Mathf.Clamp(temperature, 0, targetTemperature);
+    }
+    private void SetFireIntensity(float value)
+    {
+        bonfireLight.intensity = value;
+        zone.SetSize(value);
+    }
+
+
     #region Fire
-    public void StartFire(Times fireDuration)
+    #region Розжиг
+    public void LightFire(float endTemperature)
     {
         if (!isEnable)
         {
             isEnable = true;
-
-            this.fireStart = GeneralTime.Instance.globalTime;
-            this.fireDuration = fireDuration;
-            this.fireEnd = fireStart + fireDuration;
-
-
-            GeneralTime.TimeUnityEvent unityEvent = new GeneralTime.TimeUnityEvent();
-            unityEvent.AddEvent(GeneralTime.TimeUnityEvent.EventType.ExecuteInTime, fireEnd, null, UpdateFire, StopFire);
-            GeneralTime.Instance.AddEvent(unityEvent);
-
-            EnableParticles();
+            targetTemperature = endTemperature;
         }
+    }
+    public void UpdateLightFire(float t)
+    {
+        SetTemperature(Mathf.Lerp(0, targetTemperature * 0.2f, t));
+        SetFireIntensity(Mathf.Lerp(0, maxIntensity0, t));
+    }
+    public void FireDecay()
+    {
+        SetTemperature(0);
+        SetFireIntensity(0);
+    }
+    #endregion
+    #region Горение
+    private GeneralTime.TimeUnityEvent unityEvent;
+
+    public void StartFire(Times fireDuration)
+    {
+        if(!isEnable)
+            isEnable = true;
+
+        this.fireStart = GeneralTime.Instance.globalTime;
+        this.fireDuration = fireDuration;
+        this.fireEnd = fireStart + fireDuration;
+
+        unityEvent = new GeneralTime.TimeUnityEvent();
+        unityEvent.AddEvent(GeneralTime.TimeUnityEvent.EventType.ExecuteInTime, fireEnd, null, UpdateFire, StopFire);
+        GeneralTime.Instance.AddEvent(unityEvent);
+
+        EnableParticles();
+
+        zone.TemperatureInZone = currentTemperature;
+        zone.IsEnable = true;
     }
     public void UpdateFire(Times time)
     {
-        current = fireEnd - time;
+        currentTime = fireEnd - time;
 
-        UpdateItem();
+        UpdateItems();
+
+        float value = Mathf.Lerp(maxIntensity0, maxIntensity1, Mathf.PerlinNoise(randomValue, Time.time));
+
+        if(currentTemperature != targetTemperature)
+            SetTemperature(currentTemperature + 0.01f);
+
+        zone.TemperatureInZone = currentTemperature;
     }
     public void StopFire()
     {
@@ -99,8 +166,14 @@ public class FireBuilding : BuildingObject
         {
             DisableParticles();
             isEnable = false;
+            zone.IsEnable = false;
+
+            GeneralAvailability.PlayerUI.BreakFireMenu();
+
+            Debug.LogError("Fire End");
         }
     }
+    #endregion
     #endregion
 
     #region Observe
@@ -110,9 +183,9 @@ public class FireBuilding : BuildingObject
         if (isEnable)
         {
             if(isEnableOnAwake)
-                GeneralAvailability.TargetPoint.SetTooltipAddText(current.ToStringSimplification(isInfinity : true)).ShowAddToolTip();
+                GeneralAvailability.TargetPoint.SetTooltipAddText(currentTime.ToStringSimplification(isInfinity : true)).ShowAddToolTip();
             else
-                GeneralAvailability.TargetPoint.SetTooltipAddText(current.ToStringSimplification(true)).ShowAddToolTip();
+                GeneralAvailability.TargetPoint.SetTooltipAddText(ToolTip).ShowAddToolTip();
         }
         View();
     }
@@ -123,7 +196,7 @@ public class FireBuilding : BuildingObject
             base.Observe();
             
             if(!isEnableOnAwake)
-                GeneralAvailability.TargetPoint.SetTooltipAddText(current.ToStringSimplification(true));
+                GeneralAvailability.TargetPoint.SetTooltipAddText(ToolTip);
         }
     }
     public override void EndObserve()
@@ -150,7 +223,6 @@ public class FireBuilding : BuildingObject
         GeneralAvailability.PlayerUI.OpenFireMenu(this);
     }
     #endregion
-
 
     public void EnableParticles()
     {
@@ -180,5 +252,16 @@ public class FireBuilding : BuildingObject
             DisableParticles();
         else
             EnableParticles();
+    }
+
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+
+    }
+    protected override void OnTriggerExit(Collider other)
+    {
+        base.OnTriggerEnter(other);
     }
 }

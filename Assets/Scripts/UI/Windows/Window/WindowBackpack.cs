@@ -27,7 +27,7 @@ public class WindowBackpack : WindowUI
 		primaryContainer.onUpdated += RefreshWeight;
 		buttonBack.onClick.AddListener(Back);
 
-		opportunities = GeneralAvailability.Player.Opportunities;
+		opportunities = GeneralAvailability.Player.Status.opportunities;
 	}
 
 	public void ShowBackpackInspector()
