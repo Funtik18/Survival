@@ -123,7 +123,7 @@ Material:
     - _GradientSkyUpperColor: {r: 0.0055147037, g: 0.04094827, b: 0.125, a: 1}
     - _HorizonFogColor: {r: 0.57796365, g: 0.60338193, b: 0.6415094, a: 1}
     - _MoonColor: {r: 0.97794116, g: 0.8656244, b: 0.49616134, a: 1}
-    - _MoonPosition: {r: -0.37006715, g: 0.92900485, b: 0.00059049745, a: 0}
+    - _MoonPosition: {r: -0.53137076, g: 0.84713894, b: 0.000847248, a: 0}
     - _MoonSpriteDimensions: {r: 0, g: 0, b: 0, a: 0}
     - _StarLayer1Color: {r: 1, g: 1, b: 1, a: 1}
     - _StarLayer1SpriteDimensions: {r: 0, g: 0, b: 0, a: 0}
@@ -132,5 +132,5 @@ Material:
     - _StarLayer3Color: {r: 0.21999997, g: 1, b: 0.54999995, a: 1}
     - _StarLayer3SpriteDimensions: {r: 0, g: 0, b: 0, a: 0}
     - _SunColor: {r: 0.8088235, g: 0.41835698, b: 0, a: 1}
-    - _SunPosition: {r: 0.3837351, g: -0.9234432, b: 0, a: 0}
+    - _SunPosition: {r: 0.54487777, g: -0.83851546, b: 0, a: 0}
     - _SunSpriteDimensions: {r: 0, g: 0, b: 0, a: 0}
