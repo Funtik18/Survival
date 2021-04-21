@@ -13648,6 +13648,7 @@ MonoBehaviour:
   status:
     airFeels: 0
     windFeels: 0
+    bonusesFeels: 0
     temperatureChevrone0: -5
     temperatureChevrone1: -15
     temperatureChevrone2: -25
