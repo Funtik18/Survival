@@ -70,8 +70,8 @@ namespace Funly.SkyStudio
         [Tooltip("Moon orbit.")]
         public OrbitingBody moonOrbit;
 
-        [Tooltip("Controller for managing weather effects")]
-        public WeatherController weatherController;
+        //[Tooltip("Controller for managing weather effects")]
+        //public WeatherController weatherController;
 
         [Tooltip("If true we'll invoke DynamicGI.UpdateEnvironment() when skybox changes. This is an expensive operation.")]
         public bool updateGlobalIllumination = false;

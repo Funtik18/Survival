@@ -250,33 +250,33 @@ namespace Funly.SkyStudio
 
     private bool ContainsLightningSpawnArea()
     {
-      LightningSpawnArea area = GameObject.FindObjectOfType<LightningSpawnArea>();
-      return area != null;
+      //LightningSpawnArea area = GameObject.FindObjectOfType<LightningSpawnArea>();
+      return false;
     }
 
-    private void CreateLightningSpawnArea()
-    {
-      GameObject area = new GameObject();
-      area.AddComponent<LightningSpawnArea>();
-      area.name = "Lightning Spawn Area";
+        private void CreateLightningSpawnArea()
+        {
+            //GameObject area = new GameObject();
+            //area.AddComponent<LightningSpawnArea>();
+            //area.name = "Lightning Spawn Area";
 
-      if (Camera.main == null) {
-        Debug.LogWarning("Can't position default spawn area in front of camera since no main camera exists. Tag a camera as Main");
-        area.transform.position = Vector3.zero;
-        return;
-      }
+            //if (Camera.main == null) {
+            //  Debug.LogWarning("Can't position default spawn area in front of camera since no main camera exists. Tag a camera as Main");
+            //  area.transform.position = Vector3.zero;
+            //  return;
+            //}
 
-      Transform camera = Camera.main.transform;
+            //Transform camera = Camera.main.transform;
 
-      float distanceBack = 50.0f;
-      float distanceUp = 10.0f;
-      Vector3 lightningPos = camera.position + (camera.forward * distanceBack);
-      lightningPos.y += distanceUp;
+            //float distanceBack = 50.0f;
+            //float distanceUp = 10.0f;
+            //Vector3 lightningPos = camera.position + (camera.forward * distanceBack);
+            //lightningPos.y += distanceUp;
 
-      area.transform.position = lightningPos;
-    }
+            //area.transform.position = lightningPos;
+        }
 
-    private T GetDefaultArtStyleWithName<T>(string artStyleName) where T : class
+        private T GetDefaultArtStyleWithName<T>(string artStyleName) where T : class
     {
       string[] guids = AssetDatabase.FindAssets(artStyleName);
       if (guids.Length == 0) {

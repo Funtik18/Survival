@@ -10,13 +10,13 @@ namespace Funly.SkyStudio
     [MenuItem("GameObject/Sky Studio/Lightning Spawn Area")]
     public static void CreateLightingArea(MenuCommand menuCommand)
     {
-      GameObject area = new GameObject();
-      area.AddComponent<LightningSpawnArea>();
-      area.name = "Lightning Spawn Area";
+      //GameObject area = new GameObject();
+      //area.AddComponent<LightningSpawnArea>();
+      //area.name = "Lightning Spawn Area";
 
-      GameObjectUtility.SetParentAndAlign(area, menuCommand.context as GameObject);
-      Undo.RegisterCreatedObjectUndo(area, "Created " + area.name);
-      Selection.activeObject = area;
+      //GameObjectUtility.SetParentAndAlign(area, menuCommand.context as GameObject);
+      //Undo.RegisterCreatedObjectUndo(area, "Created " + area.name);
+      //Selection.activeObject = area;
     }
   }
 }

@@ -8,19 +8,19 @@ namespace Funly.SkyStudio
   [RequireComponent(typeof(RawImage))]
   public class LoadOverheadDepthTexture : MonoBehaviour
   {
-    WeatherDepthCamera m_RainCamera;
+    //WeatherDepthCamera m_RainCamera;
     RawImage m_Image;
 
     // Use this for initialization
     void Start()
     {
-      m_RainCamera = FindObjectOfType<WeatherDepthCamera>();
+      //m_RainCamera = FindObjectOfType<WeatherDepthCamera>();
       m_Image = GetComponent<RawImage>();
     }
 
     private void Update()
     {
-      m_Image.texture = m_RainCamera.overheadDepthTexture;
+      //m_Image.texture = m_RainCamera.overheadDepthTexture;
     }
   }
 }
