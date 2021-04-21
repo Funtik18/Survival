@@ -289,15 +289,6 @@ namespace Funly.SkyStudio
 
     private void ApplyDefaultSettings(SkyProfile profile)
     {
-      // Lightning art.
-      if (profile.lightningArtSet == null) {
-        profile.lightningArtSet = GetDefaultArtStyleWithName<LightningArtSet>("DefaultLightningArtSet");
-      }
-
-      // Splash art.
-      if (profile.rainSplashArtSet == null) {
-        profile.rainSplashArtSet = GetDefaultArtStyleWithName<RainSplashArtSet>("DefaultRainSplashArtSet");
-      }
 
       // Rain near texture.
       TextureKeyframeGroup group = profile.GetGroup<TextureKeyframeGroup>(ProfilePropertyKeys.RainNearTextureKey);

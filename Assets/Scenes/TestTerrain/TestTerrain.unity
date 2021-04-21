@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 95810170}
-  m_IndirectSpecularColor: {r: 0.021699218, g: 0.045972005, b: 0.11180334, a: 1}
+  m_IndirectSpecularColor: {r: 0.021907672, g: 0.04618045, b: 0.11201179, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -202,115 +202,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 77295664}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &95810167
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 95810168}
-  - component: {fileID: 95810170}
-  - component: {fileID: 95810169}
-  m_Layer: 0
-  m_Name: SunLight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &95810168
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 95810167}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 228313053}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!123 &95810169
-LensFlare:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 95810167}
-  m_Enabled: 0
-  m_Flare: {fileID: 0}
-  m_Color: {r: 0.99264705, g: 0.9855999, b: 0.73718643, a: 0}
-  m_Brightness: 0.35
-  m_FadeSpeed: 3
-  m_IgnoreLayers:
-    serializedVersion: 2
-    m_Bits: 6
-  m_Directional: 1
---- !u!108 &95810170
+--- !u!108 &95810170 stripped
 Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 95810170, guid: 02a49226f9b31384f93c958166a9086b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1373246184}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 95810167}
-  m_Enabled: 1
-  serializedVersion: 10
-  m_Type: 1
-  m_Shape: 0
-  m_Color: {r: 0.7352941, g: 0.42268226, b: 0.027032854, a: 1}
-  m_Intensity: 0
-  m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294852607
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
 --- !u!4 &139594713 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f5cbbcdbdbee1b64e9d61a80f2a49681,
@@ -455,50 +352,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1457276512}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &228313051
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 228313053}
-  - component: {fileID: 228313052}
-  m_Layer: 0
-  m_Name: Sun
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &228313052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 228313051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15eaab1871605bc49ae6f77707ab9018, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &228313053
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 228313051}
-  m_LocalRotation: {x: -0.3925127, y: -0.58816135, z: -0.3925127, w: 0.58816135}
-  m_LocalPosition: {x: 0, y: -0.978, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 95810168}
-  m_Father: {fileID: 687358300}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &247785434 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1909027149713995230, guid: 5fd2bbdbb0b469a459288282dbac5525,
@@ -1355,7 +1208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 448622, guid: 2117c38b04f89a14eb83910c12dab81f, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 448622, guid: 2117c38b04f89a14eb83910c12dab81f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1914,7 +1767,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &645256661 stripped
 Transform:
@@ -1934,101 +1787,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1888305768}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &687358298
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 687358300}
-  - component: {fileID: 687358299}
-  m_Layer: 0
-  m_Name: TimeOfDay
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &687358299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 687358298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a66e210f7c276e47a253a4ebf2fcd72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SkyProfile: {fileID: 11400000, guid: 8f4041b858783d94c9acf1d400b20187, type: 2}
-  m_SkyTime: 0
-  copySkyProfile: 0
-  sunOrbit: {fileID: 228313052}
-  moonOrbit: {fileID: 697863513}
-  updateGlobalIllumination: 1
---- !u!4 &687358300
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 687358298}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.978, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 228313053}
-  - {fileID: 697863514}
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &697863512
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 697863514}
-  - component: {fileID: 697863513}
-  m_Layer: 0
-  m_Name: Moon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &697863513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697863512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15eaab1871605bc49ae6f77707ab9018, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &697863514
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697863512}
-  m_LocalRotation: {x: 0.39652467, y: 0.5857162, z: -0.3971579, w: 0.58478236}
-  m_LocalPosition: {x: 0, y: -0.978, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2007101920}
-  m_Father: {fileID: 687358300}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &699482064
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2274,2294 +2032,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7937827419406436355}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &844923667
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 844923668}
-  - component: {fileID: 844923669}
-  m_Layer: 0
-  m_Name: Weather
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &844923668
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844923667}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2036147394}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &844923669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844923667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d08705209f9e38c46a0a5fbf7818437a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weather:
-    forecast:
-      expectedTemperature: {x: -32, y: 0}
-      deviation: {x: 0, y: 5}
-      expectedTemperatureCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0.8
-          inSlope: -3.5694592
-          outSlope: -3.5694592
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0.019650655
-        - serializedVersion: 3
-          time: 0.4035474
-          value: 0.38709834
-          inSlope: -3.0441933
-          outSlope: -3.0441933
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.048230138
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: -4.341236
-          outSlope: -4.341236
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.019650638
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      expectedWindCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0.1
-          inSlope: 1.2791129
-          outSlope: 1.2791129
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0.06113537
-        - serializedVersion: 3
-          time: 0.6246791
-          value: 0.11940184
-          inSlope: -0.63876337
-          outSlope: -0.63876337
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.12738436
-        - serializedVersion: 3
-          time: 1
-          value: 0.5
-          inSlope: 1.2984935
-          outSlope: 1.2984935
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.12227076
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      daysCount: 32
-      daysForecasts:
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -4.0858936
-            wind:
-              windchill: 0
-              windSpeed: 1.130506
-              windDirection: {x: 0.73017514, y: 0, z: -0.68326}
-              windAngle: 133.09892
-              windSpeedType: 0
-              windDirectionType: 5
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -4.2990456
-            wind:
-              windchill: 0
-              windSpeed: 0.3208294
-              windDirection: {x: -0.16270724, y: 0, z: 0.98667437}
-              windAngle: 9.364057
-              windSpeedType: 0
-              windDirectionType: 0
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -4.991212
-            wind:
-              windchill: -3.0354996
-              windSpeed: 6.9194593
-              windDirection: {x: 0.88729495, y: 0, z: -0.46120244}
-              windAngle: 117.46474
-              windSpeedType: 2
-              windDirectionType: 5
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -6.6234436
-            wind:
-              windchill: -3.6394453
-              windSpeed: 8.533623
-              windDirection: {x: 0.9770626, y: 0, z: 0.21295226}
-              windAngle: 77.70458
-              windSpeedType: 2
-              windDirectionType: 3
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -6.8528137
-            wind:
-              windchill: -3.8070192
-              windSpeed: 7.6819
-              windDirection: {x: -0.9705023, y: 0, z: 0.24109173}
-              windAngle: 76.04901
-              windSpeedType: 2
-              windDirectionType: 3
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -9.718196
-            wind:
-              windchill: -5.23337
-              windSpeed: 11.936841
-              windDirection: {x: -0.15651982, y: 0, z: 0.98767483}
-              windAngle: 9.004947
-              windSpeedType: 3
-              windDirectionType: 0
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -7.652413
-            wind:
-              windchill: -5.493807
-              windSpeed: 12.89522
-              windDirection: {x: 0.6119135, y: 0, z: 0.79092467}
-              windAngle: 37.72799
-              windSpeedType: 3
-              windDirectionType: 1
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -12.163188
-            wind:
-              windchill: 0
-              windSpeed: 1.2067989
-              windDirection: {x: 0.68865955, y: 0, z: -0.7250848}
-              windAngle: 136.4759
-              windSpeedType: 0
-              windDirectionType: 6
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -7.796176
-            wind:
-              windchill: -5.772973
-              windSpeed: 13.168319
-              windDirection: {x: -0.27662256, y: 0, z: -0.9609787}
-              windAngle: 163.94127
-              windSpeedType: 3
-              windDirectionType: 7
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -12.39093
-            wind:
-              windchill: -7.2241793
-              windSpeed: 19.684374
-              windDirection: {x: 0.99366266, y: 0, z: -0.11240359}
-              windAngle: 96.45389
-              windSpeedType: 4
-              windDirectionType: 4
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -11.157465
-            wind:
-              windchill: -0.057175636
-              windSpeed: 1.9774655
-              windDirection: {x: -0.12814124, y: 0, z: 0.9917559}
-              windAngle: 7.3621798
-              windSpeedType: 0
-              windDirectionType: 0
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -13.69216
-            wind:
-              windchill: -6.79739
-              windSpeed: 17.536015
-              windDirection: {x: -0.31983498, y: 0, z: -0.9474733}
-              windAngle: 161.34706
-              windSpeedType: 3
-              windDirectionType: 7
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -9.643769
-            wind:
-              windchill: -5.951354
-              windSpeed: 12.368781
-              windDirection: {x: -0.9974552, y: 0, z: -0.071297035}
-              windAngle: 94.088486
-              windSpeedType: 3
-              windDirectionType: 4
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -11.13718
-            wind:
-              windchill: -6.07022
-              windSpeed: 12.778786
-              windDirection: {x: -0.8560092, y: 0, z: -0.51696056}
-              windAngle: 121.1286
-              windSpeedType: 3
-              windDirectionType: 5
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -10.417556
-            wind:
-              windchill: -4.307048
-              windSpeed: 7.734385
-              windDirection: {x: -0.8058213, y: 0, z: -0.59215885}
-              windAngle: 126.31036
-              windSpeedType: 2
-              windDirectionType: 5
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -17.328981
-            wind:
-              windchill: -5.137784
-              windSpeed: 9.848139
-              windDirection: {x: -0.9878012, y: 0, z: -0.15572011}
-              windAngle: 98.958565
-              windSpeedType: 2
-              windDirectionType: 4
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -12.310139
-            wind:
-              windchill: -6.8900585
-              windSpeed: 13.583155
-              windDirection: {x: 0.5830936, y: 0, z: -0.812405}
-              windAngle: 144.33157
-              windSpeedType: 3
-              windDirectionType: 6
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -13.89408
-            wind:
-              windchill: -4.5555515
-              windSpeed: 7.2972493
-              windDirection: {x: -0.7035991, y: 0, z: 0.71059716}
-              windAngle: 44.716476
-              windSpeedType: 2
-              windDirectionType: 1
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -14.638166
-            wind:
-              windchill: -4.9578857
-              windSpeed: 8.158671
-              windDirection: {x: -0.9623376, y: 0, z: -0.2718571}
-              windAngle: 105.7748
-              windSpeedType: 2
-              windDirectionType: 4
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -15.942266
-            wind:
-              windchill: -3.3011532
-              windSpeed: 5.0847006
-              windDirection: {x: 0.88828206, y: 0, z: -0.4592983}
-              windAngle: 117.34184
-              windSpeedType: 2
-              windDirectionType: 5
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -9.117767
-            wind:
-              windchill: -8.254475
-              windSpeed: 23.454601
-              windDirection: {x: -0.9892623, y: 0, z: 0.14615132}
-              windAngle: 81.59605
-              windSpeedType: 4
-              windDirectionType: 3
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -12.201981
-            wind:
-              windchill: -1.0738297
-              windSpeed: 2.7763913
-              windDirection: {x: -0.78115064, y: 0, z: 0.62434256}
-              windAngle: 51.366047
-              windSpeedType: 1
-              windDirectionType: 2
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -9.158585
-            wind:
-              windchill: -3.1038332
-              windSpeed: 5.4835844
-              windDirection: {x: 0.9804256, y: 0, z: 0.19688982}
-              windAngle: 78.64485
-              windSpeedType: 2
-              windDirectionType: 3
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -13.964015
-            wind:
-              windchill: -7.4142246
-              windSpeed: 18.913296
-              windDirection: {x: 0.9136102, y: 0, z: 0.4065912}
-              windAngle: 66.00912
-              windSpeedType: 3
-              windDirectionType: 2
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -12.166367
-            wind:
-              windchill: -3.9837017
-              windSpeed: 6.2445383
-              windDirection: {x: -0.7258355, y: 0, z: -0.68786836}
-              windAngle: 133.46161
-              windSpeedType: 2
-              windDirectionType: 5
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -17.375805
-            wind:
-              windchill: -10.1217785
-              windSpeed: 29.606241
-              windDirection: {x: 0.99800795, y: 0, z: -0.063087806}
-              windAngle: 93.617065
-              windSpeedType: 5
-              windDirectionType: 4
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -14.254562
-            wind:
-              windchill: -10.0139065
-              windSpeed: 28.896687
-              windDirection: {x: 0.4671564, y: 0, z: 0.8841747}
-              windAngle: 27.849869
-              windSpeedType: 5
-              windDirectionType: 1
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -17.785671
-            wind:
-              windchill: -4.809351
-              windSpeed: 7.8853436
-              windDirection: {x: 0.51443356, y: 0, z: 0.8575303}
-              windAngle: 30.959595
-              windSpeedType: 2
-              windDirectionType: 1
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -12.161699
-            wind:
-              windchill: -9.201742
-              windSpeed: 24.006039
-              windDirection: {x: 0.88992834, y: 0, z: 0.4561004}
-              windAngle: 62.864243
-              windSpeedType: 4
-              windDirectionType: 2
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -13.326284
-            wind:
-              windchill: 0
-              windSpeed: 1.3336954
-              windDirection: {x: -0.6570107, y: 0, z: 0.7538813}
-              windAngle: 41.07229
-              windSpeedType: 0
-              windDirectionType: 1
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -17.043985
-            wind:
-              windchill: -2.802578
-              windSpeed: 4.4027677
-              windDirection: {x: -0.91768354, y: 0, z: 0.39731207}
-              windAngle: 66.58975
-              windSpeedType: 1
-              windDirectionType: 2
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -18.15557
-            wind:
-              windchill: -7.026102
-              windSpeed: 14.178221
-              windDirection: {x: 0.44311994, y: 0, z: -0.8964623}
-              windAngle: 153.69688
-              windSpeedType: 3
-              windDirectionType: 6
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -10.431467
-            wind:
-              windchill: -1.2678308
-              windSpeed: 2.8512654
-              windDirection: {x: -0.18659131, y: 0, z: 0.98243755}
-              windAngle: 10.753927
-              windSpeedType: 1
-              windDirectionType: 0
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -12.184645
-            wind:
-              windchill: -5.688036
-              windSpeed: 10.996483
-              windDirection: {x: 0.61606497, y: 0, z: 0.78769535}
-              windAngle: 38.029343
-              windSpeedType: 2
-              windDirectionType: 1
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -11.558344
-            wind:
-              windchill: -9.68763
-              windSpeed: 30.250977
-              windDirection: {x: 0.9668614, y: 0, z: 0.25530165}
-              windAngle: 75.20854
-              windSpeedType: 5
-              windDirectionType: 3
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -14.131347
-            wind:
-              windchill: -6.6666718
-              windSpeed: 14.306844
-              windDirection: {x: 0.042289525, y: 0, z: -0.9991054}
-              windAngle: 177.57626
-              windSpeedType: 3
-              windDirectionType: 7
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -9.426449
-            wind:
-              windchill: -9.336218
-              windSpeed: 29.931738
-              windDirection: {x: 0.5970442, y: 0, z: 0.80220824}
-              windAngle: 36.6585
-              windSpeedType: 5
-              windDirectionType: 1
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -12.838201
-            wind:
-              windchill: -8.830496
-              windSpeed: 26.476795
-              windDirection: {x: 0.7386379, y: 0, z: 0.67410237}
-              windAngle: 47.615517
-              windSpeedType: 4
-              windDirectionType: 2
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -12.862106
-            wind:
-              windchill: -3.4049911
-              windSpeed: 5.9435697
-              windDirection: {x: 0.99397993, y: 0, z: 0.10956261}
-              windAngle: 83.7099
-              windSpeedType: 2
-              windDirectionType: 3
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -15.160147
-            wind:
-              windchill: -9.431196
-              windSpeed: 30.621056
-              windDirection: {x: 0.33287475, y: 0, z: 0.94297105}
-              windAngle: 19.443354
-              windSpeedType: 5
-              windDirectionType: 0
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -10.393675
-            wind:
-              windchill: -6.7536926
-              windSpeed: 14.671386
-              windDirection: {x: -0.57586807, y: 0, z: -0.8175426}
-              windAngle: 144.83955
-              windSpeedType: 3
-              windDirectionType: 6
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -18.55133
-            wind:
-              windchill: -9.314871
-              windSpeed: 27.78497
-              windDirection: {x: 0.9981524, y: 0, z: -0.060760543}
-              windAngle: 93.48347
-              windSpeedType: 4
-              windDirectionType: 4
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -13.57053
-            wind:
-              windchill: -5.0176697
-              windSpeed: 9.140248
-              windDirection: {x: 0.91217047, y: 0, z: -0.4098109}
-              windAngle: 114.192955
-              windSpeedType: 2
-              windDirectionType: 5
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -18.987473
-            wind:
-              windchill: -8.051905
-              windSpeed: 20.445007
-              windDirection: {x: -0.96756834, y: 0, z: -0.2526092}
-              windAngle: 104.63197
-              windSpeedType: 4
-              windDirectionType: 4
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -12.634903
-            wind:
-              windchill: -8.392868
-              windSpeed: 19.266693
-              windDirection: {x: -0.18277968, y: 0, z: 0.9831539}
-              windAngle: 10.531697
-              windSpeedType: 4
-              windDirectionType: 0
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -14.402983
-            wind:
-              windchill: -4.724451
-              windSpeed: 7.5330606
-              windDirection: {x: -0.36099935, y: 0, z: 0.93256605}
-              windAngle: 21.161575
-              windSpeedType: 2
-              windDirectionType: 0
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -13.762838
-            wind:
-              windchill: -9.6927185
-              windSpeed: 26.047989
-              windDirection: {x: -0.8015874, y: 0, z: -0.5978777}
-              windAngle: 126.718056
-              windSpeedType: 4
-              windDirectionType: 5
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -16.64227
-            wind:
-              windchill: -5.5463486
-              windSpeed: 9.414974
-              windDirection: {x: -0.08816414, y: 0, z: -0.99610597}
-              windAngle: 174.942
-              windSpeedType: 2
-              windDirectionType: 7
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -16.159721
-            wind:
-              windchill: -4.5295277
-              windSpeed: 6.138438
-              windDirection: {x: 0.025029443, y: 0, z: -0.9996868}
-              windAngle: 178.56592
-              windSpeedType: 2
-              windDirectionType: 7
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -16.302435
-            wind:
-              windchill: -11.064138
-              windSpeed: 28.015848
-              windDirection: {x: 0.99992573, y: 0, z: 0.012189903}
-              windAngle: 89.30155
-              windSpeedType: 5
-              windDirectionType: 3
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -19.237434
-            wind:
-              windchill: -5.4750996
-              windSpeed: 7.833568
-              windDirection: {x: -0.7062079, y: 0, z: -0.70800453}
-              windAngle: 135.0728
-              windSpeedType: 2
-              windDirectionType: 6
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -20.836367
-            wind:
-              windchill: -3.8921719
-              windSpeed: 5.179294
-              windDirection: {x: 0.9486117, y: 0, z: -0.31644255}
-              windAngle: 108.44792
-              windSpeedType: 2
-              windDirectionType: 4
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -18.64554
-            wind:
-              windchill: -7.5152836
-              windSpeed: 11.393112
-              windDirection: {x: 0.98868656, y: 0, z: -0.14999627}
-              windAngle: 98.62671
-              windSpeedType: 3
-              windDirectionType: 4
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -20.636463
-            wind:
-              windchill: -6.378233
-              windSpeed: 8.766774
-              windDirection: {x: -0.9736896, y: 0, z: 0.22787833}
-              windAngle: 76.827805
-              windSpeedType: 2
-              windDirectionType: 3
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -19.699917
-            wind:
-              windchill: -7.800745
-              windSpeed: 12.147283
-              windDirection: {x: 0.5404412, y: 0, z: 0.8413818}
-              windAngle: 32.71368
-              windSpeedType: 3
-              windDirectionType: 1
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -21.512217
-            wind:
-              windchill: -6.2915154
-              windSpeed: 8.589374
-              windDirection: {x: 0.9862409, y: 0, z: 0.16531426}
-              windAngle: 80.48451
-              windSpeedType: 2
-              windDirectionType: 3
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -19.75321
-            wind:
-              windchill: -7.7711697
-              windSpeed: 11.4609375
-              windDirection: {x: -0.5722737, y: 0, z: -0.8200627}
-              windAngle: 145.09108
-              windSpeedType: 3
-              windDirectionType: 6
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -22.610952
-            wind:
-              windchill: -10.989498
-              windSpeed: 22.434317
-              windDirection: {x: 0.32428384, y: 0, z: -0.94595987}
-              windAngle: 161.07782
-              windSpeedType: 4
-              windDirectionType: 7
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -21.118725
-            wind:
-              windchill: -7.043808
-              windSpeed: 9.743508
-              windDirection: {x: 0.9050908, y: 0, z: 0.42521837}
-              windAngle: 64.83552
-              windSpeedType: 2
-              windDirectionType: 2
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -23.575363
-            wind:
-              windchill: -2.8975906
-              windSpeed: 3.5283017
-              windDirection: {x: -0.9069931, y: 0, z: -0.42114556}
-              windAngle: 114.90694
-              windSpeedType: 1
-              windDirectionType: 5
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -19.490034
-            wind:
-              windchill: -2.5271091
-              windSpeed: 3.2173214
-              windDirection: {x: 0.45071626, y: 0, z: 0.8926673}
-              windAngle: 26.789644
-              windSpeedType: 1
-              windDirectionType: 1
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -23.663517
-            wind:
-              windchill: -1.9076653
-              windSpeed: 2.7131069
-              windDirection: {x: -0.5182615, y: 0, z: 0.8552222}
-              windAngle: 31.215706
-              windSpeedType: 1
-              windDirectionType: 1
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -25.447376
-            wind:
-              windchill: -10.30854
-              windSpeed: 19.851013
-              windDirection: {x: 0.28998065, y: 0, z: -0.9570325}
-              windAngle: 163.1432
-              windSpeedType: 4
-              windDirectionType: 7
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -25.544384
-            wind:
-              windchill: -4.2831783
-              windSpeed: 5.0933642
-              windDirection: {x: 0.9904457, y: 0, z: 0.13790351}
-              windAngle: 82.073456
-              windSpeedType: 2
-              windDirectionType: 3
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -24.139568
-            wind:
-              windchill: -4.899523
-              windSpeed: 5.074794
-              windDirection: {x: -0.75676656, y: 0, z: -0.6536852}
-              windAngle: 130.82004
-              windSpeedType: 2
-              windDirectionType: 5
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -26.429016
-            wind:
-              windchill: -11.046246
-              windSpeed: 18.165567
-              windDirection: {x: -0.10334133, y: 0, z: 0.99464595}
-              windAngle: 5.931611
-              windSpeedType: 3
-              windDirectionType: 0
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -27.045765
-            wind:
-              windchill: -11.606689
-              windSpeed: 20.162642
-              windDirection: {x: 0.940679, y: 0, z: 0.33929783}
-              windAngle: 70.1659
-              windSpeedType: 4
-              windDirectionType: 3
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -29.464634
-            wind:
-              windchill: -12.282181
-              windSpeed: 22.81176
-              windDirection: {x: 0.26550046, y: 0, z: 0.96411073}
-              windAngle: 15.396693
-              windSpeedType: 4
-              windDirectionType: 0
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -24.980068
-            wind:
-              windchill: -9.936157
-              windSpeed: 14.16008
-              windDirection: {x: -0.79211277, y: 0, z: 0.61037475}
-              windAngle: 52.383396
-              windSpeedType: 3
-              windDirectionType: 2
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -25.089308
-            wind:
-              windchill: -11.824059
-              windSpeed: 20.15019
-              windDirection: {x: -0.19504035, y: 0, z: -0.98079526}
-              windAngle: 168.75294
-              windSpeedType: 4
-              windDirectionType: 7
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -25.714758
-            wind:
-              windchill: -6.749527
-              windSpeed: 7.4311543
-              windDirection: {x: 0.69991374, y: 0, z: 0.7142274}
-              windAngle: 44.420086
-              windSpeedType: 2
-              windDirectionType: 1
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -25.91026
-            wind:
-              windchill: -9.106583
-              windSpeed: 12.047746
-              windDirection: {x: -0.8708478, y: 0, z: 0.49155268}
-              windAngle: 60.557312
-              windSpeedType: 3
-              windDirectionType: 2
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -21.072777
-            wind:
-              windchill: -9.437626
-              windSpeed: 15.344887
-              windDirection: {x: 0.9712621, y: 0, z: 0.23801239}
-              windAngle: 76.230736
-              windSpeedType: 3
-              windDirectionType: 3
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -27.097153
-            wind:
-              windchill: -9.966131
-              windSpeed: 17.08221
-              windDirection: {x: 0.19603927, y: 0, z: 0.980596}
-              windAngle: 11.305436
-              windSpeedType: 3
-              windDirectionType: 0
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -21.284267
-            wind:
-              windchill: -8.469469
-              windSpeed: 12.545952
-              windDirection: {x: -0.9823541, y: 0, z: -0.18703064}
-              windAngle: 100.77955
-              windSpeedType: 3
-              windDirectionType: 4
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -29.485445
-            wind:
-              windchill: -9.985781
-              windSpeed: 17.149864
-              windDirection: {x: 0.6261008, y: 0, z: 0.7797422}
-              windAngle: 38.763023
-              windSpeedType: 3
-              windDirectionType: 1
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -20.700172
-            wind:
-              windchill: -3.5421066
-              windSpeed: 4.059475
-              windDirection: {x: 0.9843591, y: 0, z: 0.17617334}
-              windAngle: 79.85305
-              windSpeedType: 1
-              windDirectionType: 3
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -24.443623
-            wind:
-              windchill: -8.525196
-              windSpeed: 12.914191
-              windDirection: {x: -0.90131235, y: 0, z: 0.43316963}
-              windAngle: 64.331116
-              windSpeedType: 3
-              windDirectionType: 2
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -23.171635
-            wind:
-              windchill: -8.718491
-              windSpeed: 13.452602
-              windDirection: {x: 0.9035033, y: 0, z: -0.42858127}
-              windAngle: 115.37756
-              windSpeedType: 3
-              windDirectionType: 5
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -26.356955
-            wind:
-              windchill: -9.22757
-              windSpeed: 14.961618
-              windDirection: {x: 0.4621827, y: 0, z: 0.8867847}
-              windAngle: 27.528044
-              windSpeedType: 3
-              windDirectionType: 1
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -23.78647
-            wind:
-              windchill: 0
-              windSpeed: 0.46706074
-              windDirection: {x: -0.80996394, y: 0, z: -0.5864797}
-              windAngle: 125.9076
-              windSpeedType: 0
-              windDirectionType: 5
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -25.270817
-            wind:
-              windchill: -7.9648266
-              windSpeed: 10.043579
-              windDirection: {x: -0.18564494, y: 0, z: 0.9826169}
-              windAngle: 10.698733
-              windSpeedType: 2
-              windDirectionType: 0
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -24.789158
-            wind:
-              windchill: -7.4962273
-              windSpeed: 9.105043
-              windDirection: {x: 0.73939383, y: 0, z: 0.6732732}
-              windAngle: 47.679802
-              windSpeedType: 2
-              windDirectionType: 2
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -26.23548
-            wind:
-              windchill: -5.0104847
-              windSpeed: 5.264504
-              windDirection: {x: 0.13447006, y: 0, z: -0.9909177}
-              windAngle: 172.27203
-              windSpeedType: 2
-              windDirectionType: 7
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -19.72695
-            wind:
-              windchill: -6.528261
-              windSpeed: 8.67136
-              windDirection: {x: 0.9951496, y: 0, z: -0.09837266}
-              windAngle: 95.64547
-              windSpeedType: 2
-              windDirectionType: 4
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -20.051208
-            wind:
-              windchill: -4.3979893
-              windSpeed: 5.199871
-              windDirection: {x: 0.9996651, y: 0, z: -0.025876796}
-              windAngle: 91.482796
-              windSpeedType: 2
-              windDirectionType: 4
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -20.69892
-            wind:
-              windchill: -7.15666
-              windSpeed: 10.006341
-              windDirection: {x: -0.20956732, y: 0, z: 0.9777942}
-              windAngle: 12.096995
-              windSpeedType: 2
-              windDirectionType: 0
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -24.651937
-            wind:
-              windchill: -2.232912
-              windSpeed: 2.9509134
-              windDirection: {x: -0.4871135, y: 0, z: 0.8733387}
-              windAngle: 29.151033
-              windSpeedType: 1
-              windDirectionType: 1
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -19.023005
-            wind:
-              windchill: -4.395897
-              windSpeed: 5.326316
-              windDirection: {x: -0.87620574, y: 0, z: 0.48193723}
-              windAngle: 61.187996
-              windSpeedType: 2
-              windDirectionType: 2
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -21.654758
-            wind:
-              windchill: -4.404598
-              windSpeed: 5.338044
-              windDirection: {x: 0.045420233, y: 0, z: 0.998968}
-              windAngle: 2.6032372
-              windSpeedType: 2
-              windDirectionType: 0
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -21.758244
-            wind:
-              windchill: -4.072792
-              windSpeed: 4.9057927
-              windDirection: {x: 0.7466404, y: 0, z: 0.6652279}
-              windAngle: 48.30019
-              windSpeedType: 1
-              windDirectionType: 2
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -23.893593
-            wind:
-              windchill: -6.2083244
-              windSpeed: 8.289136
-              windDirection: {x: 0.88241136, y: 0, z: -0.47047868}
-              windAngle: 118.065384
-              windSpeedType: 2
-              windDirectionType: 5
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -18.795326
-            wind:
-              windchill: -8.013359
-              windSpeed: 12.644553
-              windDirection: {x: -0.81853795, y: 0, z: 0.57445246}
-              windAngle: 54.9387
-              windSpeedType: 3
-              windDirectionType: 2
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -22.500755
-            wind:
-              windchill: -5.226261
-              windSpeed: 6.6059465
-              windDirection: {x: 0.63943213, y: 0, z: -0.7688475}
-              windAngle: 140.25052
-              windSpeedType: 2
-              windDirectionType: 6
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -20.64304
-            wind:
-              windchill: -5.22336
-              windSpeed: 6.6012444
-              windDirection: {x: 0.8276194, y: 0, z: 0.5612897}
-              windAngle: 55.85496
-              windSpeedType: 2
-              windDirectionType: 2
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -24.469177
-            wind:
-              windchill: -7.1842594
-              windSpeed: 10.49642
-              windDirection: {x: -0.32623914, y: 0, z: 0.9452873}
-              windAngle: 19.040663
-              windSpeedType: 2
-              windDirectionType: 0
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -20.163254
-            wind:
-              windchill: -7.414751
-              windSpeed: 10.399514
-              windDirection: {x: -0.26347068, y: 0, z: -0.96466744}
-              windAngle: 164.7239
-              windSpeedType: 2
-              windDirectionType: 7
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -21.293732
-            wind:
-              windchill: -9.400595
-              windSpeed: 15.919851
-              windDirection: {x: 0.83975023, y: 0, z: 0.54297286}
-              windAngle: 57.113754
-              windSpeedType: 3
-              windDirectionType: 2
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -20.821217
-            wind:
-              windchill: -9.55769
-              windSpeed: 16.445385
-              windDirection: {x: -0.99969906, y: 0, z: 0.024531677}
-              windAngle: 88.5943
-              windSpeedType: 3
-              windDirectionType: 3
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -21.888912
-            wind:
-              windchill: -4.2898445
-              windSpeed: 4.9867826
-              windDirection: {x: -0.7191357, y: 0, z: -0.69486964}
-              windAngle: 134.01683
-              windSpeedType: 1
-              windDirectionType: 5
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -16.881958
-            wind:
-              windchill: -3.576233
-              windSpeed: 4.633342
-              windDirection: {x: 0.89137673, y: 0, z: 0.4532632}
-              windAngle: 63.046757
-              windSpeedType: 1
-              windDirectionType: 2
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -21.699736
-            wind:
-              windchill: -6.2334976
-              windSpeed: 9.154019
-              windDirection: {x: 0.6204245, y: 0, z: -0.7842662}
-              windAngle: 141.65286
-              windSpeedType: 2
-              windDirectionType: 6
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -21.44567
-            wind:
-              windchill: -7.921116
-              windSpeed: 13.613278
-              windDirection: {x: -0.41147718, y: 0, z: 0.91142005}
-              windAngle: 24.297667
-              windSpeedType: 3
-              windDirectionType: 1
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -25.724293
-            wind:
-              windchill: -8.897245
-              windSpeed: 16.938442
-              windDirection: {x: -0.9941059, y: 0, z: 0.10841325}
-              windAngle: 83.776146
-              windSpeedType: 3
-              windDirectionType: 3
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -16.775229
-            wind:
-              windchill: -9.724033
-              windSpeed: 20.387297
-              windDirection: {x: 0.67555934, y: 0, z: -0.73730564}
-              windAngle: 137.50241
-              windSpeedType: 4
-              windDirectionType: 6
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -19.169695
-            wind:
-              windchill: -0.2945919
-              windSpeed: 1.7805128
-              windDirection: {x: -0.99163115, y: 0, z: 0.12910295}
-              windAngle: 82.58224
-              windSpeedType: 0
-              windDirectionType: 3
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -22.940382
-            wind:
-              windchill: -6.2309093
-              windSpeed: 9.192679
-              windDirection: {x: 0.22590634, y: 0, z: -0.97414905}
-              windAngle: 166.94383
-              windSpeedType: 2
-              windDirectionType: 7
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -24.269783
-            wind:
-              windchill: -10.378651
-              windSpeed: 23.418125
-              windDirection: {x: 0.51613784, y: 0, z: 0.8565055}
-              windAngle: 31.073536
-              windSpeedType: 4
-              windDirectionType: 1
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -18.781773
-            wind:
-              windchill: -12.060905
-              windSpeed: 29.222876
-              windDirection: {x: 0.68820214, y: 0, z: 0.725519}
-              windAngle: 43.48796
-              windSpeedType: 5
-              windDirectionType: 1
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -23.994852
-            wind:
-              windchill: -11.582018
-              windSpeed: 26.617382
-              windDirection: {x: 0.24303128, y: 0, z: -0.97001845}
-              windAngle: 165.9345
-              windSpeedType: 4
-              windDirectionType: 7
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -25.145329
-            wind:
-              windchill: -6.148369
-              windSpeed: 8.255636
-              windDirection: {x: -0.5474671, y: 0, z: 0.83682716}
-              windAngle: 33.19342
-              windSpeedType: 2
-              windDirectionType: 1
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -25.379295
-            wind:
-              windchill: -12.376829
-              windSpeed: 31.056404
-              windDirection: {x: -0.69550526, y: 0, z: -0.718521}
-              windAngle: 135.93251
-              windSpeedType: 5
-              windDirectionType: 6
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -19.681374
-            wind:
-              windchill: -10.093504
-              windSpeed: 18.811611
-              windDirection: {x: 0.65278596, y: 0, z: 0.75754243}
-              windAngle: 40.75198
-              windSpeedType: 3
-              windDirectionType: 1
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -22.701408
-            wind:
-              windchill: -6.267317
-              windSpeed: 8.178084
-              windDirection: {x: 0.76304996, y: 0, z: 0.64633954}
-              windAngle: 49.733818
-              windSpeedType: 2
-              windDirectionType: 2
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -20.977242
-            wind:
-              windchill: -10.802116
-              windSpeed: 21.699018
-              windDirection: {x: 0.15453531, y: 0, z: -0.9879873}
-              windAngle: 171.11015
-              windSpeedType: 4
-              windDirectionType: 7
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -24.574888
-            wind:
-              windchill: -3.822754
-              windSpeed: 4.502008
-              windDirection: {x: -0.70594585, y: 0, z: -0.70826584}
-              windAngle: 135.094
-              windSpeedType: 1
-              windDirectionType: 6
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -20.078245
-            wind:
-              windchill: -14.063177
-              windSpeed: 39.30383
-              windDirection: {x: -0.42469332, y: 0, z: 0.9053373}
-              windAngle: 25.131254
-              windSpeedType: 6
-              windDirectionType: 1
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -23.407967
-            wind:
-              windchill: -7.150028
-              windSpeed: 9.839621
-              windDirection: {x: -0.88470155, y: 0, z: -0.46615794}
-              windAngle: 117.785194
-              windSpeedType: 2
-              windDirectionType: 5
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -20.62162
-            wind:
-              windchill: -12.56819
-              windSpeed: 29.866842
-              windDirection: {x: -0.77093387, y: 0, z: 0.63691515}
-              windAngle: 50.437824
-              windSpeedType: 5
-              windDirectionType: 2
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -23.810003
-            wind:
-              windchill: -13.156801
-              windSpeed: 33.324715
-              windDirection: {x: -0.5415264, y: 0, z: 0.84068376}
-              windAngle: 32.787605
-              windSpeedType: 5
-              windDirectionType: 1
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -25.168
-            wind:
-              windchill: -2.2100182
-              windSpeed: 2.5872176
-              windDirection: {x: -0.014380424, y: 0, z: -0.99989665}
-              windAngle: 179.17624
-              windSpeedType: 1
-              windDirectionType: 7
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -25.807915
-            wind:
-              windchill: -10.375416
-              windSpeed: 15.270617
-              windDirection: {x: 0.71773887, y: 0, z: -0.6963124}
-              windAngle: 134.1319
-              windSpeedType: 3
-              windDirectionType: 5
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -28.124126
-            wind:
-              windchill: -11.246605
-              windSpeed: 17.969635
-              windDirection: {x: 0.22923139, y: 0, z: -0.973372}
-              windAngle: 166.74818
-              windSpeedType: 3
-              windDirectionType: 7
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -28.720123
-            wind:
-              windchill: -14.681107
-              windSpeed: 32.849937
-              windDirection: {x: 0.22837397, y: 0, z: 0.9735735}
-              windAngle: 13.201354
-              windSpeedType: 5
-              windDirectionType: 0
-            humidity: 0
-      - maxWindStrength: 0
-        morning:
-          weather:
-            air:
-              airTemperature: -25.640572
-            wind:
-              windchill: -7.5818214
-              windSpeed: 8.634204
-              windDirection: {x: -0.56153244, y: 0, z: 0.82745475}
-              windAngle: 34.16184
-              windSpeedType: 2
-              windDirectionType: 1
-            humidity: 0
-        afternoon:
-          weather:
-            air:
-              airTemperature: -30.4194
-            wind:
-              windchill: -12.218605
-              windSpeed: 20.963259
-              windDirection: {x: 0.055561602, y: 0, z: 0.9984553}
-              windAngle: 3.1850598
-              windSpeedType: 4
-              windDirectionType: 0
-            humidity: 0
-        evening:
-          weather:
-            air:
-              airTemperature: -27.592312
-            wind:
-              windchill: -13.207531
-              windSpeed: 24.945728
-              windDirection: {x: 0.9265823, y: 0, z: 0.37609217}
-              windAngle: 67.908165
-              windSpeedType: 4
-              windDirectionType: 3
-            humidity: 0
-        night:
-          weather:
-            air:
-              airTemperature: -30.826591
-            wind:
-              windchill: 0
-              windSpeed: 1.2075677
-              windDirection: {x: 0.083574764, y: 0, z: 0.9965015}
-              windAngle: 4.794076
-              windSpeedType: 0
-              windDirectionType: 0
-            humidity: 0
-      temperatureDayCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: -4.0858936
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: -6.8528137
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 2
-          value: -7.796176
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 3
-          value: -9.643769
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 4
-          value: -12.310139
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 5
-          value: -9.117767
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 6
-          value: -12.166367
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 7
-          value: -12.161699
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 8
-          value: -10.431467
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 9
-          value: -9.426449
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 10
-          value: -10.393675
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 11
-          value: -12.634903
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 12
-          value: -16.159721
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 13
-          value: -18.64554
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 14
-          value: -19.75321
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 15
-          value: -19.490034
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 16
-          value: -24.139568
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 17
-          value: -24.980068
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 18
-          value: -21.072777
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 19
-          value: -20.700172
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 20
-          value: -23.78647
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 21
-          value: -19.72695
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 22
-          value: -19.023005
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 23
-          value: -18.795326
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 24
-          value: -20.163254
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 25
-          value: -16.881958
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 26
-          value: -16.775229
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 27
-          value: -18.781773
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 28
-          value: -19.681374
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 29
-          value: -20.078245
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 30
-          value: -25.168
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 31
-          value: -25.640572
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      temperatureNightCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: -6.6234436
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: -12.163188
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 2
-          value: -13.69216
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 3
-          value: -17.328981
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 4
-          value: -15.942266
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 5
-          value: -13.964015
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 6
-          value: -17.785671
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 7
-          value: -18.15557
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 8
-          value: -14.131347
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 9
-          value: -15.160147
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 10
-          value: -18.987473
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 11
-          value: -16.64227
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 12
-          value: -20.836367
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 13
-          value: -21.512217
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 14
-          value: -23.575363
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 15
-          value: -25.544384
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 16
-          value: -29.464634
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 17
-          value: -25.91026
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 18
-          value: -29.485445
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 19
-          value: -26.356955
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 20
-          value: -26.23548
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 21
-          value: -24.651937
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 22
-          value: -23.893593
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 23
-          value: -24.469177
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 24
-          value: -21.888912
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 25
-          value: -25.724293
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 26
-          value: -24.269783
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 27
-          value: -25.379295
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 28
-          value: -24.574888
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 29
-          value: -23.810003
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 30
-          value: -28.720123
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 31
-          value: -30.826591
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    updateTime:
-      days: 0
-      hours: 0
-      minutes: 5
-      seconds: 0
-      totalSeconds: 300
-    currentWeather:
-      air:
-        airTemperature: 0
-      wind:
-        windchill: 0
-        windSpeed: 0
-        windDirection: {x: 0, y: 0, z: 0}
-        windAngle: 0
-        windSpeedType: 0
-        windDirectionType: 0
-      humidity: 0
 --- !u!4 &856979497 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1860084534014364890, guid: c4f8b467a47c4604fb675e3f97474f45,
@@ -5375,50 +2845,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 287a43f2b49fafe49844c15d2306b33b, type: 3}
---- !u!1 &1184260123
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1184260125}
-  - component: {fileID: 1184260124}
-  m_Layer: 0
-  m_Name: Lightning Spawn Area
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1184260124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1184260123}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe479c8687f3f4af78e53a05fe3d69aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lightningArea: {x: 40, y: 20, z: 20}
---- !u!4 &1184260125
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1184260123}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 513.2877, y: 12.3, z: 259.2548}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1195479303
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5794,6 +3220,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 228313053, guid: 02a49226f9b31384f93c958166a9086b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.58816135
+      objectReference: {fileID: 0}
+    - target: {fileID: 228313053, guid: 02a49226f9b31384f93c958166a9086b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.3925127
+      objectReference: {fileID: 0}
+    - target: {fileID: 228313053, guid: 02a49226f9b31384f93c958166a9086b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.58816135
+      objectReference: {fileID: 0}
+    - target: {fileID: 228313053, guid: 02a49226f9b31384f93c958166a9086b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.3925127
+      objectReference: {fileID: 0}
+    - target: {fileID: 697863514, guid: 02a49226f9b31384f93c958166a9086b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.58478236
+      objectReference: {fileID: 0}
+    - target: {fileID: 697863514, guid: 02a49226f9b31384f93c958166a9086b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.39652467
+      objectReference: {fileID: 0}
+    - target: {fileID: 697863514, guid: 02a49226f9b31384f93c958166a9086b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5857162
+      objectReference: {fileID: 0}
+    - target: {fileID: 697863514, guid: 02a49226f9b31384f93c958166a9086b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.3971579
+      objectReference: {fileID: 0}
     - target: {fileID: 15450335295239477, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -6049,156 +3507,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1235413661589419796, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413661589419796, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413661589419796, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413661589419796, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413661589419796, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413661589419796, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413661785095771, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413661785095771, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413661785095771, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413661785095771, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413661785095771, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413661785095771, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413662408039088, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413662408039088, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413662408039088, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413662408039088, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413662408039088, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413662408039088, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413663149959840, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413663149959840, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413663149959840, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413663149959840, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413663149959840, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413663149959840, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413663306825896, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413663306825896, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413663306825896, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413663306825896, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413663306825896, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1235413663306825896, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1371938470764428412, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -6282,602 +3590,602 @@ PrefabInstance:
     - target: {fileID: 1858776751781366904, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776751781366904, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776751781366904, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776751781366904, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776751781366904, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776751781366904, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -600
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752030873438, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752030873438, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752030873438, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752030873438, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752030873438, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 260
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752030873438, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752052301029, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752052301029, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752052301029, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752052301029, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752052301029, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 770
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752052301029, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -430
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752100640474, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752100640474, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752100640474, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752100640474, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752100640474, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 260
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752100640474, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -600
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752102787705, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752102787705, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752102787705, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752102787705, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752102787705, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 770
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752102787705, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -260
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752432199288, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752432199288, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752432199288, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752432199288, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752432199288, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752432199288, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752571837339, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752571837339, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752571837339, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752571837339, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752571837339, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 260
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752571837339, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -430
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752601597028, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752601597028, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752601597028, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752601597028, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752601597028, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 770
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752601597028, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -600
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752728620397, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752728620397, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752728620397, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752728620397, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752728620397, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 260
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752728620397, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -260
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752753289419, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752753289419, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752753289419, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752753289419, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752753289419, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 430
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752753289419, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -430
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752783267560, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752783267560, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752783267560, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752783267560, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752783267560, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 430
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752783267560, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -260
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752993650708, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752993650708, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752993650708, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752993650708, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752993650708, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 600
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776752993650708, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -260
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753081874809, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753081874809, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753081874809, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753081874809, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753081874809, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 430
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753081874809, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -600
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753096287340, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753096287340, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753096287340, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753096287340, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753096287340, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 430
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753096287340, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753121695999, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753121695999, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753121695999, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753121695999, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753121695999, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 600
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753121695999, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -600
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753331596840, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753331596840, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753331596840, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753331596840, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753331596840, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 770
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753331596840, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753424396795, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753424396795, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753424396795, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753424396795, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753424396795, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 600
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753424396795, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -430
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753425974687, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753425974687, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753425974687, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753425974687, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753425974687, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753425974687, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -260
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753679827685, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753679827685, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753679827685, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753679827685, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753679827685, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 600
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753679827685, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753754174805, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753754174805, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753754174805, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753754174805, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753754174805, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1858776753754174805, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -430
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1902701643363490344, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
@@ -6902,7 +4210,7 @@ PrefabInstance:
     - target: {fileID: 2179909381948472092, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2179909381948472092, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
@@ -9109,11 +6417,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6819919131059496624, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 98103
-      objectReference: {fileID: 0}
     - target: {fileID: 6924904635098910156, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -9326,18 +6629,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7067859168063947690, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7067859168063947690, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7067859168063947690, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.00012207031
       objectReference: {fileID: 0}
     - target: {fileID: 7067859168063947691, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
@@ -9407,11 +6700,6 @@ PrefabInstance:
     - target: {fileID: 7067859168063947745, guid: 02a49226f9b31384f93c958166a9086b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7067859168063947745, guid: 02a49226f9b31384f93c958166a9086b,
-        type: 3}
-      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7067859168063947758, guid: 02a49226f9b31384f93c958166a9086b,
@@ -9881,63 +7169,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02a49226f9b31384f93c958166a9086b, type: 3}
---- !u!20 &1373246185 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 6819919131059496624, guid: 02a49226f9b31384f93c958166a9086b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1373246184}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1373246186 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6819919131059496626, guid: 02a49226f9b31384f93c958166a9086b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1373246184}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1373246187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1373246186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5367b3334ceb84458088c8e4f026f0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowCamerasBack: 0
-  ShowCamera: 0
-  m_screenWidth: 0
-  m_screenHeight: 0
-  FogVolumeResolution: 
-  rt_DepthFormat: 14
-  _BlendMode: 1
-  GenerateDepth: 1
-  RT_FogVolume: {fileID: 0}
-  RT_FogVolumeR: {fileID: 0}
-  _Downsample: 1
-  _showBilateralEdge: 0
-  bilateralMaterial: {fileID: 0}
-  _useBilateralUpsampling: 1
-  _upsampleMode: 1
-  ThisCamera: {fileID: 1373246185}
-  RT_Depth: {fileID: 0}
-  RT_DepthR: {fileID: 0}
-  depthShader: {fileID: 4800000, guid: d0b391204631703488bbc7d5ca98a27e, type: 3}
-  _FogVolumeCamera: {fileID: 0}
-  _FogVolumeCameraGO: {fileID: 0}
-  upsampleDepthThreshold: 0.00187
-  HDR: 0
-  TAA: 0
-  _TAA: {fileID: 0}
-  _TAAvelocity: {fileID: 0}
-  _TAAjitter: {fileID: 0}
-  DepthLayer2: 1
-  lowProfileDepthRT: []
-  lowProfileDepthRRT: []
-  TexelSize: {x: 0, y: 0, z: 0, w: 0}
-  SurrogateMaterial: {fileID: 2100000, guid: 40936b27caf58064f9aab675fe028844, type: 2}
-  SceneBlur: 1
 --- !u!1001 &1377583970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11052,98 +8283,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 732459398}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2007101919
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2007101920}
-  - component: {fileID: 2007101921}
-  m_Layer: 0
-  m_Name: MoonLight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2007101920
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2007101919}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 697863514}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 29.53, z: 0}
---- !u!108 &2007101921
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2007101919}
-  m_Enabled: 1
-  serializedVersion: 10
-  m_Type: 1
-  m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.25
-  m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 0.282
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
 --- !u!1001 &2024028301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11243,60 +8382,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc7ec1852d6b7704c940c68c548b628e, type: 3}
---- !u!1 &2036147392
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2036147394}
-  - component: {fileID: 2036147393}
-  m_Layer: 0
-  m_Name: Sky
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2036147393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2036147392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2005c7bff1a32624f8b81a8a81f984de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  globalTime:
-    days: 0
-    hours: 0
-    minutes: 0
-    seconds: 0
-    totalSeconds: 0
-  timeFlow: 12
-  frequenceCycleSeconds: 300
-  controller: {fileID: 687358299}
-  events: []
---- !u!4 &2036147394
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2036147392}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 487.2, y: 3.923, z: 216.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 844923668}
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2044733595 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6348414978470081300, guid: 5bc58297e700040418bd9a7d47c5b2a2,
@@ -11499,7 +8584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4005735964643980, guid: 69b122cc19161bc47908c71cd75dc515, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4005735964643980, guid: 69b122cc19161bc47908c71cd75dc515, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12554,7 +9639,7 @@ Transform:
   m_Children:
   - {fileID: 4854602787739728}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4008261116606162
 Transform:
@@ -14770,7 +11855,7 @@ PrefabInstance:
     - target: {fileID: 2743641997703797865, guid: 1e09bb192024d7e4b884255e51cdb85e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2743641997703797865, guid: 1e09bb192024d7e4b884255e51cdb85e,
         type: 3}

@@ -62,12 +62,6 @@ namespace Funly.SkyStudio
     // Fature status flags for Sky Studio (sun, moon, rain, clouds, etc.)
     public BoolDictionary featureStatus = new BoolDictionary();
 
-    // Lighting art customization object.
-    public LightningArtSet lightningArtSet;
-
-    // Rain splash art customization object.
-    public RainSplashArtSet rainSplashArtSet;
-
     // Star layer data textures.
     public Texture2D starLayer1DataTexture;
     public Texture2D starLayer2DataTexture;
