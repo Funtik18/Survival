@@ -1643,7 +1643,7 @@ MonoBehaviour:
           m_Time: 0
           m_InterpolationCurve: 0
           m_InterpolationDirection: 0
-          texture: {fileID: 2800000, guid: 9965f768a31984e6cb608340e2f4dd5a, type: 3}
+          texture: {fileID: 2800000, guid: acb1b4fe90c866b408d1eca4b46094bb, type: 3}
         m_Name: Cloud Noise Texture
         m_Id: 7362e6cb-0feb-4550-849b-83bdcc4c0eeb
       - keyframes:
@@ -1667,7 +1667,7 @@ MonoBehaviour:
           m_Time: 0
           m_InterpolationCurve: 0
           m_InterpolationDirection: 0
-          texture: {fileID: 0}
+          texture: {fileID: 2800000, guid: 544fafd9187c84f4cb2eadd8eb9a43b3, type: 2}
         m_Name: Star 1 Texture
         m_Id: 49bdafe5-ce0f-4180-8cbe-36fce8247fb7
       - keyframes:
@@ -1842,7 +1842,7 @@ MonoBehaviour:
     - RainSoundFeature
     - ThunderFeature
     - SunCustomTextureFeature
-    m_Values: 010101000001000000000000000001000000010000000000010100
+    m_Values: 010101010001000000000000000001000000010000000000010100
   starLayer1DataTexture: {fileID: 2800000, guid: 544fafd9187c84f4cb2eadd8eb9a43b3,
     type: 2}
   starLayer2DataTexture: {fileID: 2800000, guid: dfdfdef56028bcd4ea0dcaab78153738,

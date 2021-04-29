@@ -9,8 +9,13 @@ public struct Weather
 {
     public WeatherAir air;
     public WeatherWind wind;
+    
+    [Range(0, 100f)]
+    public float precipitation;
     [Range(0, 100f)]
     public float humidity;
+
+    public WeatherType weatherType;
 
     public float Temperature => air.airTemperature + wind.windchill;
 

@@ -23,10 +23,65 @@ public class GeneralTemperature : MonoBehaviour
 
     public WeatherController weather;
 
+    [Space]
+    public Transform weatherPosition;
+
+    public List<ParticleSystem> snowFalls = new List<ParticleSystem>();
+
+    private Transform currentWeatherTransform;
+    private ParticleSystem currentWeather;
+    private ParticleSystem CurrentWeather
+    {
+        get => currentWeather;
+        set
+        {
+            if(currentWeather != value)
+            {
+                currentWeather = value;
+                
+                currentWeatherTransform = currentWeather == null ? null : currentWeather.transform;
+            }
+        }
+    }
+
     private void Awake()
     {
         weather.onWeatherUpdated = onWeatherChanged;
         weather.Setup();
+    }
+    private void Update()
+    {
+        if(currentWeatherTransform != null)
+        {
+            currentWeatherTransform.position = weatherPosition.position;
+            currentWeatherTransform.rotation = Quaternion.Euler(0, GeneralAvailability.Player.Camera.Transform.rotation.eulerAngles.y, 0);
+        }
+    }
+    [Button]
+    private void SetWeather()
+    {
+        CurrentWeather = snowFalls.GetRandomItem();
+
+        CurrentWeather.Play();
+    }
+    [Button]
+    private void NoWeather()
+    {
+        CurrentWeather.Stop();
+        ParticleSystem temp = CurrentWeather;
+        CurrentWeather = null;
+
+        temp.transform.position = Vector3.zero;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+
+        if (weatherPosition)
+        {
+            Gizmos.DrawSphere(weatherPosition.position, 0.25f);
+        }
     }
 
     [System.Serializable]

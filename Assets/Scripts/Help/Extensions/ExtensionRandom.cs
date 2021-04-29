@@ -1,0 +1,26 @@
+﻿using UnityEngine;
+
+public static class ExtensionRandom
+{
+    public static Vector3 RandomPointInAnnulus(Vector3 origin, float minRadius, float maxRadius)
+    {
+        Vector3 point = GetRandomPointInCircleXZNoZero();
+
+        float distance = Random.Range(minRadius, maxRadius);
+
+        Vector3 result = origin + point * distance;
+
+        return result;
+    }
+
+    public static Vector3 GetRandomPointInCircleXZ() => new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f));
+    public static Vector3 GetRandomPointInCircleXZNoZero()
+    {
+        Vector3 result = GetRandomPointInCircleXZ();
+
+        if (result.x == 0 && result.y == 0)
+            return GetRandomPointInCircleXZNoZero();
+
+        return result;
+    }
+}

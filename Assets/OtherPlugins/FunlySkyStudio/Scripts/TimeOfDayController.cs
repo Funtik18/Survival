@@ -87,6 +87,10 @@ namespace Funly.SkyStudio
         }
 
 
+        private bool moonEnable;
+        private bool sunEnable;
+
+
         void Awake()
         {
             instance = this;
@@ -107,19 +111,42 @@ namespace Funly.SkyStudio
             skyProfile = m_SkyProfile;
         }
 
-        //private void Update()
-        //{
-        //    if (automaticTimeIncrement)
-        //    {
-        //        skyTime += automaticIncrementSpeed * Time.deltaTime;
-        //    }
 
-        //    // FIXME - Doe we really need to call this frequently?
-        //    if (weatherController != null)
-        //    {
-        //        weatherController.UpdateForTimeOfDay(skyProfile, timeOfDay);
-        //    }
-        //}
+        public void UpdateLunum(Times.TimesState state)
+        {
+            if(state == Times.TimesState.Night)
+            {
+                if (sunEnable)
+                {
+                    sunOrbit.gameObject.SetActive(false);
+
+                    sunEnable = false;
+                }
+                if(moonEnable == false)
+                {
+                    moonOrbit.gameObject.SetActive(true);
+
+                    moonEnable = true;
+                }
+            }
+            else
+            {
+                if (sunEnable == false)
+                {
+                    sunOrbit.gameObject.SetActive(true);
+
+                    sunEnable = true;
+
+                }
+                if (moonEnable)
+                {
+                    moonOrbit.gameObject.SetActive(false);
+
+                    moonEnable = false;
+                }
+            }
+        }
+
 
         public void UpdateGlobalIllumination()
         {

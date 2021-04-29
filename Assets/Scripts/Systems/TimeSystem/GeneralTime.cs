@@ -32,11 +32,15 @@ public class GeneralTime : MonoBehaviour
     [InfoBox("Time Flow = 1f / timeFlow")]
     public float timeFlow = 12f;
 
-    public int frequenceCycleSeconds = 300;//каждые 5 минут обновление
+    [SerializeField] private Times updateRealTime;
+    [SerializeField] private Times updateCicleGameTime;
 
     [SerializeField] private TimeOfDayController controller;
 
     public bool IsStopped { get; set; }
+
+    private int frequenceTimeSeconds;
+    private int frequenceCycleSeconds;
 
     private Coroutine timeCoroutine = null;
     public bool IsTimeProccess => timeCoroutine != null;
@@ -54,7 +58,9 @@ public class GeneralTime : MonoBehaviour
     {
         if (!IsTimeProccess)
         {
-            seconds = new WaitForSeconds(1f / timeFlow);
+            frequenceTimeSeconds = updateRealTime.TotalSeconds;
+            seconds = new WaitForSeconds(frequenceTimeSeconds * (1f / timeFlow));
+            frequenceCycleSeconds = updateCicleGameTime.TotalSeconds;
             timeCoroutine = StartCoroutine(TimeRoutine());
         }
     }
@@ -62,7 +68,7 @@ public class GeneralTime : MonoBehaviour
     {
         while (true)
         {
-            globalTime.TotalSeconds += 1;
+            globalTime.TotalSeconds += frequenceTimeSeconds;
 
             yield return seconds;
 
@@ -89,6 +95,7 @@ public class GeneralTime : MonoBehaviour
     public void ChangeTimeOn(int secs)
     {
         globalTime.TotalSeconds = secs;
+
         UpdateCycle();
         UpdateActions();
     }
@@ -119,6 +126,7 @@ public class GeneralTime : MonoBehaviour
     private void UpdateCycle()
     {
         controller.skyTime = globalTime.GetSkyPercent();
+        controller.UpdateLunum(globalTime.State);
     }
 
     private void UpdateActions()
@@ -171,6 +179,11 @@ public class GeneralTime : MonoBehaviour
     public override string ToString()
     {
         return globalTime.ToString();
+    }
+
+    private void OnGUI()
+    {
+        GUI.Box(new Rect(150, 0, 80, 20), globalTime.ToString());
     }
 
     [System.Serializable]

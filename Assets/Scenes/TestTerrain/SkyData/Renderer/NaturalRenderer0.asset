@@ -16,17 +16,17 @@ MonoBehaviour:
   cloudIntensityAdjustment: 1
   sun:
     mode: 0
-    rotation: {x: 292.56525, y: 270, z: 0}
-    intensity: 0
-    color: {r: 0.7352941, g: 0.42268226, b: 0.027032854, a: 1}
+    rotation: {x: 354.6185, y: 270, z: 0}
+    intensity: 0.73805404
+    color: {r: 0.40714252, g: 0.30172935, b: 0.4536503, a: 1}
   moon:
     mode: 0
-    rotation: {x: 68.28023, y: 90.091415, z: -0.000009228298}
+    rotation: {x: 6.658589, y: 90.09127, z: 0.0000002148929}
     intensity: 1
     color: {r: 0.24065503, g: 0.27306485, b: 0.3018868, a: 0}
   ambient:
     mode: 0
-    skyColor: {r: 0, g: 0, b: 0, a: 0}
+    skyColor: {r: 0.29634884, g: 0.21962123, b: 0.33020067, a: 0.72787493}
     equatorColor: {r: 0.018725013, g: 0.021246774, b: 0.023489367, a: 0}
     groundColor: {r: 0.0046812533, g: 0.0053116935, b: 0.005872342, a: 0}
     pivot: 0.45
