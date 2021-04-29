@@ -61,7 +61,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _CloudDensity: 0.57985115
+    - _CloudDensity: 0.4501449
     - _CloudDirection: 1
     - _CloudFadeAmount: 1
     - _CloudFadePosition: 0.97
@@ -112,18 +112,18 @@ Material:
     - _StarLayer3TwinkleSpeed: 1
     - _SunEdgeFade: 0.851
     - _SunHDRBoost: 14.7
-    - _SunRadius: 0.3202815
+    - _SunRadius: 0.061875753
     - _SunSpriteAnimationSpeed: 1
     - _SunSpriteItemCount: 1
     m_Colors:
-    - _CloudColor1: {r: 1, g: 0.84705883, b: 0.5735294, a: 1}
+    - _CloudColor1: {r: 1, g: 0.9225614, b: 0.78406554, a: 1}
     - _CloudColor2: {r: 0.41911763, g: 0.41911763, b: 0.41911763, a: 1}
-    - _GradientSkyLowerColor: {r: 0.8894729, g: 0.7632028, b: 0.46877846, a: 1}
-    - _GradientSkyMiddleColor: {r: 0.37775928, g: 0.36105132, b: 0.46894863, a: 1}
-    - _GradientSkyUpperColor: {r: 0.28426513, g: 0.38192198, b: 0.47036922, a: 1}
+    - _GradientSkyLowerColor: {r: 0.47231644, g: 0.49555627, b: 0.49449334, a: 1}
+    - _GradientSkyMiddleColor: {r: 0.016771546, g: 0.10095414, b: 0.23945013, a: 1}
+    - _GradientSkyUpperColor: {r: 0.053015217, g: 0.09669582, b: 0.20328501, a: 1}
     - _HorizonFogColor: {r: 0.57796365, g: 0.60338193, b: 0.6415094, a: 1}
-    - _MoonColor: {r: 0.47121838, g: 0.45687923, b: 0.40971097, a: 1}
-    - _MoonPosition: {r: -0.99325347, g: 0.11595286, b: 0.0015820427, a: 0}
+    - _MoonColor: {r: 0.92539424, g: 0.8232377, b: 0.48719648, a: 1}
+    - _MoonPosition: {r: -0.91858184, g: 0.3952282, b: 0.0014633255, a: 0}
     - _MoonSpriteDimensions: {r: 0, g: 0, b: 0, a: 0}
     - _StarLayer1Color: {r: 1, g: 1, b: 1, a: 1}
     - _StarLayer1SpriteDimensions: {r: 0, g: 0, b: 0, a: 0}
@@ -131,6 +131,6 @@ Material:
     - _StarLayer2SpriteDimensions: {r: 0, g: 0, b: 0, a: 0}
     - _StarLayer3Color: {r: 0.21999997, g: 1, b: 0.54999995, a: 1}
     - _StarLayer3SpriteDimensions: {r: 0, g: 0, b: 0, a: 0}
-    - _SunColor: {r: 0.81481886, g: 0.44721454, b: 0.02512613, a: 1}
-    - _SunPosition: {r: 0.9955923, g: -0.09378708, b: 0, a: 0}
+    - _SunColor: {r: 0.8088235, g: 0.41835698, b: 0, a: 1}
+    - _SunPosition: {r: 0.92640007, g: -0.37654066, b: 0, a: 0}
     - _SunSpriteDimensions: {r: 0, g: 0, b: 0, a: 0}
