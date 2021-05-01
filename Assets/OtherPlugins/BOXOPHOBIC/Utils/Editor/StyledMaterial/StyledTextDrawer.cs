@@ -61,20 +61,28 @@ namespace Boxophobic.StyledGUI
             }
             else if (alignment == "Left")
             {
-                styleLabel.alignment = TextAnchor.MiddleCenter;
+                styleLabel.alignment = TextAnchor.MiddleLeft;
             }
-            else if (alignment == "Left")
+            else if (alignment == "Right")
             {
-                styleLabel.alignment = TextAnchor.MiddleCenter;
+                styleLabel.alignment = TextAnchor.MiddleRight;
             }
 
-            if (font == "Bold")
+            if (font == "Normal")
+            {
+                styleLabel.fontStyle = FontStyle.Normal;
+            }
+            else if (font == "Bold")
             {
                 styleLabel.fontStyle = FontStyle.Bold;
             }
-            else
+            else if (font == "Italic")
             {
-                styleLabel.fontStyle = FontStyle.Normal;
+                styleLabel.fontStyle = FontStyle.Italic;
+            }
+            else if (font == "BoldAndItalic")
+            {
+                styleLabel.fontStyle = FontStyle.BoldAndItalic;
             }
 
             styleLabel.fontSize = (int)size;

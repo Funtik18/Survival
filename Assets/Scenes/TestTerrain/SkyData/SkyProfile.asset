@@ -1842,7 +1842,7 @@ MonoBehaviour:
     - RainSoundFeature
     - ThunderFeature
     - SunCustomTextureFeature
-    m_Values: 010101010001000000000000000001000000010000000000010100
+    m_Values: 010101000001000000000000000001000000010000000000010100
   starLayer1DataTexture: {fileID: 2800000, guid: 544fafd9187c84f4cb2eadd8eb9a43b3,
     type: 2}
   starLayer2DataTexture: {fileID: 2800000, guid: dfdfdef56028bcd4ea0dcaab78153738,

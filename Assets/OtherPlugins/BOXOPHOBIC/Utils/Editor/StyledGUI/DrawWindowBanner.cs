@@ -10,13 +10,13 @@ namespace Boxophobic.StyledGUI
     {
         public static void DrawWindowBanner(Color bannerColor, string bannerText, string helpURL)
         {
-            GUILayout.Space(20);
+            GUILayout.Space(15);
 
-            var bannerFullRect = GUILayoutUtility.GetRect(0, 0, 40, 0);
-            var bannerBeginRect = new Rect(bannerFullRect.position.x + 20, bannerFullRect.position.y, 20, 40);
-            var bannerMiddleRect = new Rect(bannerFullRect.position.x + 40, bannerFullRect.position.y, bannerFullRect.xMax - 75, 40);
-            var bannerEndRect = new Rect(bannerFullRect.xMax - 36, bannerFullRect.position.y, 20, 40);
-            var iconRect = new Rect(bannerFullRect.xMax - 53, bannerFullRect.position.y + 5, 30, 30);
+            var bannerFullRect = GUILayoutUtility.GetRect(0, 0, 36, 0);
+            var bannerBeginRect = new Rect(bannerFullRect.position.x + 20, bannerFullRect.position.y, 20, 36);
+            var bannerMiddleRect = new Rect(bannerFullRect.position.x + 40, bannerFullRect.position.y, bannerFullRect.xMax - 75, 36);
+            var bannerEndRect = new Rect(bannerFullRect.xMax - 36, bannerFullRect.position.y, 20, 36);
+            var iconRect = new Rect(bannerFullRect.xMax - 51, bannerFullRect.position.y + 5, 30, 26);
 
             Color guiColor;
 
@@ -57,7 +57,7 @@ namespace Boxophobic.StyledGUI
             }
 
             GUI.color = Color.white;
-            GUILayout.Space(20);
+            GUILayout.Space(15);
         }
     }
 }

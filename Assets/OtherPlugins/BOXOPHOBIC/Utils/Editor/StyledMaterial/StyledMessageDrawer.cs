@@ -17,6 +17,16 @@ namespace Boxophobic.StyledGUI
 
         MessageType mType;
 
+        public StyledMessageDrawer(string t, string m)
+        {
+            type = t;
+            message = m;
+            keyword = null;
+
+            this.top = 0;
+            this.down = 0;
+        }
+
         public StyledMessageDrawer(string t, string m, float top, float down)
         {
             type = t;

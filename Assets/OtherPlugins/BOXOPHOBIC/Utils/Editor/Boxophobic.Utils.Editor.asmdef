@@ -1,7 +1,7 @@
 {
     "name": "Boxophobic.Utils.Editor",
     "references": [
-        "Boxophobic.Utils.Scripts"
+        "GUID:825ad574da7360d4e8aea558f272972e"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [
@@ -12,5 +12,6 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": []
 }

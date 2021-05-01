@@ -22,7 +22,11 @@ namespace Boxophobic.StyledGUI
 
         public override void OnGUI(Rect position, MaterialProperty prop, String label, MaterialEditor materialEditor)
         {
-            Material material = materialEditor.target as Material;
+            //Material material = materialEditor.target as Material;
+
+            EditorGUI.BeginChangeCheck();
+
+            EditorGUI.showMixedValue = prop.hasMixedValue;
 
             if (width == 0)
             {
@@ -35,13 +39,18 @@ namespace Boxophobic.StyledGUI
 
                 toggle = EditorGUILayout.Toggle(label, toggle);
 
-                if (toggle)
+                EditorGUI.showMixedValue = false;
+
+                if (EditorGUI.EndChangeCheck())
                 {
-                    prop.floatValue = 1;
-                }
-                else
-                {
-                    prop.floatValue = 0;
+                    if (toggle)
+                    {
+                        prop.floatValue = 1;
+                    }
+                    else
+                    {
+                        prop.floatValue = 0;
+                    }
                 }
             }
             else
@@ -59,13 +68,18 @@ namespace Boxophobic.StyledGUI
 
                 toggle = GUILayout.Toggle(toggle, "", GUILayout.Width(width));
 
-                if (toggle)
+                EditorGUI.showMixedValue = false;
+
+                if (EditorGUI.EndChangeCheck())
                 {
-                    prop.floatValue = 1;
-                }
-                else
-                {
-                    prop.floatValue = 0;
+                    if (toggle)
+                    {
+                        prop.floatValue = 1;
+                    }
+                    else
+                    {
+                        prop.floatValue = 0;
+                    }
                 }
 
                 GUILayout.EndHorizontal();
