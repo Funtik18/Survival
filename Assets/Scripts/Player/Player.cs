@@ -4,6 +4,9 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Need optimaze
+/// </summary>
 public class Player : MonoBehaviour
 {
     #region Properties

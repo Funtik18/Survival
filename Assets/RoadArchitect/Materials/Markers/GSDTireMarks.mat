@@ -119,7 +119,7 @@ Material:
     - _FrezPow: 0
     - _Gloss: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 0.25
     - _GlossyReflections: 1
     - _LineWidth: 0.1
     - _Mode: 2

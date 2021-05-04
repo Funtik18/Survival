@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b2a35c9de19567d4db25cf478eed8d48, type: 2}
+  - {fileID: 2100000, guid: 5db35f0358a1eaa468805d461b2314c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -137,7 +137,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b2a35c9de19567d4db25cf478eed8d48, type: 2}
+  - {fileID: 2100000, guid: 5db35f0358a1eaa468805d461b2314c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -216,7 +216,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b2a35c9de19567d4db25cf478eed8d48, type: 2}
+  - {fileID: 2100000, guid: 5db35f0358a1eaa468805d461b2314c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -295,7 +295,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b2a35c9de19567d4db25cf478eed8d48, type: 2}
+  - {fileID: 2100000, guid: 5db35f0358a1eaa468805d461b2314c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -362,23 +362,23 @@ LODGroup:
   serializedVersion: 2
   m_LocalReferencePoint: {x: -0.0022015572, y: 3.7148423, z: -0.0023155212}
   m_Size: 8.311204
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.6
+  - screenRelativeHeight: 0.49999297
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 6245893472289718677}
-  - screenRelativeHeight: 0.30053103
+  - screenRelativeHeight: 0.1977767
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2122336694259002035}
-  - screenRelativeHeight: 0.14752579
+  - screenRelativeHeight: 0.053876307
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 7467267413217011734}
-  - screenRelativeHeight: 0.049257282
+  - screenRelativeHeight: 0.014233901
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 8526387242531136162}
