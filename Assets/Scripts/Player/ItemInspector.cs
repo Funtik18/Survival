@@ -34,6 +34,19 @@ public class ItemInspector : MonoBehaviour
 	public bool IsInspectProccess => inspectCoutine != null;
 
 	//cash
+	private ObjectPool pool;
+	private ObjectPool Pool
+    {
+        get
+        {
+			if(pool == null)
+            {
+				pool = ObjectPool.Instance;
+			}
+			return pool;
+        }
+    }
+
 	private Inventory inventory;
 
 	private Item item;
@@ -43,6 +56,7 @@ public class ItemInspector : MonoBehaviour
 	private Transform oldParent;
 	private Vector3 oldWorldPosition;
 	private Quaternion oldWorldRotation;
+
 
     public void SetItem(ItemObject itemObject)
 	{
@@ -323,7 +337,7 @@ public class ItemInspector : MonoBehaviour
 
 		if (itemObject)
 		{
-			Destroy(itemObject.gameObject);
+			Pool.ReturnGameObject(itemObject.gameObject);
 		}
 		Dispose();
 	}
@@ -342,7 +356,7 @@ public class ItemInspector : MonoBehaviour
 
         if (itemObject)
 		{
-			Destroy(itemObject.gameObject);
+			Pool.ReturnGameObject(itemObject.gameObject);
 		}
 		Dispose();
 	}
@@ -352,7 +366,7 @@ public class ItemInspector : MonoBehaviour
 
 		if (itemObject)
 		{
-			Destroy(itemObject.gameObject);
+			Pool.ReturnGameObject(itemObject.gameObject);
 		}
 		Dispose();
 	}
