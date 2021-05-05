@@ -10,8 +10,10 @@ public class GeneratorEditor : OdinEditor
         Generator generator = (Generator)target;
 
         Handles.color = Color.green;
+        Handles.DrawWireArc(generator.transform.position, Vector3.up, Vector3.forward, 360f, generator.ZoneRadius);
 
-        Handles.DrawWireArc(generator.transform.position, Vector3.up, Vector3.forward, 360f, generator.zoneRadius);
+        Handles.color = Color.red;
+        Handles.DrawWireArc(generator.transform.position, Vector3.up, Vector3.forward, 360f, generator.ZoneRadius * Mathf.Sqrt(2) + generator.zoneRadiusOffset);
 
         Handles.color = Color.red;
         Handles.DrawLine(generator.transform.position, generator.transform.position + (Vector3.forward * generator.prefabRadius));

@@ -6,11 +6,15 @@ using UnityEngine;
 
 public class Generator : MonoBehaviour
 {
-    public float zoneRadius;
     [Space]
     [SerializeField] private List<GameObject> prefabs = new List<GameObject>();
+
     [Min(1)]
     public float prefabRadius;
+
+    public float zoneRadiusOffset;
+    
+    public GeneratorType type = GeneratorType.Sphere;
 
     public Vector2Int countPrefabs;
     [Space]
@@ -18,7 +22,6 @@ public class Generator : MonoBehaviour
 
     [HideInInspector] public List<Transform> objs = new List<Transform>();
 
-    public bool IsEmpty => objs.Count == 0;
 
     private ObjectPool pool;
     private ObjectPool Pool
@@ -33,6 +36,12 @@ public class Generator : MonoBehaviour
         }
     }
 
+    public bool IsEmpty => objs.Count == 0;
+
+    public float zoneRadiusAwake = 0;
+
+    public float ZoneRadius => Mathf.Max(transform.localScale.x / 2, transform.localScale.y / 2, transform.localScale.z / 2);
+
 
     private void Awake()
     {
@@ -40,8 +49,9 @@ public class Generator : MonoBehaviour
         
         if(objs.Count != 0)
             objs.Clear();
-    }
 
+        zoneRadiusAwake = ZoneRadius * Mathf.Sqrt(2) + zoneRadiusOffset;
+    }
 
     public void ReGenerateZone()
     {
@@ -50,18 +60,26 @@ public class Generator : MonoBehaviour
         {
             temp.ReturnGameObject(objs[i].gameObject);
         }
+
         objs.Clear();
-        GenerateZone();
+
+        if(type == GeneratorType.Sphere)
+        {
+            GenerateSphereZone();
+        }
+        else if(type == GeneratorType.Box)
+        {
+            GenerateCubeZone();
+        }
     }
 
-    [Button]
-    public void GenerateZone()
+    private void GenerateSphereZone()
     {
         int countRnd = Random.Range(countPrefabs.x, countPrefabs.y);
 
         for (int i = 0; i < countRnd; i++)
         {
-            Vector3 point = GetRanomPointInZone();
+            Vector3 point = GetRanomPointInSphereZone();
 
             if(objs.Count > 0)
             {
@@ -73,7 +91,25 @@ public class Generator : MonoBehaviour
                 InstantiatePrefab(point);
             }
         }
-        Debug.LogError(objs.Count);
+    }
+    private void GenerateCubeZone()
+    {
+        int countRnd = Random.Range(countPrefabs.x, countPrefabs.y);
+
+        for (int i = 0; i < countRnd; i++)
+        {
+            Vector3 point = GetRandomPointInCubeZone();
+
+            if (objs.Count > 0)
+            {
+                if (CheckNeighbors(point))
+                    InstantiatePrefab(point);
+            }
+            else
+            {
+                InstantiatePrefab(point);
+            }
+        }
     }
 
     private bool CheckNeighbors(Vector3 point)
@@ -109,15 +145,34 @@ public class Generator : MonoBehaviour
         }
     }
 
-    private Vector3 GetRanomPointInZone()
+    private Vector3 GetRanomPointInSphereZone()
     {
-        Vector3 point = ExtensionRandom.GetRandomPointInCircleXZ() * zoneRadius + transform.position;
+        Vector3 point = ExtensionRandom.GetRandomPointInCircleXZ() * ZoneRadius + transform.position;
+        point.y = Terrain.activeTerrain.SampleHeight(point) + yOffset;
+        return point;
+    }
+    private Vector3 GetRandomPointInCubeZone()
+    {
+        Vector3 point = ExtensionRandom.RandomPointInBox(transform.position, transform.localScale);
         point.y = Terrain.activeTerrain.SampleHeight(point) + yOffset;
         return point;
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, zoneRadius);
+        if(type == GeneratorType.Sphere)
+        {
+            Gizmos.DrawWireSphere(transform.position, ZoneRadius);
+        }
+        else if(type == GeneratorType.Box)
+        {
+            Gizmos.DrawWireCube(transform.position, transform.localScale);
+        }
+    }
+
+    public enum GeneratorType 
+    {
+        Box,
+        Sphere,
     }
 }

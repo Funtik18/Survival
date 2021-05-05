@@ -37,6 +37,9 @@ public class GeneralTime : MonoBehaviour
 
     [SerializeField] private TimeOfDayController controller;
 
+
+    [SerializeField] private bool showTime = false;
+
     public bool IsStopped { get; set; }
 
     private int frequenceTimeSeconds;
@@ -183,7 +186,8 @@ public class GeneralTime : MonoBehaviour
 
     private void OnGUI()
     {
-        GUI.Box(new Rect(150, 0, 80, 20), globalTime.ToString());
+        if(showTime)
+            GUI.Box(new Rect(150, 0, 80, 20), globalTime.ToString());
     }
 
     [System.Serializable]

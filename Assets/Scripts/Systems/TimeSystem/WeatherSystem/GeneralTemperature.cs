@@ -94,12 +94,20 @@ public class GeneralTemperature : MonoBehaviour
         [SerializeField] private Times updateTime;
         [ReadOnly] [SerializeField] private Weather currentWeather;
 
+        [OnValueChanged("CheckWeather")]
+        public WeatherType weatherType;
+        [OnValueChanged("CheckFog")]
+        public FogType fogType;
+
+        public FogPressetSD lightFog;
+        public FogPressetSD mediumFog;
+        public FogPressetSD heavyFog;
+
         [ReadOnly]
         [ShowInInspector] public float Temperature => currentWeather.Temperature;
 
         public WeatherAir Air => currentWeather.air;
         public WeatherWind Wind => currentWeather.wind;
-
 
         public void Setup()
         {
@@ -111,6 +119,8 @@ public class GeneralTemperature : MonoBehaviour
             GeneralTime.Instance.AddEvent(unityEvent);
 
             UpdateWeather(GeneralTime.Instance.globalTime);
+
+            CheckFog();
         }
 
         public void UpdateWeather(Times time)
@@ -123,6 +133,40 @@ public class GeneralTemperature : MonoBehaviour
         private void RefreshWeather()
         {
 
+        }
+
+        private void CheckWeather()
+        {
+            if(weatherType == WeatherType.Clear)
+            {
+                fogType = FogType.None;
+            }
+            else if (weatherType == WeatherType.Fog)
+            {
+                fogType = (FogType)Random.Range(1, System.Enum.GetValues(typeof(FogType)).Length);
+
+            }
+
+            CheckFog();
+        }
+        private void CheckFog()
+        {
+            if (fogType == FogType.None)
+            {
+                FogController.Instance.ClearFog();
+            }
+            else if (fogType == FogType.Light)
+            {
+                FogController.Instance.TransitionTo(lightFog);
+            }
+            else if (fogType == FogType.Medium)
+            {
+                FogController.Instance.TransitionTo(mediumFog);
+            }
+            else if (fogType == FogType.Heavy)
+            {
+                FogController.Instance.TransitionTo(heavyFog);
+            }
         }
     }
 
@@ -237,10 +281,10 @@ public class GeneralTemperature : MonoBehaviour
             public Forecast evening;
             public Forecast night;
 
-            private float morningStart = 6f / 24f;
-            private float afternoonStart = 12f / 24f;
-            private float eveningStart = 17f / 24f;
-            private float nightStart = 20f / 24f;
+            //private float morningStart = 6f / 24f;
+            //private float afternoonStart = 12f / 24f;
+            //private float eveningStart = 17f / 24f;
+            //private float nightStart = 20f / 24f;
 
 
             private Forecast start;
@@ -348,8 +392,28 @@ public class GeneralTemperature : MonoBehaviour
                 {
                     weather.air.airTemperature = air;
                     weather.wind = wind;
+
+                    weather.humidity = Random.Range(0f, 100f);
+                    weather.precipitation = Random.Range(0f, 100f);
                 }
             }
         }
     }
+}
+
+public enum WeatherType
+{
+    Clear,
+    Aurora,
+    Cloudy,
+    Fog,
+    Snowfall,
+    Blizzard,
+}
+public enum FogType
+{
+    None,
+    Light,
+    Medium,
+    Heavy,
 }

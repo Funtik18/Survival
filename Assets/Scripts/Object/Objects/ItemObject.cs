@@ -7,12 +7,23 @@ public class ItemObject : WorldObject
 	[SerializeField] private ItemDataWrapper itemData;
 	[HideInInspector] public Item item;
 
+	private Rigidbody rigidbody;
+
 	private void Awake()
     {
 		SetData(itemData);
 	}
 
-	public void SetData(ItemDataWrapper data)
+    private void OnCollisionEnter(Collision collision)
+    {
+		Debug.LogError("HERE");
+	}
+	private void OnTriggerEnter(Collider other)
+    {
+		Debug.LogError("HERE");
+    }
+
+    public void SetData(ItemDataWrapper data)
     {
 		if (item == null)
 		{

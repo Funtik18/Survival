@@ -15,8 +15,6 @@ public struct Weather
     [Range(0, 100f)]
     public float humidity;
 
-    public WeatherType weatherType;
-
     public float Temperature => air.airTemperature + wind.windchill;
 
     public static Weather Lerp(Weather from, Weather to, float t)
@@ -287,14 +285,4 @@ public struct WeatherWind
         ViolentStorm = 11,
         HurricaneForce = 12,
     }
-}
-
-public enum WeatherType
-{
-    Clear,
-    Aurora,
-    Cloudy,
-    Fog,
-    Snowfall,
-    Blizzard,
 }
