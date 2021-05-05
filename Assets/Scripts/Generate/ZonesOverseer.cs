@@ -42,7 +42,7 @@ public class ZonesOverseer : MonoBehaviour
 
                 if (generator.IsEmpty)
                 {
-                    if (Vector3.Distance(player.position, generator.transform.position) <= generator.zoneRadius)
+                    if (Vector3.Distance(player.position, generator.transform.position) <= generator.zoneRadiusAwake)
                     {
                         generator.ReGenerateZone();
                     }

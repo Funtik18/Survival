@@ -38,7 +38,7 @@ public class PlayerCamera : MonoBehaviour
 
 	private Coroutine visionCoroutine = null;
 	public bool IsVisionProccess => visionCoroutine != null;
-	private WaitForSeconds visionSeconds = new WaitForSeconds(0.1f);
+	private WaitForFixedUpdate visionSeconds = new WaitForFixedUpdate();
     #endregion
 
     #region Properties

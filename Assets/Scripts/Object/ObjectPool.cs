@@ -55,6 +55,13 @@ public class ObjectPool : MonoBehaviour
     private GameObject CreateNewObject(GameObject gameObject)
     {
         GameObject newGO = Instantiate(gameObject);
+
+        Physics.SyncTransforms();
+
+        Physics.autoSimulation = false;
+        Physics.Simulate(Time.fixedDeltaTime);
+        Physics.autoSimulation = true;
+
         return newGO;
     }
 }
