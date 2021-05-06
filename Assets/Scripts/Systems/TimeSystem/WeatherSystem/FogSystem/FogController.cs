@@ -97,18 +97,18 @@ public class FogController : MonoBehaviour
     private float min = 0;
     private float max = 0.2f;
 
-    private void Awake()
+    public void SetFog(FogPressetSD data)
     {
-        CurrentRange = data.rangeValue;
-        CurrentColor = data.fogColor;
+        if (data)
+        {
+            CurrentRange = data.rangeValue;
+            CurrentColor = data.fogColor;
+        }
+        else
+        {
+            CurrentRange = 0;
+        }
     }
-
-    private void UpdateFog()
-    {
-        CurrentRange = data.rangeValue;
-        CurrentColor = data.fogColor;
-    }
-
     public void TransitionTo(FogPressetSD data)
     {
         StopAllCoroutines();
@@ -166,7 +166,11 @@ public class FogController : MonoBehaviour
         CurrentRange = range;
     }
 
-    
+    private void UpdateFog()
+    {
+        CurrentRange = data.rangeValue;
+        CurrentColor = data.fogColor;
+    }
     private void CheckFog()
     {
         Fog = fog;

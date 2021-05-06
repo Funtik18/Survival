@@ -74,7 +74,7 @@ public struct Times
         totalSeconds = (int) span.TotalSeconds;
     }
     /// <summary>
-    /// totalSeconds to TimeSpan
+    /// TotalSeconds to TimeSpan
     /// </summary>
     public void CheckTime()
     {
@@ -180,7 +180,6 @@ public struct Times
         return result;
     }
     #endregion
-
 
     public enum TimesState
     {

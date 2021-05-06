@@ -88,7 +88,7 @@ public class PlayerStatus
 		opportunities.Setup(player);
 
 		GeneralTime.Instance.onSecond += Updatestats;
-		GeneralTemperature.Instance.onWeatherChanged += WeatherChanged;
+		WeatherController.Instance.onWeatherChanged += WeatherChanged;
 	}
 
 	//Оптимизировать формулы

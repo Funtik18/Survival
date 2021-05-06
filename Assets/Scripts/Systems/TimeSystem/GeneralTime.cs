@@ -22,6 +22,7 @@ public class GeneralTime : MonoBehaviour
     }
 
     public UnityAction onDay;
+    public UnityAction onState;
     public UnityAction onHour;
     public UnityAction onMinute;
     public UnityAction onSecond;
@@ -44,6 +45,8 @@ public class GeneralTime : MonoBehaviour
 
     private int frequenceTimeSeconds;
     private int frequenceCycleSeconds;
+
+    [ReadOnly] public Times.TimesState lastState = Times.TimesState.Noon;
 
     private Coroutine timeCoroutine = null;
     public bool IsTimeProccess => timeCoroutine != null;
@@ -147,6 +150,13 @@ public class GeneralTime : MonoBehaviour
         if (globalTime.TotalSeconds % 86400 == 0)
         {
             onDay?.Invoke();
+        }
+
+        Times.TimesState currentState = globalTime.State;
+        if (currentState != lastState)
+        {
+            lastState = currentState;
+            onState?.Invoke();
         }
 
         for (int i = 0; i < events.Count; i++)

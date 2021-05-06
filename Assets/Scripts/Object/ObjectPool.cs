@@ -55,7 +55,7 @@ public class ObjectPool : MonoBehaviour
     private GameObject CreateNewObject(GameObject gameObject)
     {
         GameObject newGO = Instantiate(gameObject);
-
+        newGO.name = gameObject.name;
         Physics.SyncTransforms();
 
         Physics.autoSimulation = false;
