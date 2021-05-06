@@ -70,7 +70,14 @@ public class PlayerStatus
 
 
 	[Range(0, 100f)]
+	[Tooltip("Базовый шанс для разведения огня.")] 
 	public float baseChanceIgnition = 40f;
+
+	[Tooltip("Максимальное колличество времени для отдыха.")]
+	public Times maxResting;
+	[Tooltip("Максимальное колличество секунд в реальном времения пройдёт на вес отдых")]
+	public float maxWaitResting;
+
 
 	[Space]
 	[SerializeField] private PlayerData data;
@@ -103,6 +110,11 @@ public class PlayerStatus
 			case PlayerState.Sleeping:
 			{
 				onStats += SleepingFormule;
+			}
+			break;
+			case PlayerState.Resting:
+			{
+				onStats += RestingFormule;
 			}
 			break;
 			case PlayerState.Standing:
@@ -179,30 +191,45 @@ public class PlayerStatus
 	}
 	private void SleepingFormule()
 	{
+		stats.Fatigue.CurrentValue += stats.Fatigue.Value / (12f * 3600f);//100% / 12h or ~8.33%/h
+
 		stats.Hungred.CurrentValue -= 75f / 3600f;//75 cal/h
 		stats.Thirst.CurrentValue -= stats.Thirst.Value / (12f * 3600f);//100% / 12h or ~8.33%/h
 	}
+	private void RestingFormule()
+	{
+		stats.Fatigue.CurrentValue += stats.Fatigue.Value / (36f * 3600f);//100% / 36h
+
+		stats.Hungred.CurrentValue -= 100f / 3600f;//100 cal/h
+
+		AwakeFormule();
+	}
 	private void StandingFormule()
 	{
+		stats.Fatigue.CurrentValue -= stats.Fatigue.Value / (8f * 3600f);//100% / 8h
+
 		stats.Hungred.CurrentValue -= 125f / 3600f;//125 cal/h
 
 		AwakeFormule();
 	}
 	private void WalkingFormule()
 	{
+		stats.Fatigue.CurrentValue -= stats.Fatigue.Value / (7f * 3600f);//100% / 7h
+
+
 		stats.Hungred.CurrentValue -= 200f / 3600f;//200 cal/h
 
 		AwakeFormule();
 	}
 	private void SprintingFormule()
 	{
+		stats.Fatigue.CurrentValue -= stats.Fatigue.Value / (1f * 3600f);//100% / 1h
+
 		stats.Hungred.CurrentValue -= 400f / 3600f;//400 cal/h
 
 		AwakeFormule();
 	}
 	#endregion
-
-
 
 	[Space]
 	[Range(-100f, 100f)]

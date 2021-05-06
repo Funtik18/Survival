@@ -135,7 +135,7 @@ public class WindowIgnition : WindowUI
     {
         if (isCanIgnition)
         {
-            HideWindow();//
+            HideWindow();
             if (!IsHoldIgnitionProccess)
             {
                 GeneralAvailability.TargetPoint.ShowHightBar();

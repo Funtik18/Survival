@@ -9,9 +9,6 @@ public class FireBuilding : BuildingObject
     [PropertyOrder(-1)]
     [SerializeField] protected bool isEnableOnAwake = false;
     
-    [PropertyOrder(1)]
-    [SerializeField] private LayerMask interactLayers;
-
     [PropertyOrder(2)]
     [SerializeField] protected List<ParticleSystem> particles = new List<ParticleSystem>();
     [PropertyOrder(2)]
@@ -68,6 +65,8 @@ public class FireBuilding : BuildingObject
             //UpdateItems();
             //UpdateEnvironment();
         }
+
+        Debug.LogError(collidersIntersects.Count);
     }
 
     public bool AddItem(Item item)
@@ -252,16 +251,5 @@ public class FireBuilding : BuildingObject
             DisableParticles();
         else
             EnableParticles();
-    }
-
-
-    protected override void OnTriggerEnter(Collider other)
-    {
-        base.OnTriggerEnter(other);
-
-    }
-    protected override void OnTriggerExit(Collider other)
-    {
-        base.OnTriggerEnter(other);
     }
 }

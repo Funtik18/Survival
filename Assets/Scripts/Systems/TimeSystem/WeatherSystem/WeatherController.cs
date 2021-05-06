@@ -110,7 +110,6 @@ public class WeatherController : MonoBehaviour
                 currentWeatherTransform.rotation = Quaternion.Euler(0, playerTransform.rotation.eulerAngles.y, 0);
             }
         }
-        
 
         private void RandomWeather()
         {
@@ -157,7 +156,7 @@ public class WeatherController : MonoBehaviour
 
         public void SetWeather(WeatherPressetSD weather)
         {
-            if (currentWeatherTransform != null)
+            if (currentWeatherTransform != null && currentWeatherTransform.gameObject.activeInHierarchy)
             {
                 currentWeatherParticle.Stop();
                 currentWeatherParticle.GetComponent<SelfDestruct>().StartDestruct();
@@ -216,7 +215,7 @@ public class WeatherController : MonoBehaviour
         }
         public void TransitionWeather(WeatherPressetSD weather)
         {
-            if (currentWeatherTransform != null)
+            if (currentWeatherTransform != null && currentWeatherTransform.gameObject.activeInHierarchy)
             {
                 currentWeatherParticle.Stop();
                 currentWeatherParticle.GetComponent<SelfDestruct>().StartDestruct();

@@ -100,10 +100,16 @@ public class GeneralTime : MonoBehaviour
 
     public void ChangeTimeOn(int secs)
     {
-        globalTime.TotalSeconds = secs;
+        int diff = secs - globalTime.TotalSeconds;
+
+        for (int i = 0; i < diff; i++)
+        {
+            globalTime.TotalSeconds += 1;
+            
+            UpdateActions();
+        }
 
         UpdateCycle();
-        UpdateActions();
     }
 
     public void AddEvent(TimeUnityEvent unityEvent)

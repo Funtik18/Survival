@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8851805584064451231
 Transform:
   m_ObjectHideFlags: 0
@@ -75,7 +75,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5029327041991425004
 Transform:
   m_ObjectHideFlags: 0
@@ -133,7 +133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5259819360570851093
 Transform:
   m_ObjectHideFlags: 0
@@ -19254,7 +19254,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8867725777406385225
 Transform:
   m_ObjectHideFlags: 0
@@ -19428,7 +19428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 7986179049098056108}
   data: {fileID: 11400000, guid: ca65d2aa580f68f4391ac4daa7be488f, type: 2}
-  isPlacement: 1
+  isPlacement: 0
   ignoreLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -19436,9 +19436,6 @@ MonoBehaviour:
   - {fileID: 7986179049096122259}
   - {fileID: 5336138546279808905}
   isEnableOnAwake: 0
-  interactLayers:
-    serializedVersion: 2
-    m_Bits: 4352
   particles:
   - {fileID: 2907002959349062801}
   slots:

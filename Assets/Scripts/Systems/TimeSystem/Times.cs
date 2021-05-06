@@ -59,6 +59,8 @@ public struct Times
         }
     }
 
+    public int TotalMinutes => TotalSeconds / 60; 
+
     public void Reset()
     {
         TotalSeconds = 0;

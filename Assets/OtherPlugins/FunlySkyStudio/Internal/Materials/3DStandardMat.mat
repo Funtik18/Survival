@@ -5,10 +5,11 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: 3DStandardMat
   m_Shader: {fileID: 4800000, guid: b7272137331ff45798477dc7643f8279, type: 3}
-  m_ShaderKeywords: CLOUDS GRADIENT_BACKGROUND MOON_CUSTOM_TEXTURE
+  m_ShaderKeywords: ' GRADIENT_BACKGROUND'
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

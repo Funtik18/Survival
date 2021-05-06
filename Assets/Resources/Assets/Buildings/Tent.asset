@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectName: Tent
   description: 
-  model: {fileID: 2239421951677635119, guid: 4c7ad4e8ce16e094883a3679ee62b237, type: 3}
+  model: {fileID: 768997525019381469, guid: ee763fa47b8f04442ae1938e5ae0e536, type: 3}
   isImmediatelyCalculation: 0
   isComplex: 0
   recipt: {fileID: 0}

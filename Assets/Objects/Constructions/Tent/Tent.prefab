@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 5665123415369284399}
   - component: {fileID: 8732853710802809994}
   - component: {fileID: 6833547674559086656}
-  m_Layer: 0
+  - component: {fileID: 7484734737950111778}
+  - component: {fileID: 768997525019381469}
+  m_Layer: 9
   m_Name: Tent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5032032714122142101}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: 1431.5173, y: 153.82942, z: 1721.1947}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!33 &8732853710802809994
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -82,3 +84,35 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &7484734737950111778
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5032032714122142101}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.029855944, y: 0.03540774, z: 0.027568674}
+  m_Center: {x: -0.00011840224, y: 0.00006245375, z: 0.01376385}
+--- !u!114 &768997525019381469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5032032714122142101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a3f3bd224ad0584f8161d6d3a8c16de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coll: {fileID: 7484734737950111778}
+  data: {fileID: 11400000, guid: 0bbc4b44f757eaa4ea24625098ef48ef, type: 2}
+  isPlacement: 1
+  ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  renderers: []

@@ -9,19 +9,20 @@ using Sirenix.OdinInspector;
 public class BuildingObject : WorldObject<BuildingSD> 
 {
     [PropertyOrder(-1)]
+    [InfoBox("Если тру значит объект поставлне в мире")]
     [SerializeField] protected bool isPlacement = false;
+    public bool IsPlacement { get => isPlacement; set => isPlacement = value; }
     [PropertyOrder(1)]
+    [Tooltip("Слои на которых можно ставить строение включая слой в Build.cs")]
     [SerializeField] protected LayerMask ignoreLayers;
     [PropertyOrder(2)]
     [SerializeField] private List<MeshRenderer> renderers = new List<MeshRenderer>();
 
-    private List<Collider> collidersIntersects = new List<Collider>();
+    protected List<Collider> collidersIntersects = new List<Collider>();
     private List<Material> materialsBasic = new List<Material>();
 
     public bool IsIntersects => collidersIntersects.Count > 0;
     public virtual bool IsCanBeBuild => true;
-
-    public bool IsPlacement { get => isPlacement; set => isPlacement = value; }
 
     protected virtual void Awake()
     {
@@ -80,7 +81,6 @@ public class BuildingObject : WorldObject<BuildingSD>
 
         if (!collidersIntersects.Contains(other))
         {
-            Debug.LogError(other.name);
             if (((1 << other.gameObject.layer) & ignoreLayers) == 0)
             {
                 collidersIntersects.Add(other);

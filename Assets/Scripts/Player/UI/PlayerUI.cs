@@ -35,6 +35,8 @@ public class PlayerUI : MonoBehaviour
 		windowsUI.ignitionWindow.onIgnitionCompletely += OpenControlUI;
 
 		windowsUI.fireMenuWindow.onBack += CloseFireMenu;
+
+		windowsUI.restingWindow.onBack += CloseResting;
     }
 
 	public void OpenInventory()
@@ -125,7 +127,8 @@ public class PlayerUI : MonoBehaviour
 	}
 	public void CloseResting()
     {
-
+		windowsUI.restingWindow.HideWindow();
+		OpenControlUI();
     }
 
 

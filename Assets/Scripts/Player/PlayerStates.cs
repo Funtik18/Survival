@@ -39,6 +39,7 @@ public class PlayerStates
 public enum PlayerState
 {
 	Sleeping,
+	Resting,
 	Standing,
 	Walking,
 	Sprinting,
