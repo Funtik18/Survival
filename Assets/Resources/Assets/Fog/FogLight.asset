@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8a76d5c156f9e847b9aa2d534b42fc8, type: 3}
   m_Name: FogLight
   m_EditorClassIdentifier: 
+  fogType: 1
   fogColor: {r: 0.61819154, g: 0.7166951, b: 0.8679245, a: 0}
   rangeValue: 0.138

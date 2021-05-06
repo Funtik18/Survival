@@ -26,7 +26,10 @@ public class GeneralTemperature : MonoBehaviour
     [Space]
     public Transform weatherPosition;
 
-    public List<ParticleSystem> snowFalls = new List<ParticleSystem>();
+    public WeatherPressetSD pressetClear;
+    public WeatherPressetSD pressetSnowFall;
+
+
 
     private Transform currentWeatherTransform;
     private ParticleSystem currentWeather;
@@ -44,10 +47,19 @@ public class GeneralTemperature : MonoBehaviour
         }
     }
 
+
+
+
+
+
+
     private void Awake()
     {
         weather.onWeatherUpdated = onWeatherChanged;
         weather.Setup();
+
+
+        SetWeather(pressetSnowFall);
     }
     private void Update()
     {
@@ -60,7 +72,7 @@ public class GeneralTemperature : MonoBehaviour
     [Button]
     private void SetWeather()
     {
-        CurrentWeather = snowFalls.GetRandomItem();
+        //CurrentWeather = snowFalls.GetRandomItem();
 
         CurrentWeather.Play();
     }
@@ -72,6 +84,35 @@ public class GeneralTemperature : MonoBehaviour
         CurrentWeather = null;
 
         temp.transform.position = Vector3.zero;
+    }
+
+    public void SetWeather(WeatherPressetSD weather)
+    {
+        if (weather.randomFog)
+        {
+            if (weather.fogs.Count > 0)
+            {
+                FogPressetSD fog = weather.fogs.GetRandomItem();
+                FogController.Instance.TransitionTo(fog);
+                Debug.LogError(fog.fogType);
+            }
+            else
+            {
+                FogController.Instance.ClearFog();
+            }
+        }
+        else
+        {
+            if(weather.fog != null)
+            {
+                FogController.Instance.TransitionTo(weather.fog);
+                Debug.LogError(weather.fog.fogType);
+            }
+            else
+            {
+                FogController.Instance.ClearFog();
+            }
+        }
     }
 
     private void OnDrawGizmos()
@@ -94,15 +135,6 @@ public class GeneralTemperature : MonoBehaviour
         [SerializeField] private Times updateTime;
         [ReadOnly] [SerializeField] private Weather currentWeather;
 
-        [OnValueChanged("CheckWeather")]
-        public WeatherType weatherType;
-        [OnValueChanged("CheckFog")]
-        public FogType fogType;
-
-        public FogPressetSD lightFog;
-        public FogPressetSD mediumFog;
-        public FogPressetSD heavyFog;
-
         [ReadOnly]
         [ShowInInspector] public float Temperature => currentWeather.Temperature;
 
@@ -120,7 +152,7 @@ public class GeneralTemperature : MonoBehaviour
 
             UpdateWeather(GeneralTime.Instance.globalTime);
 
-            CheckFog();
+            //CheckFog();
         }
 
         public void UpdateWeather(Times time)
@@ -135,39 +167,21 @@ public class GeneralTemperature : MonoBehaviour
 
         }
 
-        private void CheckWeather()
-        {
-            if(weatherType == WeatherType.Clear)
-            {
-                fogType = FogType.None;
-            }
-            else if (weatherType == WeatherType.Fog)
-            {
-                fogType = (FogType)Random.Range(1, System.Enum.GetValues(typeof(FogType)).Length);
+        //private void CheckWeather()
+        //{
+        //    if(weatherType == WeatherType.Clear)
+        //    {
+        //        fogType = FogType.None;
+        //    }
+        //    else if (weatherType == WeatherType.Fog)
+        //    {
+        //        fogType = (FogType)Random.Range(1, System.Enum.GetValues(typeof(FogType)).Length);
 
-            }
+        //    }
 
-            CheckFog();
-        }
-        private void CheckFog()
-        {
-            if (fogType == FogType.None)
-            {
-                FogController.Instance.ClearFog();
-            }
-            else if (fogType == FogType.Light)
-            {
-                FogController.Instance.TransitionTo(lightFog);
-            }
-            else if (fogType == FogType.Medium)
-            {
-                FogController.Instance.TransitionTo(mediumFog);
-            }
-            else if (fogType == FogType.Heavy)
-            {
-                FogController.Instance.TransitionTo(heavyFog);
-            }
-        }
+        //    CheckFog();
+        //}
+        
     }
 
     [System.Serializable]
