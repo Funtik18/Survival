@@ -23,13 +23,13 @@ public class IgnitionRequirementUI : WindowUI
     [SerializeField] private bool isInverse = false;
     [SerializeField] private Animator animator;
 
-    private RequirementsItem requirements;
+    private RequirementItem requirements;
     private int CurrentIndex { get => requirements.CurrentIndex; set => requirements.CurrentIndex = value; }
     private List<Item> items => requirements.requirements;
 
     private List<IndicatorUI> indicators = new List<IndicatorUI>();
 
-    public void Setup(RequirementsItem requirements, int defaultIndex = 0)
+    public void Setup(RequirementItem requirements, int defaultIndex = 0)
     {
         this.requirements = requirements;
 

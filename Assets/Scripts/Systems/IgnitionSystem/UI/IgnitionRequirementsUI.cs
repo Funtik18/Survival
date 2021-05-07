@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 
 public class IgnitionRequirementsUI : MonoBehaviour
 {
@@ -10,9 +7,9 @@ public class IgnitionRequirementsUI : MonoBehaviour
     [SerializeField] private IgnitionRequirementUI requirementFuel;
     [SerializeField] private IgnitionRequirementUI requirementAccelerant;
 
-    private WindowIgnition.IgnitionRequirements requirements;
+    private RequirementsIgnition requirements;
 
-    public void Setup(WindowIgnition.IgnitionRequirements requirements)
+    public void Setup(RequirementsIgnition requirements)
     {
         this.requirements = requirements;
 

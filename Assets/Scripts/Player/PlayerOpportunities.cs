@@ -119,7 +119,7 @@ public class PlayerOpportunities
 
 			ui.barHight.UpdateFillAmount(normalStep, "%");
 
-			if (thirst.IsConcreteFull && hungred.IsConcreteFull)
+			if (thirst.IsFull && hungred.IsFull)
 			{
 				StopUse();
 				yield break;
@@ -164,7 +164,7 @@ public class PlayerOpportunities
 			
 			ui.barHight.UpdateFillAmount(normalStep, "%");
 			
-			if (thirst.IsConcreteFull)
+			if (thirst.IsFull)
             {
 				StopUse();
 				yield break;

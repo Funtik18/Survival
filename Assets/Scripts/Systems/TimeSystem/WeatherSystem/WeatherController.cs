@@ -111,7 +111,7 @@ public class WeatherController : MonoBehaviour
             }
         }
 
-        private void RandomWeather()
+        public void RandomWeather()
         {
             int value = Random.Range(0, 4);
             if (value == 0)
@@ -133,22 +133,22 @@ public class WeatherController : MonoBehaviour
         }
 
         [Button]
-        private void Clear()
+        public void Clear()
         {
             TransitionWeather(pressetClear);
         }
         [Button]
-        private void SnowFall()
+        public void SnowFall()
         {
             TransitionWeather(pressetSnowFall);
         }
         [Button]
-        private void Fog()
+        public void Fog()
         {
             TransitionWeather(pressetFog);
         }
         [Button]
-        private void Blizzard()
+        public void Blizzard()
         {
             TransitionWeather(pressetBlizzard);
         }

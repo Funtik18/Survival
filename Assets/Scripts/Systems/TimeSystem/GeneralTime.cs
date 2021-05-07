@@ -27,6 +27,8 @@ public class GeneralTime : MonoBehaviour
     public UnityAction onMinute;
     public UnityAction onSecond;
 
+    public UnityAction onUpdate;
+
     [OnValueChanged("UpdateTimeToSeconds")]
     public Times globalTime;
 
@@ -37,7 +39,6 @@ public class GeneralTime : MonoBehaviour
     [SerializeField] private Times updateCicleGameTime;
 
     [SerializeField] private TimeOfDayController controller;
-
 
     [SerializeField] private bool showTime = false;
 
@@ -89,6 +90,10 @@ public class GeneralTime : MonoBehaviour
 
         BreakTime();
     }
+    private void Update()
+    {
+        onUpdate.Invoke();
+    }
     public void BreakTime()
     {
         if (IsTimeProccess)
@@ -105,7 +110,7 @@ public class GeneralTime : MonoBehaviour
         for (int i = 0; i < diff; i++)
         {
             globalTime.TotalSeconds += 1;
-            
+
             UpdateActions();
         }
 
@@ -143,7 +148,9 @@ public class GeneralTime : MonoBehaviour
 
     private void UpdateActions()
     {
-        onSecond?.Invoke();
+        onUpdate.Invoke();
+
+        onSecond.Invoke();
 
         if (globalTime.TotalSeconds % 60 == 0)
         {

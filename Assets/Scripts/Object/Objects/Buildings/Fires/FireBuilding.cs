@@ -27,12 +27,34 @@ public class FireBuilding : BuildingObject
 
     [SerializeField] private WeatherZone zone;
 
+
+    private WindowIgnition windowIgnition;
+    private WindowIgnition WindowIgnition
+    {
+        get
+        {
+            if(windowIgnition == null)
+            {
+                windowIgnition = GeneralAvailability.PlayerUI.windowsUI.ignitionWindow;
+            }
+            return windowIgnition;
+        }
+    }
+
+    private RequirementsIgnition requirementsValues;
+
+
     private string ToolTip => currentTime.ToStringSimplification(true) + " " + System.Math.Round(currentTemperature, 1) + SymbolCollector.CELSIUS;
+
+    private float successChance;
+
+    private float holdTime = 1f;
 
     private float currentTemperature;
     public float CurrentTemperature => currentTemperature;
-
     private float targetTemperature;
+
+    private Times kindleTime;
 
     private Times fireStart;
     private Times fireDuration;
@@ -43,31 +65,35 @@ public class FireBuilding : BuildingObject
     protected bool isEnable = false;
     protected float randomValue;
 
+
+    private Coroutine holdIgnitionCoroutine = null;
+    public bool IsHoldIgnitionProccess => holdIgnitionCoroutine != null;
+
+
     protected override void Awake()
     {
         base.Awake();
+
         if (isEnableOnAwake)
         {
             EnableParticles();
         }
     }
 
-    private void Update()
-    {
-        //if (isEnable)
-        //{
-        //    float value = Mathf.Lerp(minIntensity, maxIntensity, Mathf.PerlinNoise(randomValue, Time.time));
-        //    bonfireLight.intensity = value;
-        //    warmRadius = value;
-        //}
-        if (isEnableOnAwake)
-        {
-            //UpdateItems();
-            //UpdateEnvironment();
-        }
-
-        Debug.LogError(collidersIntersects.Count);
-    }
+    //private void Update()
+    //{
+    //    //if (isEnable)
+    //    //{
+    //    //    float value = Mathf.Lerp(minIntensity, maxIntensity, Mathf.PerlinNoise(randomValue, Time.time));
+    //    //    bonfireLight.intensity = value;
+    //    //    warmRadius = value;
+    //    //}
+    //    if (isEnableOnAwake)
+    //    {
+    //        //UpdateItems();
+    //        //UpdateEnvironment();
+    //    }
+    ////}
 
     public bool AddItem(Item item)
     {
@@ -121,6 +147,8 @@ public class FireBuilding : BuildingObject
     }
     public void FireDecay()
     {
+        isEnable = false;
+
         SetTemperature(0);
         SetFireIntensity(0);
     }
@@ -208,20 +236,195 @@ public class FireBuilding : BuildingObject
     protected virtual void View()
     {
         if (isEnable)
+        {
             InteractionButton.pointer.AddPressListener(OpenCookingWindow);
+        }
         else
+        {
             InteractionButton.pointer.AddPressListener(OpenIgnitionWindow);
+        }
     }
+
 
     protected void OpenIgnitionWindow()
     {
-        GeneralAvailability.PlayerUI.OpenIgnition(this);
+        requirementsValues = new RequirementsIgnition(GeneralAvailability.PlayerInventory, CheckRequirements);
+
+        CheckRequirements();
+
+        WindowIgnition.Setup(requirementsValues);
+
+        WindowIgnition.onStart = StartIgnition;
+
+        GeneralAvailability.PlayerUI.OpenIgnition();
     }
     private void OpenCookingWindow()
     {
         GeneralAvailability.PlayerUI.OpenFireMenu(this);
     }
     #endregion
+
+    private bool isCanIgnition = false;
+
+    private void StartIgnition()
+    {
+        if (isCanIgnition)
+        {
+            WindowIgnition.HideWindow();
+            if (!IsHoldIgnitionProccess)
+            {
+                GeneralAvailability.TargetPoint.ShowHightBar();
+                holdIgnitionCoroutine = StartCoroutine(Ignition());
+            }
+        }
+        else
+        {
+            Debug.LogError("ERROR", gameObject);
+        }
+    }
+    private IEnumerator Ignition()
+    {
+
+        GeneralTime.Instance.IsStopped = true;
+
+        Times global = GeneralTime.Instance.globalTime;
+
+        int aTime = global.TotalSeconds;
+        global += kindleTime;
+        int bTime = global.TotalSeconds;
+        int secs = 0;
+
+        float currentTime = Time.deltaTime;
+
+        LightFire(targetTemperature);
+
+        float breakTime = -1;
+
+        float chance = Random.Range(0, 100);
+        Debug.LogError(chance + " - " + successChance);
+        if (chance <= successChance)
+        {
+
+        }
+        else
+        {
+            breakTime = Random.Range(0.2f, 0.8f);
+        }
+
+
+        while (currentTime < holdTime)
+        {
+            float progress = currentTime / holdTime;
+
+            secs = (int)Mathf.Lerp(aTime, bTime, progress);
+            GeneralTime.Instance.ChangeTimeOn(secs);
+
+            GeneralAvailability.TargetPoint.SetBarHightValue(progress, "%");
+
+            UpdateLightFire(progress);
+
+            currentTime += Time.deltaTime;
+
+            if (breakTime != -1)
+            {
+                if (progress >= breakTime)
+                {
+                    BreakHold();
+                }
+            }
+
+            yield return null;
+        }
+
+        StartFire(fireDuration);
+
+        StopHold();
+
+        requirementsValues.Exchange();
+    }
+    public void BreakHold()
+    {
+        StopHold();
+
+        FireDecay();
+
+        requirementsValues.PartlyExchange();
+    }
+    public void StopHold()
+    {
+        if (IsHoldIgnitionProccess)
+        {
+            StopCoroutine(holdIgnitionCoroutine);
+            holdIgnitionCoroutine = null;
+
+            GeneralTime.Instance.IsStopped = false;
+
+            GeneralAvailability.TargetPoint.HideHightBar();
+
+            WindowIgnition.Back();
+        }
+    }
+
+    private void CheckRequirements()
+    {
+        FireStarterSD starter = null;
+        FireTinderSD tinder = null;
+        FireFuelSD fuel = null;
+        FireAccelerantSD accelerant = null;
+
+        #region Checks
+        Item starterItem = requirementsValues.starters.CurrentItem;
+        if (starterItem != null)
+        {
+            starter = starterItem.itemData.scriptableData as FireStarterSD;
+        }
+        Item tinderItem = requirementsValues.tinders.CurrentItem;
+        if (tinderItem != null)
+        {
+            tinder = tinderItem.itemData.scriptableData as FireTinderSD;
+        }
+        Item fuelItem = requirementsValues.fuels.CurrentItem;
+        if (fuelItem != null)
+        {
+            fuel = fuelItem.itemData.scriptableData as FireFuelSD;
+        }
+        Item accelerantItem = requirementsValues.accelerants.CurrentItem;
+        if (accelerantItem != null)
+        {
+            accelerant = accelerantItem.itemData.scriptableData as FireAccelerantSD;
+        }
+        #endregion
+
+        float baseChance = GeneralAvailability.Player.Status.baseChanceIgnition;
+
+        if (starter == null)
+        {
+            successChance = 0;
+        }
+        else
+        {
+            successChance = baseChance + starter.chance;
+            if (tinder != null) successChance += tinder.chance;
+            if (fuel != null) { successChance += fuel.chance; fireDuration = fuel.addFireTime; targetTemperature = fuel.addTemperature; }
+            if (accelerant != null) successChance += accelerant.chance;
+            successChance = Mathf.Clamp(successChance, 0, 100);
+
+            kindleTime = starter.kindleTime;
+
+            if (accelerant != null)
+            {
+                holdTime = accelerant.holdTime;
+            }
+            else
+            {
+                holdTime = starter.holdTime;
+            }
+        }
+
+        WindowIgnition.UpdateUI(baseChance, successChance, starter == null ? SymbolCollector.DASH.ToString() : starter.kindleTime.ToStringSimplification(), fireDuration.ToStringSimplification());
+
+        isCanIgnition = starter != null && tinder != null && fuel != null;
+    }
 
     public void EnableParticles()
     {
@@ -253,3 +456,4 @@ public class FireBuilding : BuildingObject
             EnableParticles();
     }
 }
+//Проверить на розжиг на нескольких айтемов

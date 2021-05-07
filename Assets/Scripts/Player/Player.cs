@@ -3,6 +3,7 @@
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 /// <summary>
 /// Need optimaze
@@ -42,8 +43,6 @@ public class Player : MonoBehaviour
 	public PlayerUI UI => ui;
 	#endregion
 
-	public float radius;
-
 	public ItemInspector itemInspector;//make it
 
 	[Space]
@@ -51,6 +50,10 @@ public class Player : MonoBehaviour
 
 	private bool isMoveLocked = false;
 	private bool isLookLocked = false;
+	private bool isBrainPaussed = false;
+
+	private Coroutine brainCoroutine;
+	public bool IsBrainProccess => brainCoroutine != null;
 
 	private void Awake()
 	{
@@ -63,51 +66,83 @@ public class Player : MonoBehaviour
 		Build.Init(this);
 
 		CheckCursor();
+
+		StartBrain();
 	}
 
-	private void Update()
-	{
-		if (GeneralSettings.IsPlatformMobile)
-		{
-			Debug.LogError("Mobile");
-			if (isMoveLocked == false)
-			{
-				Controller.UpdateMobileMovement();
-			}
-            if (isLookLocked == false)
-            {
-				Controller.UpdateMobileLook();
-			}
+    private void StartBrain()
+    {
+        if (!IsBrainProccess)
+        {
+			brainCoroutine = StartCoroutine(Brain());
 		}
-		else if (GeneralSettings.IsPlatformPC)
-		{
-			Debug.LogError("PC");
-			if (isMoveLocked == false)
+    }
+	private IEnumerator Brain()
+    {
+        while (true)
+        {
+			while (isBrainPaussed)
 			{
-				Controller.UpdatePCMovement();
+				yield return null;
 			}
-            if (isLookLocked == false)
-            {
-				Controller.UpdatePCLook();
-			}
-		}
-	}
 
+			if (GeneralSettings.IsPlatformMobile)
+			{
+				Debug.LogError("Mobile");
+				if (isMoveLocked == false)
+				{
+					Controller.UpdateMobileMovement();
+				}
+				if (isLookLocked == false)
+				{
+					Controller.UpdateMobileLook();
+				}
+			}
+			else if (GeneralSettings.IsPlatformPC)
+			{
+				Debug.LogError("PC");
+				if (isMoveLocked == false)
+				{
+					Controller.UpdatePCMovement();
+				}
+				if (isLookLocked == false)
+				{
+					Controller.UpdatePCLook();
+				}
+			}
+
+			yield return null;
+		}
+
+		StopBrain();
+	}
+	private void PauseBrain()
+    {
+		isBrainPaussed = true;
+
+		Controller.Enable(false);
+	}
+	private void ResumeBrain()
+    {
+		isBrainPaussed = false;
+
+		Controller.Enable(true);
+	}
+	private void StopBrain()
+    {
+        if (IsBrainProccess)
+        {
+			StopCoroutine(brainCoroutine);
+			brainCoroutine = null;
+        }
+    }
 
 	public void ChangePosition(Vector3 position, Quaternion rotation)
     {
-		StartCoroutine(SetPosition(position, rotation));
-	}
-
-	private IEnumerator SetPosition(Vector3 position, Quaternion rotation)
-    {
-		Lock();
-
+		PauseBrain();
 		transform.position = position;
 		transform.rotation = rotation;
-		yield return null;
-		
-		UnLock();
+		ResumeBrain();
 	}
 
 	#region Lock

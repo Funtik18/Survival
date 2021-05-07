@@ -24,11 +24,6 @@ public class PlayerController : MonoBehaviour
     [Space]
     [SerializeField] private float gravity = -13.0f;
 
-    [Title("Stats")]
-    [SerializeField] private float staminaSpeedSpending = 10f;
-    [SerializeField] private float staminaSpeedStandRecovering = 3f;
-    [SerializeField] private float staminaSpeedWalkingRecovering = 1f;
-
     [Title("Speed")]
     [SerializeField] private AnimationCurve accelerationCurve;
     [SerializeField] private float maxRunSpeed = 5.5f;
@@ -75,8 +70,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    private StatStamina stamina;
-    private PlayerStates states;
+    private PlayerStatus status;
 
     private bool isSpeedUpBlocked = false;
     private bool isSpeedUp = false;
@@ -99,10 +93,16 @@ public class PlayerController : MonoBehaviour
 
     public void Init(Player player)
 	{
-        this.states = player.Status.states;
-        this.stamina = player.Status.stats.Stamina;
+        this.status = player.Status;
         currentSpeed = maxWalkSpeed;
     }
+
+    public void Enable(bool trigger)
+    {
+        characterController.enabled = trigger;
+    }
+
+
     public void UpdatePCLook()
     {
         currentSensitivity = mouseSensitivity;
@@ -137,11 +137,19 @@ public class PlayerController : MonoBehaviour
             targetMoveDirection.Normalize();
             currentDirection = Vector2.SmoothDamp(currentDirection, targetMoveDirection, ref currentDirVelocity, moveSmoothTime);
 
-
             if (Input.GetKeyDown(KeyCode.LeftShift))
                 SpeedUp();
             else if (Input.GetKeyUp(KeyCode.LeftShift))
                 SpeedDown();
+
+            if (isSpeedUp)
+            {
+                if (currentSpeed != maxRunSpeed)
+                {
+                    speedTimePosition += Time.deltaTime;
+                    currentSpeed = Mathf.Lerp(maxWalkSpeed, maxRunSpeed, accelerationCurve.Evaluate(speedTimePosition));
+                }
+            }
         }
 
 
@@ -181,7 +189,7 @@ public class PlayerController : MonoBehaviour
 
     public void SpeedUp()
     {
-        if (!isSpeedUpBlocked)
+        if (status.IsCanRunning)
         {
             isSpeedUp = true;
         }
@@ -228,27 +236,21 @@ public class PlayerController : MonoBehaviour
         {
             if (isSpeedUp)
             {
-                states.CurrentState = PlayerState.Sprinting;
-                stamina.CurrentValue -= staminaSpeedSpending * Time.deltaTime;
+                status.states.CurrentState = PlayerState.Sprinting;
+                
             }
             else
             {
-                states.CurrentState = PlayerState.Walking;
-                if(!stamina.IsFull)
-                    stamina.CurrentValue += staminaSpeedWalkingRecovering * Time.deltaTime;
+                status.states.CurrentState = PlayerState.Walking;
             }
         }
         else
         {
-            states.CurrentState = PlayerState.Standing;
-            if(!stamina.IsFull)
-                stamina.CurrentValue += staminaSpeedStandRecovering * Time.deltaTime;
+            status.states.CurrentState = PlayerState.Standing;
         }
-        isSpeedUpBlocked = stamina.IsEmpty;
 
-        if(isSpeedUp && isSpeedUpBlocked)
+        if (isSpeedUp && !status.IsCanRunning)
             SpeedDown();
-
 
         Vector3 velocity = (OwnerTransform.forward * currentDirection.y + OwnerTransform.right * currentDirection.x) * currentSpeed + Vector3.up * velocityY;
 

@@ -15,6 +15,9 @@ public class PlayerStatus
 	public UnityAction<float> onWindFeelsChanged;
 	public UnityAction<float> onBonusesFeelsChanged;
 
+	public bool IsCanRunning => !stats.Stamina.IsEmpty;
+
+
 	//если > 0 получаем тепло
 	//если <= 0 теряет тепло
 	[ShowInInspector]
@@ -58,7 +61,6 @@ public class PlayerStatus
 		}
 	}
 
-
 	[Space]
 	[Min(0)]
 	[SerializeField] private float temperatureChevrone0 = -5f;
@@ -68,17 +70,24 @@ public class PlayerStatus
 	[SerializeField] private float temperatureChevrone2 = -25f;
 	[Space]
 
-
 	[Range(0, 100f)]
 	[Tooltip("Базовый шанс для разведения огня.")] 
 	public float baseChanceIgnition = 40f;
 
-	[Tooltip("Максимальное колличество времени для отдыха.")]
-	public Times maxResting;
-	[Tooltip("Максимальное колличество секунд в реальном времения пройдёт на вес отдых")]
-	public float maxWaitResting;
+	[Tooltip("Максимальное колличество времени для пропуска времени.")]
+	public Times maxPassTime;
+	[Tooltip("Максимальное колличество секунд в реальном времения пройдёт на весь пропуск времени.")]
+	public float maxWaitPass;
 
+	[Tooltip("Максимальное колличество времени для сна.")]
+	public Times maxSleepTime;
+	[Tooltip("Максимальное колличество секунд в реальном времения пройдёт на весь отдых.")]
+	public float maxWaitSleeping;
 
+	[Space]
+	[SerializeField] private float staminaSpending = 10f;
+	[SerializeField] private float staminaRecovering = 1f;
+	
 	[Space]
 	[SerializeField] private PlayerData data;
 	public PlayerStats stats;
@@ -94,52 +103,65 @@ public class PlayerStatus
 
 		opportunities.Setup(player);
 
-		GeneralTime.Instance.onSecond += Updatestats;
+		GeneralTime.Instance.onSecond += UpdateStatsByTime;
+		GeneralTime.Instance.onUpdate += UpdateStatsByFrame;
 		WeatherController.Instance.onWeatherChanged += WeatherChanged;
 	}
 
 	//Оптимизировать формулы
 	#region Stats
-	private UnityAction onStats;
+	private UnityAction onStatsByTime;
+	private UnityAction onStatsByFrame;
 	private void SwapStateChanged(PlayerState state)
 	{
-		onStats = null;
+		onStatsByTime = null;
+		onStatsByFrame = null;
 
 		switch (state)
 		{
 			case PlayerState.Sleeping:
 			{
-				onStats += SleepingFormule;
+				onStatsByTime += SleepingFormule;
+				onStatsByFrame += SleepingFormuleByFrame;
 			}
 			break;
 			case PlayerState.Resting:
 			{
-				onStats += RestingFormule;
+				onStatsByTime += RestingFormule;
+				onStatsByFrame += RestingFormuleByFrame;
 			}
 			break;
 			case PlayerState.Standing:
 			{
-				onStats += StandingFormule;
+				onStatsByTime += StandingFormule;
+				onStatsByFrame += StandingFormuleByFrame;
 			}
 			break;
 			case PlayerState.Walking:
 			{
-				onStats += WalkingFormule;
+				onStatsByTime += WalkingFormule;
+				onStatsByFrame += WalkingFormuleByFrame;
 			}
 			break;
 			case PlayerState.Sprinting:
 			{
-				onStats += SprintingFormule;
+				onStatsByTime += SprintingFormule;
+				onStatsByFrame += SprintingFormuleByFrame;
 			}
 			break;
 		}
 	}
-	private void Updatestats()
+	private void UpdateStatsByTime()
 	{
-		onStats?.Invoke();
+		onStatsByTime.Invoke();
 
 		ConditionFormule();
 	}
+	private void UpdateStatsByFrame()
+    {
+		onStatsByFrame.Invoke();
+	}
+
 
 	private void ConditionFormule()
 	{
@@ -216,7 +238,6 @@ public class PlayerStatus
 	{
 		stats.Fatigue.CurrentValue -= stats.Fatigue.Value / (7f * 3600f);//100% / 7h
 
-
 		stats.Hungred.CurrentValue -= 200f / 3600f;//200 cal/h
 
 		AwakeFormule();
@@ -229,6 +250,34 @@ public class PlayerStatus
 
 		AwakeFormule();
 	}
+
+
+	private void SleepingFormuleByFrame()
+	{
+		if (!stats.Stamina.IsFull)
+			stats.Stamina.CurrentValue += staminaRecovering * Time.deltaTime;
+	}
+	private void RestingFormuleByFrame()
+	{
+		if (!stats.Stamina.IsFull)
+			stats.Stamina.CurrentValue += staminaRecovering * Time.deltaTime;
+	}
+	private void StandingFormuleByFrame()
+    {
+		if (!stats.Stamina.IsFull)
+			stats.Stamina.CurrentValue += staminaRecovering * Time.deltaTime;
+	}
+	private void WalkingFormuleByFrame()
+    {
+		if (!stats.Stamina.IsFull)
+			stats.Stamina.CurrentValue += staminaRecovering * Time.deltaTime;
+	}
+	private void SprintingFormuleByFrame()
+    {
+		stats.Stamina.CurrentValue -= staminaSpending * Time.deltaTime;
+	}
+
+
 	#endregion
 
 	[Space]
@@ -238,7 +287,6 @@ public class PlayerStatus
 	public float windResistance = 0f;
 	[Range(0, 100f)]
 	public float clothing = 0f;
-
 
 	private List<WeatherZone> zones = new List<WeatherZone>();
 

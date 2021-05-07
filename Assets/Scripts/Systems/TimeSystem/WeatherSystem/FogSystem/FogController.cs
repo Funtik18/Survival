@@ -97,6 +97,8 @@ public class FogController : MonoBehaviour
     private float min = 0;
     private float max = 0.2f;
 
+    private float minBias = 0.7f;
+
     public void SetFog(FogPressetSD data)
     {
         if (data)
@@ -174,5 +176,13 @@ public class FogController : MonoBehaviour
     private void CheckFog()
     {
         Fog = fog;
+    }
+
+    [OnValueChanged("Ce")]
+    [Range(0, 1)]
+    public float lodBias = 1;
+    private void Ce()
+    {
+        QualitySettings.lodBias = lodBias;
     }
 }
