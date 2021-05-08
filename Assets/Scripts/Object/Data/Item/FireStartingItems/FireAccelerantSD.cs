@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Inventory/Items/Fire/Accelerant", fileName = "Accelerant")]
+[CreateAssetMenu(menuName = "Game/Inventory/Items/Fire/Accelerant", fileName = "Accelerant")]
 public class FireAccelerantSD : FireSD 
 {
     [Tooltip("Сколько секунд розжигать.")]

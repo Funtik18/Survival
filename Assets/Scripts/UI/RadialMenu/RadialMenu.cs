@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class RadialMenu : MonoBehaviour
+public class RadialMenu : WindowUI
 {
     private static RadialMenu instance;
     public static RadialMenu Instance

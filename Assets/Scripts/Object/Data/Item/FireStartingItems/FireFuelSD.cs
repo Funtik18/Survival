@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Inventory/Items/Fire/Fuel", fileName = "Fuel")]
+[CreateAssetMenu(menuName = "Game/Inventory/Items/Fire/Fuel", fileName = "Fuel")]
 public class FireFuelSD : FireSD 
 {
     [Range(0, 21f)]

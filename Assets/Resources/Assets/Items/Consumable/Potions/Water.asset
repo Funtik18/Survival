@@ -14,15 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectName: Water
   description: 
-  itemSprite: {fileID: 21300000, guid: 6cf53ed439ca5e147b1d6b7f92c2aea6, type: 3}
+  itemSprite: {fileID: 21300000, guid: 31b6878837e3b374f9727bf148cb1335, type: 3}
   model: {fileID: 8521385709362072629, guid: 23d49faddd78875469d579c55de421c3, type: 3}
   orientation:
     position: {x: -0.0000031739473, y: -0.0000070929527, z: -0.0000072717667}
     rotation: {x: -0.48692697, y: -0.50916934, z: -0.64277524, w: 0.3008133}
   weight: 2.15
-  isCanned: 0
-  isBreakable: 0
   stackSize: 1
-  isCanBeCooked: 1
+  isBreakable: 0
+  decayOverTime: 0
+  decayInside: 0
+  decayOutsie: 0
+  isCookable: 0
   calories: 0
   hydration: 100

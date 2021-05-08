@@ -1,4 +1,4 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Inventory/Items/Useless", fileName = "Item")]
+[CreateAssetMenu(menuName = "Game/Inventory/Items/Useless", fileName = "Item")]
 public class UselessItemSD : ItemSD { }

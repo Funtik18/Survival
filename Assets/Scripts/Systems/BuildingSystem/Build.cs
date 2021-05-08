@@ -11,7 +11,6 @@ public class Build
 	public UnityAction<BuildingObject> onStartBuild;
 	public UnityAction onEndBuild;
 
-
 	[SerializeField] private Material acceptMaterial;
 	[SerializeField] private Material rejectMaterial;
 
@@ -36,6 +35,8 @@ public class Build
 
 	private Vector3 SpherePoint => playerCamera.Transform.position + (playerCamera.Transform.forward * rayDistance);
 
+	private ObjectPool pool;
+
 	#region Cash
 	private List<Collider> collidersIntersects;
 
@@ -51,6 +52,8 @@ public class Build
 		this.player = player;
 		this.playerCamera = player.Camera;
 		collidersIntersects = playerCamera.collidersIntersects;
+
+		pool = ObjectPool.Instance;
 	}
 
 	public void BuildBuilding(BuildingObject building)
@@ -59,9 +62,11 @@ public class Build
 
 		playerCamera.LockVision();
 
-		currentBuilding = CreateBuilding(building);
+		currentBuilding = pool.GetObject(building.gameObject).GetComponent<BuildingObject>();
 
 		onStartBuild?.Invoke(currentBuilding);
+
+		GeneralAvailability.PlayerUI.CloseRadialMenu();
 
 		StartBuild();
 	}
@@ -76,12 +81,6 @@ public class Build
 
 			currentBuilding.Place();
 		}
-	}
-
-	private BuildingObject CreateBuilding(BuildingObject building)
-    {
-		BuildingObject buildingCreated = GameObject.Instantiate(building);
-		return buildingCreated;
 	}
 	private void Dispose()
     {
@@ -132,6 +131,8 @@ public class Build
 
 			playerCamera.UnLockVision();
 
+			GeneralAvailability.PlayerUI.OpenRadialMenu();
+
 			onEndBuild?.Invoke();
 		}
 	}
@@ -143,7 +144,6 @@ public class Build
 		Dispose();
 	}
 	#endregion
-
 
 	private void Draw(bool trigger)
     {
@@ -182,6 +182,7 @@ public class Build
 			return true;
 		return false;
 	}
+
 
     private void OnDrawGizmos()
     {

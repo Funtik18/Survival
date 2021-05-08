@@ -117,6 +117,15 @@ public class PlayerUI : MonoBehaviour
 		GeneralAvailability.Player.Lock();
 	}
 
+	public void OpenRadialMenu()
+    {
+		controlUI.radialMenu.ShowWindow();
+    }
+	public void CloseRadialMenu()
+    {
+		controlUI.radialMenu.HideWindow();
+	}
+
 	public void OpenResting()
     {
 		CloseControlUI();

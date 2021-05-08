@@ -183,6 +183,6 @@ public class FogController : MonoBehaviour
     public float lodBias = 1;
     private void Ce()
     {
-        QualitySettings.lodBias = lodBias;
+        //QualitySettings.lodBias = lodBias;
     }
 }

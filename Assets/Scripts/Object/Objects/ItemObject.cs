@@ -14,14 +14,14 @@ public class ItemObject : WorldObject
 		SetData(itemData);
 	}
 
-    private void OnCollisionEnter(Collision collision)
-    {
-		Debug.LogError("HERE");
-	}
-	private void OnTriggerEnter(Collider other)
-    {
-		Debug.LogError("HERE");
-    }
+ //   private void OnCollisionEnter(Collision collision)
+ //   {
+	//	Debug.LogError("HERE");
+	//}
+	//private void OnTriggerEnter(Collider other)
+ //   {
+	//	Debug.LogError("HERE");
+ //   }
 
     public void SetData(ItemDataWrapper data)
     {

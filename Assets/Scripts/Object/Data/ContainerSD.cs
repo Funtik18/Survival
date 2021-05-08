@@ -2,7 +2,7 @@
 
 using Sirenix.OdinInspector;
 
-[CreateAssetMenu(fileName = "Container", menuName = "Environment/Container")]
+[CreateAssetMenu(menuName = "Game/Container", fileName = "Data")]
 public class ContainerSD : ObjectSD
 {
     [SuffixLabel("s", Overlay = true)]

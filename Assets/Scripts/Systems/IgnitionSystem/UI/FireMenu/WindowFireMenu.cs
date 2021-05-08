@@ -13,6 +13,9 @@ public class WindowFireMenu : WindowUI
     [Space]
     [SerializeField] private FireMenuPrimary menuPrimary;
     [SerializeField] private FireMenu fireMenu;
+    [Space]
+    [SerializeField] private ItemDataWrapper snowItem;
+
 
     private Pointer BackPointer => pointerBack.pointer;
 
@@ -43,7 +46,7 @@ public class WindowFireMenu : WindowUI
 
         fuelItems = inventory.GetAllBySD<FireFuelSD>();
         cookingItems = inventory.GetAllFood(true);
-        boilingItems = inventory.GetAllBySD<ConsumableItemSD>();
+        boilingItems = inventory.GetAllBySD<ToolContainerItemSD>();
 
         if(fuelItems.Count > 0)
             menuPrimary.buttonFuel.Accept();
@@ -55,10 +58,16 @@ public class WindowFireMenu : WindowUI
         else
             menuPrimary.buttonCooking.Reject();
 
+
         if (boilingItems.Count > 0)
+        {
             menuPrimary.buttonBoliling.Accept();
+        }
         else
+        {
             menuPrimary.buttonBoliling.Reject();
+        }
+
 
         BackOnPrimaryMenu();
         ShowWindow();
@@ -77,12 +86,27 @@ public class WindowFireMenu : WindowUI
 
     private void UseItem()
     {
-        if (fire.AddItem(item))
+        if(item.itemData.scriptableData is ToolItemSD)
         {
-            inventory.RemoveItem(item, 1);
-        }
 
-        Back();
+            fireMenu.Setup(boilingItems);
+        }
+        else
+        {
+            if (item.itemData.scriptableData is SnowItemSD)
+            {
+                Debug.LogError("boil");
+            }
+            else
+            {
+                if (fire.AddItem(item))
+                {
+                    inventory.RemoveItem(item, 1);
+                }
+            }
+
+            Back();
+        }
     }
 
     private void Fuel()
@@ -141,6 +165,8 @@ public class WindowFireMenu : WindowUI
     private void Back()
     {
         onBack?.Invoke();
+
+        item = null;
 
         fireMenu.HideWindow();
         fireMenu.Clear();

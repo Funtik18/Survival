@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76011c4fccd8b40488f50b102233f2ce, type: 3}
   m_Name: WoodenContainer
   m_EditorClassIdentifier: 
-  objectName: WoodenContainer
+  objectName: Wooden Container
   description: 
   time: 5

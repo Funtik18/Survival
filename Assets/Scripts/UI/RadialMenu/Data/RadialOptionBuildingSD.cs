@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Sirenix.OdinInspector;
 
-[CreateAssetMenu(fileName = "RadialOption", menuName = "RadialMenu/BuildingOption")]
+[CreateAssetMenu(fileName = "RadialOption", menuName = "Game/RadialMenu/BuildingOption")]
 public class RadialOptionBuildingSD : RadialOptionSD
 {
     [AssetList]

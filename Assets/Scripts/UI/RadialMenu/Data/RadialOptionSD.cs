@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 using Sirenix.OdinInspector;
 
-[CreateAssetMenu(fileName = "RadialOption", menuName = "RadialMenu/Option")]
+[CreateAssetMenu(fileName = "RadialOption", menuName = "Game/RadialMenu/Option")]
 public class RadialOptionSD : ScriptableObject
 {
     [PreviewField]

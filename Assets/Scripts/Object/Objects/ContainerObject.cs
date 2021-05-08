@@ -34,7 +34,7 @@ public class ContainerObject : WorldObject
 
         InteractionButton.OpenButton();
 
-        GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.name).ShowToolTip();
+        UpdateToolTip();
     }
     public override void EndObserve()
     {
@@ -97,6 +97,8 @@ public class ContainerObject : WorldObject
         InteractionButton.pointer.RemoveAllListeners();
         isInspected = true;
 
+        UpdateToolTip();
+
         StopHold();
     }
     public void StopHold()
@@ -113,5 +115,15 @@ public class ContainerObject : WorldObject
                 Interact();
             }
         }
+    }
+
+
+
+    private void UpdateToolTip()
+    {
+        if (isInspected && containerInventory.IsEmpty)
+            GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.objectName + " - Empty").ShowToolTip();
+        else
+            GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.objectName).ShowToolTip();
     }
 }
