@@ -15,15 +15,17 @@ MonoBehaviour:
   objectName: Recycled Can(Large)
   description: 
   itemSprite: {fileID: 21300000, guid: 0785e4ca67724184886c809a030f1079, type: 3}
-  model: {fileID: 9154447008796987750, guid: 7ba36c8a636c94d4c99f6867b407590e, type: 3}
+  model: {fileID: 2777267408717158766, guid: 381caefacb8cbd444aed74b3095267e8, type: 3}
   orientation:
     position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
+    rotation: {x: -0.88199365, y: 0.29861984, z: -0.023613485, w: 0.36380738}
+  isInfinityWeight: 0
   weight: 0.15
+  isInfinityStack: 0
   stackSize: 1
   isBreakable: 1
   decayOverTime: 0
   decayInside: 0
   decayOutsie: 0
   decayPerAction: 0
-  waterVolume: 0
+  volume: 0.5

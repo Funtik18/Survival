@@ -48,7 +48,7 @@ public class ObjectPool : MonoBehaviour
             newObjectQueue.Enqueue(gameObject);
             objectPool.Add(gameObject.name, newObjectQueue);
         }
-
+        gameObject.transform.SetParent(null);
         gameObject.SetActive(false);
     }
 

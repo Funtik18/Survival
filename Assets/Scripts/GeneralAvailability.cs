@@ -32,8 +32,8 @@ public class GeneralAvailability : MonoBehaviour
     }
 
 
-    private static Inventory playerInventory;
-    public static Inventory PlayerInventory
+    private static PlayerInventory playerInventory;
+    public static PlayerInventory PlayerInventory
     {
         get
         {
@@ -68,18 +68,6 @@ public class GeneralAvailability : MonoBehaviour
             if (inspector == null)
                 inspector = Player.itemInspector;
             return inspector;
-        }
-    }
-
-
-    private static WindowItemInspector inspectorWindow;
-    public static WindowItemInspector InspectorWindow
-    {
-        get
-        {
-            if (inspectorWindow == null)
-                inspectorWindow = Player.UI.windowsUI.itemInspectorWindow;
-            return inspectorWindow;
         }
     }
 

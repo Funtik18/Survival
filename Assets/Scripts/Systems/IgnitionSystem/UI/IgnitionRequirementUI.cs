@@ -121,7 +121,7 @@ public class IgnitionRequirementUI : WindowUI
         {
             ItemDataWrapper itemData = items[CurrentIndex].itemData;
 
-            indicatorText.text = "1 of " + items[CurrentIndex].itemData.StackSize;//fix it;
+            indicatorText.text = "1 of " + items[CurrentIndex].itemData.CurrentStackSize;//fix it;
 
             itemHelperText.text = itemText.text;
             itemText.text = itemData.scriptableData.objectName;
@@ -202,10 +202,7 @@ public class IgnitionRequirementUI : WindowUI
     {
         for (int i = 0; i < indicators.Count; i++)
         {
-            if (CurrentIndex == i)
-                indicators[i].On();
-            else
-                indicators[i].Off();
+            indicators[i].IsOn = CurrentIndex == i;
         }
     }
     #endregion

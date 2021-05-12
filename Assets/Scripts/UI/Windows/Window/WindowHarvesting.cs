@@ -75,7 +75,7 @@ public class WindowHarvesting : WindowUI
     }
     private IEnumerator Hold()
     {
-        GeneralTime.Instance.IsStopped = true;
+        GeneralTime.Instance.IsTimeStopped = true;
         Times global = GeneralTime.Instance.globalTime;
 
         int aTime = global.TotalSeconds;
@@ -99,7 +99,7 @@ public class WindowHarvesting : WindowUI
 
         Exchange();
 
-        GeneralTime.Instance.IsStopped = false;
+        GeneralTime.Instance.IsTimeStopped = false;
 
         onHarvestingCompletely?.Invoke();
 

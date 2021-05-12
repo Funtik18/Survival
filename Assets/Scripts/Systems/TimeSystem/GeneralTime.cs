@@ -42,7 +42,7 @@ public class GeneralTime : MonoBehaviour
 
     [SerializeField] private bool showTime = false;
 
-    public bool IsStopped { get; set; }
+    public bool IsTimeStopped { get; set; }
 
     private int frequenceTimeSeconds;
     private int frequenceCycleSeconds;
@@ -84,7 +84,7 @@ public class GeneralTime : MonoBehaviour
 
             UpdateActions();
             
-            while (IsStopped)
+            while (IsTimeStopped)
                 yield return null;
         }
 
@@ -122,6 +122,7 @@ public class GeneralTime : MonoBehaviour
         events.Add(unityEvent);
     }
 
+    #region Private
     private void UpdateTimeToSeconds()
     {
         globalTime.CheckTimeSeconds();
@@ -201,6 +202,7 @@ public class GeneralTime : MonoBehaviour
         //    }
         //}
     }
+    #endregion
 
     public override string ToString()
     {
@@ -298,6 +300,122 @@ public class GeneralTime : MonoBehaviour
         {
             ExecuteEveryTime,//выполнять всегда в это время
             ExecuteInTime,//выполнять пока не наступит это время
+        }
+    }
+}
+public static class SkipExtensionsTime
+{
+    private static GeneralTime instance;
+
+    private static UnityAction onCompletely;
+
+    private static Times skipTime;
+    private static bool isForGlobal = true;
+
+    private static bool showBar = false;
+    private static bool showBlock = false;
+    private static float waitSkipTimeReal = 10f;
+
+    private static Coroutine skipCoroutine = null;
+    public static bool IsSkipProccess(this GeneralTime generalTime) => skipCoroutine != null;
+
+    /// <summary>
+    /// globalTime + times = skip time
+    /// </summary>
+    /// <param name="times"></param>
+    public static GeneralTime SkipTimeOn(this GeneralTime generalTime, Times times, UnityAction completely = null, bool showbar = false, bool showblock = false)
+    {
+        instance = generalTime;
+
+        skipTime = times;
+        showBar = showbar;
+        showBlock = showblock;
+        isForGlobal = true;
+
+        onCompletely = completely;
+
+        return instance;
+    }
+
+    public static void StartSkip(this GeneralTime generalTime)
+    {
+        if (!IsSkipProccess(instance))
+        {
+            instance.IsTimeStopped = true;
+
+            int start = instance.globalTime.TotalSeconds;
+            int end;
+
+            if (isForGlobal)
+                end = start + skipTime.TotalSeconds;
+            else
+                end = skipTime.TotalSeconds;
+
+            skipCoroutine = instance.StartCoroutine(SkipTime(start, end));
+        }
+    }
+    private static IEnumerator SkipTime(int startTime, int endTime)
+    {
+        if (showBar)
+        {
+            GeneralAvailability.TargetPoint.SetBarHightValue(0, "%");
+            GeneralAvailability.TargetPoint.ShowHightBar();
+        }
+        if (showBlock)
+        {
+            GeneralAvailability.PlayerUI.controlUI.blockPanel.SetActive(true);
+        }
+
+        int secs = 0;
+
+        float currentTime = Time.deltaTime;
+
+        float waitTime = ((endTime - startTime) / 3600f) * waitSkipTimeReal;
+
+        while (currentTime < waitTime)
+        {
+            float progress = currentTime / waitTime;
+
+            secs = (int)Mathf.Lerp(startTime, endTime, progress);
+            instance.ChangeTimeOn(secs);
+
+            if (showBar)
+            {
+                GeneralAvailability.TargetPoint.SetBarHightValue(progress, "%");
+            }
+
+
+            currentTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+
+        onCompletely?.Invoke();
+
+        StopSkip();
+    }
+    public static void BreakSkipTime(this GeneralTime generalTime)
+    {
+        StopSkip();
+    }
+    private static void StopSkip()
+    {
+        if (IsSkipProccess(instance))
+        {
+            instance.StopCoroutine(skipCoroutine);
+            skipCoroutine = null;
+
+            if (showBar)
+            {
+                GeneralAvailability.TargetPoint.HideHightBar();
+            }
+            if (showBlock)
+            {
+                GeneralAvailability.PlayerUI.controlUI.blockPanel.SetActive(false);
+            }
+
+            instance.IsTimeStopped = false;
         }
     }
 }

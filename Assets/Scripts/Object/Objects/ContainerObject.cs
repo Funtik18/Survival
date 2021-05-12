@@ -47,7 +47,7 @@ public class ContainerObject : WorldObject
 
     private void OpenContainer()
     {
-        GeneralAvailability.BackpackWindow.secondaryContainer.SubscribeInventory(containerInventory);
+        GeneralAvailability.BackpackWindow.InventorySystem.SetSecondaryContainer(containerInventory);
         GeneralAvailability.BackpackWindow.ShowBackpackWithContainer();
     }
 

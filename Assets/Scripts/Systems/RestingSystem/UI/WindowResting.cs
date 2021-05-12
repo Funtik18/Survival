@@ -123,7 +123,7 @@ public class WindowResting : WindowUI
     {
         breakPanel.SetActive(true);
 
-        GeneralTime.Instance.IsStopped = true;
+        GeneralTime.Instance.IsTimeStopped = true;
 
         Times global = GeneralTime.Instance.globalTime;
 
@@ -164,7 +164,7 @@ public class WindowResting : WindowUI
             StopCoroutine(skipCoroutine);
             skipCoroutine = null;
 
-            GeneralTime.Instance.IsStopped = false;
+            GeneralTime.Instance.IsTimeStopped = false;
 
             status.states.CurrentState = PlayerState.Standing;
         }

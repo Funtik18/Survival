@@ -1,63 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2427678910341320570
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8851805584064451231}
-  - component: {fileID: 812788214851788910}
-  - component: {fileID: 3078091726616266898}
-  m_Layer: 9
-  m_Name: CookingSlot3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &8851805584064451231
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2427678910341320570}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.401, y: 0.132, z: -0.169}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7986179049098546547}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &812788214851788910
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2427678910341320570}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.1, z: 0.1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3078091726616266898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2427678910341320570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f9ab005763905e478a8630314fabafc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collider: {fileID: 812788214851788910}
 --- !u!1 &3783210638296170565
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5029327041991425004}
-  - component: {fileID: 5016209498041984568}
   - component: {fileID: 1114830657188898562}
   m_Layer: 9
   m_Name: CookingSlot0
@@ -75,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5029327041991425004
 Transform:
   m_ObjectHideFlags: 0
@@ -90,19 +31,6 @@ Transform:
   m_Father: {fileID: 7986179049098546547}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5016209498041984568
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3783210638296170565}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.1, z: 0.1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1114830657188898562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,65 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f9ab005763905e478a8630314fabafc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 5016209498041984568}
---- !u!1 &4650835206645405385
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5259819360570851093}
-  - component: {fileID: 4456665618414312904}
-  - component: {fileID: 5087780658498446250}
-  m_Layer: 9
-  m_Name: CookingSlot2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5259819360570851093
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4650835206645405385}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.464, y: 0.1, z: 0.25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7986179049098546547}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &4456665618414312904
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4650835206645405385}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.1, z: 0.1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5087780658498446250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4650835206645405385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f9ab005763905e478a8630314fabafc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collider: {fileID: 4456665618414312904}
 --- !u!1 &5840387841949523548
 GameObject:
   m_ObjectHideFlags: 0
@@ -19246,7 +19115,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8867725777406385225}
-  - component: {fileID: 6267776125876665260}
   - component: {fileID: 6979249400828764404}
   m_Layer: 9
   m_Name: CookingSlot1
@@ -19254,7 +19122,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8867725777406385225
 Transform:
   m_ObjectHideFlags: 0
@@ -19263,25 +19131,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7263026214419434088}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.135, y: 0.1, z: 0.473}
+  m_LocalPosition: {x: -0.481, y: 0.1, z: -0.038}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7986179049098546547}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6267776125876665260
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7263026214419434088}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.1, z: 0.1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6979249400828764404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19294,7 +19149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f9ab005763905e478a8630314fabafc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 6267776125876665260}
 --- !u!1 &7986179049098056019
 GameObject:
   m_ObjectHideFlags: 0
@@ -19333,8 +19187,6 @@ Transform:
   - {fileID: 1806939632186819624}
   - {fileID: 5029327041991425004}
   - {fileID: 8867725777406385225}
-  - {fileID: 5259819360570851093}
-  - {fileID: 8851805584064451231}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19396,8 +19248,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.244071, y: 0.28228986, z: 1.315939}
-  m_Center: {x: 0, y: 0.14084196, z: 0}
+  m_Size: {x: 1.244071, y: 0.052524593, z: 1.315939}
+  m_Center: {x: 0, y: 0.06626229, z: 0}
 --- !u!54 &6257519062031983793
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -19431,7 +19283,7 @@ MonoBehaviour:
   isPlacement: 0
   ignoreLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 66560
   renderers:
   - {fileID: 7986179049096122259}
   - {fileID: 5336138546279808905}
@@ -19441,9 +19293,7 @@ MonoBehaviour:
   slots:
   - {fileID: 1114830657188898562}
   - {fileID: 6979249400828764404}
-  - {fileID: 5087780658498446250}
-  - {fileID: 3078091726616266898}
-  maxTemperature: 80
+  maxFireTemperature: 80
   maxFireTime:
     days: 0
     hours: 12
@@ -19466,7 +19316,7 @@ GameObject:
   - component: {fileID: 1806939632186819624}
   - component: {fileID: 705229951127217698}
   - component: {fileID: 631160428551129343}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

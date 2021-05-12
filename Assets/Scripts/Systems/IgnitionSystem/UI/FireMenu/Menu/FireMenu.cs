@@ -9,6 +9,7 @@ public class FireMenu : WindowUI
 
     [SerializeField] private MenuChoose menu;
     [SerializeField] private TMPro.TextMeshProUGUI itemName;
+    [SerializeField] private TMPro.TextMeshProUGUI itemAdditional;
 
     private void Awake()
     {
@@ -28,6 +29,20 @@ public class FireMenu : WindowUI
     private void Choosen(Item item)
     {
         itemName.text = item.itemData.scriptableData.objectName;
+
+        if(item.itemData.scriptableData is ToolContainerItemSD containerItemSD)
+        {
+            itemAdditional.text = "Volume : " + containerItemSD.volume + " L";
+        }
+        else if(item.itemData.scriptableData is WaterItemSD waterItem)
+        {
+            itemAdditional.text = "Weight : " + item.itemData.CurrentWeight + " L";
+        }
+        else
+        {
+            itemAdditional.text = "";
+        }
+
         onUpdated?.Invoke(item);
     }
 }

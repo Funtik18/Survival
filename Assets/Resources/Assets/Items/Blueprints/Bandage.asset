@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eca7b946d615ed48bdd49a76445b40e, type: 3}
+  m_Name: Bandage
+  m_EditorClassIdentifier: 
+  itemYield:
+    scriptableData: {fileID: 11400000, guid: 97e7eae6aefa81b438fead6bf57e89f9, type: 2}
+    currentStackSize: 1
+    currentDurrability: 100
+    currentCalories: 0
+    currentWeight: 0
+    minimumWeight: 0
+  components:
+  - item: {fileID: 11400000, guid: 2e4c3feb81d1a9d49ba662c285e7acdd, type: 2}
+    count: 1
+  workPlace: 0
+  timeLimits: 0
+  requiredTime:
+    days: 0
+    hours: 0
+    minutes: 20
+    seconds: 0
+    totalSeconds: 1200
+  requiredTimeMax:
+    days: 0
+    hours: 0
+    minutes: 0
+    seconds: 0
+    totalSeconds: 0

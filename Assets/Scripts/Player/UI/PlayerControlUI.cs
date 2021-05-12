@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerControlUI : WindowUI
 {
 	[Title("Control")]
-	public TargetPoint targetPoint;
 	public Joystick joystickMove;
 	public FixedTouchField fieldLook;
 	public RadialMenu radialMenu;
@@ -13,6 +12,12 @@ public class PlayerControlUI : WindowUI
 	[Title("Buttons")]
 	public InteractionButton buttonInteraction;
 	public CustomPointer buttonSpeedUp;
+
+	[Title("Other")]
+	public TargetPoint targetPoint;
+	public GameObject blockPanel;
+	public GameObject breakPanel;
+
 
 	public void Setup(PlayerController playerController)
     {

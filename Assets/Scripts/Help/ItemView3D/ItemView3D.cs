@@ -26,13 +26,20 @@ public class ItemView3D : MonoBehaviour
 	{
 		DisposePlace();
 
-		ItemObject itemModel = Instantiate(model, modelPlace);
+		ItemObject itemModel = null;
 
-		itemModel.ColliderEnable(false);
+		if (model)
+        {
+			itemModel = Instantiate(model, modelPlace);
 
-		itemTransform = itemModel.transform;
+			itemModel.ColliderEnable(false);
 
-		itemTransform.localPosition = Vector3.zero;
+			itemTransform = itemModel.transform;
+
+			itemTransform.localPosition = Vector3.zero;
+		}
+
+		
 		return itemModel;
 	}
 
