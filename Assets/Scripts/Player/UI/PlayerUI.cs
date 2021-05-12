@@ -43,6 +43,12 @@ public class PlayerUI : MonoBehaviour
 		CloseConditionUI();
 		windowsUI.backpackWindow.ShowBackpackInspector();
 	}
+	public void OpenCrafting()
+    {
+		CloseControlUI();
+		CloseConditionUI();
+		windowsUI.backpackWindow.ShowBackpackCrafting();
+	}
 	public void CloseInventory()
 	{
 		windowsUI.backpackWindow.HideBackpack();

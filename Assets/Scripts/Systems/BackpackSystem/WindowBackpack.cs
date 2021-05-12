@@ -80,19 +80,7 @@ public class WindowBackpack : WindowUI
 		Inventory.onBlueprintsUpdated += craftingSystem.UpdateUI;
 	}
 
-
-	public void ShowWindowByIndex(int index)
-    {
-		currentIndex = index;
-		UpdateHeader();
-		OpenWindow(currentIndex);
-	}
-
-	public void OpenInventory()
-    {
-		ShowWindowByIndex(windowsOrder.FindIndex((x) => x == inventorySystem));
-		ShowWindow();
-	}
+	
 
 	public void ShowBackpackInspector()
     {
@@ -104,12 +92,34 @@ public class WindowBackpack : WindowUI
 		inventorySystem.OpenSecondaryContainer();
 		OpenInventory();
 	}
+	public void ShowBackpackCrafting()
+    {
+		OpenCrafting();
+	}
 	public void HideBackpack()
     {
 		inventorySystem.CloseWindow();
 		craftingSystem.CloseWindow();
 		HideWindow();
 	}
+
+	private void OpenInventory()
+	{
+		ShowWindowByIndex(windowsOrder.FindIndex((x) => x == inventorySystem));
+		ShowWindow();
+	}
+	private void OpenCrafting()
+	{
+		ShowWindowByIndex(windowsOrder.FindIndex((x) => x == craftingSystem));
+		ShowWindow();
+	}
+	private void ShowWindowByIndex(int index)
+	{
+		currentIndex = index;
+		UpdateHeader();
+		OpenWindow(currentIndex);
+	}
+
 
 	private void Left()
     {
