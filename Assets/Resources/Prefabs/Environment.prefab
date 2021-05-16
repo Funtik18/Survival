@@ -146,16 +146,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 470befef8a70ee04aa0e9640cf603a58, type: 2}
   - {fileID: 11400000, guid: d3a1849bbe359fb4abddbd0c7e36b67e, type: 2}
   - {fileID: 11400000, guid: 3d8bad5f102c13c4ba6c16828f3eee02, type: 2}
-  containerItems:
+  containerPosibleItems:
   - {fileID: 11400000, guid: 3c3f027af864f36418b7e8767860fcd1, type: 2}
   - {fileID: 11400000, guid: b4459d87d4ff9da429b95f7f319ee8d5, type: 2}
   - {fileID: 11400000, guid: c68a0070262fac74c99fa321dd7b402f, type: 2}
   - {fileID: 11400000, guid: bc7ca229311567b4aa0e3dcb33624130, type: 2}
   - {fileID: 11400000, guid: c8e0ded6803c21a47af46b163f153743, type: 2}
   - {fileID: 11400000, guid: f09381bc1579d9f498ec0956cf1c7d09, type: 2}
-  - {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
-  - {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
-  - {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
+  - {fileID: 11400000, guid: 3c3f027af864f36418b7e8767860fcd1, type: 2}
+  - {fileID: 11400000, guid: b4459d87d4ff9da429b95f7f319ee8d5, type: 2}
   - {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
 --- !u!114 &550366340647897853
 MonoBehaviour:
@@ -488,33 +487,11 @@ MonoBehaviour:
     - {fileID: 353971735}
     - {fileID: 1694931862}
     - {fileID: 2003058182}
-    randomPlayerData: 0
-    playerData:
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 0}
-      statusData:
-        statsData:
-          condition:
-            maxValue: 0
-            currentValue: 0
-          stamina:
-            maxValue: 0
-            currentValue: 0
-          warmth:
-            maxValue: 0
-            currentValue: 0
-          fatigue:
-            maxValue: 0
-            currentValue: 0
-          hunger:
-            maxValue: 0
-            currentValue: 0
-          thirst:
-            maxValue: 0
-            currentValue: 0
-        gender: 0
-      inventoryData:
-        items: []
+    randomPlayerData: 1
+    playerRandomData: {fileID: 11400000, guid: dca39bf00505c7045bc0c33351fb1e31, type: 2}
+    playerData: {fileID: 0}
+    randomInventory: 0
+    container: {fileID: 0}
 --- !u!1 &5974223110589789611
 GameObject:
   m_ObjectHideFlags: 0

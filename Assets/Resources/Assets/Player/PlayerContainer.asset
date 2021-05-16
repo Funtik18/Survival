@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c60e0584b6b17c4ca6627e2b1d08583, type: 3}
+  m_Name: PlayerContainer
+  m_EditorClassIdentifier: 
+  container:
+    staticItems:
+    - scriptableData: {fileID: 11400000, guid: 17e656c3d1536434d9999bfc47cc4941, type: 2}
+      currentStackSize: 1
+      currentDurrability: 100
+      currentCalories: 0
+      currentWeight: 0
+      minimumWeight: 0
+      maxStackSize: 3
+    - scriptableData: {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
+      currentStackSize: 1
+      currentDurrability: 100
+      currentCalories: 0
+      currentWeight: 0
+      minimumWeight: 0
+      maxStackSize: 45
+    - scriptableData: {fileID: 11400000, guid: fe3f6e012c3127b4cb3b18f174143b35, type: 2}
+      currentStackSize: 1
+      currentDurrability: 100
+      currentCalories: 0
+      currentWeight: 0.5
+      minimumWeight: 0
+      maxStackSize: 1
+    itemsCount: {x: 0, y: 0}
+    dinamicItems: []
+    useDiff: 0
+    posibleItems: []

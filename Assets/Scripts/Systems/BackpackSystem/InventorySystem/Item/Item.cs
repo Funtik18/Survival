@@ -95,7 +95,7 @@ public class ItemDataWrapper
 	public bool IsFully => CurrentStackSize == scriptableData.stackSize;
 	public int StackDiffrence => scriptableData.stackSize - CurrentStackSize;
 
-	private float MaxStackSize
+	protected float MaxStackSize
 	{
 		get
 		{
@@ -192,11 +192,11 @@ public class ItemDataWrapper
 		return data;
 	}
 }
-public enum ConsumableState
+[System.Serializable]
+public class ItemDataRandom : ItemDataWrapper
 {
-	Hot,
-	Warm,
-	Chilled,
-	Cold,
-	Freezing,
+	[MaxValue("MaxStackSize")]
+	[MinValue("CurrentStackSize")]
+	[Min(1)]
+	[SerializeField] protected int maxStackSize = 1;
 }

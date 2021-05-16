@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1416618130}
-  m_IndirectSpecularColor: {r: 0.34605175, g: 0.24867922, b: 0.20573448, a: 1}
+  m_IndirectSpecularColor: {r: 0.34985057, g: 0.25036407, b: 0.20566596, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -121,7 +121,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 3ecddfa5d6ca4544d9d60f5939ac2dc5, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 87acfed98cec285478ca12fcca79fe6e, type: 2}
 --- !u!43 &1417480
 Mesh:
   m_ObjectHideFlags: 0
@@ -20648,6 +20648,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.22285649
+      objectReference: {fileID: 0}
+    - target: {fileID: 5980258141199936045, guid: 90896f6c81194af4a837fd92f29a5b67,
+        type: 3}
+      propertyPath: newGamePattern.container.itemsCount.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}

@@ -79,8 +79,17 @@ public class GlobalSaveLoader : MonoBehaviour
 
         public bool randomPlayerData = false;
 
+        [ShowIf("randomPlayerData")]
+        public PlayerStatusRandomSD playerRandomData;
+
         [HideIf("randomPlayerData")]
-        public PlayerData playerData;
+        public PlayerStatusSD playerData;
+
+        public bool randomInventory = false;
+
+        [HideIf("randomInventory")]
+        public ContainerSD container;
+
 
         public Data GetData()
         {
@@ -97,9 +106,10 @@ public class GlobalSaveLoader : MonoBehaviour
                 point = startPoint;
             }
 
-
             data.playerData.position = point.position;
             data.playerData.rotation = Quaternion.LookRotation(point.forward);
+
+            data.playerData.statusData = randomPlayerData ? playerRandomData.GetData() : playerData.statsData;
 
             return data;
         }

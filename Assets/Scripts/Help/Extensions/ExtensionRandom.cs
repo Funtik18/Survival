@@ -2,6 +2,16 @@
 
 public static class ExtensionRandom
 {
+    public static int RandomNumBtw(this Vector2Int minMax)
+    {
+        return Random.Range(minMax.x, minMax.y);
+    }
+    public static float RandomNumBtw(this Vector2 minMax)
+    {
+        return Random.Range(minMax.x, minMax.y);
+    }
+
+
     public static Vector3 RandomPointInAnnulus(Vector3 origin, float minRadius, float maxRadius)
     {
         Vector3 point = GetRandomPointInCircleXZNoZero();
