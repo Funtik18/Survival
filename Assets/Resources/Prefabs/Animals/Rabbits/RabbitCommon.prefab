@@ -133,8 +133,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 115413760188762155}
-  - component: {fileID: 115413760188762153}
-  - component: {fileID: 115413760188762154}
   m_Layer: 20
   m_Name: Pelvis
   m_TagString: Untagged
@@ -160,35 +158,6 @@ Transform:
   m_Father: {fileID: 115413760452872982}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &115413760188762153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 115413760188762156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a189ee587b921b42b643023076ac091, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 0
---- !u!136 &115413760188762154
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 115413760188762156}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.12
-  m_Height: 0.4
-  m_Direction: 1
-  m_Center: {x: 0.05, y: 0.07, z: 0}
 --- !u!1 &115413760211683738
 GameObject:
   m_ObjectHideFlags: 0
@@ -1226,9 +1195,10 @@ GameObject:
   - component: {fileID: 115413761996455603}
   - component: {fileID: 115413761996455604}
   - component: {fileID: 115413761996455606}
+  - component: {fileID: 8434302678085903787}
   - component: {fileID: 1278811118487821447}
   - component: {fileID: 115413761996455602}
-  m_Layer: 10
+  m_Layer: 20
   m_Name: RabbitCommon
   m_TagString: Animal
   m_Icon: {fileID: 0}
@@ -1242,7 +1212,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115413761996455607}
-  m_LocalRotation: {x: -0, y: -0.49127457, z: -0, w: 0.8710048}
+  m_LocalRotation: {x: 0, y: -0.49127623, z: 0, w: 0.87100387}
   m_LocalPosition: {x: 22.13, y: 0, z: 7.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1261,8 +1231,8 @@ Animator:
   m_GameObject: {fileID: 115413761996455607}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e1f61507af3734e4eb2f4bf1b1214c24, type: 3}
-  m_Controller: {fileID: 9100000, guid: fe67e3612e80d2140b029dc9682b006e, type: 2}
-  m_CullingMode: 0
+  m_Controller: {fileID: 9100000, guid: 28f832380960e1a44a6d90a0bb3d6e7f, type: 2}
+  m_CullingMode: 1
   m_UpdateMode: 1
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
@@ -1292,6 +1262,24 @@ NavMeshAgent:
   m_BaseOffset: -0.05
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!143 &8434302678085903787
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115413761996455607}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 0.25
+  m_Radius: 0.26
+  m_SlopeLimit: 45
+  m_StepOffset: 0.1
+  m_SkinWidth: 0.0001
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.2, z: 0.1}
 --- !u!114 &1278811118487821447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1304,14 +1292,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01f42a13f95de646a26b348e79016b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravity: -13
   animator: {fileID: 115413761996455604}
+  controller: {fileID: 8434302678085903787}
   agent: {fileID: 115413761996455606}
   view: {fileID: 115413761996455602}
   headCollider: {fileID: 115413761851758540}
-  colliders:
-  - {fileID: 115413760188762153}
-  velocity: 0
-  direction: 0
+  colliders: []
   Acceleration: 1
   Deceleration: 0.5
   WalkAnimationSpeed: 1

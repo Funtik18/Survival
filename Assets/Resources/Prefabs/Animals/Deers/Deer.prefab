@@ -1870,6 +1870,7 @@ GameObject:
   - component: {fileID: 1191999722482607470}
   - component: {fileID: 1284045873070488976}
   - component: {fileID: 1190687033318270159}
+  - component: {fileID: 243245480}
   - component: {fileID: 3291670163368809993}
   - component: {fileID: 1190687033318270157}
   m_Layer: 20
@@ -1908,7 +1909,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 2efb3c7f410b9a347abe1202bd798394, type: 3}
   m_Controller: {fileID: 9100000, guid: 4ce729cc2be1d7f49b43db82dfc2df2e, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 1
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
@@ -1930,7 +1931,7 @@ NavMeshAgent:
   m_Acceleration: 75
   avoidancePriority: 50
   m_AngularSpeed: 0
-  m_StoppingDistance: 2
+  m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -1938,6 +1939,24 @@ NavMeshAgent:
   m_BaseOffset: -0.05
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!143 &243245480
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190687033318270156}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.65
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.0001
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0.5}
 --- !u!114 &3291670163368809993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1950,13 +1969,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eebbcd522af0e0a47a10475b5c6a7fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravity: -13
   animator: {fileID: 1284045873070488976}
+  controller: {fileID: 243245480}
   agent: {fileID: 1190687033318270159}
   view: {fileID: 1190687033318270157}
   headCollider: {fileID: 0}
   colliders: []
-  velocity: 0
-  direction: 0
   Acceleration: 1
   Deceleration: 0.5
   WalkAnimationSpeed: 1

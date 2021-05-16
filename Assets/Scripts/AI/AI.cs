@@ -7,7 +7,11 @@ using UnityEngine.AI;
 
 public class AI : MonoBehaviour
 {
+    [SerializeField] private float gravity = -13.0f;
+
+
     [SerializeField] protected Animator animator;
+    [SerializeField] protected CharacterController controller;
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected FieldOfView view;
     [Space]
@@ -39,11 +43,6 @@ public class AI : MonoBehaviour
             animator.SetBool(idleHash, currentState == AIState.Idle);
         }
     }
-
-    [Range(0, 1)]
-    public float velocity = 0;
-    [Range(-90, 90)]
-    public float direction = 0;
 
     [Space]
     public float Acceleration = 1;
@@ -87,6 +86,7 @@ public class AI : MonoBehaviour
     public bool IsBrainProccess => brainCoroutine != null;
     #endregion
 
+
     private void Awake()
     {
         //navmesh
@@ -109,6 +109,30 @@ public class AI : MonoBehaviour
 
         StartBrain();
     }
+    Vector3 rootMotion;
+    private void Update()
+    {
+        if (controller)
+        {
+            if (!controller.isGrounded)
+            {
+                rootMotion.y += gravity * Time.deltaTime;
+            }
+            controller.Move(rootMotion);
+            rootMotion = Vector3.zero;
+        }
+    }
+    private void OnAnimatorMove()
+    {
+        agent.nextPosition = Transform.position;
+
+        rootMotion += animator.deltaPosition;
+
+        //Transform.position = animator.rootPosition;
+        Transform.rotation = animator.rootRotation;
+    }
+
+
     private void StartBrain()
     {
         if (!IsBrainProccess)
@@ -209,6 +233,7 @@ public class AI : MonoBehaviour
     protected void GenerateDestination(Vector3 origin, float innerRadius, float outerRadius)
     {
         currentDestination = ExtensionRandom.RandomPointInAnnulus(origin, innerRadius, outerRadius);
+        currentDestination.y = Terrain.activeTerrain.SampleHeight(currentDestination);
         if (CheckPath(agent, currentDestination))
         {
             agent.SetDestination(currentDestination);
@@ -229,14 +254,6 @@ public class AI : MonoBehaviour
         return false;
     }
 
-    private void OnAnimatorMove()
-    {
-        agent.nextPosition = Transform.position;
-        //transform.position = agent.nextPosition;
-
-        Transform.position = animator.rootPosition;
-        Transform.rotation = animator.rootRotation;
-    }
 
     private void OnDrawGizmosSelected()
     {
