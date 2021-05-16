@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a60da0a99fd304fa8225f6cb63f9c7, type: 3}
+  m_Name: Cloth
+  m_EditorClassIdentifier: 
+  objectName: Cloth
+  description: Cloth used for crafting and repair, as well as for creating bandages.
+  itemSprite: {fileID: 21300000, guid: f86fc51688ed28a4d8f1f25d1503894c, type: 3}
+  model: {fileID: 6709786556356989414, guid: 8dd7d1779c265964ab077a81088ad97b, type: 3}
+  orientation:
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  isInfinityWeight: 0
+  weight: 0.1
+  isInfinityStack: 1
+  stackSize: 1
+  isBreakable: 0
+  decayOverTime: 0
+  decayInside: 0
+  decayOutsie: 0

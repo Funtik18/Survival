@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class WindowFireMenu : WindowUI
 {
@@ -11,11 +12,12 @@ public class WindowFireMenu : WindowUI
     [SerializeField] private CustomPointer pointerUse;
     [SerializeField] protected CustomPointer pointerBack;
     [Space]
+    [SerializeField] private TMPro.TextMeshProUGUI fireDurationText;
+    [SerializeField] private TMPro.TextMeshProUGUI fireTemperatureText;
+    [SerializeField] private Image fireIcon;
+    [Space]
     [SerializeField] private FireMenuPrimary menuPrimary;
     [SerializeField] private FireMenu fireMenu;
-    [Space]
-    [SerializeField] private ItemDataWrapper snowItem;
-
 
     private Pointer BackPointer => pointerBack.pointer;
 
@@ -25,7 +27,10 @@ public class WindowFireMenu : WindowUI
 
     private Inventory inventory;
     private FireBuilding fire;
+    
     private Item item;
+    private Item tool;
+    float volume;
 
     private void Awake()
     {
@@ -44,6 +49,11 @@ public class WindowFireMenu : WindowUI
         this.inventory = inventory;
         this.fire = camfireBuilding;
 
+        fire.onFireDuration = FireDuration;
+        fire.onFireTemperature = FireTempretature;
+        fire.onFireTemperaturePercent = FireTemperaturePercent;
+
+
         fuelItems = inventory.GetAllBySD<FireFuelSD>();
         cookingItems = inventory.GetAllFood(true);
         boilingItems = inventory.GetAllBySD<ToolContainerItemSD>();
@@ -53,34 +63,18 @@ public class WindowFireMenu : WindowUI
         else
             menuPrimary.buttonFuel.Reject();
 
-        if (cookingItems.Count > 0)
-            menuPrimary.buttonCooking.Accept();
+        if (cookingItems.Count > 0 && !fire.IsFull)
+            menuPrimary.buttonCooking.Reject();
         else
             menuPrimary.buttonCooking.Reject();
 
-
-        if (boilingItems.Count > 0)
-        {
+        if (boilingItems.Count > 0 && !fire.IsFull)
             menuPrimary.buttonBoliling.Accept();
-        }
         else
-        {
             menuPrimary.buttonBoliling.Reject();
-        }
-
 
         BackOnPrimaryMenu();
         ShowWindow();
-    }
-
-    public void Out()
-    {
-        if (IsOpened)
-        {
-            HideWindow();
-
-            fireMenu.Clear();
-        }
     }
 
 
@@ -88,26 +82,97 @@ public class WindowFireMenu : WindowUI
     {
         if(item.itemData.scriptableData is ToolItemSD)
         {
+            tool = item;
+            List<Item> boiling = inventory.GetAllBoilLiquid();
+            boiling.Insert(0, new Item(ItemsData.Instance.Snow));
+            fireMenu.Setup(boiling);
 
-            fireMenu.Setup(boilingItems);
+            PreparationToBoil();
         }
         else
         {
-            if (item.itemData.scriptableData is SnowItemSD)
+            //передача айтема огню
+            if (tool != null)
             {
-                Debug.LogError("boil");
+                if (tool.itemData.scriptableData is ToolContainerItemSD toolContainer)
+                {
+                    //boiling
+                    volume = toolContainer.volume;
+
+                    if (volume > 0.5f && item.itemData.scriptableData is SnowItemSD)
+                    {
+                        HideWindow();
+
+                        GeneralAvailability.PlayerUI.OpenExchander(0.5f, volume, 0.5f, AddItemByVolume, AddItemFull, Back);
+                    }
+                    else if (volume > 0.5f && item.itemData.CurrentWeight > 0.5f)
+                    {
+                        float maxWeight = item.itemData.CurrentWeightRounded;
+
+                        HideWindow();
+
+                        GeneralAvailability.PlayerUI.OpenExchander(0.5f, maxWeight <= volume ? maxWeight : volume, 0.5f, AddItemByVolume, AddItemFull, Back);
+                    }
+                    else
+                    {
+                        AddItemFull();
+                    }
+                }
+                else
+                {
+                    //cooking
+                }
             }
             else
             {
-                if (fire.AddItem(item))
+                if (item.itemData.scriptableData is FireFuelSD fuelSD)
                 {
+                    fire.AddFuel(fuelSD);
                     inventory.RemoveItem(item, 1);
+                }
+
+            }
+        }
+    }
+    private void AddItemByVolume(float liquedVolume)
+    {
+        CookingSlot slot = fire.GetEmptySlot();
+        if (slot)
+        {
+            ItemDataWrapper wat = item.itemData;//вода и тд
+
+            if (wat.scriptableData is SnowItemSD)
+            {
+
+            }
+            else
+            {
+                if (liquedVolume >= wat.CurrentWeight)
+                {
+                    liquedVolume = wat.CurrentWeight;
+                    inventory.RemoveItem(item, 1);
+                }
+                else
+                {
+                    wat.CurrentWeight -= liquedVolume;
                 }
             }
 
-            Back();
+            ItemObjectLiquidContainer itemObjectLiquidContainer = fire.AddItemObjectOnSlot<ItemObjectLiquidContainer>(tool, slot);
+            inventory.RemoveItem(tool, 1);
+
+            itemObjectLiquidContainer.SetLiquid(wat.scriptableData, liquedVolume);
+
+            itemObjectLiquidContainer.StartProccess();
         }
+
+        Back();
     }
+    private void AddItemFull()
+    {
+        AddItemByVolume(volume);
+    }
+
 
     private void Fuel()
     {
@@ -127,6 +192,8 @@ public class WindowFireMenu : WindowUI
     }
     private void Boiling()
     {
+        tool = null;
+
         fireMenu.Setup(boilingItems);
 
         pointerUseText.text = "BOIL";
@@ -134,6 +201,7 @@ public class WindowFireMenu : WindowUI
         Preparation();
     }
 
+    //подготовка что бы вернутся назад к главному меню
     private void Preparation()
     {
         menuPrimary.HideWindow();
@@ -148,6 +216,12 @@ public class WindowFireMenu : WindowUI
         BackPointer.AddPressListener(fireMenu.HideWindow);
         BackPointer.AddPressListener(BackOnPrimaryMenu);
     }
+    private void PreparationToBoil()
+    {
+        BackPointer.RemoveAllPressListeners();
+        BackPointer.AddPressListener(Boiling);
+    }
+
 
     private void BackOnPrimaryMenu()
     {
@@ -157,18 +231,57 @@ public class WindowFireMenu : WindowUI
         BackPointer.AddPressListener(Back);
     }
 
-    private void ItemUpdated(Item item)
-    {
-        this.item = item;
-    }
 
+
+    public void Out()
+    {
+        if (IsOpened)
+        {
+            HideWindow();
+
+            Dispose();
+
+            pointerUse.CloseButton();
+            fireMenu.HideWindow();
+            fireMenu.Clear();
+        }
+    }
     private void Back()
     {
         onBack?.Invoke();
 
-        item = null;
+        Dispose();
 
+        pointerUse.CloseButton();
         fireMenu.HideWindow();
         fireMenu.Clear();
+    }
+    private void Dispose()
+    {
+        fire.ClearUIActions();
+        fire = null;
+
+        item = null;
+        tool = null;
+        volume = 0;
+    }
+
+    private void FireDuration(string duration)
+    {
+        fireDurationText.text = duration;
+    }
+    private void FireTempretature(string temperature)
+    {
+        fireTemperatureText.text = temperature;
+    }
+    private void FireTemperaturePercent(float percent)
+    {
+        fireIcon.fillAmount = percent;
+    }
+
+
+    private void ItemUpdated(Item item)
+    {
+        this.item = item;
     }
 }

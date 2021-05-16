@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 606545092}
   - component: {fileID: 606545091}
+  - component: {fileID: 550366340647897853}
   - component: {fileID: 606545093}
   m_Layer: 0
   m_Name: DATA
@@ -51,19 +52,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bc7ca229311567b4aa0e3dcb33624130, type: 2}
   - {fileID: 11400000, guid: c8e0ded6803c21a47af46b163f153743, type: 2}
   - {fileID: 11400000, guid: f09381bc1579d9f498ec0956cf1c7d09, type: 2}
-  - {fileID: 11400000, guid: cd949f783ba9bae45a80904dedb73bc0, type: 2}
-  - {fileID: 11400000, guid: fe3f6e012c3127b4cb3b18f174143b35, type: 2}
-  - {fileID: 11400000, guid: 91c735e4a219fd040a357fb76b5d1f72, type: 2}
-  - {fileID: 11400000, guid: eb604291a260dd141a7d52087a07b208, type: 2}
   - {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
   - {fileID: 11400000, guid: 17e656c3d1536434d9999bfc47cc4941, type: 2}
   - {fileID: 11400000, guid: 85a3e62ace3ec2540b63007ebe95d402, type: 2}
   - {fileID: 11400000, guid: 9cffce06f0a23584e890d4c6ef7428da, type: 2}
   - {fileID: 11400000, guid: e5a50c0cfae8cdd49a703bc8944f5fa1, type: 2}
-  - {fileID: 11400000, guid: 0b986651c1c48054d8618601f82d55b7, type: 2}
+  - {fileID: 11400000, guid: 4045cae1e1e2ed641956bbbc76ef6e75, type: 2}
+  - {fileID: 11400000, guid: 91c735e4a219fd040a357fb76b5d1f72, type: 2}
   - {fileID: 11400000, guid: daae5dce1aa984e4c8a6d617afb5a0ce, type: 2}
   - {fileID: 11400000, guid: b713345a86eb4774e90400b0378dbfa1, type: 2}
-  - {fileID: 11400000, guid: 4045cae1e1e2ed641956bbbc76ef6e75, type: 2}
+  - {fileID: 11400000, guid: eb604291a260dd141a7d52087a07b208, type: 2}
+  - {fileID: 11400000, guid: 452ac2779f768d641ab5238d005a13b9, type: 2}
+  - {fileID: 11400000, guid: 97e7eae6aefa81b438fead6bf57e89f9, type: 2}
+  - {fileID: 11400000, guid: 2e4c3feb81d1a9d49ba662c285e7acdd, type: 2}
+  - {fileID: 11400000, guid: 94ec03e6f5e3f8140b24152371eb3576, type: 2}
   allConsumables:
   - {fileID: 11400000, guid: 3c3f027af864f36418b7e8767860fcd1, type: 2}
   - {fileID: 11400000, guid: b4459d87d4ff9da429b95f7f319ee8d5, type: 2}
@@ -71,20 +73,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bc7ca229311567b4aa0e3dcb33624130, type: 2}
   - {fileID: 11400000, guid: c8e0ded6803c21a47af46b163f153743, type: 2}
   - {fileID: 11400000, guid: f09381bc1579d9f498ec0956cf1c7d09, type: 2}
-  - {fileID: 11400000, guid: cd949f783ba9bae45a80904dedb73bc0, type: 2}
-  - {fileID: 11400000, guid: fe3f6e012c3127b4cb3b18f174143b35, type: 2}
-  - {fileID: 11400000, guid: 0b986651c1c48054d8618601f82d55b7, type: 2}
   allDrinks:
   - {fileID: 11400000, guid: c68a0070262fac74c99fa321dd7b402f, type: 2}
   - {fileID: 11400000, guid: bc7ca229311567b4aa0e3dcb33624130, type: 2}
   - {fileID: 11400000, guid: c8e0ded6803c21a47af46b163f153743, type: 2}
   - {fileID: 11400000, guid: f09381bc1579d9f498ec0956cf1c7d09, type: 2}
-  - {fileID: 11400000, guid: cd949f783ba9bae45a80904dedb73bc0, type: 2}
-  - {fileID: 11400000, guid: fe3f6e012c3127b4cb3b18f174143b35, type: 2}
+  potableWater: {fileID: 11400000, guid: fe3f6e012c3127b4cb3b18f174143b35, type: 2}
+  unsafeWater: {fileID: 11400000, guid: 49799bfc4506bb3418044fce6beac349, type: 2}
   allFood:
   - {fileID: 11400000, guid: 3c3f027af864f36418b7e8767860fcd1, type: 2}
   - {fileID: 11400000, guid: b4459d87d4ff9da429b95f7f319ee8d5, type: 2}
-  - {fileID: 11400000, guid: 0b986651c1c48054d8618601f82d55b7, type: 2}
+  snow: {fileID: 11400000, guid: 0b986651c1c48054d8618601f82d55b7, type: 2}
   allFires:
   - {fileID: 11400000, guid: 91c735e4a219fd040a357fb76b5d1f72, type: 2}
   - {fileID: 11400000, guid: eb604291a260dd141a7d52087a07b208, type: 2}
@@ -95,6 +94,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 85a3e62ace3ec2540b63007ebe95d402, type: 2}
   - {fileID: 11400000, guid: 9cffce06f0a23584e890d4c6ef7428da, type: 2}
   - {fileID: 11400000, guid: e5a50c0cfae8cdd49a703bc8944f5fa1, type: 2}
+  - {fileID: 11400000, guid: 452ac2779f768d641ab5238d005a13b9, type: 2}
   allStarters:
   - {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
   allFuels:
@@ -104,10 +104,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b713345a86eb4774e90400b0378dbfa1, type: 2}
   - {fileID: 11400000, guid: 85a3e62ace3ec2540b63007ebe95d402, type: 2}
   - {fileID: 11400000, guid: 9cffce06f0a23584e890d4c6ef7428da, type: 2}
+  - {fileID: 11400000, guid: 452ac2779f768d641ab5238d005a13b9, type: 2}
   allTinders:
   - {fileID: 11400000, guid: 17e656c3d1536434d9999bfc47cc4941, type: 2}
   - {fileID: 11400000, guid: e5a50c0cfae8cdd49a703bc8944f5fa1, type: 2}
   allAccelerants: []
+  allTools:
+  - {fileID: 11400000, guid: 4045cae1e1e2ed641956bbbc76ef6e75, type: 2}
+  - {fileID: 11400000, guid: 94ec03e6f5e3f8140b24152371eb3576, type: 2}
+  allBlueprints:
+  - {fileID: 11400000, guid: 470befef8a70ee04aa0e9640cf603a58, type: 2}
+  - {fileID: 11400000, guid: d3a1849bbe359fb4abddbd0c7e36b67e, type: 2}
+  - {fileID: 11400000, guid: 3d8bad5f102c13c4ba6c16828f3eee02, type: 2}
   containerItems:
   - {fileID: 11400000, guid: 3c3f027af864f36418b7e8767860fcd1, type: 2}
   - {fileID: 11400000, guid: b4459d87d4ff9da429b95f7f319ee8d5, type: 2}
@@ -116,6 +124,39 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c8e0ded6803c21a47af46b163f153743, type: 2}
   - {fileID: 11400000, guid: f09381bc1579d9f498ec0956cf1c7d09, type: 2}
   - {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
+  - {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
+  - {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
+  - {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
+--- !u!114 &550366340647897853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606545090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd3b6076d2c05646b356dcc962d89fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meltTime:
+    days: 0
+    hours: 0
+    minutes: 30
+    seconds: 0
+    totalSeconds: 1800
+  boilsTime:
+    days: 0
+    hours: 0
+    minutes: 30
+    seconds: 0
+    totalSeconds: 1800
+  evaporationTime:
+    days: 0
+    hours: 0
+    minutes: 45
+    seconds: 0
+    totalSeconds: 2700
 --- !u!114 &606545093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,7 +379,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5974223110730402865
 Transform:
   m_ObjectHideFlags: 0

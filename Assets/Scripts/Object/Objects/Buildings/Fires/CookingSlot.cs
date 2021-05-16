@@ -1,43 +1,66 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class CookingSlot : MonoBehaviour
 {
-    [SerializeField] private Collider collider;
+    public UnityAction onSlotEndWork;
 
-    private Item item;
+    private FireBuilding owner;
     private ItemObject itemObject;
 
+    public bool IsWorking => owner.IsEnable;
 
-    public bool IsEmpty => item == null;
+    public bool IsEmpty => itemObject == null;
 
-    public void SetItem(Item item)
+    public void SetOwner(FireBuilding fire)
     {
-        this.item = item;
-
-        InstantiateItem();
+        this.owner = fire;
     }
 
-    public void UpdateItem()
+    public void SetItem(ItemObject itemObject)
+    {
+        this.itemObject = itemObject;
+        this.itemObject.onDisable += DisposeSlot;
+
+        if (itemObject is ItemObjectLiquidContainer itemObjectLiquid)
+        {
+            itemObjectLiquid.SetSlot(this);
+        }
+
+        UpdatePosition();
+    }
+
+    public void StartWork()
+    {
+        
+    }
+    public void Work()
     {
         if (IsEmpty) return;
+        itemObject.UpdateItem();
+    }
+    public void EndWork()
+    {
+        onSlotEndWork?.Invoke();
+    }
 
-        Debug.LogError("Update");
+    private void UpdatePosition()
+    {
+        itemObject.transform.SetParent(transform);
+        itemObject.transform.localPosition = Vector3.zero;
     }
 
 
-    private void InstantiateItem()
+    private void DisposeSlot()
     {
-        itemObject = Instantiate(item.itemData.scriptableData.model, transform);
-        itemObject.transform.localPosition = Vector3.zero;
-
+        itemObject = null;
+        onSlotEndWork = null;
     }
 
     private void OnDrawGizmos()
     {
-        if (!collider) return;
-
         Gizmos.color = new Color(1, 0, 0, 0.5f);
 
-        Gizmos.DrawCube(transform.position, collider.bounds.size);
+        Gizmos.DrawWireSphere(transform.position, 0.2f);
     }
 }

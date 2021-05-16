@@ -19,11 +19,16 @@ MonoBehaviour:
   orientation:
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
+  isInfinityWeight: 0
   weight: 0.5
-  isCanned: 0
-  isBreakable: 0
+  isInfinityStack: 1
   stackSize: 1
+  isBreakable: 0
+  decayOverTime: 0
+  decayInside: 0
+  decayOutsie: 0
   chance: 15
+  addTemperature: 6
   addFireTime:
     days: 0
     hours: 1

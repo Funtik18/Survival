@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
@@ -19,22 +20,22 @@ public class PlayerUI : MonoBehaviour
 
 		conditionUI.Setup(player.Status);
 
-		windowsUI.itemInspectorWindow.Setup(player.itemInspector);
 		windowsUI.buildingWindow.Setup(player.Build);
 		windowsUI.harvestingWindow.Setup(player.Inventory);
 
-		windowsUI.backpackWindow.primaryContainer.SubscribeInventory(player.Inventory);
 		windowsUI.backpackWindow.onBack += CloseInventory;
 
 		windowsUI.harvestingWindow.onBack += CloseHarvesting;
-		windowsUI.harvestingWindow.onHarvestingCompletely += OpenControlUI;
+		windowsUI.harvestingWindow.onHarvestingCompletely += OpenControlUI;//edit
 
 		windowsUI.ignitionWindow.onBack += CloseIgnition;
 
 		windowsUI.fireMenuWindow.onBack += CloseFireMenu;
 
 		windowsUI.restingWindow.onBack += CloseResting;
-    }
+
+		windowsUI.exchangerWindow.onBack += CloseExchanger;
+	}
 
 	public void OpenInventory()
 	{
@@ -42,12 +43,42 @@ public class PlayerUI : MonoBehaviour
 		CloseConditionUI();
 		windowsUI.backpackWindow.ShowBackpackInspector();
 	}
+	public void OpenCrafting()
+    {
+		CloseControlUI();
+		CloseConditionUI();
+		windowsUI.backpackWindow.ShowBackpackCrafting();
+	}
 	public void CloseInventory()
 	{
 		windowsUI.backpackWindow.HideBackpack();
 		OpenConditionUI();
 		OpenControlUI();
 	}
+
+
+	public void OpenItemInspector(Item item)
+    {
+		CloseControlUI();
+		CloseConditionUI();
+
+		windowsUI.itemInspectorWindow.SetItem(item);
+	}
+	public void OpenItemInspector(ItemObject itemObject)
+	{
+		CloseControlUI();
+		CloseConditionUI();
+
+		windowsUI.itemInspectorWindow.SetItem(itemObject);
+	}
+	public void CloseItemInspector()
+    {
+		windowsUI.itemInspectorWindow.HideWindow();
+
+		OpenControlUI();
+		OpenConditionUI();
+	}
+
 
 	public void OpenHarvesting(HarvestingObject harvesting)
     {
@@ -62,6 +93,7 @@ public class PlayerUI : MonoBehaviour
 		OpenConditionUI();
 	}
 
+
 	public void OpenIgnition()
     {
 		CloseControlUI();
@@ -74,6 +106,7 @@ public class PlayerUI : MonoBehaviour
 		OpenControlUI();
 		OpenConditionUI();
 	}
+
 
 	public void OpenFireMenu(FireBuilding fireBuilding)
     {
@@ -94,29 +127,6 @@ public class PlayerUI : MonoBehaviour
 		OpenConditionUI();
 	}
 
-
-	public void OpenConditionUI()
-    {
-		conditionUI.ShowStamina();
-		conditionUI.ShowCondition();
-	}
-	public void CloseConditionUI()
-    {
-		conditionUI.HideStamina();
-		conditionUI.HideCondition();
-	}
-
-	public void OpenControlUI()
-    {
-		GeneralAvailability.Player.UnLock();
-		controlUI.ShowWindow();
-	}
-	public void CloseControlUI()
-    {
-		controlUI.HideWindow();
-		GeneralAvailability.Player.Lock();
-	}
-
 	public void OpenRadialMenu()
     {
 		controlUI.radialMenu.ShowWindow();
@@ -125,6 +135,7 @@ public class PlayerUI : MonoBehaviour
     {
 		controlUI.radialMenu.HideWindow();
 	}
+
 
 	public void OpenResting()
     {
@@ -136,6 +147,48 @@ public class PlayerUI : MonoBehaviour
 		windowsUI.restingWindow.HideWindow();
 		OpenControlUI();
     }
+
+
+	public void OpenExchander(float min, float max, float step, UnityAction<float> ok = null, UnityAction all = null, UnityAction cancel = null)
+    {
+		CloseControlUI();
+		CloseConditionUI();
+
+		windowsUI.exchangerWindow.Setup(min, max, step, ok, all, cancel).ShowWindow();
+
+	}
+	public void CloseExchanger()
+    {
+		windowsUI.exchangerWindow.HideWindow();
+
+		OpenControlUI();
+		OpenConditionUI();
+	}
+
+
+
+	public void OpenConditionUI()
+	{
+		conditionUI.ShowStamina();
+		conditionUI.ShowCondition();
+	}
+	public void CloseConditionUI()
+	{
+		conditionUI.HideStamina();
+		conditionUI.HideCondition();
+	}
+
+
+	public void OpenControlUI()
+	{
+		GeneralAvailability.Player.UnLock();
+		controlUI.ShowWindow();
+	}
+	public void CloseControlUI()
+	{
+		controlUI.HideWindow();
+		GeneralAvailability.Player.Lock();
+	}
 
 
 	public Button ShowBreakButton()

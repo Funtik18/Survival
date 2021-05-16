@@ -6,9 +6,6 @@ using UnityEngine.Events;
 
 public class ItemInspector : MonoBehaviour
 {
-	public UnityAction onItemTake;
-	public UnityAction onItemLeave;
-
 	[SerializeField] private Transform modelPlace;
 	[SerializeField] private Camera cam;
 	[Space]
@@ -22,8 +19,8 @@ public class ItemInspector : MonoBehaviour
 	private float thresholdDistacnce = 0.1f;
 	private float thresholdAngle = 0.1f;
 
-	//coroutine
-	private List<Item> cashItemsToDelete = new List<Item>();
+	#region Coroutine
+    private List<Item> cashItemsToDelete = new List<Item>();
 
 	public bool IsInspectItem { get; private set; }
 
@@ -32,9 +29,10 @@ public class ItemInspector : MonoBehaviour
 
 	private Coroutine inspectCoutine = null;
 	public bool IsInspectProccess => inspectCoutine != null;
+    #endregion
 
-	//cash
-	private ObjectPool pool;
+    //cash
+    private ObjectPool pool;
 	private ObjectPool Pool
     {
         get
@@ -57,19 +55,28 @@ public class ItemInspector : MonoBehaviour
 	private Vector3 oldWorldPosition;
 	private Quaternion oldWorldRotation;
 
+    private void Awake()
+    {
+		WindowItemInspector windowItemInspector = GeneralAvailability.PlayerUI.windowsUI.itemInspectorWindow;
+
+		windowItemInspector.onLeaveIt = ItemLeave;
+		windowItemInspector.onAction = ItemAction;
+		windowItemInspector.onTakeIt = ItemTake;
+	}
+
 
     public void SetItem(ItemObject itemObject)
 	{
-        GeneralAvailability.Player.Lock();
-
         this.itemObject = itemObject;
 
-        SetupItem(itemObject.item);
+        SetupItem(itemObject.Item);
 
         onItemTake = FromWorldTake;
         onItemLeave = ToWorldLeave;
 
-        StartInspect();
+		GeneralAvailability.PlayerUI.OpenItemInspector(itemObject);
+
+		StartInspect();
     }
 	public void ItemsReview(Inventory from)
 	{
@@ -86,7 +93,6 @@ public class ItemInspector : MonoBehaviour
 		this.item = item;
 
 		ItemSD sd = this.item.itemData.scriptableData;
-
 
 		if (instantiateModel)
         {
@@ -106,9 +112,7 @@ public class ItemInspector : MonoBehaviour
 		}
 
 		itemObject.ColliderEnable(false);
-		OpenUI();
 	}
-
 
 	#region Review
 	private void StartReview()
@@ -125,7 +129,11 @@ public class ItemInspector : MonoBehaviour
         foreach (var item in items)
         {
 			SetupItem(item, true, InspectAnimationType.OnlyLocal);
+			
 			StartInspect();
+
+			GeneralAvailability.PlayerUI.OpenItemInspector(item);
+
 
 			while (IsInspectProccess)
 			{
@@ -135,7 +143,7 @@ public class ItemInspector : MonoBehaviour
 
 		inventory.RemoveItems(cashItemsToDelete);
 		cashItemsToDelete.Clear();
-		CloseUI();
+
 		StopReview();
 	}
 	private void StopReview()
@@ -166,7 +174,7 @@ public class ItemInspector : MonoBehaviour
 		ItemTransform.SetParent(oldParent);
 		yield return LerpItem(ItemTransform, oldWorldPosition, oldWorldRotation, 0.3f);//lerp item back to world
 
-		itemObject.ColliderEnable(true);
+		
 		Dispose();
 
 		StopInspect();
@@ -302,48 +310,29 @@ public class ItemInspector : MonoBehaviour
 	}
 
 
-	private void OpenUI()
-    {
-		GeneralAvailability.Player.Lock();
-
-		GeneralAvailability.InspectorWindow.SetInformation(item.itemData.scriptableData);
-		GeneralAvailability.InspectorWindow.ShowWindow();
-	}
-	private void CloseUI()
-    {
-		GeneralAvailability.Player.UnLock();
-
-		GeneralAvailability.InspectorWindow.HideWindow();
-	}
-
-
 	#region Take Leave
-	public void ItemTake()
-	{
-		onItemTake?.Invoke();
-	}
-	public void ItemLeave()
-	{
-		onItemLeave?.Invoke();
-	}
+	private UnityAction onItemTake;
+	private UnityAction onItemLeave;
 
 	private void FromWorldTake()
     {
 		GeneralAvailability.PlayerInventory.AddItem(item.itemData);
 
-		CloseUI();
-
 		StopInspect();
 
 		if (itemObject)
 		{
+			if(itemObject is ItemObjectLiquidContainer liquidContainer)
+            {
+				GeneralAvailability.PlayerInventory.AddItem(liquidContainer.GetItem());
+            }
+
 			Pool.ReturnGameObject(itemObject.gameObject);
 		}
 		Dispose();
 	}
 	private void ToWorldLeave()
     {
-		CloseUI();
 		IsInspectItem = false;
 	}
 	private void FromInventoryTake()
@@ -375,12 +364,36 @@ public class ItemInspector : MonoBehaviour
 
 	private void Dispose()
     {
+		itemObject.ColliderEnable(true);
+
 		itemObject = null;
 		item = null;
 
 		oldParent = null;
 		oldWorldPosition = Vector3.zero;
 		oldWorldRotation = Quaternion.identity;
+	}
+
+
+	private void ItemTake()
+	{
+		onItemTake?.Invoke();
+
+		GeneralAvailability.PlayerUI.CloseItemInspector();
+	}
+	private void ItemAction()
+    {
+		onItemLeave?.Invoke();
+		
+		itemObject.ActionItem();
+
+		GeneralAvailability.PlayerUI.CloseItemInspector();
+	}
+	private void ItemLeave()
+	{
+		onItemLeave?.Invoke();
+
+		GeneralAvailability.PlayerUI.CloseItemInspector();
 	}
 }
 public enum InspectAnimationType

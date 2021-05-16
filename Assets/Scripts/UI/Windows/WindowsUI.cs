@@ -17,32 +17,21 @@ public class WindowsUI : MonoBehaviour
 	public WindowFireMenu fireMenuWindow;
 	public WindowHarvesting harvestingWindow;
 
-	[Button]
-	private void OpenInspector()
-    {
-		itemInspectorWindow.ShowWindow();
-	}
-	[Button]
-	private void CloseInspector()
-    {
-		itemInspectorWindow.HideWindow();
-	}
-
-	[Button]
-	private void OpenItemInspector()
-	{
-		backpackWindow.OpenItemInspector();
-		backpackWindow.ShowWindow();
-	}
-	[Button]
-	private void OpenSecondaryContainer()
-	{
-		backpackWindow.OpenSecondaryContainer();
-		backpackWindow.ShowWindow();
-	}
-	[Button]
-	private void CloseInventory()
-    {
-		backpackWindow.HideBackpack();
-	}
+	//[Button]
+	//private void OpenItemInspector()
+	//{
+	//	backpackWindow.OpenItemInspector();
+	//	backpackWindow.ShowWindow();
+	//}
+	//[Button]
+	//private void OpenSecondaryContainer()
+	//{
+	//	backpackWindow.OpenSecondaryContainer();
+	//	backpackWindow.ShowWindow();
+	//}
+	//[Button]
+	//private void CloseInventory()
+ //   {
+	//	backpackWindow.HideBackpack();
+	//}
 }

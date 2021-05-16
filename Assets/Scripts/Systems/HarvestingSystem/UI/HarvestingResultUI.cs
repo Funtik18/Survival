@@ -20,7 +20,7 @@ public class HarvestingResultUI : MonoBehaviour
     private void UpdateUI()
     {
         itemIcon.sprite = item.scriptableData.itemSprite;
-        itemCount.text = "x" + item.StackSize;
+        itemCount.text = "x" + item.CurrentStackSize;
         itemName.text = item.scriptableData.objectName;
     }
 }

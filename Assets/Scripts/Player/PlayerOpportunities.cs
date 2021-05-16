@@ -25,8 +25,8 @@ public class PlayerOpportunities
 		this.inventory = player.Inventory;
 
 		this.exchanger = ui.windowsUI.exchangerWindow;
-		exchanger.onOk += RemoveItem;
-		exchanger.onAll += RemoveItem;
+		//exchanger.onOk += RemoveItem;
+		//exchanger.onAll += RemoveItem;
 
 		thirst = player.Status.stats.Thirst;
 		hungred = player.Status.stats.Hungred;
@@ -35,9 +35,9 @@ public class PlayerOpportunities
 	public void DropItem(Item item)
 	{
 		ItemDataWrapper itemData = item.itemData;
-		if (itemData.StackSize > 1)
+		if (itemData.CurrentStackSize > 1)
 		{
-			if (itemData.StackSize > 4)
+			if (itemData.CurrentStackSize > 4)
 				exchanger.SetItem(item);
 			else
 				RemoveItem(item, 1);
@@ -85,6 +85,7 @@ public class PlayerOpportunities
 	}
 	private IEnumerator UseConsuable(ItemDataWrapper data, float calories, float hydration)
     {
+		//ERROR
 		//ui
 		ui.conditionUI.conditionWindow.thirst.EnableCondition(true);
 		ui.conditionUI.conditionWindow.hungred.EnableCondition(true);
@@ -144,13 +145,13 @@ public class PlayerOpportunities
 		float startWeight = data.CurrentWeight;
 		float endWeight = data.MinimumWeight;
 
-		float maxHydration = ((startWeight - endWeight) / (data.scriptableData.weight - endWeight)) * (thirst.Value * (hydration / 100f));
+		float maxHydration = (startWeight - endWeight) / (thirst.Value * (hydration / 100f));//максимально возможное насыщение
 
 		float startHydration = thirst.CurrentValue;
 		float endHydration = startHydration + maxHydration;
 
 		float time = 0;
-		float duration = useTimeByKg * ((startWeight - endWeight));//1L = 1kg
+		float duration = useTimeByKg * ((startWeight - endWeight));//1L == 1kg
 
 		//time duration cycle
 		while(time < duration)
@@ -163,9 +164,12 @@ public class PlayerOpportunities
 			time += Time.deltaTime;
 			
 			ui.barHight.UpdateFillAmount(normalStep, "%");
-			
+
+			Debug.LogError(time);
+
 			if (thirst.IsFull)
             {
+				Debug.LogError("FULL");
 				StopUse();
 				yield break;
 			}
@@ -180,6 +184,7 @@ public class PlayerOpportunities
 
 	private void StopUse()
 	{
+		Debug.LogError("Not good");
 		if (IsUseProccess)
 		{
 			owner.StopCoroutine(useCoroutine);
@@ -216,7 +221,7 @@ public class PlayerOpportunities
 	}
 	private void RemoveItem(Item item)
 	{
-		RemoveItem(item, item.itemData.StackSize);
+		RemoveItem(item, item.itemData.CurrentStackSize);
 	}
 	private void CreateWorldItem(Item item, int count)
     {

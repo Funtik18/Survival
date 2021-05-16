@@ -27,8 +27,8 @@ public class Player : MonoBehaviour
 	[SerializeField] private PlayerStatus status;
 	public PlayerStatus Status => status;
 
-	[SerializeField] private Inventory inventory;
-	public Inventory Inventory => inventory;
+	[SerializeField] private PlayerInventory inventory;
+	public PlayerInventory Inventory => inventory;
 
 	[SerializeField] private Build build;
 	public Build Build => build;

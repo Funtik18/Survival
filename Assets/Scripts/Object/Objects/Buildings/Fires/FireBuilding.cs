@@ -3,9 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Sirenix.OdinInspector;
+using UnityEngine.Events;
 
 public class FireBuilding : BuildingObject
 {
+    public UnityAction<string> onFireDuration;
+    public UnityAction<string> onFireTemperature;
+    public UnityAction<float> onFireTemperaturePercent;
+
+    public UnityAction onFireEnd;
+
     [PropertyOrder(-1)]
     [SerializeField] protected bool isEnableOnAwake = false;
     
@@ -14,7 +21,7 @@ public class FireBuilding : BuildingObject
     [PropertyOrder(2)]
     [SerializeField] private List<CookingSlot> slots = new List<CookingSlot>();
     [Space]
-    [SerializeField] private float maxTemperature = 80;
+    [SerializeField] private float maxFireTemperature = 80;
     [SerializeField] private Times maxFireTime = new Times() { hours = 12 };
     [Space]
     [SerializeField] protected Light bonfireLight;
@@ -27,6 +34,22 @@ public class FireBuilding : BuildingObject
 
     [SerializeField] private WeatherZone zone;
 
+    public bool IsFull
+    {
+        get
+        {
+            for (int i = 0; i < slots.Count; i++)
+            {
+                if (slots[i].IsEmpty)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    private Inventory Inventory => GeneralAvailability.PlayerInventory;
 
     private WindowIgnition windowIgnition;
     private WindowIgnition WindowIgnition
@@ -43,16 +66,32 @@ public class FireBuilding : BuildingObject
 
     private RequirementsIgnition requirementsValues;
 
-
-    private string ToolTip => currentTime.ToStringSimplification(true) + " " + System.Math.Round(currentTemperature, 1) + SymbolCollector.CELSIUS;
+    private string ToolTip => CurrentTime.ToStringSimplification(true) + CurrentStringTemperature;
 
     private float successChance;
 
     private float holdTime = 1f;
 
     private float currentTemperature;
-    public float CurrentTemperature => currentTemperature;
+    public float CurrentTemperature
+    {
+        get => currentTemperature;
+        set
+        {
+            currentTemperature = value;
+
+            onFireTemperaturePercent?.Invoke(currentTemperature / maxFireTemperature);
+
+            onFireTemperature?.Invoke(CurrentStringTemperature);
+        }
+    }
+    public string CurrentStringTemperature => System.Math.Round(CurrentTemperature, 1) + SymbolCollector.CELSIUS;
+
     private float targetTemperature;
+
+
+
+
 
     private Times kindleTime;
 
@@ -61,9 +100,22 @@ public class FireBuilding : BuildingObject
     private Times fireEnd;
 
     private Times currentTime;
+    public Times CurrentTime
+    {
+        get => currentTime;
+        set
+        {
+            currentTime = value;
+
+            onFireDuration?.Invoke(currentTime.ToStringSimplification());
+        }
+    }
 
     protected bool isEnable = false;
+    public bool IsEnable => isEnable;
     protected float randomValue;
+
+    public CookingSlot GetEmptySlot() => slots.Find((x) => x.IsEmpty);
 
 
     private Coroutine holdIgnitionCoroutine = null;
@@ -73,6 +125,11 @@ public class FireBuilding : BuildingObject
     protected override void Awake()
     {
         base.Awake();
+
+        for (int i = 0; i < slots.Count; i++)
+        {
+            slots[i].SetOwner(this);
+        }
 
         if (isEnableOnAwake)
         {
@@ -95,113 +152,30 @@ public class FireBuilding : BuildingObject
     //    }
     ////}
 
-    public bool AddItem(Item item)
-    {
-        ItemDataWrapper data = item.itemData;
-        ItemSD itemSD = data.scriptableData;
-        if (itemSD is FireFuelSD fuelSD)
-        {
-            fireEnd += fuelSD.addFireTime;
-            targetTemperature += fuelSD.addTemperature;
-            unityEvent.SetTime(fireEnd);
 
-            return true;
-        }
-        return false;
+    public void AddFuel(FireFuelSD fuel)
+    {
+        fireEnd += fuel.addFireTime;
+        targetTemperature += fuel.addTemperature;
+        unityEvent.SetTime(fireEnd);
     }
-
-
-    private void UpdateItems()
+    public ItObject AddItemObjectOnSlot<ItObject>(Item item, CookingSlot slot) where ItObject : ItemObject
     {
-        for (int i = 0; i < slots.Count; i++)
-        {
-            slots[i].UpdateItem();
-        }
+        ItObject itemObject = ObjectPool.Instance.GetObject(item.itemData.scriptableData.model.gameObject).GetComponent<ItObject>();
+        slot.SetItem(itemObject);
+
+        return itemObject;
     }
 
     private void SetTemperature(float temperature)
     {
-        currentTemperature = Mathf.Clamp(temperature, 0, targetTemperature);
+        CurrentTemperature = Mathf.Clamp(temperature, 0, targetTemperature);
     }
     private void SetFireIntensity(float value)
     {
         bonfireLight.intensity = value;
         zone.SetSize(value);
     }
-
-
-    #region Fire
-    #region Розжиг
-    public void LightFire(float endTemperature)
-    {
-        if (!isEnable)
-        {
-            isEnable = true;
-            targetTemperature = endTemperature;
-        }
-    }
-    public void UpdateLightFire(float t)
-    {
-        SetTemperature(Mathf.Lerp(0, targetTemperature * 0.2f, t));
-        SetFireIntensity(Mathf.Lerp(0, maxIntensity0, t));
-    }
-    public void FireDecay()
-    {
-        isEnable = false;
-
-        SetTemperature(0);
-        SetFireIntensity(0);
-    }
-    #endregion
-    #region Горение
-    private GeneralTime.TimeUnityEvent unityEvent;
-
-    public void StartFire(Times fireDuration)
-    {
-        if(!isEnable)
-            isEnable = true;
-
-        this.fireStart = GeneralTime.Instance.globalTime;
-        this.fireDuration = fireDuration;
-        this.fireEnd = fireStart + fireDuration;
-
-        unityEvent = new GeneralTime.TimeUnityEvent();
-        unityEvent.AddEvent(GeneralTime.TimeUnityEvent.EventType.ExecuteInTime, fireEnd, null, UpdateFire, StopFire);
-        GeneralTime.Instance.AddEvent(unityEvent);
-
-        EnableParticles();
-
-        zone.TemperatureInZone = currentTemperature;
-        zone.IsEnable = true;
-    }
-    public void UpdateFire(Times time)
-    {
-        currentTime = fireEnd - time;
-
-        UpdateItems();
-
-        float value = Mathf.Lerp(maxIntensity0, maxIntensity1, Mathf.PerlinNoise(randomValue, Time.time));
-
-        if(currentTemperature != targetTemperature)
-            SetTemperature(currentTemperature + 0.01f);
-
-        zone.TemperatureInZone = currentTemperature;
-    }
-    public void StopFire()
-    {
-        if (isEnable)
-        {
-            DisableParticles();
-            isEnable = false;
-            zone.IsEnable = false;
-
-            GeneralAvailability.PlayerUI.BreakFireMenu();
-
-            Debug.LogError("Fire End");
-        }
-    }
-    #endregion
-    #endregion
 
     #region Observe
     public override void StartObserve()
@@ -210,7 +184,7 @@ public class FireBuilding : BuildingObject
         if (isEnable)
         {
             if(isEnableOnAwake)
-                GeneralAvailability.TargetPoint.SetTooltipAddText(currentTime.ToStringSimplification(isInfinity : true)).ShowAddToolTip();
+                GeneralAvailability.TargetPoint.SetTooltipAddText(CurrentTime.ToStringSimplification(isInfinity : true)).ShowAddToolTip();
             else
                 GeneralAvailability.TargetPoint.SetTooltipAddText(ToolTip).ShowAddToolTip();
         }
@@ -264,7 +238,72 @@ public class FireBuilding : BuildingObject
     }
     #endregion
 
+    #region Ignition
+
     private bool isCanIgnition = false;
+
+    #region Горение
+    private GeneralTime.TimeUnityEvent unityEvent;
+
+    public void StartFire(Times fireDuration)
+    {
+        if (!isEnable)
+            isEnable = true;
+
+        this.fireStart = GeneralTime.Instance.globalTime;
+        this.fireDuration = fireDuration;
+        this.fireEnd = fireStart + fireDuration;
+
+        unityEvent = new GeneralTime.TimeUnityEvent();
+        unityEvent.AddEvent(GeneralTime.TimeUnityEvent.EventType.ExecuteInTime, fireEnd, null, UpdateFire, StopFire);
+        GeneralTime.Instance.AddEvent(unityEvent);
+
+        for (int i = 0; i < slots.Count; i++)
+        {
+            slots[i].StartWork();
+        }
+
+        EnableParticles();
+
+        zone.TemperatureInZone = CurrentTemperature;
+        zone.IsEnable = true;
+    }
+    public void UpdateFire(Times time)
+    {
+        CurrentTime = fireEnd - time;
+
+        if (isEnable)
+        {
+            for (int i = 0; i < slots.Count; i++)
+            {
+                slots[i].Work();
+            }
+        }
+
+        float value = Mathf.Lerp(maxIntensity0, maxIntensity1, Mathf.PerlinNoise(randomValue, Time.time));
+
+        if (CurrentTemperature != targetTemperature)
+            SetTemperature(CurrentTemperature + 0.01f);
+
+        zone.TemperatureInZone = CurrentTemperature;
+    }
+    public void StopFire()
+    {
+        if (isEnable)
+        {
+            DisableParticles();
+            isEnable = false;
+            zone.IsEnable = false;
+
+            GeneralAvailability.PlayerUI.BreakFireMenu();
+
+            for (int i = 0; i < slots.Count; i++)
+            {
+                slots[i].EndWork();
+            }
+        }
+    }
+    #endregion
 
     private void StartIgnition()
     {
@@ -284,8 +323,7 @@ public class FireBuilding : BuildingObject
     }
     private IEnumerator Ignition()
     {
-
-        GeneralTime.Instance.IsStopped = true;
+        GeneralTime.Instance.IsTimeStopped = true;
 
         Times global = GeneralTime.Instance.globalTime;
 
@@ -295,8 +333,6 @@ public class FireBuilding : BuildingObject
         int secs = 0;
 
         float currentTime = Time.deltaTime;
-
-        LightFire(targetTemperature);
 
         float breakTime = -1;
 
@@ -311,7 +347,6 @@ public class FireBuilding : BuildingObject
             breakTime = Random.Range(0.2f, 0.8f);
         }
 
-
         while (currentTime < holdTime)
         {
             float progress = currentTime / holdTime;
@@ -321,7 +356,8 @@ public class FireBuilding : BuildingObject
 
             GeneralAvailability.TargetPoint.SetBarHightValue(progress, "%");
 
-            UpdateLightFire(progress);
+            SetTemperature(Mathf.Lerp(CurrentTemperature, targetTemperature, progress));
+            SetFireIntensity(Mathf.Lerp(0, maxIntensity0, progress));
 
             currentTime += Time.deltaTime;
 
@@ -346,7 +382,8 @@ public class FireBuilding : BuildingObject
     {
         StopHold();
 
-        FireDecay();
+        SetTemperature(0);
+        SetFireIntensity(0);
 
         requirementsValues.PartlyExchange();
     }
@@ -357,7 +394,7 @@ public class FireBuilding : BuildingObject
             StopCoroutine(holdIgnitionCoroutine);
             holdIgnitionCoroutine = null;
 
-            GeneralTime.Instance.IsStopped = false;
+            GeneralTime.Instance.IsTimeStopped = false;
 
             GeneralAvailability.TargetPoint.HideHightBar();
 
@@ -425,6 +462,7 @@ public class FireBuilding : BuildingObject
 
         isCanIgnition = starter != null && tinder != null && fuel != null;
     }
+    #endregion
 
     public void EnableParticles()
     {
@@ -455,5 +493,11 @@ public class FireBuilding : BuildingObject
         else
             EnableParticles();
     }
+
+    public void ClearUIActions()
+    {
+        onFireDuration = null;
+        onFireTemperature = null;
+        onFireTemperaturePercent = null;
+    }
 }
-//Проверить на розжиг на нескольких айтемов
