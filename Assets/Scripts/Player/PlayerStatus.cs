@@ -15,6 +15,14 @@ public class PlayerStatus
 	public UnityAction<float> onWindFeelsChanged;
 	public UnityAction<float> onBonusesFeelsChanged;
 
+	private Gender gender;
+	public Gender Gender
+    {
+		get => gender;
+		set => gender = value;
+    }
+
+
 	public bool IsCanRunning => !stats.Stamina.IsEmpty;
 
 
@@ -74,31 +82,28 @@ public class PlayerStatus
 	[Tooltip("Базовый шанс для разведения огня.")] 
 	public float baseChanceIgnition = 40f;
 
-	[Tooltip("Максимальное колличество времени для пропуска времени.")]
-	public Times maxPassTime;
-	[Tooltip("Максимальное колличество секунд в реальном времения пройдёт на весь пропуск времени.")]
-	public float maxWaitPass;
-
-	[Tooltip("Максимальное колличество времени для сна.")]
-	public Times maxSleepTime;
-	[Tooltip("Максимальное колличество секунд в реальном времения пройдёт на весь отдых.")]
-	public float maxWaitSleeping;
 
 	[Space]
 	[SerializeField] private float staminaSpending = 10f;
 	[SerializeField] private float staminaRecovering = 1f;
 	
 	[Space]
-	[SerializeField] private PlayerData data;
 	public PlayerStats stats;
 
 	public PlayerOpportunities opportunities;
 	public PlayerStates states;
 
-	public void Init(Player player)
+
+	public PlayerStatus SetData(PlayerStatusData data)
     {
 		stats = new PlayerStats(data.statsData);
-		
+
+		return this;
+    }
+
+	public void Init(Player player)
+    {
+
 		states.AddAction(SwapStateChanged);
 
 		opportunities.Setup(player);
@@ -107,6 +112,19 @@ public class PlayerStatus
 		GeneralTime.Instance.onUpdate += UpdateStatsByFrame;
 		WeatherController.Instance.onWeatherChanged += WeatherChanged;
 	}
+
+	public PlayerStatusData GetData()
+    {
+		PlayerStatusData statusData = new PlayerStatusData()
+		{
+			statsData = stats.GetData(),
+			
+			gender = Gender.Female,
+		};
+
+		return statusData;
+    }
+
 
 	//Оптимизировать формулы
 	#region Stats
@@ -276,8 +294,6 @@ public class PlayerStatus
     {
 		stats.Stamina.CurrentValue -= staminaSpending * Time.deltaTime;
 	}
-
-
 	#endregion
 
 	[Space]
@@ -323,10 +339,18 @@ public class PlayerStatus
 		BonusesFeels = value;
 	}
 
-
 	private void WeatherChanged(Weather weather)
     {
 		AirFeels = Mathf.Clamp(weather.air.airTemperature - (weather.air.airTemperature * airResistance / 100f), -100f, 50f);
 		WindFeels = Mathf.Min(weather.wind.windchill - (weather.wind.windchill * windResistance / 100f), 0);
 	}
+}
+[System.Serializable]
+public struct PlayerStatusData
+{
+	[TabGroup("PlayerStats")]
+	[HideLabel]
+	public PlayerStatsData statsData;
+
+	public Gender gender;
 }

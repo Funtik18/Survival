@@ -99,40 +99,62 @@ public abstract class StatBar : Stat
 		CurrentValue = currentValue;
 	}
 
-    public override void UpdateAttribute()
+	public StatBar(StatBarData data) : base(data.maxValue)
+	{
+		CurrentValue = data.currentValue;
+	}
+
+	public override void UpdateAttribute()
     {
         base.UpdateAttribute();
 		onCurrentValueChanged?.Invoke(currentValue);
 		onPercentValueChanged?.Invoke(PercentValue);
 	}
+
+	public StatBarData GetData()
+	{
+		StatBarData data = new StatBarData()
+		{
+			currentValue = CurrentValue,
+			maxValue = Value,
+		};
+
+		return data;
+	}
 }
 public class StatStamina : StatBar
 {
 	public StatStamina(float baseValue, float currentValue) : base(baseValue, currentValue) { }
+	public StatStamina(StatBarData data) : base(data) { }
 }
 public class StatCondition : StatBar
 {
 	public StatCondition(float baseValue, float currentValue) : base(baseValue, currentValue) { }
+	public StatCondition(StatBarData data) : base(data) { }
 }
 public class StatWarmth : StatBar
 {
 	public WarmthState state = WarmthState.Warm;
 	public StatWarmth(float baseValue, float currentValue) : base(baseValue, currentValue) { }
+	public StatWarmth(StatBarData data) : base(data) { }
 }
 public class StatFatigue : StatBar
 {
 	public FatigueState state = FatigueState.Rested;
 	public StatFatigue(float baseValue, float currentValue) : base(baseValue, currentValue) { }
+	public StatFatigue(StatBarData data) : base(data) { }
 }
 public class StatHungred : StatBar
 {
 	public HungredState state = HungredState.Full;
 	public StatHungred(float baseValue, float currentValue) : base(baseValue, currentValue) { }
+	public StatHungred(StatBarData data) : base(data) { }
 }
 public class StatThirst : StatBar
 {
 	public ThirstState state = ThirstState.Slaked;
 	public StatThirst(float baseValue, float currentValue) : base(baseValue, currentValue) { }
+	public StatThirst(StatBarData data) : base(data) { }
 }
 
 public enum WarmthState 

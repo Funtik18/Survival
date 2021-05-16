@@ -62,10 +62,27 @@ public class CraftingSystemUI : BackpackWindow
         Times skipTime = new Times();
         skipTime.TotalSeconds = blueprintSD.timeLimits ? blueprintSD.GetRandomBtwTimes() : blueprintSD.requiredTime.TotalSeconds;
 
-        GeneralTime.Instance.SkipTimeOn(skipTime, completely: CompletelyCraft, showbar: true, showblock : true).StartSkip();
+        float waitTime = Laws.Instance.waitRealTimeCraft * ((float)skipTime.TotalSeconds / 3600f);
+
+        GeneralTime.Instance.SkipSetup(start: StartSkip, progress: UpdateSkip, end: EndSkip).StartSkip(skipTime, waitTime);
 
         buttonCraft.gameObject.SetActive(false);
     }
+
+    private void StartSkip()
+    {
+        UpdateSkip(0);
+        GeneralAvailability.PlayerUI.barHight.ShowBar();
+    }
+    private void UpdateSkip(float progress)
+    {
+        GeneralAvailability.PlayerUI.barHight.UpdateFillAmount(progress, "%");
+    }
+    private void EndSkip()
+    {
+        GeneralAvailability.PlayerUI.barHight.HideBar();
+    }
+
 
     private void SelectedBlueprint(BlueprintAvailability blueprint)
     {

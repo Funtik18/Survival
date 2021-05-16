@@ -59,7 +59,7 @@ public class PlayerOpportunities
 		{
             if (IsCanGetIt(consuable))
             {
-				ui.ShowBreakButton().onClick.AddListener(StopUse);
+				ui.ShowBreakButton().BreakPointer.AddPressListener(StopUse);
 				ui.barHight.ShowBar();
 
 				useCoroutine = owner.StartCoroutine(Use(item, consuable));
@@ -194,7 +194,7 @@ public class PlayerOpportunities
 			ui.conditionUI.conditionWindow.thirst.EnableCondition(false);
 
 			ui.barHight.HideBar();
-			ui.HideBreakButton().onClick.RemoveAllListeners();
+			ui.HideBreakButton();
 		}
 	}
     

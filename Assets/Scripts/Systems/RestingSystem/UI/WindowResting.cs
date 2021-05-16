@@ -17,9 +17,6 @@ public class WindowResting : WindowUI
     [SerializeField] private Toggle toggleSleep;
     [SerializeField] private Toggle togglePass;
     [Space]
-    [SerializeField] private GameObject breakPanel;
-    [SerializeField] private Button breakButton;
-
     [SerializeField] private PanelRest sleep;
     [SerializeField] private PanelRest pass;
 
@@ -37,11 +34,8 @@ public class WindowResting : WindowUI
         }
     }
 
-    private Coroutine skipCoroutine = null;
-    public bool IsSkipProccess => skipCoroutine != null;
 
     private PanelRest rest;
-
 
     private void Awake()
     {
@@ -59,19 +53,79 @@ public class WindowResting : WindowUI
     {
         base.ShowWindow();
 
-
         toggleSleep.isOn = true;
         TogglesChanged(toggleSleep.isOn);
-        Setup();
+
+        sleep.Setup(Laws.Instance.maxSleepTime.TotalSeconds, Laws.Instance.waitRealTimeSleeping, 3600);
+        pass.Setup(Laws.Instance.maxPassTime.TotalSeconds, Laws.Instance.waitRealTimePassing, 300);
     }
 
-    public void Setup()
+    float lastSliderValue;
+    private void StartSkip(PanelRest rest, Times skipTime)
     {
-        sleep.Setup(Status.maxSleepTime.TotalSeconds, Status.maxWaitSleeping, 3600);
-        pass.Setup(Status.maxPassTime.TotalSeconds, Status.maxWaitPass, 300);
+        this.rest = rest;
 
-        breakButton.onClick.RemoveAllListeners();
-        breakButton.onClick.AddListener(Break);
+        Debug.LogError("Start ADS");
+
+        if (toggleSleep.isOn)
+        {
+            Status.states.CurrentState = PlayerState.Sleeping;
+
+            GeneralTime.Instance.SkipSetup(start: StartSkip, end: EndSkip, time: UpdateSKip).StartSkip(skipTime, Laws.Instance.waitRealTimeSleeping);
+        }
+        else
+        {
+            Status.states.CurrentState = PlayerState.Resting;
+
+            lastSliderValue = rest.slider.value;
+
+            GeneralAvailability.PlayerUI.ShowBreakButton().BreakPointer.AddPressListener(BreakSkip);
+            GeneralTime.Instance.SkipSetup(start: StartSkip, end: EndSkip, brek: EndSkip, progress: UpdateSKip).StartSkip(skipTime, Laws.Instance.waitRealTimePassing);
+        }
+    }
+
+    private void StartSkip()
+    {
+        if (toggleSleep.isOn)
+        {
+            GeneralAvailability.PlayerUI.sleepPanel.Enable(true);
+        }
+        else
+        {
+            GeneralAvailability.PlayerUI.blockPanel.Enable(true);
+        }
+    }
+    private void UpdateSKip(float progress)
+    {
+        rest.slider.value = Mathf.Lerp(lastSliderValue, 0, progress);
+    }
+    private void UpdateSKip(Times time)
+    {
+        GeneralAvailability.PlayerUI.sleepPanel.UpdateUI(time.ToStringSimplification());
+    }
+
+    private void BreakSkip()
+    {
+        if (GeneralTime.Instance.IsSkipProccess())
+        {
+            GeneralTime.Instance.BreakSkipTime();
+        }
+    }
+
+    private void EndSkip()
+    {
+        if (toggleSleep.isOn)
+        {
+            Cancel();
+            GeneralAvailability.PlayerUI.sleepPanel.Enable(false);
+        }
+        else
+        {
+            GeneralAvailability.PlayerUI.HideBreakButton();
+            GeneralAvailability.PlayerUI.blockPanel.Enable(false);
+        }
+
+        status.states.CurrentState = PlayerState.Standing;
     }
 
     private void TogglesChanged(bool trigger)
@@ -92,95 +146,9 @@ public class WindowResting : WindowUI
         }
     }
 
-    private void StartSkip(PanelRest rest, Times skipTime)
-    {
-        if (!IsSkipProccess)
-        {
-            float maxWait;
-
-            this.rest = rest;
-
-            if (toggleSleep.isOn)
-            {
-                Status.states.CurrentState = PlayerState.Sleeping;
-
-                maxWait = Status.maxWaitSleeping;
-            }
-            else
-            {
-                Status.states.CurrentState = PlayerState.Resting;
-
-                maxWait = Status.maxWaitPass;
-            }
-
-            rest.Enable(false);
-            
-
-            skipCoroutine = StartCoroutine(SkipTime(skipTime, maxWait));
-        }
-    }
-    private IEnumerator SkipTime(Times skipTime, float maxWait)
-    {
-        breakPanel.SetActive(true);
-
-        GeneralTime.Instance.IsTimeStopped = true;
-
-        Times global = GeneralTime.Instance.globalTime;
-
-        int aTime = global.TotalSeconds;
-        global += skipTime;
-        int bTime = global.TotalSeconds;
-        int secs = 0;
-
-        float currentTime = Time.deltaTime;
-
-        float lastSliderValue = rest.slider.value;
-
-        float waitTime = Mathf.Lerp(1, maxWait, lastSliderValue / rest.slider.maxValue);
-
-        while (currentTime < waitTime)
-        {
-            float progress = currentTime / waitTime;
-
-            secs = (int)Mathf.Lerp(aTime, bTime, progress);
-            rest.slider.value = Mathf.Lerp(lastSliderValue, 0, progress);
-            GeneralTime.Instance.ChangeTimeOn(secs);
-
-            currentTime += Time.deltaTime;
-
-            yield return null;
-        }
-
-        rest.Enable(true);
-
-        Cancel();
-
-        StopSkip();
-    }
-    private void StopSkip()
-    {
-        if (IsSkipProccess)
-        {
-            StopCoroutine(skipCoroutine);
-            skipCoroutine = null;
-
-            GeneralTime.Instance.IsTimeStopped = false;
-
-            status.states.CurrentState = PlayerState.Standing;
-        }
-    }
-
-    private void Break()
-    {
-        rest.Enable(true);
-        StopSkip();
-        breakPanel.SetActive(false);
-    }
-
     private void Cancel()
     {
         rest = null;
-        breakPanel.SetActive(false);
         onBack?.Invoke();
     }
 }

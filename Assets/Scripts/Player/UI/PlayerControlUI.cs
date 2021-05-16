@@ -13,12 +13,6 @@ public class PlayerControlUI : WindowUI
 	public InteractionButton buttonInteraction;
 	public CustomPointer buttonSpeedUp;
 
-	[Title("Other")]
-	public TargetPoint targetPoint;
-	public GameObject blockPanel;
-	public GameObject breakPanel;
-
-
 	public void Setup(PlayerController playerController)
     {
 		buttonSpeedUp.pointer.AddPressListener(playerController.SpeedUp);

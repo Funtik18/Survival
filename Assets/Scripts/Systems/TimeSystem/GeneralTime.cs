@@ -307,37 +307,57 @@ public static class SkipExtensionsTime
 {
     private static GeneralTime instance;
 
+    private static UnityAction<float> onProgress;
+    private static UnityAction<Times> onTimes;
     private static UnityAction onCompletely;
+    private static UnityAction onStart;
+    private static UnityAction onEnd;
+    private static UnityAction onBreak;
 
     private static Times skipTime;
     private static bool isForGlobal = true;
-
-    private static bool showBar = false;
-    private static bool showBlock = false;
     private static float waitSkipTimeReal = 10f;
 
     private static Coroutine skipCoroutine = null;
     public static bool IsSkipProccess(this GeneralTime generalTime) => skipCoroutine != null;
 
+
     /// <summary>
     /// globalTime + times = skip time
     /// </summary>
     /// <param name="times"></param>
-    public static GeneralTime SkipTimeOn(this GeneralTime generalTime, Times times, UnityAction completely = null, bool showbar = false, bool showblock = false)
+    public static GeneralTime SkipSetup(this GeneralTime generalTime, UnityAction<Times> time = null, UnityAction<float> progress = null, UnityAction completely = null, UnityAction start = null, UnityAction end = null, UnityAction brek = null)
     {
         instance = generalTime;
 
-        skipTime = times;
-        showBar = showbar;
-        showBlock = showblock;
-        isForGlobal = true;
-
+        onTimes = time;
+        onProgress = progress;
         onCompletely = completely;
+        onStart = start;
+        onEnd = end;
+        onBreak = brek;
 
         return instance;
     }
 
-    public static void StartSkip(this GeneralTime generalTime)
+    public static void StartSkip(this GeneralTime generalTime, Times times, float waitTime)
+    {
+        skipTime = times;
+        waitSkipTimeReal = waitTime;
+        isForGlobal = true;
+
+        StartSkip(generalTime);
+    }
+    public static void StartSkip(this GeneralTime generalTime, Times times, AnimationCurve waitTime)
+    {
+        //skipTime = times;
+        //waitSkipTimeReal = waitTime;
+        //isForGlobal = true;
+
+        //StartSkip(generalTime);
+    }
+
+    private static void StartSkip(this GeneralTime generalTime)
     {
         if (!IsSkipProccess(instance))
         {
@@ -351,39 +371,32 @@ public static class SkipExtensionsTime
             else
                 end = skipTime.TotalSeconds;
 
+            onStart?.Invoke();
+
             skipCoroutine = instance.StartCoroutine(SkipTime(start, end));
         }
     }
+
     private static IEnumerator SkipTime(int startTime, int endTime)
     {
-        if (showBar)
-        {
-            GeneralAvailability.TargetPoint.SetBarHightValue(0, "%");
-            GeneralAvailability.TargetPoint.ShowHightBar();
-        }
-        if (showBlock)
-        {
-            GeneralAvailability.PlayerUI.controlUI.blockPanel.SetActive(true);
-        }
-
         int secs = 0;
 
         float currentTime = Time.deltaTime;
 
-        float waitTime = ((endTime - startTime) / 3600f) * waitSkipTimeReal;
+        Times time = new Times();
+        time.TotalSeconds = endTime;
 
-        while (currentTime < waitTime)
+        while (currentTime < waitSkipTimeReal)
         {
-            float progress = currentTime / waitTime;
+            float progress = currentTime / waitSkipTimeReal;
 
             secs = (int)Mathf.Lerp(startTime, endTime, progress);
             instance.ChangeTimeOn(secs);
 
-            if (showBar)
-            {
-                GeneralAvailability.TargetPoint.SetBarHightValue(progress, "%");
-            }
+            time.TotalSeconds = endTime -secs;
 
+            onProgress?.Invoke(progress);
+            onTimes?.Invoke(time);
 
             currentTime += Time.deltaTime;
 
@@ -397,6 +410,7 @@ public static class SkipExtensionsTime
     }
     public static void BreakSkipTime(this GeneralTime generalTime)
     {
+        onBreak?.Invoke();
         StopSkip();
     }
     private static void StopSkip()
@@ -406,15 +420,7 @@ public static class SkipExtensionsTime
             instance.StopCoroutine(skipCoroutine);
             skipCoroutine = null;
 
-            if (showBar)
-            {
-                GeneralAvailability.TargetPoint.HideHightBar();
-            }
-            if (showBlock)
-            {
-                GeneralAvailability.PlayerUI.controlUI.blockPanel.SetActive(false);
-            }
-
+            onEnd?.Invoke();
             instance.IsTimeStopped = false;
         }
     }

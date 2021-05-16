@@ -19,8 +19,6 @@ public class CraftingItemInspectorUI : MonoBehaviour
 
     public void UpdateUI()
     {
-        Debug.LogError("Update");
-
         if (currentItemSD)
         {
             itemTittle.text = currentItemSD.objectName;

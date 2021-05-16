@@ -42,6 +42,8 @@ public class Player : MonoBehaviour
 	[SerializeField] private PlayerUI ui;
 	public PlayerUI UI => ui;
 	#endregion
+	[SerializeField] private PlayerData data;
+
 
 	public ItemInspector itemInspector;//make it
 
@@ -55,12 +57,12 @@ public class Player : MonoBehaviour
 	private Coroutine brainCoroutine;
 	public bool IsBrainProccess => brainCoroutine != null;
 
-	private void Awake()
-	{
-		Status.Init(this);
+	public void IsDEBUG()
+    {
+		Status.SetData(data.statusData).Init(this);
 
 		Controller.Init(this);
-		
+
 		Inventory.Init();
 		UI.Setup(this);
 		Build.Init(this);
@@ -70,7 +72,41 @@ public class Player : MonoBehaviour
 		StartBrain();
 	}
 
-    private void StartBrain()
+	public void SetData(PlayerData data)
+    {
+		this.data = data;
+
+		Debug.LogError(data.position + "  " + data.rotation);
+
+		ChangePosition(data.position, data.rotation);
+
+		Status.SetData(data.statusData).Init(this);
+
+		Controller.Init(this);
+
+		Inventory.Init();
+		UI.Setup(this);
+		Build.Init(this);
+
+		CheckCursor();
+
+		StartBrain();
+	}
+	public PlayerData GetData()
+    {
+		PlayerData data = new PlayerData()
+		{
+			position = transform.localPosition,
+			rotation = transform.localRotation,
+
+			statusData = Status.GetData(),
+			inventoryData = Inventory.GetData(),
+		};
+
+		return data;
+	}
+
+	private void StartBrain()
     {
         if (!IsBrainProccess)
         {
@@ -187,13 +223,15 @@ public class Player : MonoBehaviour
 [System.Serializable]
 public class PlayerData
 {
-    [TabGroup("PlayerStats")]
-    [HideLabel]
-    public PlayerStatsData statsData;
+	[HideInInspector] public Vector3 position;
+	[HideInInspector] public Quaternion rotation;
 
-    [Button]
-	private void Save()
-	{
-		SaveLoadManager.SavePlayerStatistics(this);
+	public PlayerStatusData statusData;
+	public InventoryData inventoryData;
+
+	public PlayerData()
+    {
+		statusData = new PlayerStatusData();
+		inventoryData = new InventoryData();
 	}
 }

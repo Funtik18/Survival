@@ -191,7 +191,34 @@ public class Inventory
 
     public bool ContainsType<SD>() => items.FirstOrDefault((x) => x.itemData.scriptableData is SD) != null;
 
+
+    private ItemDataWrapper[] GetItemsData()
+    {
+        List<ItemDataWrapper> itemDatas = new List<ItemDataWrapper>();
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            itemDatas.Add(items[i].itemData);
+        }
+
+        return itemDatas.ToArray();
+    }
+
+    public InventoryData GetData()
+    {
+        InventoryData data = new InventoryData()
+        {
+            items = GetItemsData(),
+        };
+        return data;
+    }
 }
+[System.Serializable]
+public struct InventoryData
+{
+    public ItemDataWrapper[] items;
+}
+
 
 [System.Serializable]
 public class PlayerInventory : Inventory

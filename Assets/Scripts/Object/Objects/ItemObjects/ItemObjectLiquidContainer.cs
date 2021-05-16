@@ -105,7 +105,7 @@ public class ItemObjectLiquidContainer : ItemObject
 
     private void StartMelting()
     {
-        duration = Volume * ItemsLaws.Instance.meltTime.TotalSeconds;
+        duration = Volume * Laws.Instance.meltTime.TotalSeconds;
 
         currentTime = new Times();
         showTime = new Times();
@@ -118,7 +118,7 @@ public class ItemObjectLiquidContainer : ItemObject
 
     private void StartBoiling()
     {
-        duration = Volume * ItemsLaws.Instance.boilsTime.TotalSeconds;
+        duration = Volume * Laws.Instance.boilsTime.TotalSeconds;
 
         currentTime = new Times();
         showTime = new Times();
@@ -142,7 +142,7 @@ public class ItemObjectLiquidContainer : ItemObject
 
                 if (progress >= 1f)
                 {
-                    duration = Volume * ItemsLaws.Instance.boilsTime.TotalSeconds;
+                    duration = Volume * Laws.Instance.boilsTime.TotalSeconds;
 
                     currentTime.TotalSeconds = 0;
 
@@ -158,7 +158,7 @@ public class ItemObjectLiquidContainer : ItemObject
 
                 if (progress >= 1f)
                 {
-                    duration = ItemsLaws.Instance.evaporationTime.TotalSeconds;
+                    duration = Laws.Instance.evaporationTime.TotalSeconds;
 
                     currentTime.TotalSeconds = 0;
 
@@ -189,7 +189,15 @@ public class ItemObjectLiquidContainer : ItemObject
     {
         slot.onSlotEndWork = BreakSkipTime;
 
-        GeneralTime.Instance.SkipTimeOn(showTime).StartSkip();
+        GeneralTime.Instance.SkipSetup(start: StartSkip, end: EndSkip).StartSkip(showTime, Laws.Instance.waitRealTimePassTime);
+    }
+    private void StartSkip()
+    {
+        GeneralAvailability.PlayerUI.blockPanel.Enable(true);
+    }
+    private void EndSkip()
+    {
+        GeneralAvailability.PlayerUI.blockPanel.Enable(false);
     }
     private void BreakSkipTime()
     {

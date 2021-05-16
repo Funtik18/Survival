@@ -100,7 +100,7 @@ public class GeneralAvailability : MonoBehaviour
         get
         {
             if (targetPoint == null)
-                targetPoint = Player.UI.controlUI.targetPoint;
+                targetPoint = Player.UI.targetPoint;
             return targetPoint;
         }
     }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 using Sirenix.OdinInspector;
 
@@ -9,11 +7,10 @@ using Sirenix.OdinInspector;
 /// </summary>
 public class PlayerStats
 {
-	public PlayerStatsData data;
+	public StatCondition Condition;
 
 	public StatStamina Stamina;
 
-	public StatCondition Condition;
 	public StatWarmth Warmth;
 	public StatFatigue Fatigue;
 	public StatHungred Hungred;
@@ -21,34 +18,50 @@ public class PlayerStats
 
 	public PlayerStats(PlayerStatsData data)
 	{
-		this.data = data;
+		Condition = new StatCondition(data.condition);
 
-		Stamina = new StatStamina(data.stamina.maxValue, data.stamina.currentValue);
+		Stamina = new StatStamina(data.stamina);
 
-		Condition = new StatCondition(data.condition.maxValue, data.condition.currentValue);
-		Warmth = new StatWarmth(data.warmth.maxValue, data.warmth.currentValue);
-		Fatigue = new StatFatigue(data.fatigue.maxValue, data.fatigue.currentValue);
-		Hungred = new StatHungred(data.hunger.maxValue, data.hunger.currentValue);
-		Thirst = new StatThirst(data.thirst.maxValue, data.thirst.currentValue);
+		Warmth = new StatWarmth(data.warmth);
+		Fatigue = new StatFatigue(data.fatigue);
+		Hungred = new StatHungred(data.hunger);
+		Thirst = new StatThirst(data.thirst);
+	}
+
+	public PlayerStatsData GetData()
+    {
+		PlayerStatsData data = new PlayerStatsData()
+		{
+			condition = Condition.GetData(),
+
+			stamina = Stamina.GetData(),
+
+			warmth = Warmth.GetData(),
+			fatigue = Fatigue.GetData(),
+			hunger = Hungred.GetData(),
+			thirst = Hungred.GetData(),
+		};
+
+		return data;
 	}
 }
 [System.Serializable]
 public struct PlayerStatsData
 {
-	public StatBar stamina;
+	public StatBarData condition;
 
-	public StatBar condition;
-	public StatBar warmth;
-	public StatBar fatigue;
-	public StatBar hunger;
-	public StatBar thirst;
+	public StatBarData stamina;
 
-	[InlineProperty]
-	[System.Serializable]
-	public struct StatBar
-    {
-		public float maxValue;
-		[Min(0), MaxValue("maxValue")]
-		public float currentValue;
-	}
+	public StatBarData warmth;
+	public StatBarData fatigue;
+	public StatBarData hunger;
+	public StatBarData thirst;
+}
+[InlineProperty]
+[System.Serializable]
+public struct StatBarData
+{
+	public float maxValue;
+	[Min(0), MaxValue("maxValue")]
+	public float currentValue;
 }

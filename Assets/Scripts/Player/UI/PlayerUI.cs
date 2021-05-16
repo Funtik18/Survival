@@ -11,8 +11,13 @@ public class PlayerUI : MonoBehaviour
 	public ProgressBar barLow;
 	public ProgressBar barHight;
 	[Space]
-	public Button buttonBreak;
-	public GameObject panelBreak;
+	[Space]
+	public TargetPoint targetPoint;
+	public BlockPanel blockPanel;
+	public SleepPanel sleepPanel;
+	public ButtonBreak breakButton;
+	public SavingPanel savingPanel;
+
 
 	public void Setup(Player player)
 	{
@@ -191,14 +196,14 @@ public class PlayerUI : MonoBehaviour
 	}
 
 
-	public Button ShowBreakButton()
+	public ButtonBreak ShowBreakButton()
     {
-		panelBreak.SetActive(true);
-		return buttonBreak;
+		breakButton.gameObject.SetActive(true);
+		return breakButton;
     }
-	public Button HideBreakButton()
+	public void HideBreakButton()
     {
-		panelBreak.SetActive(false);
-		return buttonBreak;
+		breakButton.BreakPointer.RemoveAllListeners();
+		breakButton.gameObject.SetActive(false);
 	}
 }
