@@ -146,16 +146,51 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 470befef8a70ee04aa0e9640cf603a58, type: 2}
   - {fileID: 11400000, guid: d3a1849bbe359fb4abddbd0c7e36b67e, type: 2}
   - {fileID: 11400000, guid: 3d8bad5f102c13c4ba6c16828f3eee02, type: 2}
-  containerPosibleItems:
-  - {fileID: 11400000, guid: 3c3f027af864f36418b7e8767860fcd1, type: 2}
-  - {fileID: 11400000, guid: b4459d87d4ff9da429b95f7f319ee8d5, type: 2}
-  - {fileID: 11400000, guid: c68a0070262fac74c99fa321dd7b402f, type: 2}
-  - {fileID: 11400000, guid: bc7ca229311567b4aa0e3dcb33624130, type: 2}
-  - {fileID: 11400000, guid: c8e0ded6803c21a47af46b163f153743, type: 2}
-  - {fileID: 11400000, guid: f09381bc1579d9f498ec0956cf1c7d09, type: 2}
-  - {fileID: 11400000, guid: 3c3f027af864f36418b7e8767860fcd1, type: 2}
-  - {fileID: 11400000, guid: b4459d87d4ff9da429b95f7f319ee8d5, type: 2}
-  - {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
+  playerContainer:
+    staticItems:
+    - scriptableData: {fileID: 11400000, guid: 17e656c3d1536434d9999bfc47cc4941, type: 2}
+      currentStackSize: 1
+      currentDurrability: 100
+      currentCalories: 0
+      currentWeight: 0
+      minimumWeight: 0
+      maxStackSize: 3
+      maxWeight: 1
+    - scriptableData: {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
+      currentStackSize: 1
+      currentDurrability: 100
+      currentCalories: 0
+      currentWeight: 0
+      minimumWeight: 0
+      maxStackSize: 45
+      maxWeight: 1
+    - scriptableData: {fileID: 11400000, guid: fe3f6e012c3127b4cb3b18f174143b35, type: 2}
+      currentStackSize: 1
+      currentDurrability: 100
+      currentCalories: 0
+      currentWeight: 0.5
+      minimumWeight: 0
+      maxStackSize: 1
+      maxWeight: 1.5
+    itemsAddCount: {x: 0, y: 7}
+    dinamicPosibleItems:
+    - {fileID: 11400000, guid: 3c3f027af864f36418b7e8767860fcd1, type: 2}
+    - {fileID: 11400000, guid: b4459d87d4ff9da429b95f7f319ee8d5, type: 2}
+    - {fileID: 11400000, guid: c68a0070262fac74c99fa321dd7b402f, type: 2}
+    - {fileID: 11400000, guid: bc7ca229311567b4aa0e3dcb33624130, type: 2}
+    - {fileID: 11400000, guid: c8e0ded6803c21a47af46b163f153743, type: 2}
+    - {fileID: 11400000, guid: f09381bc1579d9f498ec0956cf1c7d09, type: 2}
+  container:
+    staticItems: []
+    itemsAddCount: {x: 0, y: 7}
+    dinamicPosibleItems:
+    - {fileID: 11400000, guid: 3c3f027af864f36418b7e8767860fcd1, type: 2}
+    - {fileID: 11400000, guid: b4459d87d4ff9da429b95f7f319ee8d5, type: 2}
+    - {fileID: 11400000, guid: c68a0070262fac74c99fa321dd7b402f, type: 2}
+    - {fileID: 11400000, guid: bc7ca229311567b4aa0e3dcb33624130, type: 2}
+    - {fileID: 11400000, guid: c8e0ded6803c21a47af46b163f153743, type: 2}
+    - {fileID: 11400000, guid: f09381bc1579d9f498ec0956cf1c7d09, type: 2}
+    - {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
 --- !u!114 &550366340647897853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,7 +525,7 @@ MonoBehaviour:
     randomPlayerData: 1
     playerRandomData: {fileID: 11400000, guid: dca39bf00505c7045bc0c33351fb1e31, type: 2}
     playerData: {fileID: 0}
-    randomInventory: 0
+    randomInventory: 1
     container: {fileID: 0}
 --- !u!1 &5974223110589789611
 GameObject:

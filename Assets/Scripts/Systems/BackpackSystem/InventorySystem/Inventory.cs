@@ -11,19 +11,24 @@ public class Inventory
     public UnityAction<List<Item>> onCollectionChanged;
     public UnityAction onChanged;
 
-    [ListDrawerSettings(ShowIndexLabels = true)]
-    public List<ItemDataWrapper> initItems = new List<ItemDataWrapper>();
+    private InventoryData data;
+
     [HideInInspector] public List<Item> items = new List<Item>();
 
     public bool IsEmpty => items.Count == 0;
 
+    public Inventory SetData(InventoryData data)
+    {
+        this.data = data;
+        return this;
+    }
     public virtual void Init()
     {
-        for (int i = 0; i < initItems.Count; i++)
+        ItemDataWrapper[] initItems = data.items;
+        for (int i = 0; i < initItems.Length; i++)
         {
             AddItem(initItems[i]);
         }
-        //initItems.Clear();
     }
 
     public bool AddItem(ItemDataWrapper itemData)

@@ -99,10 +99,11 @@ public class ItemsData : MonoBehaviour
     public List<BlueprintSD> AllBlueprints => allBlueprints;
 
     //Containers
-
     [TitleGroup("Containers")]
-    [ReadOnly] [SerializeField] private List<ItemSD> containerPosibleItems = new List<ItemSD>();
-
+    [SerializeField] private Container playerContainer;
+    public InventoryData PlayerContainer => playerContainer.GetInventoryData();
+    [SerializeField] private Container container;
+    public InventoryData Container => container.GetInventoryData();
 
     private ItemDataWrapper snowItem;
     public ItemDataWrapper Snow
@@ -117,7 +118,6 @@ public class ItemsData : MonoBehaviour
             return snowItem;
         }
     }
-
 
     public ItemDataWrapper GetRandomItem()
     {
@@ -148,25 +148,11 @@ public class ItemsData : MonoBehaviour
         return dataWrapper;
     }
 
-    public List<ItemSD> GetRandomContainer(int count)
-    {
-        List<ItemSD> items = new List<ItemSD>();
-
-        for (int i = 0; i < count; i++)
-        {
-            items.Add(containerPosibleItems.GetRandomItem());
-        }
-        
-        items.Shuffle();
-        
-        return items;
-    }
-
-
     [Button]
     private void UpdateContainers()
     {
-        containerPosibleItems = MultipleLists(allConsumables.ToArray(), allFood.ToArray(), allStarters.ToArray(), allAccelerants.ToArray());
+        playerContainer.dinamicPosibleItems = MultipleLists(allConsumables.ToArray());
+        container.dinamicPosibleItems = MultipleLists(allConsumables.ToArray(), allStarters.ToArray(), allAccelerants.ToArray());
     }
 
     private List<ItemSD> MultipleLists(params ItemSD[][] items)
@@ -183,5 +169,48 @@ public class ItemsData : MonoBehaviour
     private bool Limits(ItemSD item)
     {
         return !(item is WaterItemSD) && !(item is SnowItemSD);
+    }
+}
+[System.Serializable]
+public class Container
+{
+    [InfoBox("Items которые точно будут в контейнере")]
+    public List<ItemDataRandom> staticItems = new List<ItemDataRandom>();
+
+    [MinMaxSlider(0, 32)]
+    public Vector2Int itemsAddCount;
+    [InfoBox("Items которые динамичные могут появится, а могут не появится")]
+    [ReadOnly] public List<ItemSD> dinamicPosibleItems = new List<ItemSD>();
+
+
+    public List<ItemDataWrapper> GetItems()
+    {
+        List<ItemDataWrapper> items = new List<ItemDataWrapper>();
+
+        for (int i = 0; i < staticItems.Count; i++)
+        {
+            items.Add(staticItems[i].RndData());
+        }
+
+        int itemsCount = itemsAddCount.RandomNumBtw();
+
+        for (int i = 0; i < itemsCount; i++)
+        {
+            ItemDataWrapper data = new ItemDataWrapper();
+            data.scriptableData = dinamicPosibleItems[UnityEngine.Random.Range(0, dinamicPosibleItems.Count)];
+            items.Add(data.RndData());
+        }
+
+        return items;
+    }
+
+    public InventoryData GetInventoryData()
+    {
+        InventoryData data = new InventoryData()
+        {
+            items = GetItems().ToArray(),
+        };
+
+        return data;
     }
 }

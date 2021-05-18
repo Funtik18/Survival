@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
 	[SerializeField] private PlayerUI ui;
 	public PlayerUI UI => ui;
 	#endregion
+
 	[SerializeField] private PlayerData data;
 
 
@@ -63,7 +64,8 @@ public class Player : MonoBehaviour
 
 		Controller.Init(this);
 
-		Inventory.Init();
+		Inventory.SetData(data.inventoryData).Init();
+
 		UI.Setup(this);
 		Build.Init(this);
 
@@ -76,15 +78,14 @@ public class Player : MonoBehaviour
     {
 		this.data = data;
 
-		Debug.LogError(data.position + "  " + data.rotation);
-
 		ChangePosition(data.position, data.rotation);
 
 		Status.SetData(data.statusData).Init(this);
 
 		Controller.Init(this);
 
-		Inventory.Init();
+		Inventory.SetData(data.inventoryData).Init();
+
 		UI.Setup(this);
 		Build.Init(this);
 
@@ -122,12 +123,15 @@ public class Player : MonoBehaviour
 				yield return null;
 			}
 
+			Controller.UpdateGravity();
+
 			if (GeneralSettings.IsPlatformMobile)
 			{
 				Debug.LogError("Mobile");
 				if (isMoveLocked == false)
 				{
 					Controller.UpdateMobileMovement();
+					Controller.UpdateMovement();
 				}
 				if (isLookLocked == false)
 				{
@@ -140,6 +144,7 @@ public class Player : MonoBehaviour
 				if (isMoveLocked == false)
 				{
 					Controller.UpdatePCMovement();
+					Controller.UpdateMovement();
 				}
 				if (isLookLocked == false)
 				{

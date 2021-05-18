@@ -23,14 +23,14 @@ public class ContainerUI : MonoBehaviour
     {
         currentInventory = inventory;
 
-        currentInventory.onCollectionChanged += UpdateGrid;
+        currentInventory.onCollectionChanged = UpdateGrid;
         UpdateGrid(currentInventory.items);
     }
     public void UnSubscribeInventory()
     {
         if (currentInventory != null)
         {
-            currentInventory.onCollectionChanged -= UpdateGrid;
+            currentInventory.onCollectionChanged = null;
             currentInventory = null;
         }
     }

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 601965307525583936}
   - component: {fileID: 390566205}
   - component: {fileID: 390566204}
-  - component: {fileID: 390566203}
   m_Layer: 13
   m_Name: Drawer_2
   m_TagString: Untagged
@@ -109,25 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 390566205}
   scriptableData: {fileID: 11400000, guid: 0b727b5282a8f254688e4e1fac6e5941, type: 2}
-  containerInventory:
-    initItems: []
   isInspected: 0
---- !u!114 &390566203
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6062994879430631356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e16b2bc65bcbc04cb1d4a4fa1c59a0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  generateOnAwake: 1
-  useRandomCount: 1
-  randomCount: {x: 0, y: 5}
-  constCount: 0
 --- !u!1 &6331928750301206045
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +122,6 @@ GameObject:
   - component: {fileID: 5524015121531615563}
   - component: {fileID: 390566208}
   - component: {fileID: 390566207}
-  - component: {fileID: 390566206}
   m_Layer: 13
   m_Name: Drawer_1
   m_TagString: Untagged
@@ -237,25 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 390566208}
   scriptableData: {fileID: 11400000, guid: 0b727b5282a8f254688e4e1fac6e5941, type: 2}
-  containerInventory:
-    initItems: []
   isInspected: 0
---- !u!114 &390566206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6331928750301206045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e16b2bc65bcbc04cb1d4a4fa1c59a0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  generateOnAwake: 1
-  useRandomCount: 1
-  randomCount: {x: 0, y: 5}
-  constCount: 0
 --- !u!1 &8174259297553415440
 GameObject:
   m_ObjectHideFlags: 0

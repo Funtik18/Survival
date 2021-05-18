@@ -24,6 +24,7 @@ public class ItemDataWrapper
 	[Required]
 	public ItemSD scriptableData;
 
+	[HideIf("IsWater")]
 	[MaxValue("MaxStackSize")]
 	[Min(1)]
 	[SerializeField] protected int currentStackSize = 1;
@@ -53,7 +54,7 @@ public class ItemDataWrapper
 	}
 	public string CurrentStringDurability => CurrentDurrability + "%";
 
-	[ShowIf("IsConsumable")]
+	[ShowIf("IsConsumableNoWater")]
 	[MaxValue("Calories")]
 	[Min(0)]
 	[OnValueChanged("WeightDependCalories")]
@@ -70,7 +71,7 @@ public class ItemDataWrapper
 
 	[ShowIf("IsConsumable")]
 	[MaxValue("VarialceWeight")]
-	[MinValue("minimumWeight")]
+	[MinValue("MinimumWeight")]
 	[SerializeField] protected float currentWeight;
 	public float CurrentWeight
     {
@@ -85,7 +86,6 @@ public class ItemDataWrapper
 
 	public string CurrentStringWeight => CurrentWeight + "KG";
 
-
 	[ShowIf("IsWater")]
 	[MaxValue("MinWeight")]
 	[Min(0)]
@@ -95,7 +95,7 @@ public class ItemDataWrapper
 	public bool IsFully => CurrentStackSize == scriptableData.stackSize;
 	public int StackDiffrence => scriptableData.stackSize - CurrentStackSize;
 
-	protected float MaxStackSize
+	protected int MaxStackSize
 	{
 		get
 		{
@@ -156,7 +156,7 @@ public class ItemDataWrapper
         }
     }
 
-	private bool IsConsumable
+	protected bool IsConsumable
     {
         get
         {
@@ -167,8 +167,18 @@ public class ItemDataWrapper
 			return false;
         }
     }
-
-	private bool IsWater
+	protected bool IsConsumableNoWater
+	{
+		get
+		{
+			if (scriptableData != null)
+			{
+				return scriptableData is ConsumableItemSD && !IsWater;
+			}
+			return false;
+		}
+	}
+	protected bool IsWater
     {
         get
         {
@@ -180,6 +190,21 @@ public class ItemDataWrapper
 		}
     }
 
+	public virtual ItemDataWrapper RndData()
+	{
+		CurrentStackSize = Random.Range(1, MaxStackSize);
+
+		CurrentWeight = scriptableData.weight;
+
+        if (IsConsumable)
+        {
+			CurrentCalories = (scriptableData as ConsumableItemSD).calories;
+        }
+
+		CurrentDurrability = 100;
+
+		return this;
+	}
 
 	public ItemDataWrapper Copy()
 	{
@@ -195,8 +220,32 @@ public class ItemDataWrapper
 [System.Serializable]
 public class ItemDataRandom : ItemDataWrapper
 {
+	[HideIf("IsWater")]
 	[MaxValue("MaxStackSize")]
 	[MinValue("CurrentStackSize")]
 	[Min(1)]
 	[SerializeField] protected int maxStackSize = 1;
+
+	[ShowIf("IsWater")]
+	[MinValue("CurrentWeight")] 
+	[SerializeField] protected float maxWeight = 1;
+
+	public override ItemDataWrapper RndData()
+    {
+		ItemDataWrapper data = new ItemDataWrapper();
+		data.scriptableData = scriptableData;
+
+        if (IsWater)
+        {
+			data.CurrentWeight = Random.Range(currentWeight, maxWeight);
+        }
+        else
+        {
+			data.CurrentStackSize = Random.Range(currentStackSize, maxStackSize);
+		}
+
+		data.CurrentDurrability = 100;
+
+		return data;
+	}
 }

@@ -23,7 +23,6 @@ public class WindowBackpack : WindowUI
 	[Space]
 	[SerializeField] private Button buttonBack;
 
-
 	private PlayerInventory inventory;
 	private PlayerInventory Inventory
 	{
@@ -80,17 +79,18 @@ public class WindowBackpack : WindowUI
 		Inventory.onBlueprintsUpdated += craftingSystem.UpdateUI;
 	}
 
-	
 
-	public void ShowBackpackInspector()
+	public void ShowBackpack()
     {
-		inventorySystem.OpenItemInspector();
-		OpenInventory();
+		ShowWindowByIndex(windowsOrder.FindIndex((x) => x == inventorySystem));
+		ShowWindow();
 	}
 	public void ShowBackpackWithContainer()
     {
-		inventorySystem.OpenSecondaryContainer();
-		OpenInventory();
+		navigationHeader.Enable(false);
+		CloseAll();
+		inventorySystem.OpenWindow(false);
+		ShowWindow();
 	}
 	public void ShowBackpackCrafting()
     {
@@ -103,11 +103,17 @@ public class WindowBackpack : WindowUI
 		HideWindow();
 	}
 
-	private void OpenInventory()
+
+
+	public WindowBackpack SetSecondaryContainer(Inventory inventory)
 	{
-		ShowWindowByIndex(windowsOrder.FindIndex((x) => x == inventorySystem));
-		ShowWindow();
+		inventorySystem.SetSecondaryContainer(inventory);
+
+		return this;
 	}
+
+
+
 	private void OpenCrafting()
 	{
 		ShowWindowByIndex(windowsOrder.FindIndex((x) => x == craftingSystem));
@@ -117,9 +123,16 @@ public class WindowBackpack : WindowUI
 	{
 		currentIndex = index;
 		UpdateHeader();
+		navigationHeader.Enable(true);
+
 		OpenWindow(currentIndex);
 	}
+	private void OpenWindow(int index)
+	{
+		CloseAll();
 
+		windowsOrder[index].OpenWindow();
+	}
 
 	private void Left()
     {
@@ -162,6 +175,7 @@ public class WindowBackpack : WindowUI
 			}
 		}
 	}
+	
 	private void UpdateNavigator(bool direction)
     {
 		navigationHeader.SetSelectorDirection(direction);
@@ -174,12 +188,6 @@ public class WindowBackpack : WindowUI
 		navigationHeader.SetIndicatorsIndex(CurrentIndex);
 	}
 
-	private void OpenWindow(int index)
-	{
-		CloseAll();
-
-		windowsOrder[index].OpenWindow();
-	}
 	private void CloseAll()
     {
 		for (int i = 0; i < windowsOrder.Count; i++)

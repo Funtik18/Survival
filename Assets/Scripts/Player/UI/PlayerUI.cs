@@ -18,7 +18,6 @@ public class PlayerUI : MonoBehaviour
 	public ButtonBreak breakButton;
 	public SavingPanel savingPanel;
 
-
 	public void Setup(Player player)
 	{
 		controlUI.Setup(player.Controller);
@@ -46,7 +45,14 @@ public class PlayerUI : MonoBehaviour
 	{
 		CloseControlUI();
 		CloseConditionUI();
-		windowsUI.backpackWindow.ShowBackpackInspector();
+		windowsUI.backpackWindow.ShowBackpack();
+	}
+	public void OpenInventoryWithContainer()
+    {
+		CloseControlUI();
+		CloseConditionUI();
+
+		windowsUI.backpackWindow.ShowBackpackWithContainer();
 	}
 	public void OpenCrafting()
     {

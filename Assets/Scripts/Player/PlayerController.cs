@@ -77,7 +77,6 @@ public class PlayerController : MonoBehaviour
     private float speedTimePosition;
 
     private float cameraPitch = 0.0f;
-    private float velocityY = 0.0f;
 
     private float currentSensitivity;
     private float currentSmoothTime;
@@ -151,11 +150,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
-
-        UpdateSlope();
-        UpdateGravity();
-        UpdateVelocity();
     }
     public void UpdateMobileMovement()
     {
@@ -181,11 +175,22 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
+    }
+    public void UpdateMovement()
+    {
         UpdateSlope();
-        UpdateGravity();
         UpdateVelocity();
     }
+    public void UpdateGravity()
+    {
+        Vector3 velocity = Vector3.zero;
+        if (!characterController.isGrounded)
+        {
+            velocity.y += gravity * Time.deltaTime;
+            characterController.Move(velocity);
+        }
+    }
+
 
     public void SpeedUp()
     {
@@ -206,6 +211,8 @@ public class PlayerController : MonoBehaviour
     }
 
 
+
+
     private void UpdateLook()
     {
         currentMouseDelta = Vector2.SmoothDamp(currentMouseDelta, targetLookDirection, ref currentMouseDeltaVelocity, currentSmoothTime);
@@ -224,12 +231,7 @@ public class PlayerController : MonoBehaviour
             //currentSpeed = maxSlopeSpeed;
         }
     }
-    private void UpdateGravity()
-    {
-        if (characterController.isGrounded)
-            velocityY = 0.0f;
-        velocityY += gravity * Time.deltaTime;
-    }
+
     private void UpdateVelocity()
     {
         if(currentDirection != Vector2.zero)
@@ -237,7 +239,6 @@ public class PlayerController : MonoBehaviour
             if (isSpeedUp)
             {
                 status.states.CurrentState = PlayerState.Sprinting;
-                
             }
             else
             {
@@ -252,8 +253,7 @@ public class PlayerController : MonoBehaviour
         if (isSpeedUp && !status.IsCanRunning)
             SpeedDown();
 
-        Vector3 velocity = (OwnerTransform.forward * currentDirection.y + OwnerTransform.right * currentDirection.x) * currentSpeed + Vector3.up * velocityY;
-
+        Vector3 velocity = (OwnerTransform.forward * currentDirection.y + OwnerTransform.right * currentDirection.x) * currentSpeed;
         characterController.Move(velocity * Time.deltaTime);
     }
 

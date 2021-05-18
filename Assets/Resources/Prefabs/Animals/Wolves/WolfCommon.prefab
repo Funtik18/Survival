@@ -1300,7 +1300,7 @@ GameObject:
   - component: {fileID: 7712399900375915364}
   - component: {fileID: 7712399900375915363}
   m_Layer: 20
-  m_Name: Wolf
+  m_Name: WolfCommon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1430,7 +1430,7 @@ MonoBehaviour:
     m_Bits: 0
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   delay: 0.2
 --- !u!1 &7712413299622601072
 GameObject:

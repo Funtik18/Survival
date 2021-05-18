@@ -20,7 +20,7 @@ public class ContainerObject : WorldObject
 
     private void Awake()
     {
-		containerInventory.Init();//изменить
+		containerInventory.SetData(ItemsData.Instance.Container).Init();//изменить
 	}
 
     public override void StartObserve()
@@ -47,8 +47,8 @@ public class ContainerObject : WorldObject
 
     private void OpenContainer()
     {
-        GeneralAvailability.BackpackWindow.InventorySystem.SetSecondaryContainer(containerInventory);
-        GeneralAvailability.BackpackWindow.ShowBackpackWithContainer();
+        GeneralAvailability.BackpackWindow.SetSecondaryContainer(containerInventory);
+        GeneralAvailability.PlayerUI.OpenInventoryWithContainer();
     }
 
 	public override void Interact()

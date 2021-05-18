@@ -16,6 +16,10 @@ public class NavigationHeaderUI : MonoBehaviour
         left.onClick.AddListener(Left);
         right.onClick.AddListener(Right);
     }
+    public void Enable(bool trigger)
+    {
+        gameObject.SetActive(trigger);
+    }
 
     public void SetSelectorText(string text)
     {

@@ -33,7 +33,6 @@ public class GlobalSaveLoader : MonoBehaviour
             else if (DataHolder.loadType == LoadType.Load)
             {
                 Data data = DataHolder.Data;
-
             }
         }
     }
@@ -90,7 +89,6 @@ public class GlobalSaveLoader : MonoBehaviour
         [HideIf("randomInventory")]
         public ContainerSD container;
 
-
         public Data GetData()
         {
             Data data = new Data();
@@ -110,6 +108,16 @@ public class GlobalSaveLoader : MonoBehaviour
             data.playerData.rotation = Quaternion.LookRotation(point.forward);
 
             data.playerData.statusData = randomPlayerData ? playerRandomData.GetData() : playerData.statsData;
+
+            if (randomInventory)
+            {
+                data.playerData.inventoryData = ItemsData.Instance.PlayerContainer;
+            }
+            else
+            {
+                //data.playerData.inventoryData = container.container.GetInventoryData();
+            }
+
 
             return data;
         }

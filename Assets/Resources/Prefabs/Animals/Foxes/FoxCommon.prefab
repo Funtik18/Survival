@@ -1464,7 +1464,7 @@ MonoBehaviour:
   visibleTargets: []
   targetMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   obstacleMask:
     serializedVersion: 2
     m_Bits: 1024

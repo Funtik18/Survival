@@ -57,6 +57,7 @@ public class PlayerOpportunities
 
 		if (data is ConsumableItemSD consuable)
 		{
+
             if (IsCanGetIt(consuable))
             {
 				ui.ShowBreakButton().BreakPointer.AddPressListener(StopUse);
@@ -76,36 +77,38 @@ public class PlayerOpportunities
 
 		if(consuable is WaterItemSD water)
 			yield return UseWater(data, consuable.hydration);
-        else
+		else
 			yield return UseConsuable(data, consuable.calories, consuable.hydration);
 
 		DestroyItem(item);
 
 		StopUse();
 	}
-	private IEnumerator UseConsuable(ItemDataWrapper data, float calories, float hydration)
+	private IEnumerator UseConsuable(ItemDataWrapper data, float maxCalories, float hydration)
     {
-		//ERROR
 		//ui
 		ui.conditionUI.conditionWindow.thirst.EnableCondition(true);
 		ui.conditionUI.conditionWindow.hungred.EnableCondition(true);
 
 		//lerp parametrs
-		float maxCalories = data.CurrentCalories;
-		float maxHydration = (maxCalories / calories) * (thirst.Value * (hydration / 100f));
+		float currentCalories = data.CurrentCalories;
+		Debug.LogError(currentCalories + "  " + maxCalories);
+		float maxHydration = (currentCalories / maxCalories) * (thirst.Value * (hydration / 100f));
 
 		float startCalories = hungred.CurrentValue;
 		float startHydration = thirst.CurrentValue;
 
-		float endCalories = startCalories + maxCalories;
+		float endCalories = startCalories + currentCalories;
 		float endHydration = startHydration + maxHydration;
 
 		float startWeight = data.CurrentWeight;
 		float endWeight = 0.05f;
 
 		float time = 0;
-		float duration = useTimeByKg * (maxCalories / 1000f);//1kg
+		float duration = useTimeByKg * data.CurrentWeight;//1kg
 
+		Debug.LogError(startCalories + "  " + endCalories);
+		Debug.LogError(startHydration + "  " + endHydration);
 		//time duration cycle
 		while (time < duration)
 		{
@@ -113,7 +116,7 @@ public class PlayerOpportunities
 
 			thirst.CurrentValue = Mathf.Lerp(startHydration, endHydration, normalStep);
 			hungred.CurrentValue = Mathf.Lerp(startCalories, endCalories, normalStep);
-			data.CurrentCalories = Mathf.Lerp(maxCalories, 0, normalStep);
+			data.CurrentCalories = Mathf.Lerp(currentCalories, 0, normalStep);
 			data.CurrentWeight = Mathf.Lerp(startWeight, endWeight, normalStep);
 
 			time += Time.deltaTime;
@@ -169,7 +172,6 @@ public class PlayerOpportunities
 
 			if (thirst.IsFull)
             {
-				Debug.LogError("FULL");
 				StopUse();
 				yield break;
 			}
@@ -184,7 +186,6 @@ public class PlayerOpportunities
 
 	private void StopUse()
 	{
-		Debug.LogError("Not good");
 		if (IsUseProccess)
 		{
 			owner.StopCoroutine(useCoroutine);
@@ -202,12 +203,12 @@ public class PlayerOpportunities
     {
 		if(consuable is WaterItemSD)
         {
-			if (thirst.IsFull)
+			if (thirst.IsFullNear)
 				return false;
         }
         else
         {
-			if (thirst.IsFull && hungred.IsFull)
+			if (thirst.IsFullNear && hungred.IsFullNear)
 				return false;
         }
 		return true;

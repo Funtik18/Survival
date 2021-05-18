@@ -15,7 +15,12 @@ PrefabInstance:
     - target: {fileID: 1406189286424223596, guid: e6d7f2fadba89cb43aecff247873aa4c,
         type: 3}
       propertyPath: m_Name
-      value: RabbitBabyWhite
+      value: RabbitBabyWhite Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406189286424223597, guid: e6d7f2fadba89cb43aecff247873aa4c,
+        type: 3}
+      propertyPath: targetMask.m_Bits
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1411089735577047336, guid: e6d7f2fadba89cb43aecff247873aa4c,
         type: 3}
