@@ -36,6 +36,18 @@ public class PIRadialOption : MonoBehaviour
         }
     }
 
+    private bool isHideIcon = false;
+    public bool IsHideIcon
+    {
+        get => isHideIcon;
+        set
+        {
+            isHideIcon = value;
+
+            icon.enabled = !isHideIcon;
+        }
+    }
+
     private void Awake()
     {
         pointer.AddPressListener(Choosen);

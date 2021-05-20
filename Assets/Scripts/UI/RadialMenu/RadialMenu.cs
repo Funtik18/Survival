@@ -249,9 +249,12 @@ public class RadialMenu : WindowUI
 
         [SerializeField] private PIRadialMenu connection;
 
+        [HideIf("isItemAction")]
         [SerializeField] private bool isBuilding = false;
-
         [HideIf("isBuilding")]
+        [SerializeField] private bool isItemAction = false;
+
+        [HideIf("IsComplex")]
         [OnValueChanged("IconChanged")]
         [SerializeField] private Sprite icon;
 
@@ -259,7 +262,15 @@ public class RadialMenu : WindowUI
         [OnValueChanged("IconChanged")]
         [SerializeField] private BuildingSD building;
 
+        [ShowIf("isItemAction")]
+        [OnValueChanged("IconChanged")]
+        [SerializeField] private ItemSD item;
+
         [SerializeField] private UnityEvent unityEvent;
+
+        private Item currentFastItem = null;
+
+        private bool IsComplex => isBuilding || isItemAction;
 
         private bool isEnd = true;
         public bool IsEnd => isEnd;
@@ -285,8 +296,8 @@ public class RadialMenu : WindowUI
         public void Setup(PIRadialMenu owner)
         {
             this.owner = owner;
-            owner.onOpened += Check;
             owner.onOpened += IconChanged;
+            owner.onOpened += Check;
 
             option.onChoosen = EventInvoke;
         }
@@ -297,11 +308,24 @@ public class RadialMenu : WindowUI
             {
                 if(building != null)
                 {
-                    option.IsProhibition = !GeneralAvailability.Player.Build.IsCanBuild(building);
+                    option.IsProhibition = !GeneralAvailability.Build.IsCanBuild(building);
                 }
                 else
                 {
                     option.IsProhibition = true;
+                }
+            }
+
+            if (isItemAction)
+            {
+                if(item != null)
+                {
+                    currentFastItem = GeneralAvailability.PlayerInventory.FastAccessGetItem(item);
+                    option.IsHideIcon = currentFastItem == null;
+                }
+                else
+                {
+                    option.IsHideIcon = true;
                 }
             }
 
@@ -310,28 +334,42 @@ public class RadialMenu : WindowUI
 
         private void EventInvoke()
         {
+            MainEvent();
+
+            if (isBuilding)
+                GeneralAvailability.Build.BuildBuilding(building.model);
+
+            if (isItemAction)
+                GeneralAvailability.Player.Status.opportunities.EquipUnEquip(currentFastItem);
+        }
+        private void MainEvent()
+        {
             if (IsEnd)
-            {
                 RadialMenu.Instance.CloseRadialMenu();
-            }
             else
             {
                 owner.CloseMenu();
+                connection.OpenMenu();
             }
 
             unityEvent?.Invoke();
-
-            if(isBuilding)
-                if(GeneralAvailability.Player.Build.IsCanBuild(building))
-                    GeneralAvailability.Build.BuildBuilding(building.model);
-
-            if (!IsEnd)
-                connection.OpenMenu();
         }
+
 
         private void IconChanged()
         {
-            option.Setup(isBuilding ? building?.buildingSprite : icon);
+            if (isBuilding && !isItemAction)
+            {
+                option.Setup(building?.buildingSprite);
+            }
+            else if (!isBuilding && isItemAction)
+            {
+                option.Setup(item?.itemSprite);
+            }
+            else
+            {
+                option.Setup(icon);
+            }
         }
     }
 }

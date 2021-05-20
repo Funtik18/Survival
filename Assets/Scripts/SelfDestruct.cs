@@ -20,6 +20,6 @@ public class SelfDestruct : MonoBehaviour
     private IEnumerator Destruct()
     {
         yield return seconds;
-        ObjectPool.Instance.ReturnGameObject(gameObject);
+        ObjectPool.ReturnGameObject(gameObject);
     }
 }

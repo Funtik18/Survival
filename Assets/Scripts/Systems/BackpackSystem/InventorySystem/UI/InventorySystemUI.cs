@@ -6,17 +6,15 @@ public class InventorySystemUI : BackpackWindow
 	[SerializeField] private ContainerUI secondaryContainer;
 	[SerializeField] private InventoryItemInspectorUI itemInspector;
 
-	private PlayerOpportunities opportunities;
-
     public override void Setup(PlayerInventory inventory)
     {
         base.Setup(inventory);
 
-		itemInspector.onUse += UseItem;
-		itemInspector.onActions += ActionsWith;
-		itemInspector.onDrop += DropItem;
+		PlayerOpportunities opportunities = GeneralAvailability.Player.Status.opportunities;
 
-		opportunities = GeneralAvailability.Player.Status.opportunities;
+		itemInspector.onUse += opportunities.UseItem;
+		itemInspector.onActions += opportunities.ActionsItem;
+		itemInspector.onDrop += opportunities.DropItem;
 
 		primaryContainer.SubscribeInventory(inventory);
 
@@ -81,7 +79,6 @@ public class InventorySystemUI : BackpackWindow
 		itemInspector.gameObject.SetActive(false);
 	}
 
-   
 	private void ItemShift(ContainerUI from, ContainerUI to, Item item)
 	{
 		if (item != null)
@@ -89,18 +86,5 @@ public class InventorySystemUI : BackpackWindow
 			to.currentInventory.AddItem(item.itemData);
 			from.currentInventory.RemoveItem(item);
 		}
-	}
-
-	private void UseItem(Item item)
-	{
-		opportunities.UseItem(item);
-	}
-	private void ActionsWith(Item item)
-	{
-
-	}
-	private void DropItem(Item item)
-	{
-		opportunities.DropItem(item);
 	}
 }

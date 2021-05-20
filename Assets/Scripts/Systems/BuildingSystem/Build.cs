@@ -36,8 +36,6 @@ public class Build
 
 	private Vector3 SpherePoint => playerCamera.Transform.position + (playerCamera.Transform.forward * rayDistance);
 
-	private ObjectPool pool;
-
 	#region Cash
 	private List<Collider> collidersIntersects;
 
@@ -54,8 +52,6 @@ public class Build
 		this.inventory = player.Inventory;
 		this.playerCamera = player.Camera;
 		collidersIntersects = playerCamera.collidersIntersects;
-
-		pool = ObjectPool.Instance;
 	}
 
 	public bool IsCanBuild(BuildingSD sd)
@@ -95,11 +91,11 @@ public class Build
 
 	public void BuildBuilding(BuildingObject building)
 	{
-		if (building == null) return;
+		if (!IsCanBuild(building.Data)) return;
 
 		playerCamera.LockVision();
 
-		currentBuilding = pool.GetObject(building.gameObject).GetComponent<BuildingObject>();
+		currentBuilding = ObjectPool.GetObject(building.gameObject).GetComponent<BuildingObject>();
 
 		onStartBuild?.Invoke(currentBuilding);
 

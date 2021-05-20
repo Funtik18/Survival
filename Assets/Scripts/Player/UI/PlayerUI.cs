@@ -50,6 +50,16 @@ public class PlayerUI : MonoBehaviour
 	}
 
 
+	public void OpenShooting()
+    {
+		controlUI.windowShoting.ShowWindow();
+	}
+	public void CloseShooting()
+    {
+		controlUI.windowShoting.HideWindow();
+	}
+
+
 	public void OpenInventory()
 	{
 		CloseControlUI();
@@ -83,13 +93,6 @@ public class PlayerUI : MonoBehaviour
 		CloseConditionUI();
 
 		windowsUI.itemInspectorWindow.SetItem(item);
-	}
-	public void OpenItemInspector(ItemObject itemObject)
-	{
-		CloseControlUI();
-		CloseConditionUI();
-
-		windowsUI.itemInspectorWindow.SetItem(itemObject);
 	}
 	public void CloseItemInspector()
     {

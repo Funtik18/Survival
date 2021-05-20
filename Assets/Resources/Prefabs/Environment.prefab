@@ -41,7 +41,6 @@ GameObject:
   - component: {fileID: 606545092}
   - component: {fileID: 606545091}
   - component: {fileID: 550366340647897853}
-  - component: {fileID: 606545093}
   m_Layer: 0
   m_Name: DATA
   m_TagString: Untagged
@@ -154,6 +153,7 @@ MonoBehaviour:
       currentCalories: 0
       currentWeight: 0
       minimumWeight: 0
+      currentMagazineCapacity: 0
       maxStackSize: 3
       maxWeight: 1
     - scriptableData: {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
@@ -162,6 +162,7 @@ MonoBehaviour:
       currentCalories: 0
       currentWeight: 0
       minimumWeight: 0
+      currentMagazineCapacity: 0
       maxStackSize: 45
       maxWeight: 1
     - scriptableData: {fileID: 11400000, guid: fe3f6e012c3127b4cb3b18f174143b35, type: 2}
@@ -170,6 +171,7 @@ MonoBehaviour:
       currentCalories: 0
       currentWeight: 0.5
       minimumWeight: 0
+      currentMagazineCapacity: 0
       maxStackSize: 1
       maxWeight: 1.5
     itemsAddCount: {x: 0, y: 7}
@@ -237,18 +239,6 @@ MonoBehaviour:
     minutes: 45
     seconds: 0
     totalSeconds: 2700
---- !u!114 &606545093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 606545090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 166f55d885890f0498baea57f0abbf37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1694931861
 GameObject:
   m_ObjectHideFlags: 0

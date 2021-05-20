@@ -21,9 +21,8 @@ public class InventoryItemInspectorUI : MonoBehaviour
 	[SerializeField] private TMPro.TextMeshProUGUI actionsText;
 	[SerializeField] private TMPro.TextMeshProUGUI dropText;
 
-
-	//cash
 	private ContainerSlotUI currentSlot;
+	private ItemDataWrapper itemData;
 
 	private void Awake()
 	{
@@ -47,7 +46,9 @@ public class InventoryItemInspectorUI : MonoBehaviour
 
 			inspectorUI.InstantiateModel(data.model);
 
-			CheckItemType(data);
+			itemData = currentSlot.Data;
+
+			CheckItemType();
 		}
 		else
 		{
@@ -62,13 +63,12 @@ public class InventoryItemInspectorUI : MonoBehaviour
 		}
 	}
 
-	private void CheckItemType(ItemSD item)
+	private void CheckItemType()
     {
 		buttonDrop.gameObject.SetActive(true);
 	
-		if(item is ConsumableItemSD consuable)
+		if(itemData.scriptableData is ConsumableItemSD consuable)
         {
-
 			if(consuable is PotionItemSD)
             {
 				useText.text = "DRINK";
@@ -80,7 +80,20 @@ public class InventoryItemInspectorUI : MonoBehaviour
 
 			buttonUse.gameObject.SetActive(true);
         }
-        else
+		else if(itemData.scriptableData is ToolWeaponSD)
+        {
+			if (GeneralAvailability.Player.Status.opportunities.IsEquiped(itemData))
+            {
+				useText.text = "UNEQUIP";
+            }
+            else
+            {
+				useText.text = "EQUIP";
+			}
+
+			buttonUse.gameObject.SetActive(true);
+		}
+		else
         {
 			buttonUse.gameObject.SetActive(false);
 		}
@@ -89,6 +102,8 @@ public class InventoryItemInspectorUI : MonoBehaviour
 	private void Use()
     {
 		onUse?.Invoke(currentSlot.item);
+
+		CheckItemType();
 	}
 	private void Actions()
     {

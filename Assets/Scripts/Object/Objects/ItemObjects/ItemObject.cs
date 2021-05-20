@@ -8,6 +8,7 @@ public class ItemObject : WorldObject
 	public UnityAction onDisable;
 
 	[SerializeField] protected ItemDataWrapper itemData;
+	public ItemDataWrapper Data => itemData;
 	[ShowIf("CheckCan")]
 	public ItemObjectLiquidContainer canItemObject;
 	[ShowIf("CheckCan")]
@@ -28,11 +29,8 @@ public class ItemObject : WorldObject
 		}
     }
 
-
 	public virtual void UpdateItem() { }
 	public virtual void UpdateItem(float temperature) { }
-
-	public virtual void ActionItem() { }
 
 
 	public override void StartObserve()

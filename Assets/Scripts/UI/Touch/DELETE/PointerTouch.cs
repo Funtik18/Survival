@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 using Sirenix.OdinInspector;
 
@@ -10,14 +8,13 @@ public abstract class PointerTouch : Pointer
 
     public override bool IsEnable 
     { 
-        get => isEnable;
+        get => base.IsEnable;
         set
         {
-            isEnable = value;
-            canvasGroup.IsEnabled(isEnable);
+            base.IsEnable = value;
+            canvasGroup.IsEnabled(value);
         } 
     }
-
 
     [Button]
     public void OpenWindow()

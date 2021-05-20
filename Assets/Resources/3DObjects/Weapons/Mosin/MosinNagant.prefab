@@ -800,7 +800,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1706987699286574385}
   - component: {fileID: 4148917260203870181}
-  - component: {fileID: 4148917260203870180}
+  - component: {fileID: 5195129708163620888}
+  - component: {fileID: 6685376095792747766}
   m_Layer: 12
   m_Name: MosinNagant
   m_TagString: Untagged
@@ -816,8 +817,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2088439771067080587}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 83.42, y: 163.93, z: 623.96}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.25000015, y: 0.25000003, z: 0.25000015}
   m_Children:
   - {fileID: 936326548407890647}
   - {fileID: 8088685967557866539}
@@ -872,7 +873,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 9.463806, y: 1.3505249, z: 0.29248047}
   m_Center: {x: 0.030578613, y: -0.17526245, z: -0.0087890625}
---- !u!114 &4148917260203870180
+--- !u!114 &5195129708163620888
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -881,7 +882,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2088439771067080587}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b14f35c3f0318c24f92b95d195ef140c, type: 3}
+  m_Script: {fileID: 11500000, guid: c35e78afbc3a68345a06ca865ebe2679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   coll: {fileID: 4148917260203870181}
@@ -892,9 +893,30 @@ MonoBehaviour:
     currentCalories: 0
     currentWeight: 4
     minimumWeight: 0
+    currentMagazineCapacity: 5
   canItemObject: {fileID: 0}
   baseCan: {fileID: 0}
   opennedCan: {fileID: 0}
+  animator: {fileID: 6685376095792747766}
+--- !u!95 &6685376095792747766
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088439771067080587}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f1fdef08a3449234daa04177319629d7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2490657220729793559
 GameObject:
   m_ObjectHideFlags: 0

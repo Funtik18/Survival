@@ -9,6 +9,8 @@ public class PlayerControlUI : WindowUI
 	public FixedTouchField fieldLook;
 	public RadialMenu radialMenu;
 
+	public WindowShooting windowShoting;
+
 	[Title("Buttons")]
 	public InteractionButton buttonInteraction;
 	public CustomPointer buttonSpeedUp;

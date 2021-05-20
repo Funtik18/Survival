@@ -30,39 +30,16 @@ public class WindowItemInspector : WindowUI
 	{
         currentItem = item;
 
-        actionButton.gameObject.SetActive(false);
-
         UpdateUI();
 
         if(!IsOpened)
             ShowWindow();
     }
-    public void SetItem(ItemObject itemObject)
+
+    public void SetupAction(bool isEnable, string text = "")
     {
-        currentItem = itemObject.Item;
-
-        if(itemObject is ItemObjectLiquidContainer liquidContainer)
-        {
-            if (liquidContainer.IsProccessing)
-            {
-                actionButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "PASS TIME";
-                actionButton.gameObject.SetActive(true);
-            }
-            else
-            {
-                actionButton.gameObject.SetActive(false);
-            }
-        }
-        else
-        {
-            actionButton.gameObject.SetActive(false);
-        }
-
-
-        UpdateUI();
-
-        if (!IsOpened)
-            ShowWindow();
+        actionButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = text;
+        actionButton.gameObject.SetActive(isEnable);
     }
 
     private void UpdateUI()

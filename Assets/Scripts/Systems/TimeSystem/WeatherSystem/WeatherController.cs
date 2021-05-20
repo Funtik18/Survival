@@ -203,7 +203,7 @@ public class WeatherController : MonoBehaviour
             {
                 if (weather.particles.Count > 0)
                 {
-                    currentWeatherTransform = ObjectPool.Instance.GetObject(weather.particles.GetRandomItem().gameObject).transform;
+                    currentWeatherTransform = ObjectPool.GetObject(weather.particles.GetRandomItem().gameObject).transform;
                     currentWeatherTransform.SetParent(origin);
 
                     currentWeatherParticle = currentWeatherTransform.GetComponent<ParticleSystem>();
@@ -214,7 +214,7 @@ public class WeatherController : MonoBehaviour
             {
                 if (weather.particle != null)
                 {
-                    currentWeatherTransform = ObjectPool.Instance.GetObject(weather.particle.gameObject).transform;
+                    currentWeatherTransform = ObjectPool.GetObject(weather.particle.gameObject).transform;
                     currentWeatherTransform.SetParent(origin);
 
                     currentWeatherParticle = currentWeatherTransform.GetComponent<ParticleSystem>();
@@ -259,7 +259,7 @@ public class WeatherController : MonoBehaviour
             {
                 if (weather.particles.Count > 0)
                 {
-                    currentWeatherTransform = ObjectPool.Instance.GetObject(weather.particles.GetRandomItem().gameObject).transform;
+                    currentWeatherTransform = ObjectPool.GetObject(weather.particles.GetRandomItem().gameObject).transform;
                     currentWeatherTransform.SetParent(origin);
 
                     currentWeatherParticle = currentWeatherTransform.GetComponent<ParticleSystem>();
@@ -270,7 +270,7 @@ public class WeatherController : MonoBehaviour
             {
                 if (weather.particle != null)
                 {
-                    currentWeatherTransform = ObjectPool.Instance.GetObject(weather.particle.gameObject).transform;
+                    currentWeatherTransform = ObjectPool.GetObject(weather.particle.gameObject).transform;
                     currentWeatherTransform.SetParent(origin);
 
                     currentWeatherParticle = currentWeatherTransform.GetComponent<ParticleSystem>();

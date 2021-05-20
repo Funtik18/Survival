@@ -15,7 +15,7 @@ MonoBehaviour:
   objectName: Bedroll
   description: A down-filled sleeping bag.
   itemSprite: {fileID: 21300000, guid: 785eb9341aa223d4d8597235e5d4d48b, type: 3}
-  model: {fileID: 4445102548152149349, guid: 2d82cb21aa857464e9f1e4dff819ed8a, type: 3}
+  model: {fileID: 6372581546383895229, guid: 2d82cb21aa857464e9f1e4dff819ed8a, type: 3}
   orientation:
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}

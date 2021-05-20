@@ -11,13 +11,7 @@ public class Pointer : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private const float DoubleClickTime = 0.2f;
 
-    protected bool isEnable = true;
-    public virtual bool IsEnable
-    {
-        get => isEnable;
-        set => isEnable = value;
-    }
-
+    public virtual bool IsEnable { get; set; }
     public bool IsPressed { get; protected set; }
 
     public UnityEvent onPressed;
@@ -27,11 +21,14 @@ public class Pointer : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private float lastPressTime = 0;
 
+    private void Awake()
+    {
+        IsEnable = true;
+    }
+
     public virtual void OnPointerDown(PointerEventData eventData)
     {
         PressButton();
-
-        
     }
     public virtual void OnPointerUp(PointerEventData eventData)
     {

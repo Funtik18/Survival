@@ -23,19 +23,6 @@ public class Generator : MonoBehaviour
     [HideInInspector] public List<Transform> objs = new List<Transform>();
 
 
-    private ObjectPool pool;
-    private ObjectPool Pool
-    {
-        get
-        {
-            if (pool == null)
-            {
-                pool = ObjectPool.Instance;
-            }
-            return pool;
-        }
-    }
-
     public bool IsEmpty => objs.Count == 0;
 
     public float zoneRadiusAwake = 0;
@@ -45,8 +32,6 @@ public class Generator : MonoBehaviour
 
     private void Awake()
     {
-        pool = ObjectPool.Instance;
-        
         if(objs.Count != 0)
             objs.Clear();
 
@@ -55,10 +40,9 @@ public class Generator : MonoBehaviour
 
     public void ReGenerateZone()
     {
-        ObjectPool temp = Pool;
         for (int i = 0; i < objs.Count; i++)
         {
-            temp.ReturnGameObject(objs[i].gameObject);
+            ObjectPool.ReturnGameObject(objs[i].gameObject);
         }
 
         objs.Clear();
@@ -135,7 +119,7 @@ public class Generator : MonoBehaviour
         {
             Quaternion rot = Quaternion.FromToRotation(Vector3.up, hit.normal);
 
-            Transform obj = Pool.GetObject(prefabs.GetRandomItem()).transform;
+            Transform obj = ObjectPool.GetObject(prefabs.GetRandomItem()).transform;
             
             obj.position = point;
             obj.rotation = rot;

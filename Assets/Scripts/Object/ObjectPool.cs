@@ -1,25 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour
+public static class ObjectPool
 {
-    private static ObjectPool instance;
-    public static ObjectPool Instance
-    {
-        get
-        {
-            if(instance == null)
-            {
-                instance = FindObjectOfType<ObjectPool>();
-            }
-            return instance;
-        }
-    }
+    private static Dictionary<string, Queue<GameObject>> objectPool = new Dictionary<string, Queue<GameObject>>();
 
-    private Dictionary<string, Queue<GameObject>> objectPool = new Dictionary<string, Queue<GameObject>>();
-
-    public GameObject GetObject(GameObject gameObject)
+    public static GameObject GetObject(GameObject gameObject)
     {
         if (objectPool.TryGetValue(gameObject.name, out Queue<GameObject> objectList))
         {
@@ -36,7 +23,7 @@ public class ObjectPool : MonoBehaviour
             return CreateNewObject(gameObject);
     }
 
-    public void ReturnGameObject(GameObject gameObject)
+    public static void ReturnGameObject(GameObject gameObject)
     {
         if (objectPool.TryGetValue(gameObject.name, out Queue<GameObject> objectList))
         {
@@ -52,9 +39,9 @@ public class ObjectPool : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private GameObject CreateNewObject(GameObject gameObject)
+    private static GameObject CreateNewObject(GameObject gameObject)
     {
-        GameObject newGO = Instantiate(gameObject);
+        GameObject newGO = GameObject.Instantiate(gameObject);
         newGO.name = gameObject.name;
         Physics.SyncTransforms();
 

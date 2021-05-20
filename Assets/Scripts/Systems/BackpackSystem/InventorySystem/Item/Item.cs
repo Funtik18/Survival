@@ -27,7 +27,7 @@ public class ItemDataWrapper
 	[HideIf("IsWater")]
 	[MaxValue("MaxStackSize")]
 	[Min(1)]
-	[SerializeField] protected int currentStackSize = 1;
+	[SerializeField] private int currentStackSize = 1;
 	public int CurrentStackSize
 	{
 		get => currentStackSize;
@@ -37,70 +37,8 @@ public class ItemDataWrapper
 			onDataChanged?.Invoke();
 		}
 	}
-
-	private bool IsBreakeable => scriptableData.isBreakable;
-	[ShowIf("IsBreakeable")]
-	[MinValue("Durrability")]
-	[Range(0f, 100f)]
-	[SerializeField] protected float currentDurrability = 100f;
-	public float CurrentDurrability
-	{
-		get => currentDurrability;
-		set
-		{
-			currentDurrability = (float)System.Math.Round(value, 2);
-			onDataChanged?.Invoke();
-		}
-	}
-	public string CurrentStringDurability => CurrentDurrability + "%";
-
-	[ShowIf("IsConsumableNoWater")]
-	[MaxValue("Calories")]
-	[Min(0)]
-	[OnValueChanged("WeightDependCalories")]
-	[SerializeField] protected float currentCalories;
-	public float CurrentCalories
-	{
-		get => currentCalories;
-		set
-		{
-			currentCalories = value;
-			onDataChanged?.Invoke();
-		}
-	}
-
-	[MaxValue("VarialceWeight")]
-	[MinValue("MinimumWeight")]
-	[SerializeField] protected float currentWeight;
-	public float CurrentWeight
-    {
-		get => currentWeight;
-		set
-        {
-			currentWeight = (float)System.Math.Round(value, 2);
-			onDataChanged?.Invoke();
-        }
-    }
-	public float CurrentWeightRounded => (float)System.Math.Round(CurrentWeight, 2);
-
-	public string CurrentStringWeight => CurrentWeight + "KG";
-
-	[ShowIf("IsWater")]
-	[MaxValue("MinWeight")]
-	[Min(0)]
-	[SerializeField] protected float minimumWeight;
-	public float MinimumWeight
-	{
-        get
-        {
-			if (IsConsumable) return minimumWeight;
-			else return scriptableData.weight;
-        }
-	}
-
 	public bool IsFully => CurrentStackSize == scriptableData.stackSize;
 	public int StackDiffrence => scriptableData.stackSize - CurrentStackSize;
-
 	protected int MaxStackSize
 	{
 		get
@@ -113,6 +51,112 @@ public class ItemDataWrapper
 			return 1;
 		}
 	}
+
+
+	private bool IsBreakeable => scriptableData.isBreakable;
+	[ShowIf("IsBreakeable")]
+	[MinValue("Durrability")]
+	[Range(0f, 100f)]
+	[SerializeField] private float currentDurrability = 100f;
+	public float CurrentDurrability
+	{
+		get => currentDurrability;
+		set
+		{
+			currentDurrability = (float)System.Math.Round(value, 2);
+			onDataChanged?.Invoke();
+		}
+	}
+	public string CurrentStringDurability => CurrentDurrability + "%";
+
+
+
+	[ShowIf("IsConsumableNoWater")]
+	[MaxValue("Calories")]
+	[Min(0)]
+	[OnValueChanged("WeightDependCalories")]
+	[SerializeField] private float currentCalories;
+	public float CurrentCalories
+	{
+		get => currentCalories;
+		set
+		{
+			currentCalories = value;
+			onDataChanged?.Invoke();
+		}
+	}
+
+
+
+	[MaxValue("VarialceWeight")]
+	[MinValue("MinimumWeight")]
+	[SerializeField] private float currentWeight;
+	public float CurrentWeight
+	{
+		get => currentWeight;
+		set
+		{
+			currentWeight = (float)System.Math.Round(value, 2);
+			onDataChanged?.Invoke();
+		}
+	}
+	public float CurrentWeightRounded => (float)System.Math.Round(CurrentWeight, 2);
+	public string CurrentStringWeight => CurrentWeight + "KG";
+	[ShowIf("IsWater")]
+	[MaxValue("MinWeight")]
+	[Min(0)]
+	[SerializeField] private float minimumWeight;
+	public float MinimumWeight
+	{
+		get
+		{
+			if (IsConsumable) return minimumWeight;
+			else return scriptableData.weight;
+		}
+	}
+	private float VarialceWeight
+	{
+		get
+		{
+			if (scriptableData.isInfinityWeight) return Mathf.Clamp(currentWeight, minimumWeight, 100f);
+			return Mathf.Clamp(currentWeight, minimumWeight, scriptableData.weight);
+		}
+	}
+	private float MinWeight
+	{
+		get
+		{
+			if (scriptableData.isInfinityWeight) return Mathf.Clamp(minimumWeight, 0, 100);
+			return Mathf.Clamp(minimumWeight, 0, scriptableData.weight);
+		}
+	}
+
+
+	[ShowIf("IsWeapon")]
+	[MaxValue("MaxMagaizneCapacity")]
+	[Min(0)]
+	[SerializeField] private int currentMagazineCapacity;
+	public int CurrentMagazineCapacity
+	{
+		get => currentMagazineCapacity;
+		set
+		{
+			currentMagazineCapacity = value;
+		}
+	}
+	public int MaxMagaizneCapacity
+	{
+		get
+		{
+			if (scriptableData is ToolWeaponSD)
+			{
+				return (scriptableData as ToolWeaponSD).magazineCapacity;
+			}
+			return 0;
+		}
+	}
+
+
 	private float Durrability
 	{
 		get
@@ -140,55 +184,21 @@ public class ItemDataWrapper
 		}
 	}
 
-	private void WeightDependCalories()
-    {
-		if (IsConsumable && !IsWater)
-			currentWeight = (float)System.Math.Round(scriptableData.weight * (CurrentCalories / (scriptableData as ConsumableItemSD).calories), 2);
-	}
 
-	private float VarialceWeight
-    {
-        get
-        {
-			if (scriptableData.isInfinityWeight) return Mathf.Clamp(currentWeight, minimumWeight, 100f);
-			return Mathf.Clamp(currentWeight, minimumWeight, scriptableData.weight);
-        }
-    }
-	private float MinWeight
-    {
-        get
-        {
-			if (scriptableData.isInfinityWeight) return Mathf.Clamp(minimumWeight, 0, 100);
-			return Mathf.Clamp(minimumWeight, 0, scriptableData.weight);
-        }
-    }
 
-	protected bool IsConsumable
+	public bool IsConsumable
     {
         get
         {
 			if(scriptableData != null)
             {
-				bool isConsumable = scriptableData is ConsumableItemSD;
-
-				return isConsumable;
+				return scriptableData is ConsumableItemSD;
             }
 
 			return false;
         }
     }
-	protected bool IsConsumableNoWater
-	{
-		get
-		{
-			if (scriptableData != null)
-			{
-				return scriptableData is ConsumableItemSD && !IsWater;
-			}
-			return false;
-		}
-	}
-	protected bool IsWater
+	public bool IsWater
     {
         get
         {
@@ -199,6 +209,26 @@ public class ItemDataWrapper
 			return false;
 		}
     }
+	protected bool IsConsumableNoWater => IsConsumable && !IsWater;
+
+	public bool IsWeapon 
+	{
+        get
+        {
+			if (scriptableData != null)
+			{
+				return scriptableData is ToolWeaponSD;
+			}
+
+			return false;
+		}
+	}
+
+	private void WeightDependCalories()
+	{
+		if (IsConsumable && !IsWater)
+			currentWeight = (float)System.Math.Round(scriptableData.weight * (CurrentCalories / (scriptableData as ConsumableItemSD).calories), 2);
+	}
 
 	public virtual ItemDataWrapper RndData()
 	{
@@ -235,11 +265,11 @@ public class ItemDataRandom : ItemDataWrapper
 	[MaxValue("MaxStackSize")]
 	[MinValue("CurrentStackSize")]
 	[Min(1)]
-	[SerializeField] protected int maxStackSize = 1;
+	[SerializeField] private int maxStackSize = 1;
 
 	[ShowIf("IsWater")]
 	[MinValue("CurrentWeight")] 
-	[SerializeField] protected float maxWeight = 1;
+	[SerializeField] private float maxWeight = 1;
 
 	public override ItemDataWrapper RndData()
     {
@@ -248,11 +278,11 @@ public class ItemDataRandom : ItemDataWrapper
 
         if (IsWater)
         {
-			data.CurrentWeight = Random.Range(currentWeight, maxWeight);
+			data.CurrentWeight = Random.Range(CurrentWeight, maxWeight);
         }
         else
         {
-			data.CurrentStackSize = Random.Range(currentStackSize, maxStackSize);
+			data.CurrentStackSize = Random.Range(CurrentStackSize, maxStackSize);
 		}
 
 		data.CurrentDurrability = 100;

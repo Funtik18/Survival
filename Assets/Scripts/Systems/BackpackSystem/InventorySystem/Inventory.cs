@@ -34,11 +34,13 @@ public class Inventory
 
     public bool AddItem(ItemDataWrapper itemData)
     {
+        Item item = null;
+
         if (itemData != null)
         {
             if (itemData.scriptableData.isInfinityStack)
             {
-                Item item = GetBySD(itemData.scriptableData);
+                item = GetBySD(itemData.scriptableData);
 
                 if(item != null && item.itemData.scriptableData == itemData.scriptableData)
                 {
@@ -54,7 +56,8 @@ public class Inventory
                 }
                 else
                 {
-                    items.Add(new Item(itemData));
+                    item = new Item(itemData);
+                    items.Add(item);
                 }
             }
             else
@@ -65,7 +68,8 @@ public class Inventory
                 {
                     for (int i = 0; i < findedSameItems.Count; i++)
                     {
-                        ItemDataWrapper findedData = findedSameItems[i].itemData;
+                        item = findedSameItems[i];
+                        ItemDataWrapper findedData = item.itemData;
                         int difference = findedData.StackDiffrence;
 
                         if (difference != 0)
@@ -88,11 +92,15 @@ public class Inventory
                     }
 
                     if (itemData.CurrentStackSize > 0)
-                        items.Add(new Item(itemData));
+                    {
+                        item = new Item(itemData);
+                        items.Add(item);
+                    }
                 }
                 else
                 {
-                    items.Add(new Item(itemData));
+                    item = new Item(itemData);
+                    items.Add(item);
                 }
             }
             
@@ -103,6 +111,8 @@ public class Inventory
         }
         return false;
     }
+
+
     public bool RemoveItem(Item item, int count)
     {
         if (item != null)
@@ -162,6 +172,7 @@ public class Inventory
         return weight;
     }
 
+    public Item FindItemByData(ItemDataWrapper data) => items.FindLast((x) => x.itemData == data);
     public Item GetBySD(ItemSD sd) => items.FindLast((x) => x.itemData.scriptableData == sd);
     public Item GetBySD<SD>() => items.FindLast((x) => x.itemData.scriptableData is SD);
 
@@ -346,5 +357,35 @@ public class PlayerInventory : Inventory
     public void BlueprintExchange(BlueprintItem blueprintItem)
     {
         RemoveItem(blueprintItem);
+    }
+
+
+    private List<Item> fastAccess = new List<Item>();
+
+    public Item FastAccessCheckItem(ItemSD itemSD)
+    {
+        for (int i = 0; i < fastAccess.Count; i++)
+        {
+            if(fastAccess[i].itemData.scriptableData == itemSD)
+            {
+                return fastAccess[i];
+            }
+        }
+        return null;
+    }
+
+    public Item FastAccessGetItem(ItemSD itemSD)
+    {
+        Item item = FastAccessCheckItem(itemSD);
+
+        if(item == null)
+        {
+            item = GetBySD(itemSD);
+
+            if(item != null)
+                fastAccess.Add(item);
+        }
+
+        return item;
     }
 }

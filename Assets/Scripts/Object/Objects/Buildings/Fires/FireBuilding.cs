@@ -161,7 +161,7 @@ public class FireBuilding : BuildingObject
     }
     public ItObject AddItemObjectOnSlot<ItObject>(Item item, CookingSlot slot) where ItObject : ItemObject
     {
-        ItObject itemObject = ObjectPool.Instance.GetObject(item.itemData.scriptableData.model.gameObject).GetComponent<ItObject>();
+        ItObject itemObject = ObjectPool.GetObject(item.itemData.scriptableData.model.gameObject).GetComponent<ItObject>();
         slot.SetItem(itemObject);
 
         return itemObject;

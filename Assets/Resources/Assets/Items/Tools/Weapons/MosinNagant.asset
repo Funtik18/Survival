@@ -16,7 +16,7 @@ MonoBehaviour:
   description: MosinNagant an old 7.62 caliber bolt-action hunting rifle. Will bring
     a deer down. Maybe a wolf.
   itemSprite: {fileID: 21300000, guid: c380e4f7e53817142bf7be2ab64a17b7, type: 3}
-  model: {fileID: 4148917260203870180, guid: b838f4222a7f4a341aa81d3b35e0e3b7, type: 3}
+  model: {fileID: 5195129708163620888, guid: b838f4222a7f4a341aa81d3b35e0e3b7, type: 3}
   orientation:
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}

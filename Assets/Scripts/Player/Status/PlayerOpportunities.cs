@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerOpportunities
 {
 	[SerializeField] private float useTimeByKg = 15f;
+	[SerializeField] private Transform leftHand;
+	[SerializeField] private Transform rightHand;
 
 	private StatThirst thirst;
 	private StatHungred hungred;
@@ -47,25 +49,37 @@ public class PlayerOpportunities
 		inventory.RemoveItem(item);
     }
 
-    #region Use
-    public void UseItem(Item item)
+
+	public void UseItem(Item item)
 	{
 		ItemSD data = item.itemData.scriptableData;
 
 		if (data is ConsumableItemSD consuable)
 		{
 
-            if (IsCanGetIt(consuable))
-            {
+			if (IsCanGetIt(consuable))
+			{
 				OpenUI();
 				useCoroutine = owner.StartCoroutine(Use(item, consuable));
+			}
+			else
+			{
+				Debug.LogError("I can not take it");
+			}
+		}
+		else if(data is ToolWeaponSD weapon)
+        {
+            if (IsEquiped(item.itemData))
+            {
+				UnEquip();
             }
             else
             {
-				Debug.LogError("I can not take it");
+				EquipItem(item);
             }
-		}
+        }
 	}
+	#region Use
 	private IEnumerator Use(Item item, ConsumableItemSD consuable)
 	{
 		ItemDataWrapper data = item.itemData;
@@ -203,6 +217,91 @@ public class PlayerOpportunities
 		return true;
     }
 	#endregion
+
+	#region Actions
+	private ItemObjectWeapon weapon;
+
+	public bool IsEquiped(ItemDataWrapper data)
+    {
+		if (weapon == null) return false;
+		return weapon.Data == data;
+	}
+
+	public void EquipUnEquip(Item item)
+    {
+		if(item != null)
+        {
+			bool isNewWeapon = weapon == null ? true : item.itemData != weapon.Data;
+
+			UnEquip();
+			if (isNewWeapon)
+				EquipItem(item);
+		}
+	}
+
+    public void EquipItem(Item item)
+    {
+		if(item != null)
+        {
+			ItemObject itemObject = item.itemData.scriptableData.model;
+
+			if (itemObject is ItemObjectWeapon)
+			{
+				weapon = ObjectPool.GetObject(itemObject.gameObject).GetComponent<ItemObjectWeapon>();
+				weapon.ColliderEnable(false);
+
+				PutInHand(weapon.transform, rightHand);
+
+				GeneralAvailability.PlayerUI.controlUI.windowShoting.Setup(weapon, Aim, DeAim, Shoot, Reload, UnEquip);
+				GeneralAvailability.PlayerUI.OpenShooting();
+			}
+		}
+    }
+	public void FreeHands()
+    {
+		if(weapon != null)
+        {
+			ObjectPool.ReturnGameObject(weapon.gameObject);
+			weapon.transform.SetParent(null);
+			weapon.ColliderEnable(true);
+
+			GeneralAvailability.PlayerUI.CloseShooting();
+		}
+
+		weapon = null;
+	}
+	private void PutInHand(Transform obj, Transform parent)
+    {
+		obj.SetParent(parent);
+		obj.localPosition = Vector3.zero;
+		obj.localRotation = Quaternion.identity;
+	}
+	private void Aim()
+    {
+		weapon.Aim();
+	}
+	private void DeAim()
+	{
+		weapon.DeAim();
+	}
+	private void Shoot()
+    {
+		weapon.Shoot();
+	}
+	private void Reload()
+    {
+
+	}
+	private void UnEquip()
+    {
+		FreeHands();
+	}
+	#endregion
+
+	public void ActionsItem(Item item)
+    {
+
+    }
 
 	private void OpenUI()
     {

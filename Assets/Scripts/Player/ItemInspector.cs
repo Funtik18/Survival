@@ -32,20 +32,9 @@ public class ItemInspector : MonoBehaviour
     #endregion
 
     //cash
-    private ObjectPool pool;
-	private ObjectPool Pool
-    {
-        get
-        {
-			if(pool == null)
-            {
-				pool = ObjectPool.Instance;
-			}
-			return pool;
-        }
-    }
 
 	private Inventory inventory;
+	private WindowItemInspector windowItemInspector;
 
 	private Item item;
 	private ItemObject itemObject;
@@ -57,7 +46,7 @@ public class ItemInspector : MonoBehaviour
 
     private void Awake()
     {
-		WindowItemInspector windowItemInspector = GeneralAvailability.PlayerUI.windowsUI.itemInspectorWindow;
+		windowItemInspector = GeneralAvailability.PlayerUI.windowsUI.itemInspectorWindow;
 
 		windowItemInspector.onLeaveIt = ItemLeave;
 		windowItemInspector.onAction = ItemAction;
@@ -74,7 +63,7 @@ public class ItemInspector : MonoBehaviour
         onItemTake = FromWorldTake;
         onItemLeave = ToWorldLeave;
 
-		GeneralAvailability.PlayerUI.OpenItemInspector(itemObject);
+		OpenUI();
 
 		StartInspect();
     }
@@ -132,8 +121,7 @@ public class ItemInspector : MonoBehaviour
 			
 			StartInspect();
 
-			GeneralAvailability.PlayerUI.OpenItemInspector(item);
-
+			OpenUI();
 
 			while (IsInspectProccess)
 			{
@@ -312,11 +300,14 @@ public class ItemInspector : MonoBehaviour
 
 	#region Take Leave
 	private UnityAction onItemTake;
+	private UnityAction onItemAction;
 	private UnityAction onItemLeave;
+
+	private Item addedItem;
 
 	private void FromWorldTake()
     {
-		GeneralAvailability.PlayerInventory.AddItem(item.itemData);
+		AddItem(item.itemData);
 
 		StopInspect();
 
@@ -324,10 +315,10 @@ public class ItemInspector : MonoBehaviour
 		{
 			if(itemObject is ItemObjectLiquidContainer liquidContainer)
             {
-				GeneralAvailability.PlayerInventory.AddItem(liquidContainer.GetItem());
+				AddItem(liquidContainer.GetItem());
             }
 
-			Pool.ReturnGameObject(itemObject.gameObject);
+			ObjectPool.ReturnGameObject(itemObject.gameObject);
 		}
 		Dispose();
 	}
@@ -343,20 +334,12 @@ public class ItemInspector : MonoBehaviour
 
 		cashItemsToDelete.Add(item);
 
-        if (itemObject)
-		{
-			Pool.ReturnGameObject(itemObject.gameObject);
-		}
 		Dispose();
 	}
 	private void ToInventoryLeave()
 	{
 		StopInspect();
 
-		if (itemObject)
-		{
-			Pool.ReturnGameObject(itemObject.gameObject);
-		}
 		Dispose();
 	}
 	#endregion
@@ -372,27 +355,71 @@ public class ItemInspector : MonoBehaviour
 		oldParent = null;
 		oldWorldPosition = Vector3.zero;
 		oldWorldRotation = Quaternion.identity;
-	}
 
+		onItemTake = null;
+		onItemAction = null;
+		onItemLeave = null;
+	}
 
 	private void ItemTake()
 	{
 		onItemTake?.Invoke();
 
-		GeneralAvailability.PlayerUI.CloseItemInspector();
+		CloseUI();
 	}
 	private void ItemAction()
     {
-		onItemLeave?.Invoke();
-		
-		itemObject.ActionItem();
+		onItemAction?.Invoke();
 
-		GeneralAvailability.PlayerUI.CloseItemInspector();
+		CloseUI();
 	}
 	private void ItemLeave()
 	{
 		onItemLeave?.Invoke();
 
+		CloseUI();
+	}
+
+
+	private void AddItem(ItemDataWrapper itemData)
+    {
+		GeneralAvailability.PlayerInventory.AddItem(itemData);
+	}
+	private void OpenUI()
+    {
+		onItemAction = null;
+
+		if (itemObject is ItemObjectLiquidContainer liquidContainer)
+		{
+			if (liquidContainer.IsProccessing)
+			{
+				windowItemInspector.SetupAction(true, "PASS TIME");
+			}
+			else
+			{
+				windowItemInspector.SetupAction(false);
+			}
+
+			onItemAction += onItemLeave;
+			onItemAction += liquidContainer.ActionItem;
+		}
+		else if (itemObject is ItemObjectWeapon weapon)
+		{
+			windowItemInspector.SetupAction(true, "EQUIP");
+
+			onItemAction += onItemTake;
+			onItemAction += weapon.ActionItem;
+		}
+		else
+		{
+			windowItemInspector.SetupAction(false);
+		}
+
+
+		GeneralAvailability.PlayerUI.OpenItemInspector(item);
+	}
+	private void CloseUI()
+    {
 		GeneralAvailability.PlayerUI.CloseItemInspector();
 	}
 }
