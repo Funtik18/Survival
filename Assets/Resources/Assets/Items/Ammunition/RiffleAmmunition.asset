@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456bd9b0939bfad4db7c14d6c862d0c3, type: 3}
+  m_Name: RiffleAmmunition
+  m_EditorClassIdentifier: 
+  objectName: Rifle ammunition
+  description: A single 7.62 rifle round.
+  itemSprite: {fileID: 21300000, guid: cc8021e64fec2944db7aecfa276248f9, type: 3}
+  model: {fileID: 8807165167031760168, guid: 43d8c31bea007b248937bf6389a6c4e0, type: 3}
+  orientation:
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  isInfinityWeight: 0
+  weight: 0.02
+  isInfinityStack: 1
+  stackSize: 1
+  isBreakable: 0
+  decayOverTime: 0
+  decayInside: 0
+  decayOutsie: 0

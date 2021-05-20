@@ -58,7 +58,7 @@ public class SaveLoadManager : MonoBehaviour
 
 	public static void SaveData(Data data)
     {
-		SaveDataToJson(data, directorySaves, "file" + expansion);
+		SaveDataToJson(data, directorySaves, "SaveFile" + expansion);
 	}
 
 

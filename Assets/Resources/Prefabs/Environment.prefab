@@ -515,6 +515,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newGamePattern:
+    randomTime: 1
+    startTime:
+      days: 0
+      hours: 0
+      minutes: 0
+      seconds: 0
+      totalSeconds: 0
     randomPoints: 1
     startPoint: {fileID: 0}
     startPoints:
@@ -525,8 +532,6 @@ MonoBehaviour:
     randomPlayerData: 1
     playerRandomData: {fileID: 11400000, guid: dca39bf00505c7045bc0c33351fb1e31, type: 2}
     playerData: {fileID: 0}
-    randomInventory: 1
-    container: {fileID: 0}
 --- !u!1 &5974223110589789611
 GameObject:
   m_ObjectHideFlags: 0
@@ -935,12 +940,12 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 0
           value: 0.8
-          inSlope: -3.5694592
-          outSlope: -3.5694592
+          inSlope: -6.945971
+          outSlope: -6.945971
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.019650655
+          outWeight: 0.032463193
         - serializedVersion: 3
           time: 0.4035474
           value: 0.38709834

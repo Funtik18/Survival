@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63dbe346899b7414899bd4a589aab916, type: 3}
+  m_Name: Bedroll
+  m_EditorClassIdentifier: 
+  objectName: Bedroll
+  description: 
+  buildingSprite: {fileID: 21300000, guid: 785eb9341aa223d4d8597235e5d4d48b, type: 3}
+  model: {fileID: 3852324087604253105, guid: 947fedbc16689424bbf58e1c42f6c5d3, type: 3}
+  isFromInventory: 1
+  isFromInventoryComplex: 0
+  isTypes: 0
+  categories: 0
+  items: []
+  item:
+    item: {fileID: 11400000, guid: 7bca834ec1a1d704ba0bc5cccc7fc6df, type: 2}
+    count: 1
+  exchangeAfterBuild: 1

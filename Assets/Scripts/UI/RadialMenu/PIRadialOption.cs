@@ -6,52 +6,57 @@ public class PIRadialOption : MonoBehaviour
 {
     public UnityAction onChoosen;
 
-    [HideInInspector] public RadialOptionData Data { get; private set; }
-
-    [SerializeField] private PointerButton button;
+    [SerializeField] private Pointer pointer;
     [SerializeField] private Image icon;
 
     [SerializeField] private Image prohibition;
 
-    private void Awake()
+    private bool isProhibition = false;
+    public bool IsProhibition
     {
-        button.AddPressListener(Choosen);
+        get => isProhibition;
+        set
+        {
+            isProhibition = value;
+
+            prohibition.enabled = isProhibition;
+            pointer.IsEnable = !isProhibition;
+        }
     }
 
-    public void SetData(RadialOptionData data)
+    private bool isDisable = false;
+    public bool IsDisable
     {
-        this.Data = data;
+        get => isDisable;
+        set
+        {
+            isDisable = value;
+
+            pointer.IsEnable = !isDisable;
+        }
+    }
+
+    private void Awake()
+    {
+        pointer.AddPressListener(Choosen);
+    }
+
+    public void Setup(Sprite icon)
+    {
+        this.icon.sprite = icon;
 
         UpdateUI();
     }
 
     public void UpdateUI()
     {
-        if( Data != null)
-        {
-            Sprite sprite = Data.scriptableData.optionIcon;
-            icon.enabled = sprite == null ? false : true;
-            icon.sprite = sprite;
-            if (Data.scriptableData is RadialOptionBuildingSD buildingSD)
-            {
-                BuildingObject obj = buildingSD.building;
-
-                bool isProhibition = obj == null ? false : !obj.IsCanBeBuild;
-                prohibition.enabled = isProhibition;
-                button.IsEnable = !isProhibition;
-            }
-        }
-        else
-        {
-            icon.enabled = false;
-            prohibition.enabled = false;
-            button.IsEnable = false;
-        }
+        icon.enabled = icon.sprite != null;
+        IsProhibition = isProhibition;
+        IsDisable = isDisable;
     }
 
     public void Choosen()
     {
         onChoosen?.Invoke();
-        Data.EventInvoke();
     }
 }

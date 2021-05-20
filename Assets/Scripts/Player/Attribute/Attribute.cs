@@ -73,6 +73,7 @@ public abstract class Stat : AttributeModifiable
 }
 public abstract class StatBar : Stat
 {
+	public UnityAction onCurrentValueZero;
 	public UnityAction<float> onCurrentValueChanged;
 	public UnityAction<float> onPercentValueChanged;
 
@@ -87,6 +88,8 @@ public abstract class StatBar : Stat
         set
         {
 			currentValue = Mathf.Clamp(value, 0, Value);
+			if (currentValue == 0)
+				onCurrentValueZero?.Invoke();
 
 			UpdateAttribute();
 		}

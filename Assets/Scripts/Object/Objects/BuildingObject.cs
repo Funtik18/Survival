@@ -18,11 +18,15 @@ public class BuildingObject : WorldObject<BuildingSD>
     [PropertyOrder(2)]
     [SerializeField] private List<MeshRenderer> renderers = new List<MeshRenderer>();
 
+    private Item storedItem;
+    public Item StoredItem { get => storedItem; set => storedItem = value; }
+
+
     protected List<Collider> collidersIntersects = new List<Collider>();
     private List<Material> materialsBasic = new List<Material>();
 
     public bool IsIntersects => collidersIntersects.Count > 0;
-    public virtual bool IsCanBeBuild => true;
+
 
     protected virtual void Awake()
     {
@@ -37,11 +41,6 @@ public class BuildingObject : WorldObject<BuildingSD>
         SetMaterial();
 
         IsPlacement = true;
-
-        if (data.isImmediatelyCalculation)
-        {
-
-        }
     }
 
     public void SetMaterial(Material material)

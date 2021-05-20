@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Sirenix.OdinInspector;
 using System.Linq;
+using System;
 
 [System.Serializable]
 public class Inventory
@@ -195,6 +196,32 @@ public class Inventory
     }
 
     public bool ContainsType<SD>() => items.FirstOrDefault((x) => x.itemData.scriptableData is SD) != null;
+    public bool ContainsType(ItemsData.Categories categories)
+    {
+        if ((categories & ItemsData.Categories.FireFuelSD) != ItemsData.Categories.None)
+        {
+            if (!ContainsType<FireFuelSD>())
+            {
+                return false;
+            }
+        }
+        if ((categories & ItemsData.Categories.FireStarterSD) != ItemsData.Categories.None)
+        {
+            if (!ContainsType<FireStarterSD>())
+            {
+                return false;
+            }
+        }
+        if ((categories & ItemsData.Categories.FireTinderSD) != ItemsData.Categories.None)
+        {
+            if (!ContainsType<FireTinderSD>())
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
 
     private ItemDataWrapper[] GetItemsData()
@@ -283,14 +310,7 @@ public class PlayerInventory : Inventory
 
         for (int i = 0; i < components.Count; i++)
         {
-            Item item = GetBySD(components[i].item);
-
-            if (item != null)
-            {
-                if (item.itemData.CurrentStackSize < components[i].count)//тут нужно проверять общее колво всех айтемов в инвентаре
-                    return false;
-            }
-            else
+            if(IsContainsBlueprintItem(components[i]) == false)
             {
                 return false;
             }
@@ -304,8 +324,27 @@ public class PlayerInventory : Inventory
 
         for (int i = 0; i < components.Count; i++)
         {
-            RemoveItem(components[i]);
+            BlueprintExchange(components[i]);
         }
         AddItem(blueprint.itemYield);
+    }
+
+
+    public bool IsContainsBlueprintItem(BlueprintItem blueprintItem)
+    {
+        Item item = GetBySD(blueprintItem.item);
+
+        if (item != null)
+        {
+            if (item.itemData.CurrentStackSize < blueprintItem.count)//тут нужно проверять общее колво всех айтемов в инвентаре
+                return false;
+        }
+        else return false;
+
+        return true;
+    }
+    public void BlueprintExchange(BlueprintItem blueprintItem)
+    {
+        RemoveItem(blueprintItem);
     }
 }

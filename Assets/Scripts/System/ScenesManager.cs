@@ -37,6 +37,7 @@ public class ScenesManager : MonoBehaviour
     private float targetProgress;
     private float progressAnimationMultiplier = 0.5f;
 
+    private int indexMenuScene = 0;
     private int indexGameScene = 1;
 
     public ScenesManager SetupLoad(UnityAction<float> progress = null, UnityAction completedLoad = null, float additionalWaitTime = 0f)
@@ -51,6 +52,10 @@ public class ScenesManager : MonoBehaviour
     public void LoadGameScene()
     {
         LoadScene(indexGameScene);
+    }
+    public void LoadMenuScene()
+    {
+        LoadScene(indexMenuScene);
     }
     public void LoadScene(int index)
     {

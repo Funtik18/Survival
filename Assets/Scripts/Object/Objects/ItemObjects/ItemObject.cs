@@ -7,7 +7,6 @@ public class ItemObject : WorldObject
 {
 	public UnityAction onDisable;
 
-
 	[SerializeField] protected ItemDataWrapper itemData;
 	[ShowIf("CheckCan")]
 	public ItemObjectLiquidContainer canItemObject;

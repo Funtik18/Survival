@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1f78b4ce2709344d946a0ed26b69474, type: 3}
+  m_Name: MosinNagant
+  m_EditorClassIdentifier: 
+  objectName: Hunting rifle
+  description: MosinNagant an old 7.62 caliber bolt-action hunting rifle. Will bring
+    a deer down. Maybe a wolf.
+  itemSprite: {fileID: 21300000, guid: c380e4f7e53817142bf7be2ab64a17b7, type: 3}
+  model: {fileID: 4148917260203870180, guid: b838f4222a7f4a341aa81d3b35e0e3b7, type: 3}
+  orientation:
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  isInfinityWeight: 0
+  weight: 4
+  isInfinityStack: 0
+  stackSize: 1
+  isBreakable: 0
+  decayOverTime: 0
+  decayInside: 0
+  decayOutsie: 0
+  decayPerAction: 0
+  magazineCapacity: 5
+  ammunition: {fileID: 11400000, guid: 04383b38a62ed1f41a707b007e717d45, type: 2}

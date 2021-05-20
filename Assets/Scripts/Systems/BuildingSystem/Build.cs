@@ -21,7 +21,10 @@ public class Build
 	[Range(-90, 90)]
 	[SerializeField] private float anglePlacement = 60f;
 
+	public bool isCanBuild { get; set; }
+
 	private Player player;
+	private PlayerInventory inventory;
 	private PlayerCamera playerCamera;
 
 	private BuildingObject currentBuilding;
@@ -30,8 +33,6 @@ public class Build
 	private Coroutine buildCoroutine = null;
 	public bool IsBuildingProccess => buildCoroutine != null;
 	private WaitForSeconds buildingSeconds = new WaitForSeconds(0.05f);
-
-	public bool IsCanBuild{ get; private set; }
 
 	private Vector3 SpherePoint => playerCamera.Transform.position + (playerCamera.Transform.forward * rayDistance);
 
@@ -50,11 +51,47 @@ public class Build
     public void Init(Player player)
     {
 		this.player = player;
+		this.inventory = player.Inventory;
 		this.playerCamera = player.Camera;
 		collidersIntersects = playerCamera.collidersIntersects;
 
 		pool = ObjectPool.Instance;
 	}
+
+	public bool IsCanBuild(BuildingSD sd)
+	{
+		if (sd != null)
+		{
+			if (sd.isFromInventory)
+			{
+				if (sd.isFromInventoryComplex)
+				{
+					if (sd.isTypes)
+					{
+						return inventory.ContainsType(sd.categories);
+					}
+					else
+					{
+						for (int i = 0; i < sd.items.Count; i++)
+						{
+							if (inventory.IsContainsBlueprintItem(sd.items[i]) == false)
+							{
+								return false;
+							}
+						}
+						return true;
+					}
+				}
+				else
+				{
+					return inventory.IsContainsBlueprintItem(sd.item);
+				}
+			}
+		}
+
+		return true;
+	}
+
 
 	public void BuildBuilding(BuildingObject building)
 	{
@@ -72,7 +109,7 @@ public class Build
 	}
 	public void PlacementBuilding()
     {
-		if (IsBuildingProccess && IsCanBuild)
+		if (IsBuildingProccess && isCanBuild)
 		{
 			StopBuild();
 
@@ -80,6 +117,8 @@ public class Build
 			currentTransform.rotation = lastRotation;
 
 			currentBuilding.Place();
+
+			Exchange();
 		}
 	}
 	private void Dispose()
@@ -147,14 +186,14 @@ public class Build
 
 	private void Draw(bool trigger)
     {
-		IsCanBuild = trigger;
+		isCanBuild = trigger;
 
 		currentTransform.position = lastPosition;
 		currentTransform.rotation = lastRotation;
 
 		currentBuilding.IsPlacement = false;
 
-		currentBuilding.SetMaterial(IsCanBuild ? acceptMaterial : rejectMaterial);
+		currentBuilding.SetMaterial(isCanBuild ? acceptMaterial : rejectMaterial);
 	}
 
 	private bool CheckCast(Ray ray, out RaycastHit hit, float distance)
@@ -183,6 +222,31 @@ public class Build
 		return false;
 	}
 
+
+	private void Exchange()
+    {
+		BuildingSD sd = currentBuilding.Data;
+
+        if (sd.IsItem)
+        {
+			if (sd.exchangeAfterBuild)
+			{
+				Item item = inventory.GetBySD(sd.item.item);
+				currentBuilding.StoredItem = item;
+				inventory.RemoveItem(sd.item);
+			}
+		}
+		else if (sd.IsListItems)
+        {
+			if (sd.exchangeAfterBuild)
+			{
+                for (int i = 0; i < sd.items.Count; i++)
+                {
+					inventory.RemoveItem(sd.items[i]);
+				}
+			}
+		}
+    }
 
     private void OnDrawGizmos()
     {

@@ -2,7 +2,6 @@
 
 namespace DS 
 {
-	[RequireComponent(typeof(Collider))]
 	public abstract class Object : MonoBehaviour
 	{
 		[SerializeField] private Collider coll;
@@ -83,7 +82,9 @@ public abstract class WorldBoard<SD> : WorldBoard where SD : ObjectSD
 }
 public abstract class WorldObject<SD> : WorldObject where SD : ObjectSD
 {
-	public SD data;
+	[SerializeField] protected SD data;
+	public SD Data => data;
+
 
 	public override void StartObserve()
 	{

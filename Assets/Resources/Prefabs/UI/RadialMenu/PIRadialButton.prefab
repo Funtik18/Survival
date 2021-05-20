@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c502269ca0320a448bba15a195bdb82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 8210705584792654729}
+  pointer: {fileID: 5736809584990481691}
   icon: {fileID: 4376403276685034230}
   prohibition: {fileID: 370337481201204509}
 --- !u!1 &6855536505893750134
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 413402003139132130}
   - component: {fileID: 6244210763757463291}
   - component: {fileID: 3601227795675894745}
-  - component: {fileID: 8210705584792654729}
+  - component: {fileID: 5736809584990481691}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -286,7 +286,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8210705584792654729
+--- !u!114 &5736809584990481691
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -295,7 +295,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6855536505893750134}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10bc33a9195046747b1ef568e91f590a, type: 3}
+  m_Script: {fileID: 11500000, guid: fe2573291ad505b4687a6b81c7fee964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onPressed:
@@ -304,6 +304,6 @@ MonoBehaviour:
   onUnPressed:
     m_PersistentCalls:
       m_Calls: []
-  onClicked:
+  onDoublePressed:
     m_PersistentCalls:
       m_Calls: []

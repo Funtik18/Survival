@@ -1,119 +1,57 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using UnityEngine;
-
-using Sirenix.OdinInspector;
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+using UnityEngine.Events;
 
 public class PIRadialMenu : MonoBehaviour
 {
-    [Range(1, 10)]
-    [SerializeField] private int optionCount = 1;
+    public UnityAction onOpened;
+    public UnityAction onClosed;
 
-    [Min(0)]
-    [SerializeField] private float distanceBtwOptions = 100f;
+    private List<Transform> transforms = new List<Transform>();
 
-
-    [SerializeField] private PIRadialOption optionPrefab;
-    [SerializeField] private CanvasGroup canvasGroup;
-
-    [SerializeField] private List<PIRadialOption> options = new List<PIRadialOption>();
-
-    public void Setup(List<RadialOptionData> optionsData)
+    public void OpenMenu()
     {
-        optionCount = optionsData.Count;
-        UpdateMenu();
+        onOpened?.Invoke();
 
-        for (int i = 0; i < optionCount; i++)
-        {
-            RadialOptionData data = optionsData[i];
-            options[i].SetData(data);
+        gameObject.SetActive(true);
+    }
+    public void CloseMenu()
+    {
+        gameObject.SetActive(false);
 
-            if (data.isEnd)
-                options[i].onChoosen += RadialMenu.Instance.CloseRadialMenu;
-            else
-                options[i].onChoosen += CloseMenu;
-        }
+        onClosed?.Invoke();
     }
 
-    public void RefreshMenu()
+    public void UpdateMenu()
     {
-        for (int i = 0; i < options.Count; i++)
+        GetAll();
+
+        for (int i = 0; i < transforms.Count; i++)
         {
-            options[i].UpdateUI();
-        }
-    }
-
-
-    private void GetAllOptions()
-    {
-        foreach (Transform child in transform)
-        {
-            options.Add(child.GetComponent<PIRadialOption>());
-        }
-    }
-
-    [Button]
-    private void DisposeOptions()
-    {
-        options.Clear();
-
-        while (transform.childCount != 0)
-        {
-            DestroyImmediate(transform.GetChild(transform.childCount - 1).gameObject);
-        }
-    }
-
-    [Button]
-    private void UpdateMenu()
-    {
-        DisposeOptions();
-
-        for (int i = 0; i < optionCount; i++)
-        {
-#if UNITY_EDITOR
-            PrefabUtility.InstantiatePrefab(optionPrefab, transform);
-#else
-                    Instantiate(optionPrefab, transform);
-#endif
-        }
-
-
-        GetAllOptions();
-
-        for (int i = 0; i < options.Count; i++)
-        {
-            PIRadialOption option = options[i];
-
-            float theta = ((2 * Mathf.PI) / options.Count) * i;
+            float theta = ((2 * Mathf.PI) / transforms.Count) * i;
 
             float xPos = Mathf.Sin(theta);
             float yPos = Mathf.Cos(theta);
 
-            if(options.Count > 1)
-            {
-                distanceBtwOptions = 100;
-                if (options.Count > 3) distanceBtwOptions = 150;
-                if (options.Count > 5) distanceBtwOptions = 200;
-                if (options.Count > 8) distanceBtwOptions = 250;
-                option.transform.localPosition = new Vector3(xPos, yPos, 0) * distanceBtwOptions;
-            }
+            float distanceBtwOptions = 100;
+            if (transforms.Count == 1) distanceBtwOptions = 0;
+            else if (transforms.Count > 3 && transforms.Count <= 5) distanceBtwOptions = 150;
+            else if (transforms.Count > 5 && transforms.Count <= 8) distanceBtwOptions = 200;
+            else if (transforms.Count > 8 && transforms.Count <= 10) distanceBtwOptions = 250;
+            transforms[i].localPosition = new Vector3(xPos, yPos, 0) * distanceBtwOptions;
         }
-
     }
-
-    [Button]
-    public void OpenMenu()
+    private void Dispose()
     {
-        canvasGroup.IsEnabled(true);
+        transforms.Clear();
     }
-    [Button]
-    public void CloseMenu()
+    private void GetAll()
     {
-        canvasGroup.IsEnabled(false);
+        Dispose();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transforms.Add(transform.GetChild(i));
+        }
     }
 }

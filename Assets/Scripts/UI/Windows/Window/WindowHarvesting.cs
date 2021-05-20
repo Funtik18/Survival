@@ -54,7 +54,7 @@ public class WindowHarvesting : WindowUI
     }
     private void UpdateUI()
     {
-        HarvestingSD data = harvesting.data;
+        HarvestingSD data = harvesting.Data;
         tittleText.text = data.objectName;
         timeText.text = data.howLong.ToStringSimplification();
 
@@ -118,9 +118,9 @@ public class WindowHarvesting : WindowUI
 
     private void Exchange()
     {
-        for (int i = 0; i < harvesting.data.items.Count; i++)
+        for (int i = 0; i < harvesting.Data.items.Count; i++)
         {
-            ItemDataWrapper copyItem = harvesting.data.items[i].Copy();
+            ItemDataWrapper copyItem = harvesting.Data.items[i].Copy();
 
             inventory.AddItem(copyItem);
         }

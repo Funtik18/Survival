@@ -10,10 +10,13 @@ using UnityEngine.UI;
 public class WindowResting : WindowUI
 {
     public UnityAction onBack;
+    public UnityAction onTakeIt;
 
     [SerializeField] private Button buttonBack;
     [SerializeField] private Pointer panelBack;
-
+    [Space]
+    [SerializeField] private Pointer takeIt;
+    [Space]
     [SerializeField] private Toggle toggleSleep;
     [SerializeField] private Toggle togglePass;
     [Space]
@@ -42,11 +45,18 @@ public class WindowResting : WindowUI
         buttonBack.onClick.AddListener(Cancel);
         panelBack.onPressed.AddListener(Cancel);
 
+        takeIt.onPressed.AddListener(TakeIt);
+
         toggleSleep.onValueChanged.AddListener(TogglesChanged);
         togglePass.onValueChanged.AddListener(TogglesChanged);
 
         sleep.onRest += StartSkip;
         pass.onRest += StartSkip;
+    }
+
+    public void UseTakeButton()
+    {
+        takeIt.gameObject.SetActive(true);
     }
 
     public override void ShowWindow()
@@ -144,6 +154,16 @@ public class WindowResting : WindowUI
             sleep.HideWindow();
             pass.ShowWindow();
         }
+    }
+
+    private void TakeIt()
+    {
+        takeIt.gameObject.SetActive(false);
+
+        takeIt.onPressed.RemoveAllListeners();
+
+        onTakeIt?.Invoke();
+        Cancel();
     }
 
     private void Cancel()

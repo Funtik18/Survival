@@ -69,14 +69,13 @@ public class ItemDataWrapper
 		}
 	}
 
-	[ShowIf("IsConsumable")]
 	[MaxValue("VarialceWeight")]
 	[MinValue("MinimumWeight")]
 	[SerializeField] protected float currentWeight;
 	public float CurrentWeight
     {
 		get => currentWeight;
-        set
+		set
         {
 			currentWeight = (float)System.Math.Round(value, 2);
 			onDataChanged?.Invoke();
@@ -90,7 +89,14 @@ public class ItemDataWrapper
 	[MaxValue("MinWeight")]
 	[Min(0)]
 	[SerializeField] protected float minimumWeight;
-	public float MinimumWeight => minimumWeight;
+	public float MinimumWeight
+	{
+        get
+        {
+			if (IsConsumable) return minimumWeight;
+			else return scriptableData.weight;
+        }
+	}
 
 	public bool IsFully => CurrentStackSize == scriptableData.stackSize;
 	public int StackDiffrence => scriptableData.stackSize - CurrentStackSize;
@@ -101,6 +107,7 @@ public class ItemDataWrapper
 		{
 			if (scriptableData != null)
 			{
+				if (scriptableData.isInfinityStack) return 100;
 				return scriptableData.stackSize;
 			}
 			return 1;
@@ -162,8 +169,11 @@ public class ItemDataWrapper
         {
 			if(scriptableData != null)
             {
-				return scriptableData is ConsumableItemSD;
+				bool isConsumable = scriptableData is ConsumableItemSD;
+
+				return isConsumable;
             }
+
 			return false;
         }
     }
@@ -192,14 +202,15 @@ public class ItemDataWrapper
 
 	public virtual ItemDataWrapper RndData()
 	{
-		CurrentStackSize = Random.Range(1, MaxStackSize);
+		if (CurrentWeight == 0)
+			CurrentWeight = scriptableData.weight;
 
-		CurrentWeight = scriptableData.weight;
-
-        if (IsConsumable)
-        {
+		if (IsConsumable)
+		{
 			CurrentCalories = (scriptableData as ConsumableItemSD).calories;
-        }
+		}
+
+		CurrentStackSize = Random.Range(1, MaxStackSize);
 
 		CurrentDurrability = 100;
 

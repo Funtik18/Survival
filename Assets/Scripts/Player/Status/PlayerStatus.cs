@@ -1,8 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
+﻿using Sirenix.OdinInspector;
 
-using Sirenix.OdinInspector;
 using System.Collections.Generic;
+
+using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Текущий статус персонажа.
@@ -92,37 +93,38 @@ public class PlayerStatus
 	public PlayerStates states;
 
 
+	private bool isAlive = true;
+
+
 	public PlayerStatus SetData(PlayerStatusData data)
     {
 		stats = new PlayerStats(data.statsData);
-
 		return this;
     }
 
 	public void Init(Player player)
     {
-
 		states.AddAction(SwapStateChanged);
 
 		opportunities.Setup(player);
+
+		stats.Condition.onCurrentValueZero += Death;
 
 		GeneralTime.Instance.onSecond += UpdateStatsByTime;
 		GeneralTime.Instance.onUpdate += UpdateStatsByFrame;
 		WeatherController.Instance.onWeatherChanged += WeatherChanged;
 	}
 
-	public PlayerStatusData GetData()
+	private void Death()
     {
-		PlayerStatusData statusData = new PlayerStatusData()
-		{
-			statsData = stats.GetData(),
-			
-			gender = Gender.Female,
-		};
+        if (isAlive)
+        {
+			GeneralAvailability.PlayerUI.OpenDeadPanel();
+			ScenesManager.Instance.SetupLoad(completedLoad: ScenesManager.Instance.Allow, additionalWaitTime: 3f).LoadMenuScene();
 
-		return statusData;
-    }
-
+			isAlive = false;
+		}
+	}
 
 	//Оптимизировать формулы
 	#region Stats
@@ -171,15 +173,15 @@ public class PlayerStatus
 	{
 		onStatsByTime.Invoke();
 
-		ConditionFormule();
+		TemperatureFormules();
+		ConditionFormules();
 	}
 	private void UpdateStatsByFrame()
     {
 		onStatsByFrame.Invoke();
 	}
 
-
-	private void ConditionFormule()
+	private void ConditionFormules()
 	{
 		if (stats.Warmth.CurrentValue == 0)
 		{
@@ -198,17 +200,14 @@ public class PlayerStatus
 			stats.Condition.CurrentValue -= (stats.Condition.Value * 0.5f) / 86400f;//-50.0%/d or ~2.08%/h
 		}
 	}
-
-	private void AwakeFormule()
+	private void TemperatureFormules()
 	{
-		stats.Thirst.CurrentValue -= stats.Thirst.Value / (8f * 3600f);//100% / 8h or 12.5%/h
-
-		if(FeelsLike >= 0)
-        {
+		if (FeelsLike >= 0)
+		{
 			stats.Warmth.CurrentValue += stats.Warmth.Value / (5f * 3600f);
-        }
-        else
-        {
+		}
+		else
+		{
 			if (temperatureChevrone0 < FeelsLike)
 			{
 				stats.Warmth.CurrentValue -= stats.Warmth.Value / (5f * 3600f);//100% / 5h
@@ -227,6 +226,7 @@ public class PlayerStatus
 			}
 		}
 	}
+
 	private void SleepingFormule()
 	{
 		stats.Fatigue.CurrentValue += stats.Fatigue.Value / (12f * 3600f);//100% / 12h or ~8.33%/h
@@ -239,34 +239,29 @@ public class PlayerStatus
 		stats.Fatigue.CurrentValue += stats.Fatigue.Value / (36f * 3600f);//100% / 36h
 
 		stats.Hungred.CurrentValue -= 100f / 3600f;//100 cal/h
-
-		AwakeFormule();
+		stats.Thirst.CurrentValue -= stats.Thirst.Value / (8f * 3600f);//100% / 8h or 12.5%/h
 	}
 	private void StandingFormule()
 	{
 		stats.Fatigue.CurrentValue -= stats.Fatigue.Value / (8f * 3600f);//100% / 8h
 
 		stats.Hungred.CurrentValue -= 125f / 3600f;//125 cal/h
-
-		AwakeFormule();
+		stats.Thirst.CurrentValue -= stats.Thirst.Value / (8f * 3600f);//100% / 8h or 12.5%/h
 	}
 	private void WalkingFormule()
 	{
 		stats.Fatigue.CurrentValue -= stats.Fatigue.Value / (7f * 3600f);//100% / 7h
 
 		stats.Hungred.CurrentValue -= 200f / 3600f;//200 cal/h
-
-		AwakeFormule();
+		stats.Thirst.CurrentValue -= stats.Thirst.Value / (8f * 3600f);//100% / 8h or 12.5%/h
 	}
 	private void SprintingFormule()
 	{
 		stats.Fatigue.CurrentValue -= stats.Fatigue.Value / (1f * 3600f);//100% / 1h
 
 		stats.Hungred.CurrentValue -= 400f / 3600f;//400 cal/h
-
-		AwakeFormule();
+		stats.Thirst.CurrentValue -= stats.Thirst.Value / (8f * 3600f);//100% / 8h or 12.5%/h
 	}
-
 
 	private void SleepingFormuleByFrame()
 	{
@@ -292,6 +287,9 @@ public class PlayerStatus
     {
 		stats.Stamina.CurrentValue -= staminaSpending * Time.deltaTime;
 	}
+
+
+	
 	#endregion
 
 	[Space]
@@ -341,6 +339,19 @@ public class PlayerStatus
     {
 		AirFeels = Mathf.Clamp(weather.air.airTemperature - (weather.air.airTemperature * airResistance / 100f), -100f, 50f);
 		WindFeels = Mathf.Min(weather.wind.windchill - (weather.wind.windchill * windResistance / 100f), 0);
+	}
+
+
+	public PlayerStatusData GetData()
+	{
+		PlayerStatusData statusData = new PlayerStatusData()
+		{
+			statsData = stats.GetData(),
+
+			gender = Gender.Female,
+		};
+
+		return statusData;
 	}
 }
 [System.Serializable]

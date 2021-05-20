@@ -170,6 +170,17 @@ public class ItemsData : MonoBehaviour
     {
         return !(item is WaterItemSD) && !(item is SnowItemSD);
     }
+
+    [System.Flags]
+    public enum Categories
+    {
+        None = 0,
+        FireStarterSD = 1,
+        FireFuelSD = 2,
+        FireTinderSD = 4,
+
+        All = FireStarterSD | FireFuelSD | FireTinderSD,
+    }
 }
 [System.Serializable]
 public class Container

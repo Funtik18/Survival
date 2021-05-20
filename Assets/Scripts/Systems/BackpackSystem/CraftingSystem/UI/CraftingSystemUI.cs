@@ -29,6 +29,11 @@ public class CraftingSystemUI : BackpackWindow
         requirementsUI.Setup(inventory);
     }
 
+    public override void OpenWindow()
+    {
+        base.OpenWindow();
+    }
+
     public override void CloseWindow()
     {
         base.CloseWindow();
@@ -54,7 +59,6 @@ public class CraftingSystemUI : BackpackWindow
         inventory.BlueprintExchange(blueprintSD);
 
         blueprintsUI.Select(blueprintSD);
-
     }
 
     private void Craft()
@@ -72,6 +76,7 @@ public class CraftingSystemUI : BackpackWindow
     private void StartSkip()
     {
         UpdateSkip(0);
+        GeneralAvailability.PlayerUI.blockPanel.gameObject.SetActive(true);
         GeneralAvailability.PlayerUI.barHight.ShowBar();
     }
     private void UpdateSkip(float progress)
@@ -81,6 +86,9 @@ public class CraftingSystemUI : BackpackWindow
     private void EndSkip()
     {
         GeneralAvailability.PlayerUI.barHight.HideBar();
+        GeneralAvailability.PlayerUI.blockPanel.gameObject.SetActive(false);
+
+        CompletelyCraft();
     }
 
 

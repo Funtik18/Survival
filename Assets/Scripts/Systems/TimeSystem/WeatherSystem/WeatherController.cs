@@ -24,6 +24,9 @@ public class WeatherController : MonoBehaviour
     public WeatherControl weather;
     [Space]
     public Transform weatherTransform;
+
+    public WeatherForecast CurrentForecast => weather.Forecast;
+
     private void Awake()
     {
         weather.onWeatherUpdated = onWeatherChanged;
@@ -36,6 +39,12 @@ public class WeatherController : MonoBehaviour
         weather.RefreshWeather();
     }
 
+    public void SetForecast(WeatherForecast forecast)
+    {
+        weather.Forecast = forecast;
+    }
+
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -46,12 +55,16 @@ public class WeatherController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// TODO: засунуть частицы в forecast
+    /// </summary>
     [System.Serializable]
     public class WeatherControl
     {
         public UnityAction<Weather> onWeatherUpdated;
 
         [SerializeField] private WeatherForecast forecast;
+
         [Space]    
         [SerializeField] private Times updateTime;
         [ReadOnly] [SerializeField] private Weather currentWeather;
@@ -61,6 +74,22 @@ public class WeatherController : MonoBehaviour
         public WeatherPressetSD pressetSnowFall;
         public WeatherPressetSD pressetFog;
         public WeatherPressetSD pressetBlizzard;
+
+        public WeatherForecast Forecast
+        {
+            get
+            {
+                if (forecast.IsEmpty)
+                {
+                    forecast.Generate();
+                }
+                return forecast;
+            }
+            set
+            {
+                forecast = value;
+            }
+        }
 
         [ReadOnly]
         [ShowInInspector] public float Temperature => currentWeather.Temperature;
@@ -77,8 +106,6 @@ public class WeatherController : MonoBehaviour
 
         public void Setup(Transform playerTransform, Transform weatherTransform, Transform origin)
         {
-            forecast.Generate();
-
             GeneralTime.TimeUnityEvent unityEvent = new GeneralTime.TimeUnityEvent();
             unityEvent.AddEvent(GeneralTime.TimeUnityEvent.EventType.ExecuteEveryTime, updateTime, null, UpdateWeather);
 
@@ -93,6 +120,13 @@ public class WeatherController : MonoBehaviour
             this.weatherTransform = weatherTransform;
 
             SetWeather(pressetClear);
+        }
+
+        public WeatherForecast GenerateForecast()
+        {
+            forecast.Generate();
+
+            return forecast;
         }
 
         public void UpdateWeather(Times time)
@@ -299,6 +333,8 @@ public class WeatherController : MonoBehaviour
         [Space]
         [SerializeField] private AnimationCurve temperatureDayCurve;
         [SerializeField] private AnimationCurve temperatureNightCurve;
+
+        public bool IsEmpty => daysForecasts.Count == 0;
 
         private WeatherDayForecast day0;
         private WeatherDayForecast day1;

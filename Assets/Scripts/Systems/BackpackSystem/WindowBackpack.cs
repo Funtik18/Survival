@@ -94,7 +94,8 @@ public class WindowBackpack : WindowUI
 	}
 	public void ShowBackpackCrafting()
     {
-		OpenCrafting();
+		ShowWindowByIndex(windowsOrder.FindIndex((x) => x == craftingSystem));
+		ShowWindow();
 	}
 	public void HideBackpack()
     {
@@ -113,12 +114,6 @@ public class WindowBackpack : WindowUI
 	}
 
 
-
-	private void OpenCrafting()
-	{
-		ShowWindowByIndex(windowsOrder.FindIndex((x) => x == craftingSystem));
-		ShowWindow();
-	}
 	private void ShowWindowByIndex(int index)
 	{
 		currentIndex = index;

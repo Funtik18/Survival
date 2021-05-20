@@ -11,6 +11,7 @@ public class PlayerUI : MonoBehaviour
 	public ProgressBar barLow;
 	public ProgressBar barHight;
 	[Space]
+	public GameObject panelDead;
 	[Space]
 	public TargetPoint targetPoint;
 	public BlockPanel blockPanel;
@@ -40,6 +41,14 @@ public class PlayerUI : MonoBehaviour
 
 		windowsUI.exchangerWindow.onBack += CloseExchanger;
 	}
+
+	public void OpenDeadPanel()
+    {
+		CloseControlUI();
+		CloseConditionUI();
+		panelDead.SetActive(true);
+	}
+
 
 	public void OpenInventory()
 	{
@@ -151,6 +160,18 @@ public class PlayerUI : MonoBehaviour
 	public void OpenResting()
     {
 		CloseControlUI();
+		windowsUI.restingWindow.ShowWindow();
+	}
+	public void OpenPassTime()
+    {
+		CloseControlUI();
+		windowsUI.restingWindow.ShowWindow();
+	}
+	public void OpeRestingForBag(UnityAction takeIt)
+    {
+		CloseControlUI();
+		windowsUI.restingWindow.onTakeIt = takeIt;
+		windowsUI.restingWindow.UseTakeButton();
 		windowsUI.restingWindow.ShowWindow();
 	}
 	public void CloseResting()

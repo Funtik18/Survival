@@ -103,6 +103,12 @@ public class GeneralTime : MonoBehaviour
         }
     }
 
+    public void SetTime(int secs)
+    {
+        globalTime.TotalSeconds = secs;
+
+        UpdateCycle();
+    }
     public void ChangeTimeOn(int secs)
     {
         int diff = secs - globalTime.TotalSeconds;

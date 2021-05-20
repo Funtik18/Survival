@@ -13,6 +13,9 @@ public class GlobalSaveLoader : MonoBehaviour
         if (DataHolder.loadType == LoadType.DEBUG)
         {
             GeneralAvailability.Player.IsDEBUG();
+
+            if (WeatherController.Instance.CurrentForecast == null) { }
+
             Debug.LogError("DEBUG");
         }
         else
@@ -22,13 +25,25 @@ public class GlobalSaveLoader : MonoBehaviour
             if (DataHolder.loadType == LoadType.NewGame)
             {
                 Data data = newGamePattern.GetData();
+
+                GeneralTime.Instance.SetTime(data.time.TotalSeconds);
                 GeneralAvailability.Player.SetData(data.playerData);
+
+                GeneralStatistics.Init();
             }
             else if (DataHolder.loadType == LoadType.Continue)
             {
                 Data data = DataHolder.Data;
 
+                GeneralTime.Instance.SetTime(data.time.TotalSeconds);
+
                 GeneralAvailability.Player.SetData(data.playerData);
+
+                WeatherController.Instance.SetForecast(data.weatherForecast);
+
+                GeneralStatistics.SetData(data.statistic);
+                
+                GeneralStatistics.Init();
             }
             else if (DataHolder.loadType == LoadType.Load)
             {
@@ -43,7 +58,10 @@ public class GlobalSaveLoader : MonoBehaviour
     {
         Data data = DataHolder.Data;
         data.date = System.DateTime.Now;
+        data.time = GeneralTime.Instance.globalTime;
+        data.statistic = GeneralStatistics.GetData();
         data.playerData = GeneralAvailability.Player.GetData();
+        data.weatherForecast = WeatherController.Instance.CurrentForecast;
 
         DataHolder.Save();
     }
@@ -70,6 +88,10 @@ public class GlobalSaveLoader : MonoBehaviour
     [System.Serializable]
     public class NewGamePattern
     {
+        public bool randomTime = true;
+        [HideIf("randomTime")]
+        public Times startTime;
+
         public bool randomPoints = false;
         [HideIf("randomPoints")]
         public Transform startPoint;
@@ -84,40 +106,22 @@ public class GlobalSaveLoader : MonoBehaviour
         [HideIf("randomPlayerData")]
         public PlayerStatusSD playerData;
 
-        public bool randomInventory = false;
-
-        [HideIf("randomInventory")]
-        public ContainerSD container;
-
         public Data GetData()
         {
             Data data = new Data();
 
-            Transform point;
+            data.time = randomTime ? Times.GetRandomTimes() : startTime;
 
-            if (randomPoints)
-            {
-                point = startPoints.GetRandomItem();
-            }
-            else
-            {
-                point = startPoint;
-            }
+            Transform point = randomPoints ? startPoints.GetRandomItem() : startPoint;
 
             data.playerData.position = point.position;
             data.playerData.rotation = Quaternion.LookRotation(point.forward);
 
             data.playerData.statusData = randomPlayerData ? playerRandomData.GetData() : playerData.statsData;
 
-            if (randomInventory)
-            {
-                data.playerData.inventoryData = ItemsData.Instance.PlayerContainer;
-            }
-            else
-            {
-                //data.playerData.inventoryData = container.container.GetInventoryData();
-            }
+            data.playerData.inventoryData = ItemsData.Instance.PlayerContainer;
 
+            data.weatherForecast = WeatherController.Instance.CurrentForecast;
 
             return data;
         }

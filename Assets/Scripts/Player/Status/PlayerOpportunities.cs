@@ -10,10 +10,10 @@ public class PlayerOpportunities
 	private StatHungred hungred;
 
 	private Player owner;
-	private PlayerUI ui;
 	private Inventory inventory;
 
-	private WindowExchanger exchanger;
+	private WindowCondition condition;
+
 
 	private Coroutine useCoroutine = null;
 	public bool IsUseProccess => useCoroutine != null;
@@ -21,12 +21,9 @@ public class PlayerOpportunities
 	public void Setup(Player player)
 	{
 		this.owner = player;
-		this.ui = player.UI;
 		this.inventory = player.Inventory;
 
-		this.exchanger = ui.windowsUI.exchangerWindow;
-		//exchanger.onOk += RemoveItem;
-		//exchanger.onAll += RemoveItem;
+		condition = GeneralAvailability.PlayerUI.conditionUI.conditionWindow;
 
 		thirst = player.Status.stats.Thirst;
 		hungred = player.Status.stats.Hungred;
@@ -37,10 +34,10 @@ public class PlayerOpportunities
 		ItemDataWrapper itemData = item.itemData;
 		if (itemData.CurrentStackSize > 1)
 		{
-			if (itemData.CurrentStackSize > 4)
-				exchanger.SetItem(item);
-			else
-				RemoveItem(item, 1);
+			//if (itemData.CurrentStackSize > 4)
+			//	exchanger.SetItem(item);
+			//else
+			//	RemoveItem(item, 1);
 		}
 		else
 			RemoveItem(item);
@@ -60,9 +57,7 @@ public class PlayerOpportunities
 
             if (IsCanGetIt(consuable))
             {
-				ui.ShowBreakButton().BreakPointer.AddPressListener(StopUse);
-				ui.barHight.ShowBar();
-
+				OpenUI();
 				useCoroutine = owner.StartCoroutine(Use(item, consuable));
             }
             else
@@ -87,8 +82,8 @@ public class PlayerOpportunities
 	private IEnumerator UseConsuable(ItemDataWrapper data, float maxCalories, float hydration)
     {
 		//ui
-		ui.conditionUI.conditionWindow.thirst.EnableCondition(true);
-		ui.conditionUI.conditionWindow.hungred.EnableCondition(true);
+		condition.thirst.EnableCondition(true);
+		condition.hungred.EnableCondition(true);
 
 		//lerp parametrs
 		float currentCalories = data.CurrentCalories;
@@ -121,7 +116,7 @@ public class PlayerOpportunities
 
 			time += Time.deltaTime;
 
-			ui.barHight.UpdateFillAmount(normalStep, "%");
+			GeneralAvailability.PlayerUI.barHight.UpdateFillAmount(normalStep, "%");
 
 			if (thirst.IsFull && hungred.IsFull)
 			{
@@ -142,7 +137,7 @@ public class PlayerOpportunities
 	private IEnumerator UseWater(ItemDataWrapper data, float hydration)
     {
 		//ui
-		ui.conditionUI.conditionWindow.thirst.EnableCondition(true);
+		condition.thirst.EnableCondition(true);
 
 		//lerp parametrs
 		float startWeight = data.CurrentWeight;
@@ -165,10 +160,8 @@ public class PlayerOpportunities
 			data.CurrentWeight = Mathf.Lerp(startWeight, endWeight, normalStep);
 
 			time += Time.deltaTime;
-			
-			ui.barHight.UpdateFillAmount(normalStep, "%");
 
-			Debug.LogError(time);
+			GeneralAvailability.PlayerUI.barHight.UpdateFillAmount(normalStep, "%");
 
 			if (thirst.IsFull)
             {
@@ -191,11 +184,7 @@ public class PlayerOpportunities
 			owner.StopCoroutine(useCoroutine);
 			useCoroutine = null;
 
-			ui.conditionUI.conditionWindow.hungred.EnableCondition(false);
-			ui.conditionUI.conditionWindow.thirst.EnableCondition(false);
-
-			ui.barHight.HideBar();
-			ui.HideBreakButton();
+			CloseUI();
 		}
 	}
     
@@ -214,6 +203,24 @@ public class PlayerOpportunities
 		return true;
     }
 	#endregion
+
+	private void OpenUI()
+    {
+		GeneralAvailability.PlayerUI.blockPanel.Enable(true);
+		GeneralAvailability.PlayerUI.ShowBreakButton().BreakPointer.AddPressListener(StopUse);
+		GeneralAvailability.PlayerUI.barHight.UpdateFillAmount(0, "%").ShowBar();
+
+	}
+	private void CloseUI()
+    {
+		condition.hungred.EnableCondition(false);
+		condition.thirst.EnableCondition(false);
+
+		GeneralAvailability.PlayerUI.barHight.HideBar();
+		GeneralAvailability.PlayerUI.HideBreakButton();
+		GeneralAvailability.PlayerUI.blockPanel.Enable(true);
+	}
+
 
     private void RemoveItem(Item item, int count)
 	{

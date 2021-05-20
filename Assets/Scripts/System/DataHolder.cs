@@ -33,7 +33,12 @@ public class Data
 {
 	public JsonDateTime date;
 
+	public Times time;
+
+	public Statistic statistic;
+
 	public PlayerData playerData;
+	public WeatherController.WeatherForecast weatherForecast;
 
 	public Difficult difficult;
 

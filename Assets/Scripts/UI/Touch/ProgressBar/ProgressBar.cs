@@ -34,12 +34,14 @@ public class ProgressBar : MonoBehaviour
         set => bar.fillAmount = value;
     }
 
-    public void UpdateFillAmount(float value, string expresion = "")
+    public ProgressBar UpdateFillAmount(float value, string expresion = "")
     {
         FillAmount = value;
         
         if (useNumText)
             numText.text = (Mathf.CeilToInt(value * 100)) + expresion;
+
+        return this;
     }
 
     public void SetColor(Color color)

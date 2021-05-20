@@ -183,6 +183,22 @@ public struct Times
     }
     #endregion
 
+
+    public static Times GetRandomTimes()
+    {
+        Times times = new Times()
+        {
+            days = 0,
+            hours = UnityEngine.Random.Range(0, 24),
+            minutes = UnityEngine.Random.Range(0, 60),
+            seconds = 0,
+        };
+        times.CheckTimeSeconds();
+
+        return times;
+    }
+
+
     public enum TimesState
     {
         Morning,

@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using System.Linq;
 
 /// <summary>
 /// Need optimaze
@@ -215,6 +216,10 @@ public class Player : MonoBehaviour
 		UI.controlUI.UnLockControl();
 	}
     #endregion
+
+
+
+
 
 	private void CheckCursor()
 	{
