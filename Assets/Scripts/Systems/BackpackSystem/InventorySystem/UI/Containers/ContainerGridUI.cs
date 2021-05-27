@@ -41,7 +41,7 @@ public class ContainerGridUI : MonoBehaviour
     {
 		this.owner = owner;
 
-		onSlotsChanged += UpdateScrollBarSteps;
+		onSlotsChanged = UpdateScrollBarSteps;
 		UpdateSlots();
 
 		return this;
@@ -52,7 +52,7 @@ public class ContainerGridUI : MonoBehaviour
 		UnChooseLastSlot();
 		DisposeSlots();
 
-		int rows = Mathf.CeilToInt((float)items.Count / CurrentColumns);
+		int rows = Mathf.CeilToInt((float)items.Count / CurrentColumns);//item rows
 
 		if(rows > 4)
         {
@@ -74,13 +74,18 @@ public class ContainerGridUI : MonoBehaviour
         }
 		else//всовывается без проблем в 4 строки
 		{
+			int diff = 4 - CurrentRows;
+
+			if(diff < 0)//нужно удалить не нужные строки до 4
+				RemoveRows(-diff);
+
 			PutItems(items);
 		}
-    }
+	}
 
 	public void RefreshScroll()
     {
-		scrollrect.verticalScrollbar.value = 0;
+		VerticalScrollbar.value = 1;
 	}
 
 	public void UnChooseLastSlot()

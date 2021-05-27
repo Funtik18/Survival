@@ -1,16 +1,71 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class InventorySystemUI : BackpackWindow
 {
 	[SerializeField] private ContainerUI primaryContainer;
 	[SerializeField] private ContainerUI secondaryContainer;
 	[SerializeField] private InventoryItemInspectorUI itemInspector;
+	[Space]
+	[SerializeField] private TMPro.TextMeshProUGUI titleSort;
+	[Space]
+	[SerializeField] private Pointer buttonAll;
+	[SerializeField] private Pointer buttonFire;
+	[SerializeField] private Pointer buttonFirstAid;
+	[SerializeField] private Pointer buttonCloth;
+	[SerializeField] private Pointer buttonFood;
+	[SerializeField] private Pointer buttonTools;
+	[SerializeField] private Pointer buttonMaterials;
+	[Space]
+	[SerializeField] private Toggle toggleAZ;
+	[SerializeField] private Toggle toggleWeight;
 
-    public override void Setup(PlayerInventory inventory)
+	private InventorySortGlobal currentGlobalSort = InventorySortGlobal.None;
+	public InventorySortGlobal CurrentGlobalSort
+    {
+		get => currentGlobalSort;
+        set
+        {
+			if(currentGlobalSort != value)
+            {
+				currentGlobalSort = value;
+				inventory.SetSort(currentGlobalSort);
+				primaryContainer.RefreshContainer();
+
+				if (secondaryContainer.currentInventory != null)
+				{
+					secondaryContainer.currentInventory.SetSort(currentSort);
+					secondaryContainer.RefreshContainer();
+				}
+			}
+        }
+    }
+	private InventorySort currentSort = InventorySort.All;
+	public InventorySort CurrentSort 
+	{
+		get => currentSort;
+        set
+        {
+			if(currentSort != value)
+            {
+				currentSort = value;
+				inventory.SetSort(currentSort);
+
+				primaryContainer.RefreshContainer();
+
+				if(secondaryContainer.currentInventory != null)
+                {
+					secondaryContainer.currentInventory.SetSort(currentSort);
+					secondaryContainer.RefreshContainer();
+				}
+			}
+        }
+	}
+
+
+	public override void Setup(PlayerInventory inventory)
     {
         base.Setup(inventory);
-
-		
 
 		PlayerOpportunities opportunities = GeneralAvailability.Player.Status.opportunities;
 
@@ -25,6 +80,17 @@ public class InventorySystemUI : BackpackWindow
 
 		primaryContainer.onSlotChoosen = itemInspector.SetItem;//события для осмотра предмета
 		primaryContainer.onUpdated = UpdateInspector;
+
+		buttonAll.AddPressListener(SortAll);
+		buttonFire.AddPressListener(SortFire);
+		buttonFirstAid.AddPressListener(SortFirstAid);
+		buttonCloth.AddPressListener(SortCloth);
+		buttonFood.AddPressListener(SortFood);
+		buttonTools.AddPressListener(SortTools);
+		buttonMaterials.AddPressListener(SortMaterials);
+
+		toggleAZ.onValueChanged.AddListener(SortByName);
+		toggleWeight.onValueChanged.AddListener(SortByWeight);
 	}
 
 
@@ -69,7 +135,6 @@ public class InventorySystemUI : BackpackWindow
 	/// </summary>
 	private void OpenItemInspector()
 	{
-
 		secondaryContainer.gameObject.SetActive(false);
 		itemInspector.gameObject.SetActive(true);
 	}
@@ -163,5 +228,60 @@ public class InventorySystemUI : BackpackWindow
     private void UpdateInspector()
     {
 		itemInspector.SetItem(null);
+	}
+
+
+	private void SortAll()
+    {
+		CurrentSort = InventorySort.All;
+
+		titleSort.text = "ALL";
+	}
+	private void SortFire()
+    {
+		CurrentSort = InventorySort.FireItems;
+
+		titleSort.text = "Fire Starting";
+	}
+	private void SortFirstAid()
+	{
+		CurrentSort = InventorySort.FirstAidItems;
+
+		titleSort.text = "First Aid";
+	}
+	private void SortCloth()
+	{
+		CurrentSort = InventorySort.ClothItems;
+
+		titleSort.text = "Cloth";
+	}
+	private void SortFood()
+	{
+		CurrentSort = InventorySort.FoodItems;
+
+		titleSort.text = "Food";
+	}
+	private void SortTools()
+	{
+		CurrentSort = InventorySort.ToolsItems;
+
+		titleSort.text = "Tools";
+	}
+	private void SortMaterials()
+	{
+		CurrentSort = InventorySort.MaterialsItems;
+
+		titleSort.text = "Materials";
+	}
+
+	private void SortByName(bool trigger)
+    {
+		if (trigger)
+			CurrentGlobalSort = InventorySortGlobal.ByName;
+	}
+	private void SortByWeight(bool trigger)
+	{
+		if (trigger)
+			CurrentGlobalSort = InventorySortGlobal.ByWeight;
 	}
 }

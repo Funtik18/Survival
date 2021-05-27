@@ -71,7 +71,7 @@ public class ItemsData : MonoBehaviour
 
     [TitleGroup("Fire Items")]
     [AssetList(AutoPopulate = true, Path = Assets)]
-    [ReadOnly] [SerializeField] private List<FireSD> allFires = new List<FireSD>();
+    [ReadOnly] [SerializeField] private List<FireItemSD> allFires = new List<FireItemSD>();
 
     [HorizontalGroup("Fire Items/Split")]
     [VerticalGroup("Fire Items/Split/Left")]

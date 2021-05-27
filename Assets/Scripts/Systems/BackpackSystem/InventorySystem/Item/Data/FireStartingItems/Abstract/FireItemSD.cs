@@ -2,7 +2,7 @@
 
 using Sirenix.OdinInspector;
 
-public abstract class FireSD : ItemSD
+public abstract class FireItemSD : ItemSD
 {
     [Title("Benefit")]
     [SuffixLabel("%", true)]

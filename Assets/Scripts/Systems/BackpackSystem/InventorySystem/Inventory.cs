@@ -14,9 +14,16 @@ public class Inventory
 
     private InventoryData data;
 
-    [HideInInspector] public List<Item> items = new List<Item>();
+    private List<Item> allItems = new List<Item>();
+    public List<Item> AllItems => allItems;
 
-    public bool IsEmpty => items.Count == 0;
+    private List<Item> currentItems = new List<Item>();
+    public List<Item> CurrentItems => currentItems;
+
+    private InventorySortGlobal currentGlobalSort = InventorySortGlobal.None;
+    private InventorySort currentSort = InventorySort.None;
+
+    public bool IsEmpty => allItems.Count == 0;
 
     public Inventory SetData(InventoryData data)
     {
@@ -30,6 +37,9 @@ public class Inventory
         {
             AddItem(initItems[i]);
         }
+
+        onChanged += delegate { SetSort(currentSort); };
+        SetSort(InventorySort.All);
     }
 
     public bool AddItem(ItemDataWrapper itemData)
@@ -95,7 +105,6 @@ public class Inventory
                     CreateAddItem(itemData);
             }
 
-            onCollectionChanged?.Invoke(items);
             onChanged?.Invoke();
             return true;
         }
@@ -104,7 +113,9 @@ public class Inventory
     private void CreateAddItem(ItemDataWrapper itemData)
     {
         Item item = new Item(itemData);
-        items.Add(item);
+        allItems.Add(item);
+
+        Sort();
     }
 
     public bool RemoveItem(Item item, int count)
@@ -130,26 +141,15 @@ public class Inventory
     {
         if (item != null)
         {
-            if (items.Contains(item))
+            if (allItems.Contains(item))
             {
-                items.Remove(item);
-                onCollectionChanged?.Invoke(items);
+                allItems.Remove(item);
                 onChanged?.Invoke();
+
+                Sort();
+
                 return true;
             }
-        }
-        return false;
-    }
-
-    public bool RemoveItems(List<Item> removers)
-    {
-        if(removers.Count > 0)
-        {
-            for (int i = 0; i < removers.Count; i++)
-            {
-                RemoveItem(removers[i]);
-            }
-            return true;
         }
         return false;
     }
@@ -170,21 +170,93 @@ public class Inventory
     }
 
 
-    public Item FindItemByData(ItemDataWrapper data) => items.FindLast((x) => x.itemData == data);
-    public Item GetBySD(ItemSD sd) => items.FindLast((x) => x.itemData.scriptableData == sd);
-    public Item GetBySD<SD>() => items.FindLast((x) => x.itemData.scriptableData is SD);
+    public Inventory SetSort(InventorySort sortType)
+    {
+        currentSort = sortType;
+        CurrentItems.Clear();
 
-    public List<Item> GetAllBySD(ItemSD sd) => items.FindAll((x) => x.itemData.scriptableData == sd);
-    public List<Item> GetAllBySD<SD>() => items.FindAll((x) => x.itemData.scriptableData is SD);
+        if (currentSort == InventorySort.All)
+        {
+            CurrentItems.AddRange(allItems);
+        }
+        else if (currentSort == InventorySort.FireItems)
+        {
+            CurrentItems.AddRange(GetAllBySD<FireItemSD>());
+        }
+        else if(currentSort == InventorySort.FirstAidItems)
+        {
+            CurrentItems.AddRange(GetAllBySD<FirstAidItemSD>());
+        }
+        else if(currentSort == InventorySort.ClothItems)
+        {
+            CurrentItems.AddRange(GetAllBySD<ClothingItemSD>());
+        }
+        else if(currentSort == InventorySort.FoodItems)
+        {
+            CurrentItems.AddRange(GetAllBySD<ConsumableItemSD>());
+        }
+        else if(currentSort == InventorySort.ToolsItems)
+        {
+            CurrentItems.AddRange(GetAllBySD<ToolItemSD>());
+        }
+        else if(currentSort == InventorySort.MaterialsItems)
+        {
+            CurrentItems.AddRange(GetAllBySD<MaterialItemSD>());
+        }
+
+        onCollectionChanged?.Invoke(CurrentItems);
+
+        return this;
+    }
+    public Inventory SetSort(InventorySortGlobal sortType)
+    {
+        if (currentGlobalSort == sortType) return this;
+
+        currentGlobalSort = sortType;
+
+        Sort();
+
+        return this;
+    }
+
+    private void Sort()
+    {
+        if (currentGlobalSort == InventorySortGlobal.ByName)
+        {
+            SortAlphabetically();
+        }
+        else if (currentGlobalSort == InventorySortGlobal.ByWeight)
+        {
+            SortWeight();
+        }
+
+        SetSort(currentSort);
+    }
+    private void SortAlphabetically()
+    {
+        allItems.Sort((x, y) => string.Compare(x.itemData.scriptableData.objectName, y.itemData.scriptableData.objectName));
+    }
+    private void SortWeight()
+    {
+        allItems.Sort((x, y) => x.itemData.CurrentWeight.CompareTo(y.itemData.CurrentWeight));
+    }
+
+
+    public Item FindItemByData(ItemDataWrapper data) => allItems.FindLast((x) => x.itemData == data);
+    public Item GetBySD(ItemSD sd) => allItems.FindLast((x) => x.itemData.scriptableData == sd);
+    public Item GetBySD<SD>() => allItems.FindLast((x) => x.itemData.scriptableData is SD);
+
+    public List<Item> GetAllBySD(ItemSD sd) => allItems.FindAll((x) => x.itemData.scriptableData == sd);
+    public List<Item> GetAllBySD<SD>() => allItems.FindAll((x) => x.itemData.scriptableData is SD);
 
     public List<Item> GetAllFood(bool onlyCookableFood = false)
     {
         List<Item> finded = null;
 
         if (onlyCookableFood)
-            finded = items.FindAll((x) => x.itemData.scriptableData is FoodItemSD && (x.itemData.scriptableData as FoodItemSD).isCookable == true);
+            finded = allItems.FindAll((x) => x.itemData.scriptableData is FoodItemSD && (x.itemData.scriptableData as FoodItemSD).isCookable == true);
         else
-            finded = items.FindAll((x) => x.itemData.scriptableData is FoodItemSD);
+            finded = allItems.FindAll((x) => x.itemData.scriptableData is FoodItemSD);
 
         return finded;
     }
@@ -204,7 +276,7 @@ public class Inventory
         return liquids;
     }
 
-    public bool ContainsType<SD>() => items.FirstOrDefault((x) => x.itemData.scriptableData is SD) != null;
+    public bool ContainsType<SD>() => allItems.FirstOrDefault((x) => x.itemData.scriptableData is SD) != null;
     public bool ContainsType(ItemsData.Categories categories)
     {
         if ((categories & ItemsData.Categories.FireFuelSD) != ItemsData.Categories.None)
@@ -236,9 +308,9 @@ public class Inventory
     private float GetWeight()//оптимизировать
     {
         float weight = 0f;
-        for (int i = 0; i < items.Count; i++)
+        for (int i = 0; i < allItems.Count; i++)
         {
-            ItemDataWrapper data = items[i].itemData;
+            ItemDataWrapper data = allItems[i].itemData;
 
             weight += data.CurrentWeight;
         }
@@ -246,13 +318,17 @@ public class Inventory
     }
 
 
+ 
+
+
+
     private ItemDataWrapper[] GetItemsData()
     {
         List<ItemDataWrapper> itemDatas = new List<ItemDataWrapper>();
 
-        for (int i = 0; i < items.Count; i++)
+        for (int i = 0; i < allItems.Count; i++)
         {
-            itemDatas.Add(items[i].itemData);
+            itemDatas.Add(allItems[i].itemData);
         }
 
         return itemDatas.ToArray();
@@ -267,6 +343,25 @@ public class Inventory
         return data;
     }
 }
+public enum InventorySortGlobal
+{
+    None,
+    ByName,
+    ByWeight,
+}
+public enum InventorySort
+{
+    None,
+    All,
+    FireItems,
+    FirstAidItems,
+    ClothItems,
+    FoodItems,
+    ToolsItems,
+    MaterialsItems,
+}
+
+
 [System.Serializable]
 public struct InventoryData
 {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game/Inventory/Items/Fire/Fuel", fileName = "Fuel")]
-public class FireFuelSD : FireSD 
+public class FireFuelSD : FireItemSD 
 {
     [Range(0, 21f)]
     public float addTemperature = 0;

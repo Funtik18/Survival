@@ -25,7 +25,7 @@ public class ContainerSlotUI : MonoBehaviour
 	[SerializeField] private TMPro.TextMeshProUGUI durabilityText;
 	[SerializeField] private TMPro.TextMeshProUGUI weightText;
 	[Space]
-	[SerializeField] private ContainerSlotInteractionUI interaction;
+	[SerializeField] private Pointer pointer;
 
 	[Space]
 	[SerializeField] private List<Sprite> abstractSprites = new List<Sprite>();
@@ -41,7 +41,7 @@ public class ContainerSlotUI : MonoBehaviour
     {
 		this.owner = owner;
 
-		interaction.onClick += ClickSlot;
+		pointer.AddPressListener(ClickSlot);
 		return this;
 	}
 	public void SetItem(Item item)

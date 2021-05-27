@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game/Inventory/Items/Fire/Starter", fileName = "Starter")]
-public class FireStarterSD : FireSD 
+public class FireStarterSD : FireItemSD 
 {
     [Tooltip("Сколько секунд розжигать.")]
     [Min(1f)]

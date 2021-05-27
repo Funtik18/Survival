@@ -120,7 +120,7 @@ public class ItemInspector : MonoBehaviour
     {
 		cashItemsOnDelete.Clear();
 
-		foreach (var i in inventory.items)
+		foreach (var i in inventory.AllItems)
         {
 			SetupItem(i, true, InspectAnimationType.OnlyLocal);
 

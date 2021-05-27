@@ -24,7 +24,7 @@ public class ContainerUI : MonoBehaviour
         currentInventory = inventory;
 
         currentInventory.onCollectionChanged = UpdateGrid;
-        UpdateGrid(currentInventory.items);
+        UpdateGrid(currentInventory.CurrentItems);
     }
     public void UnSubscribeInventory()
     {
