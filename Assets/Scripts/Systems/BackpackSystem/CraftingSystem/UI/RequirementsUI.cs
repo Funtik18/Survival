@@ -52,13 +52,15 @@ public class RequirementsUI : MonoBehaviour
             Debug.LogError("SetWorkPlaceEDIT HERE");
 
             RequirementTimeUI requirementTime = Instantiate(requirementTimePrefab, root);
-            if (currentBlueprint.timeLimits)
+
+            TimeLimits limits = currentBlueprint.timeLimits;
+            if (limits.isLimits)
             {
-                requirementTime.SetTime(currentBlueprint.requiredTime, currentBlueprint.requiredTimeMax);
+                requirementTime.SetTime(limits.requiredTime, limits.requiredTimeMax);
             }
             else
             {
-                requirementTime.SetTime(currentBlueprint.requiredTime);
+                requirementTime.SetTime(limits.requiredTime);
             }
         }
     }

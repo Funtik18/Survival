@@ -12,27 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eca7b946d615ed48bdd49a76445b40e, type: 3}
   m_Name: TinderPlug1
   m_EditorClassIdentifier: 
-  itemYield:
-    scriptableData: {fileID: 11400000, guid: 17e656c3d1536434d9999bfc47cc4941, type: 2}
-    currentStackSize: 2
-    currentDurrability: 100
-    currentCalories: 0
-    currentWeight: 0
-    minimumWeight: 0
+  workPlace: 0
   components:
   - item: {fileID: 11400000, guid: eb604291a260dd141a7d52087a07b208, type: 2}
     count: 1
-  workPlace: 0
-  timeLimits: 1
-  requiredTime:
-    days: 0
-    hours: 0
-    minutes: 5
-    seconds: 0
-    totalSeconds: 300
-  requiredTimeMax:
-    days: 0
-    hours: 0
-    minutes: 10
-    seconds: 0
-    totalSeconds: 600
+  timeLimits:
+    isLimits: 1
+    requiredTime:
+      days: 0
+      hours: 0
+      minutes: 5
+      seconds: 0
+      totalSeconds: 300
+    requiredTimeMax:
+      days: 0
+      hours: 0
+      minutes: 10
+      seconds: 0
+      totalSeconds: 600
+  yield:
+    item:
+      scriptableData: {fileID: 11400000, guid: 17e656c3d1536434d9999bfc47cc4941, type: 2}
+      currentStackSize: 2
+      currentDurrability: 100
+      currentCalories: 0
+      currentWeight: 0.1
+      minimumWeight: 0
+      currentMagazineCapacity: 0
+    isRandom: 0
+    maxStackSize: 0

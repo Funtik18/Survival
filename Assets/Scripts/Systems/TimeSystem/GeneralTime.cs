@@ -416,8 +416,11 @@ public static class SkipExtensionsTime
     }
     public static void BreakSkipTime(this GeneralTime generalTime)
     {
-        onBreak?.Invoke();
-        StopSkip();
+        if (IsSkipProccess(instance))
+        {
+            onBreak?.Invoke();
+            StopSkip();
+        }
     }
     private static void StopSkip()
     {

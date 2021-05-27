@@ -8,32 +8,13 @@ using UnityEngine.Events;
 [CreateAssetMenu(menuName = "Game/Blueprint", fileName = "Data")]
 public class BlueprintSD : ScriptableObject
 {
-    public ItemDataWrapper itemYield;
+    public WorkPlace workPlace = WorkPlace.Any;
 
     public List<BlueprintItem> components = new List<BlueprintItem>();
 
-    //public bool useTools = false;
-    //[ShowIf("useTools")]
-    //public List<ItemSD> requirementsTools = new List<ItemSD>();
+    public TimeLimits timeLimits;
 
-    public WorkPlace workPlace = WorkPlace.Any;
-
-    public bool timeLimits = false;
-    public Times requiredTime;
-    [ShowIf("timeLimits")]
-    [OnValueChanged("Limitation")]
-    public Times requiredTimeMax;
-
-    public int GetRandomBtwTimes()
-    {
-        return Random.Range(requiredTime.TotalSeconds, requiredTimeMax.TotalSeconds);
-    }
-
-
-    private void Limitation()
-    {
-        requiredTimeMax.TotalSeconds = Mathf.Max(requiredTime.TotalSeconds + 60, requiredTimeMax.TotalSeconds);
-    }
+    public ItemYield yield;
 }
 public enum WorkPlace
 {
@@ -60,6 +41,27 @@ public class BlueprintAvailability
     }
 }
 
+
+[System.Serializable]
+public class ItemYield
+{
+    public ItemDataWrapper item;
+    public bool isRandom = false;
+
+    [ShowIf("isRandom")]
+    [MinValue("MaxStackSize")]
+    public int maxStackSize;
+
+    private int MaxStackSize
+    {
+        get
+        {
+            if (item != null)
+                return item.CurrentStackSize + 1;
+            return 0;
+        }
+    }
+}
 
 
 public class RequirementItem

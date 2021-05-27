@@ -20,8 +20,10 @@ public class PlayerCamera : MonoBehaviour
 		}
 	}
 
+	[SerializeField] private Transform currentTransform;
 	[SerializeField] private Camera playerCamera;
 	[SerializeField] private CameraShaker shaker;
+	[SerializeField] private float fieldOfView = 60f;
 	[Space]
 	[SerializeField] private LayerMask interactLayers;
 	[SerializeField] private LayerMask ignoringLayers;
@@ -39,19 +41,14 @@ public class PlayerCamera : MonoBehaviour
 	private Coroutine visionCoroutine = null;
 	public bool IsVisionProccess => visionCoroutine != null;
 	private WaitForFixedUpdate visionSeconds = new WaitForFixedUpdate();
-    #endregion
 
-    #region Properties
-    private Transform trans;
-	public Transform Transform
-	{
-		get
-		{
-			if(trans == null)
-				trans = transform;
-			return trans;
-		}
-	}
+	private Coroutine fovCoroutine = null;
+	private bool IsFovProccess => fovCoroutine != null;
+	#endregion
+
+	#region Properties
+	public Transform Transform => currentTransform;
+
 	public bool IsVisionBlocked { get; private set; }
 
 	private CameraShakeInstance HandheldCamera
@@ -74,36 +71,77 @@ public class PlayerCamera : MonoBehaviour
 		StartVision();
 	}
 
-	#region Vision
-	private IObservable Observable => currentCollider.GetComponent<IObservable>();//need cash
-
-	private Collider currentCollider = null;
-	private Collider CurrentCollider
+    #region FOV
+    public void SetFieldOfView(float value, float t)
     {
-		get => currentCollider;
-        set
+        if (!IsFovProccess)
         {
-			if(value != currentCollider || value == null)
+			fovCoroutine = StartCoroutine(FOV(value, t));
+        }
+	}
+	public void ResetFieldOfView(float t)
+	{
+		if (!IsFovProccess)
+		{
+			fovCoroutine = StartCoroutine(FOV(fieldOfView, t));
+        }
+        else
+        {
+			StopFOV();
+			fovCoroutine = StartCoroutine(FOV(fieldOfView, t));
+		}
+	}
+	private IEnumerator FOV(float fov, float t)
+    {
+		float time = 0;
+		float startFOV = playerCamera.fieldOfView;
+		float endFov = fov;
+		while(time < t)
+        {
+			playerCamera.fieldOfView = Mathf.Lerp(startFOV, endFov, time / t);
+
+			time += Time.deltaTime;
+			yield return null;
+		}
+		playerCamera.fieldOfView = endFov;
+		StopFOV();
+	}
+	private void StopFOV()
+    {
+		if (IsFovProccess)
+		{
+			StopCoroutine(fovCoroutine);
+			fovCoroutine = null;
+		}
+	}
+    #endregion
+
+    #region Vision
+	private IObservable currentObserv;
+	private IObservable CurrentObserv
+    {
+		get => currentObserv;
+
+		set
+        {
+			if (currentObserv != value)
             {
-				if(currentCollider != null)
-					Observable.EndObserve();
-
-				currentCollider = value;
-
-				if (currentCollider != null)
-					Observable.StartObserve();
+				currentObserv?.EndObserve();
+				currentObserv = value;
+				currentObserv?.StartObserve();
             }
             else
             {
-				Observable?.Observe();
+				currentObserv?.Observe();
 			}
 		}
 	}
-	private void DisposeCollider()
+
+	private void Dispose()
 	{
-		if (CurrentCollider != null)
+		if (CurrentObserv != null)
 		{
-			CurrentCollider = null;
+			CurrentObserv = null;
 		}
 	}
 
@@ -121,15 +159,17 @@ public class PlayerCamera : MonoBehaviour
 			if (IsVisionBlocked == false)
             {
 				RaycastHit hit;
-				Ray ray = new Ray(Transform.position, Transform.forward);
+				Ray ray = new Ray(currentTransform.position, currentTransform.forward);
 
                 //каст для мира
                 if (Physics.Raycast(ray, out hit, maxRayDistance, ~ignoringLayers))
                 {
                     lastHitPoint = hit.point;
 
+					//переделать
                     collidersIntersects.Clear();
                     collidersIntersects.AddRange(Physics.OverlapSphere(hit.point, sphereRadius, interactLayers));
+
                     if (collidersIntersects.Count > 0)
                         GeneralAvailability.TargetPoint.ShowPoint();
                     else
@@ -138,16 +178,19 @@ public class PlayerCamera : MonoBehaviour
                     //каст для интерактивных объектов
                     if (Physics.Raycast(ray, out hit, rayDistance, interactLayers))
 					{
-						CurrentCollider = hit.collider;
+						if(hit.transform.parent == null)
+							CurrentObserv = hit.transform.GetComponent<IObservable>();
+						else
+							CurrentObserv = hit.transform.GetComponentInParent<IObservable>();
 					}
 					else
 					{
-						DisposeCollider();
+						Dispose();
 					}
                 }
                 else
                 {
-					DisposeCollider();
+					Dispose();
 					GeneralAvailability.TargetPoint.HidePoint();
                 }
 
@@ -173,13 +216,14 @@ public class PlayerCamera : MonoBehaviour
 
 		GeneralAvailability.TargetPoint.HidePoint();
 
-		DisposeCollider();
+		Dispose();
 	}
 	public void UnLockVision()
 	{
 		IsVisionBlocked = false;
 	}
 	#endregion
+
 
 	#region Idle Shake
 	public void StartIdleShake()

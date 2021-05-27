@@ -12,18 +12,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 pitchYMinMaxClamp = new Vector2(-90.0f, 45.0f);
 
     [Title("Sensitivity-Smooth")]
-    [SerializeField] private float mouseSensitivity = 3.5f;
-    [SerializeField] private float touchSensitivity = 1.5f;
+    [SerializeField] private float sensitivity = 1.5f;
     [Range(0.0f, 0.5f)]
-    [SerializeField] private float touchSmoothTime = 0.03f;
-    [Range(0.0f, 0.5f)]
-    [SerializeField] private float mouseSmoothTime = 0.03f;
-    [Space]
-    [Range(0.0f, 0.5f)]
-    [SerializeField] private float moveSmoothTime = 0.3f;
-    [Space]
-    [SerializeField] private float gravity = -13.0f;
+    [SerializeField] private float smooth = 0.03f;
 
+    [Space]
+    [Range(0.0f, 0.5f)]
+    [SerializeField] private float moveSmooth = 0.3f;
+    
     [Title("Speed")]
     [SerializeField] private AnimationCurve accelerationCurve;
     [SerializeField] private float maxRunSpeed = 5.5f;
@@ -34,6 +30,8 @@ public class PlayerController : MonoBehaviour
     [Title("Slope")]
     [SerializeField] private float slopeForce;
     [SerializeField] private float slopeForceRayLength;
+    [Space]
+    [SerializeField] private float gravity = -13.0f;
 
     #region Properties
     private Transform ownerTransform;
@@ -79,7 +77,7 @@ public class PlayerController : MonoBehaviour
     private float cameraPitch = 0.0f;
 
     private float currentSensitivity;
-    private float currentSmoothTime;
+    private float currentSmooth;
 
     private Vector2 currentDirection = Vector2.zero;
     private Vector2 currentDirVelocity = Vector2.zero;
@@ -94,6 +92,9 @@ public class PlayerController : MonoBehaviour
 	{
         this.status = player.Status;
         currentSpeed = maxWalkSpeed;
+
+        currentSensitivity = sensitivity;
+        currentSmooth = smooth;
     }
 
     public void Enable(bool trigger)
@@ -101,19 +102,24 @@ public class PlayerController : MonoBehaviour
         characterController.enabled = trigger;
     }
 
+    public void SetLookSensitivity(float sensitivity)
+    {
+        currentSensitivity = sensitivity;
+    }
+    public void ResetLookSensitivity()
+    {
+        currentSensitivity = sensitivity;
+    }
+
 
     public void UpdatePCLook()
     {
-        currentSensitivity = mouseSensitivity;
-        currentSmoothTime = mouseSmoothTime;
         targetLookDirection = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
         UpdateLook();
     }
     public void UpdateMobileLook()
     {
-        currentSensitivity = touchSensitivity;
-        currentSmoothTime = touchSmoothTime;
         targetLookDirection = ControlUI.fieldLook.Direction;
         targetLookDirection.Normalize();
 
@@ -134,7 +140,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             targetMoveDirection.Normalize();
-            currentDirection = Vector2.SmoothDamp(currentDirection, targetMoveDirection, ref currentDirVelocity, moveSmoothTime);
+            currentDirection = Vector2.SmoothDamp(currentDirection, targetMoveDirection, ref currentDirVelocity, moveSmooth);
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
                 SpeedUp();
@@ -164,7 +170,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             targetMoveDirection.Normalize();
-            currentDirection = Vector2.SmoothDamp(currentDirection, targetMoveDirection, ref currentDirVelocity, moveSmoothTime);
+            currentDirection = Vector2.SmoothDamp(currentDirection, targetMoveDirection, ref currentDirVelocity, moveSmooth);
 
             if (isSpeedUp)
             {
@@ -215,12 +221,13 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateLook()
     {
-        currentMouseDelta = Vector2.SmoothDamp(currentMouseDelta, targetLookDirection, ref currentMouseDeltaVelocity, currentSmoothTime);
+        currentMouseDelta = Vector2.SmoothDamp(currentMouseDelta, targetLookDirection, ref currentMouseDeltaVelocity, currentSmooth);
 
         cameraPitch -= currentMouseDelta.y * currentSensitivity;
         cameraPitch = Mathf.Clamp(cameraPitch, pitchYMinMaxClamp.x, pitchYMinMaxClamp.y);
 
         OwnerCamera.localEulerAngles = Vector3.right * cameraPitch;
+
         OwnerTransform.Rotate(Vector3.up * currentMouseDelta.x * currentSensitivity);
     }
 

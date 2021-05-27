@@ -1,11 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IObservable
+﻿public interface IObservable
 {
-	bool IsObservable { get; }
-
 	void StartObserve();
 	void Observe();
 	void EndObserve();

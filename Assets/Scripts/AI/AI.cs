@@ -5,32 +5,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AI : MonoBehaviour
+public class AI : WorldEntity
 {
-    [SerializeField] private float gravity = -13.0f;
+    [SerializeField] private Transform currentTransform;
+    [Space]
+    [SerializeField] private bool isBrain = true;
+    [SerializeField] private AIData data;
 
+    [SerializeField] private Collider interaction;
+    [SerializeField] private List<HitZone> hitZones = new List<HitZone>();
+
+    [SerializeField] private float gravity = -13.0f;
 
     [SerializeField] protected Animator animator;
     [SerializeField] protected CharacterController controller;
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected FieldOfView view;
-    [Space]
-    [SerializeField] protected ColliderTrigger headCollider;
-    [SerializeField] protected List<ColliderTrigger> colliders = new List<ColliderTrigger>();
 
-    private Transform trans;
-    public Transform Transform 
-    {
-        get
-        {
-            if (trans == null)
-                trans = transform;
-            return trans;
-        }
-    }
-
-    protected bool isAlive = true;
-    public bool IsAlive => isAlive;
+    public Transform Transform => currentTransform;
+    public AIStatus Status { get; private set; }
 
     private AIState currentState;
     public AIState CurrentState
@@ -53,41 +46,30 @@ public class AI : MonoBehaviour
 
     public int totalIdleAnimations = 0;
 
-    [Space]
-    [Min(1), MaxValue("wanderOuterRadius")]
-    public float wanderInnerRadius;
-    [MinValue("wanderInnerRadius")]
-    public float wanderOuterRadius;
-    [Space]
-    [Min(1), MaxValue("awayOuterRadius")]
-    public float awayInnerRadius;
-    [MinValue("awayInnerRadius")] 
-    public float awayOuterRadius;
-
     #region Private
+    private Coroutine brainCoroutine = null;
+    public bool IsBrainProccess => brainCoroutine != null;
+
     protected List<Transform> viewsTargers;
 
     protected int idleHash = -1;
     protected int idleIndexHash = -1;
+    protected int idleIndex = 0;
+
+    protected int deadHash = -1;
+    protected int deathIndexHash = -1;
+    protected int deathIndex = 0;
 
     protected int velocityHash = -1;
     protected int directionHash = -1;
 
-    protected int idleIndex = 0;
     protected int hitIndex = 1;
-    protected int deathIndex = 1;
 
-    protected float waypointTimer;
-    protected float waitTime;
-
-    protected Vector3 currentDestination;
-
-    private Coroutine brainCoroutine = null;
-    public bool IsBrainProccess => brainCoroutine != null;
+    private Vector3 rootMotion;
     #endregion
 
 
-    private void Awake()
+    protected virtual void Awake()
     {
         //navmesh
         agent.updatePosition = false;
@@ -95,21 +77,21 @@ public class AI : MonoBehaviour
         idleHash = Animator.StringToHash("IsIdle");
         idleIndexHash = Animator.StringToHash("IdleIndex");
 
+        deadHash = Animator.StringToHash("Dead");
+        deathIndexHash = Animator.StringToHash("DeathIndex");
+
         velocityHash = Animator.StringToHash("Velocity");
         directionHash = Animator.StringToHash("Direction");
+
         //view
         viewsTargers = view.visibleTargets;
-        ////colliders
-        //headCollider.onTriggerEnter +=;
-        //for (int i = 0; i < colliders.Count; i++)
-        //{
-        //    colliders[i].onTriggerEnter +=;
-        //}
 
+
+        Status = new AIStatus(data.status);
+        Status.Condition.onCurrentValueZero += StopBrain;
 
         StartBrain();
     }
-    Vector3 rootMotion;
     private void Update()
     {
         if (controller)
@@ -132,7 +114,7 @@ public class AI : MonoBehaviour
         Transform.rotation = animator.rootRotation;
     }
 
-
+    #region Brain
     private void StartBrain()
     {
         if (!IsBrainProccess)
@@ -146,9 +128,10 @@ public class AI : MonoBehaviour
     }
     private IEnumerator Brain()
     {
-        while (isAlive)
+        while (isBrain)
         {
             Behavior();
+
             yield return null;
         }
         //death
@@ -161,32 +144,14 @@ public class AI : MonoBehaviour
             StopCoroutine(brainCoroutine);
             brainCoroutine = null;
 
-            view.StopView();
+            StartCoroutine(Death());
         }
     }
+    #endregion
 
     protected virtual void Behavior() { }
-
-
-    protected void BehaviorRunAway()
-    {
-        if (CurrentState != AIState.Run)
-        {
-            GenerateDestination(Transform.position, awayInnerRadius, awayOuterRadius);
-        }
-
-        if (agent.remainingDistance >= agent.stoppingDistance && !agent.pathPending)
-        {
-            CurrentState = AIState.Run;
-            MoveAIRootMotion();
-        }
-        else
-        {
-            GenerateDestination(Transform.position, awayInnerRadius, awayOuterRadius);
-        }
-    }
-
-   
+    protected virtual IEnumerator Death() { yield return null; }
+    public virtual void Hit(HitZone.Zone zone) { }
 
     protected void MoveAIRootMotion()
     {
@@ -230,19 +195,6 @@ public class AI : MonoBehaviour
     }
 
 
-    protected void GenerateDestination(Vector3 origin, float innerRadius, float outerRadius)
-    {
-        currentDestination = ExtensionRandom.RandomPointInAnnulus(origin, innerRadius, outerRadius);
-        currentDestination.y = Terrain.activeTerrain.SampleHeight(currentDestination);
-        if (CheckPath(agent, currentDestination))
-        {
-            agent.SetDestination(currentDestination);
-        }
-        else
-        {
-            GenerateDestination(origin, innerRadius, outerRadius);
-        }
-    }
     protected bool CheckPath(NavMeshAgent agent, Vector3 destination)
     {
         NavMeshPath path = new NavMeshPath();
@@ -255,23 +207,21 @@ public class AI : MonoBehaviour
     }
 
 
-    private void OnDrawGizmosSelected()
+    protected virtual void Diable()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(currentDestination, 0.25f);
+        animator.enabled = false;
+        controller.enabled = false;
+        agent.enabled = false;
+        view.StopView();
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(currentDestination, agent.stoppingDistance);
-
-        //path
-        Gizmos.color = Color.yellow;
-        Vector3[] corners = agent.path.corners;
-
-        for (int i = 0; i < corners.Length - 1; i++)
+        for (int i = 0; i < hitZones.Count; i++)
         {
-            Gizmos.DrawLine(corners[i], corners[i + 1]);
+            hitZones[i].Collider.enabled = false;
         }
+
+        interaction.enabled = true;
     }
+
 
     public enum AIState
     {
@@ -279,4 +229,27 @@ public class AI : MonoBehaviour
         Walk,
         Run,
     }
+}
+public class AIStatus
+{
+    public StatCondition Condition;
+
+    public bool IsAlive => !Condition.IsEquilZero;
+
+    public AIStatus(AIStatusData data)
+    {
+        Condition = new StatCondition(data.condition);
+    }
+}
+[System.Serializable]
+public class AIData 
+{
+    [TabGroup("AIStats")]
+    [HideLabel]
+    public AIStatusData status;
+}
+[System.Serializable]
+public struct AIStatusData
+{
+    public StatBarData condition;
 }

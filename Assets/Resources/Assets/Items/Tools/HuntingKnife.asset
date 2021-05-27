@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d4920a2fe5dc794c8731f143243a609, type: 3}
+  m_Name: HuntingKnife
+  m_EditorClassIdentifier: 
+  objectName: Hunting knife
+  description: Good quality knife with a stainless steel blade and wooden handle.
+  itemSprite: {fileID: 21300000, guid: a3b001dc814517246aa0b9c8d11b091b, type: 3}
+  model: {fileID: 2220928936017619118, guid: 1f52627673afc3846a5e984a32621e12, type: 3}
+  orientation:
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  isInfinityWeight: 0
+  weight: 0.5
+  isInfinityStack: 0
+  stackSize: 1
+  isBreakable: 0
+  decayOverTime: 0
+  decayInside: 0
+  decayOutsie: 0
+  decayPerAction: 0

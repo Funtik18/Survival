@@ -116,10 +116,7 @@ public class WindowResting : WindowUI
 
     private void BreakSkip()
     {
-        if (GeneralTime.Instance.IsSkipProccess())
-        {
-            GeneralTime.Instance.BreakSkipTime();
-        }
+        GeneralTime.Instance.BreakSkipTime();
     }
 
     private void EndSkip()

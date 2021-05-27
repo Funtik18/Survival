@@ -14,9 +14,9 @@ public class ContainerUI : MonoBehaviour
 
     [HideInInspector] public Inventory currentInventory;
 
-    private void Awake()
+    public void Setup()
     {
-        grid.onSlotChoosen += SlotChoosen;
+        grid.Setup(this).onSlotChoosen += SlotChoosen;
     }
 
     public void SubscribeInventory(Inventory inventory)
@@ -39,6 +39,11 @@ public class ContainerUI : MonoBehaviour
     {
         grid.RefreshScroll();
         grid.UnChooseLastSlot();
+        UpdateWeight();
+    }
+    public void UpdateWeight()
+    {
+        weightText.text = currentInventory.CurrentStringWeight;
     }
 
     private void UpdateGrid(List<Item> items)
@@ -49,15 +54,6 @@ public class ContainerUI : MonoBehaviour
 
         onUpdated?.Invoke();
     }
-
-    private void UpdateWeight()
-    {
-        if(weightText != null)
-        {
-            weightText.text = currentInventory.GetWeight() + " KG";
-        }
-    }
-
     private void SlotChoosen(ContainerSlotUI slot)
     {
 		onSlotChoosen?.Invoke(slot); 

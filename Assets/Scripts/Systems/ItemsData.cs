@@ -34,75 +34,91 @@ public class ItemsData : MonoBehaviour
     [Title("Items")]
     [AssetList(AutoPopulate = true, Path = Assets, CustomFilterMethod = "Limits")]
     [OnValueChanged("UpdateContainers")]
-    public List<ItemSD> allItems = new List<ItemSD>();
+    [ReadOnly] [SerializeField] private List<ItemSD> allItems = new List<ItemSD>();
 
     //Consumable Items
 
     [TitleGroup("Consumable Items")]
     [AssetList(AutoPopulate = true, Path = Assets, CustomFilterMethod = "Limits")]
-    [SerializeField] private List<ConsumableItemSD> allConsumables = new List<ConsumableItemSD>();
+    [ReadOnly] [SerializeField] private List<ConsumableItemSD> allConsumables = new List<ConsumableItemSD>();
     [HorizontalGroup("Consumable Items/Split")]
     [VerticalGroup("Consumable Items/Split/Left")]
     [AssetList(AutoPopulate = true, Path = Assets, CustomFilterMethod = "Limits")]
-    [SerializeField] private List<PotionItemSD> allDrinks = new List<PotionItemSD>();
+    [ReadOnly] [SerializeField] private List<PotionItemSD> allDrinks = new List<PotionItemSD>();
 
     [LabelWidth(100)]
-    [VerticalGroup("Consumable Items/Split/Left")] 
-    [SerializeField] private WaterItemSD potableWater;
+    [VerticalGroup("Consumable Items/Split/Left")]
+    [ReadOnly] [SerializeField] private WaterItemSD potableWater;
     public WaterItemSD PotableWater => potableWater;
 
     [LabelWidth(100)]
     [VerticalGroup("Consumable Items/Split/Left")]
-    [SerializeField] private WaterItemSD unsafeWater;
+    [ReadOnly] [SerializeField] private WaterItemSD unsafeWater;
     public WaterItemSD UnSafeWater => unsafeWater;
 
     [VerticalGroup("Consumable Items/Split/Right")]
     [AssetList(AutoPopulate = true, Path = Assets, CustomFilterMethod = "Limits")]
-    [SerializeField] private List<FoodItemSD> allFood = new List<FoodItemSD>();
+    [ReadOnly] [SerializeField] private List<FoodItemSD> allFood = new List<FoodItemSD>();
     [LabelWidth(100)]
     [VerticalGroup("Consumable Items/Split/Right")]
-    [SerializeField] private SnowItemSD snow;
+    [ReadOnly] [SerializeField] private SnowItemSD snow;
+    [LabelWidth(100)]
+    [VerticalGroup("Consumable Items/Split/Right")]
+    [AssetList(AutoPopulate = true, Path = Assets)]
+    [ReadOnly] [SerializeField] private List<MeatItemSD> allMeat = new List<MeatItemSD>();
 
     //Fire Items
 
     [TitleGroup("Fire Items")]
     [AssetList(AutoPopulate = true, Path = Assets)]
-    [SerializeField] private List<FireSD> allFires = new List<FireSD>();
+    [ReadOnly] [SerializeField] private List<FireSD> allFires = new List<FireSD>();
 
     [HorizontalGroup("Fire Items/Split")]
     [VerticalGroup("Fire Items/Split/Left")]
     [AssetList(AutoPopulate = true, Path = Assets)]
-    [SerializeField] private List<FireStarterSD> allStarters = new List<FireStarterSD>();
+    [ReadOnly] [SerializeField] private List<FireStarterSD> allStarters = new List<FireStarterSD>();
     [VerticalGroup("Fire Items/Split/Left")]
     [AssetList(AutoPopulate = true, Path = Assets)]
-    [SerializeField] private List<FireFuelSD> allFuels = new List<FireFuelSD>();
+    [ReadOnly] [SerializeField] private List<FireFuelSD> allFuels = new List<FireFuelSD>();
 
     [VerticalGroup("Fire Items/Split/Right")]
     [AssetList(AutoPopulate = true, Path = Assets)]
-    [SerializeField] private List<FireTinderSD> allTinders = new List<FireTinderSD>();
+    [ReadOnly] [SerializeField] private List<FireTinderSD> allTinders = new List<FireTinderSD>();
 
     [VerticalGroup("Fire Items/Split/Right")]
     [AssetList(AutoPopulate = true, Path = Assets)]
-    [SerializeField] private List<FireAccelerantSD> allAccelerants = new List<FireAccelerantSD>();
+    [ReadOnly] [SerializeField] private List<FireAccelerantSD> allAccelerants = new List<FireAccelerantSD>();
 
     //Tools Items
 
     [TitleGroup("Tools Items")]
     [AssetList(AutoPopulate = true, Path = Assets)]
-    [SerializeField] private List<ToolItemSD> allTools = new List<ToolItemSD>();
+    [ReadOnly] [SerializeField] private List<ToolItemSD> allTools = new List<ToolItemSD>();
+
+    [AssetList(AutoPopulate = true, Path = Assets)]
+    [HorizontalGroup("Tools Items/Split")]
+    [VerticalGroup("Tools Items/Split/Left")] 
+    [ReadOnly][SerializeField] private List<ToolWeaponSD> allWeapons = new List<ToolWeaponSD>();
+
+
+    //Materials Items
+
+    [TitleGroup("Materials Items")]
+    [AssetList(AutoPopulate = true, Path = Assets)]
+    [ReadOnly] [SerializeField] private List<MaterialItemSD> allMaterials = new List<MaterialItemSD>();
 
     //Blueprints
 
     [TitleGroup("Blueprints")]
     [AssetList(AutoPopulate = true, Path = Assets)]
-    [SerializeField] private List<BlueprintSD> allBlueprints = new List<BlueprintSD>();
+    [ReadOnly] [SerializeField] private List<BlueprintSD> allBlueprints = new List<BlueprintSD>();
     public List<BlueprintSD> AllBlueprints => allBlueprints;
 
     //Containers
     [TitleGroup("Containers")]
     [SerializeField] private Container playerContainer;
-    public InventoryData PlayerContainer => playerContainer.GetInventoryData();
     [SerializeField] private Container container;
+    public InventoryData PlayerContainer => playerContainer.GetInventoryData();
     public InventoryData Container => container.GetInventoryData();
 
     private ItemDataWrapper snowItem;
@@ -143,7 +159,7 @@ public class ItemsData : MonoBehaviour
         else
             dataWrapper.scriptableData = unsafeWater;
 
-        dataWrapper.CurrentWeight = volume;
+        dataWrapper.CurrentBaseWeight = volume;
 
         return dataWrapper;
     }
@@ -168,7 +184,7 @@ public class ItemsData : MonoBehaviour
 
     private bool Limits(ItemSD item)
     {
-        return !(item is WaterItemSD) && !(item is SnowItemSD);
+        return !(item is WaterItemSD) && !(item is SnowItemSD) && !(item is MeatItemSD);
     }
 
     [System.Flags]

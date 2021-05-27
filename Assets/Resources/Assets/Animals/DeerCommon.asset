@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 321bfe4c825a85145a90a1f3197773e6, type: 3}
+  m_Name: DeerCommon
+  m_EditorClassIdentifier: 
+  animalName: Deer
+  rawMeat: {fileID: 11400000, guid: 02be6074666e32345b97a1d11835d01b, type: 2}
+  minMeatWeight: 8
+  maxMeatWeight: 10
+  addDatasMeatKG:
+  - tool: {fileID: 0}
+    holdTime: 5
+    timeLimits:
+      isLimits: 0
+      requiredTime:
+        days: 0
+        hours: 0
+        minutes: 30
+        seconds: 0
+        totalSeconds: 1800
+      requiredTimeMax:
+        days: 0
+        hours: 0
+        minutes: 0
+        seconds: 0
+        totalSeconds: 0
+  - tool: {fileID: 11400000, guid: 7270f1e0859aeea49a8768d3d1828fbf, type: 2}
+    holdTime: 2
+    timeLimits:
+      isLimits: 0
+      requiredTime:
+        days: 0
+        hours: 0
+        minutes: 8
+        seconds: 0
+        totalSeconds: 480
+      requiredTimeMax:
+        days: 0
+        hours: 0
+        minutes: 0
+        seconds: 0
+        totalSeconds: 0
+  - tool: {fileID: 11400000, guid: 8ce9dd1d97299f14c9685b13615e65ab, type: 2}
+    holdTime: 2.5
+    timeLimits:
+      isLimits: 0
+      requiredTime:
+        days: 0
+        hours: 0
+        minutes: 15
+        seconds: 0
+        totalSeconds: 900
+      requiredTimeMax:
+        days: 0
+        hours: 0
+        minutes: 0
+        seconds: 0
+        totalSeconds: 0
+  hide: {fileID: 0}
+  hides: 1
+  addDatasHide: []
+  gut: {fileID: 0}
+  guts: 2
+  addDatasGuts: []

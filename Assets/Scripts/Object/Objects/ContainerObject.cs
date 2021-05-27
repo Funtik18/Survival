@@ -17,11 +17,7 @@ public class ContainerObject : WorldObject
     private float endTime = 4f;
     private float currentTime;
 
-
-    private void Awake()
-    {
-		containerInventory.SetData(ItemsData.Instance.Container).Init();//изменить
-	}
+    private bool isFirstTime = true;
 
     public override void StartObserve()
 	{
@@ -47,8 +43,7 @@ public class ContainerObject : WorldObject
 
     private void OpenContainer()
     {
-        GeneralAvailability.BackpackWindow.SetSecondaryContainer(containerInventory);
-        GeneralAvailability.PlayerUI.OpenInventoryWithContainer();
+        GeneralAvailability.PlayerUI.OpenInventoryWithContainer(containerInventory);
     }
 
 	public override void Interact()
@@ -96,6 +91,12 @@ public class ContainerObject : WorldObject
 
         InteractionButton.pointer.RemoveAllListeners();
         isInspected = true;
+
+        if (isFirstTime)
+        {
+            containerInventory.SetData(ItemsData.Instance.Container).Init();
+            isFirstTime = false;
+        }
 
         UpdateToolTip();
 

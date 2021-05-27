@@ -74,7 +74,7 @@ public class ItemObject : WorldObject
     private bool CheckCan() => itemData.scriptableData is CannedFoodItemSD;
 
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
 		onDisable?.Invoke();
 

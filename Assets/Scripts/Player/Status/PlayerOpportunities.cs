@@ -4,7 +4,9 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerOpportunities
 {
-	[SerializeField] private float useTimeByKg = 15f;
+	[SerializeField] private float useTimeKg = 15f;
+	[SerializeField] private Times useTimeKG;
+	[Space]
 	[SerializeField] private Transform leftHand;
 	[SerializeField] private Transform rightHand;
 
@@ -26,6 +28,8 @@ public class PlayerOpportunities
 		this.inventory = player.Inventory;
 
 		condition = GeneralAvailability.PlayerUI.conditionUI.conditionWindow;
+		windowShooting = GeneralAvailability.PlayerUI.controlUI.windowShoting;
+
 
 		thirst = player.Status.stats.Thirst;
 		hungred = player.Status.stats.Hungred;
@@ -49,177 +53,134 @@ public class PlayerOpportunities
 		inventory.RemoveItem(item);
     }
 
+	#region Use
+	private Item itemUse;
+	private ItemDataWrapper itemUseData;
+	private ConsumableItemSD consumableItem;
+	private float startHydration, endHydration;
+	private float itemHydration;
+	private float startCalories, endCalories;
+	private float itemStartCalories;
+	private float itemStartWeight, itemEndWeight;
 
 	public void UseItem(Item item)
 	{
-		ItemSD data = item.itemData.scriptableData;
+		itemUse = item;
+		itemUseData = itemUse.itemData;
+		ItemSD data = itemUseData.scriptableData;
 
-		if (data is ConsumableItemSD consuable)
+		if (data is ConsumableItemSD consumable)
+			UseConsumableItem(consumable);
+		else if(data is ToolItemSD tool)
+			UseTool(tool);
+	}
+
+	private void UseConsumableItem(ConsumableItemSD consumable)
+    {
+		consumableItem = consumable;
+
+		if (IsCanGetIt())
 		{
+			itemUseData = itemUse.itemData;
 
-			if (IsCanGetIt(consuable))
-			{
-				OpenUI();
-				useCoroutine = owner.StartCoroutine(Use(item, consuable));
-			}
-			else
-			{
-				Debug.LogError("I can not take it");
-			}
+			float duration = useTimeKg * itemUseData.CurrentBaseWeight;//1kg
+			Times skip = new Times();
+			skip.TotalSeconds = (int)(useTimeKG.TotalSeconds * itemUseData.CurrentBaseWeight);
+
+			GeneralTime.Instance.SkipSetup(start: StartUseConsumable, progress: UpdateUseConsumable, completely : CompletelyUseConsumable).StartSkip(skip, duration);
 		}
-		else if(data is ToolWeaponSD weapon)
+	}
+	private void UseTool(ToolItemSD tool)
+    {
+		if(tool is ToolWeaponSD weapon)
         {
-            if (IsEquiped(item.itemData))
-            {
+			if (IsEquiped(itemUseData))
+			{
 				UnEquip();
-            }
-            else
-            {
-				EquipItem(item);
-            }
-        }
-	}
-	#region Use
-	private IEnumerator Use(Item item, ConsumableItemSD consuable)
-	{
-		ItemDataWrapper data = item.itemData;
-
-		if(consuable is WaterItemSD water)
-			yield return UseWater(data, consuable.hydration);
-		else
-			yield return UseConsuable(data, consuable.calories, consuable.hydration);
-
-		DestroyItem(item);
-
-		StopUse();
-	}
-	private IEnumerator UseConsuable(ItemDataWrapper data, float maxCalories, float hydration)
-    {
-		//ui
-		condition.thirst.EnableCondition(true);
-		condition.hungred.EnableCondition(true);
-
-		//lerp parametrs
-		float currentCalories = data.CurrentCalories;
-		Debug.LogError(currentCalories + "  " + maxCalories);
-		float maxHydration = (currentCalories / maxCalories) * (thirst.Value * (hydration / 100f));
-
-		float startCalories = hungred.CurrentValue;
-		float startHydration = thirst.CurrentValue;
-
-		float endCalories = startCalories + currentCalories;
-		float endHydration = startHydration + maxHydration;
-
-		float startWeight = data.CurrentWeight;
-		float endWeight = 0.05f;
-
-		float time = 0;
-		float duration = useTimeByKg * data.CurrentWeight;//1kg
-
-		Debug.LogError(startCalories + "  " + endCalories);
-		Debug.LogError(startHydration + "  " + endHydration);
-		//time duration cycle
-		while (time < duration)
-		{
-			float normalStep = time / duration;
-
-			thirst.CurrentValue = Mathf.Lerp(startHydration, endHydration, normalStep);
-			hungred.CurrentValue = Mathf.Lerp(startCalories, endCalories, normalStep);
-			data.CurrentCalories = Mathf.Lerp(currentCalories, 0, normalStep);
-			data.CurrentWeight = Mathf.Lerp(startWeight, endWeight, normalStep);
-
-			time += Time.deltaTime;
-
-			GeneralAvailability.PlayerUI.barHight.UpdateFillAmount(normalStep, "%");
-
-			if (thirst.IsFull && hungred.IsFull)
+			}
+			else
 			{
-				StopUse();
-				yield break;
+				EquipItem(itemUse);
 			}
-			else
-				yield return null;
 		}
+    }
 
-		//end
-		data.CurrentCalories = 0;
-		data.CurrentWeight = endWeight;
 
-		thirst.CurrentValue = endHydration;
-		hungred.CurrentValue = endCalories;
-	}
-	private IEnumerator UseWater(ItemDataWrapper data, float hydration)
+	private void StartUseConsumable()
     {
-		//ui
-		condition.thirst.EnableCondition(true);
+		OpenUI();
 
 		//lerp parametrs
-		float startWeight = data.CurrentWeight;
-		float endWeight = data.MinimumWeight;
+		itemStartWeight = itemUseData.CurrentBaseWeight;
+		itemEndWeight = 0f;
 
-		float maxHydration = (startWeight - endWeight) / (thirst.Value * (hydration / 100f));//максимально возможное насыщение
+		itemStartCalories = itemUseData.CurrentCalories;
 
-		float startHydration = thirst.CurrentValue;
-		float endHydration = startHydration + maxHydration;
-
-		float time = 0;
-		float duration = useTimeByKg * ((startWeight - endWeight));//1L == 1kg
-
-		//time duration cycle
-		while(time < duration)
+		if(consumableItem is WaterItemSD)
         {
-			float normalStep = time / duration;
-
-			thirst.CurrentValue = Mathf.Lerp(startHydration, endHydration, normalStep);
-			data.CurrentWeight = Mathf.Lerp(startWeight, endWeight, normalStep);
-
-			time += Time.deltaTime;
-
-			GeneralAvailability.PlayerUI.barHight.UpdateFillAmount(normalStep, "%");
-
-			if (thirst.IsFull)
-            {
-				StopUse();
-				yield break;
-			}
-			else
-				yield return null;
-		}
-
-		//end
-		data.CurrentWeight = endWeight;
-		thirst.CurrentValue = endHydration;
-	}
-
-	private void StopUse()
-	{
-		if (IsUseProccess)
-		{
-			owner.StopCoroutine(useCoroutine);
-			useCoroutine = null;
-
-			CloseUI();
-		}
-	}
-    
-	private bool IsCanGetIt(ConsumableItemSD consuable)
-    {
-		if(consuable is WaterItemSD)
-        {
-			if (thirst.IsFullNear)
-				return false;
+			itemHydration = (itemStartWeight - itemEndWeight) / (thirst.Value * (consumableItem.hydration / 100f));//максимально возможное насыщение
         }
         else
         {
-			if (thirst.IsFullNear && hungred.IsFullNear)
-				return false;
-        }
+			itemHydration = (itemStartCalories / consumableItem.calories) * (thirst.Value * (consumableItem.hydration / 100f));
+		}
+
+		startCalories = hungred.CurrentValue;
+		endCalories = startCalories + itemStartCalories;
+
+		startHydration = thirst.CurrentValue;
+		endHydration = startHydration + itemHydration;
+	}
+	private void UpdateUseConsumable(float progress)
+    {
+		GeneralAvailability.PlayerUI.barHight.UpdateFillAmount(progress, "%");
+
+		hungred.CurrentValue = Mathf.Lerp(startCalories, endCalories, progress);
+		thirst.CurrentValue = Mathf.Lerp(startHydration, endHydration, progress);
+
+		itemUseData.CurrentCalories = Mathf.Lerp(itemStartCalories, 0, progress);
+		itemUseData.CurrentBaseWeight = Mathf.Lerp(itemStartWeight, itemEndWeight, progress);
+
+		if (!IsCanGetIt())
+		{
+			BreakUseConsumable();
+		}
+	}
+	private void BreakUseConsumable()
+    {
+		GeneralTime.Instance.BreakSkipTime();
+
+		CloseUI();
+	}
+	private void CompletelyUseConsumable()
+    {
+		itemUseData.CurrentCalories = 0;
+		itemUseData.CurrentBaseWeight = itemEndWeight;
+
+		hungred.CurrentValue = endCalories;
+		thirst.CurrentValue = endHydration;
+
+		DestroyItem(itemUse);
+
+		CloseUI();
+	}
+
+
+	private bool IsCanGetIt()
+    {
+		if (thirst.IsFullNear && hungred.IsFullNear)
+			return false;
 		return true;
-    }
+	}
 	#endregion
 
 	#region Actions
+	private WindowShooting windowShooting;
 	private ItemObjectWeapon weapon;
+
+
+	private Coroutine reloadCoroutine = null;
+	private bool IsReloadProccess => reloadCoroutine != null;
 
 	public bool IsEquiped(ItemDataWrapper data)
     {
@@ -249,26 +210,26 @@ public class PlayerOpportunities
 			{
 				weapon = ObjectPool.GetObject(itemObject.gameObject).GetComponent<ItemObjectWeapon>();
 				weapon.ColliderEnable(false);
+				weapon.Enable(true);
+
+				weapon.onRequiredReload += Reload;
 
 				PutInHand(weapon.transform, rightHand);
 
-				GeneralAvailability.PlayerUI.controlUI.windowShoting.Setup(weapon, Aim, DeAim, Shoot, Reload, UnEquip);
-				GeneralAvailability.PlayerUI.OpenShooting();
+				windowShooting.Setup(weapon, Aim, DeAim, Shoot, Reload, UnEquip);
+				windowShooting.ShowWindow();
 			}
 		}
     }
 	public void FreeHands()
     {
-		if(weapon != null)
-        {
-			ObjectPool.ReturnGameObject(weapon.gameObject);
-			weapon.transform.SetParent(null);
-			weapon.ColliderEnable(true);
+		weapon.Enable(false);
 
-			GeneralAvailability.PlayerUI.CloseShooting();
-		}
+		ObjectPool.ReturnGameObject(weapon.gameObject);
+		weapon.transform.SetParent(null);
+		weapon.ColliderEnable(true);
 
-		weapon = null;
+		windowShooting.HideWindow();
 	}
 	private void PutInHand(Transform obj, Transform parent)
     {
@@ -276,29 +237,87 @@ public class PlayerOpportunities
 		obj.localPosition = Vector3.zero;
 		obj.localRotation = Quaternion.identity;
 	}
+
 	private void Aim()
     {
-		weapon.Aim();
+		if (!IsReloadProccess)
+        {
+			windowShooting.Aim();
+			weapon.Aim();
+
+			GeneralAvailability.Player.Camera.SetFieldOfView(35, 0.7f);
+			GeneralAvailability.Player.Controller.SetLookSensitivity(1f);
+        }
+        else
+        {
+			BreakReload();
+			Aim();
+		}
 	}
 	private void DeAim()
 	{
 		weapon.DeAim();
+		windowShooting.DeAim();
+		GeneralAvailability.Player.Camera.ResetFieldOfView(0.3f);
+		GeneralAvailability.Player.Controller.ResetLookSensitivity();
 	}
+
 	private void Shoot()
     {
-		weapon.Shoot();
+		if(!IsReloadProccess)
+			weapon.Shoot();
 	}
 	private void Reload()
     {
-
+		if(!weapon.IsFull)
+			StartReload();
 	}
 	private void UnEquip()
-    {
-		FreeHands();
+	{
+		if (weapon != null)
+		{
+			DeAim();
+			BreakReload();
+			FreeHands();
+		}
+		weapon = null;
 	}
-	#endregion
 
-	public void ActionsItem(Item item)
+    #region Reload
+	private void StartReload()
+    {
+        if (!IsReloadProccess)
+        {
+			DeAim();
+			reloadCoroutine = owner.StartCoroutine(ReLoad());
+        }
+    }
+	private IEnumerator ReLoad()
+    {
+        while (!weapon.IsFull)
+        {
+			yield return new WaitForSeconds(weapon.AmmoReloadDelay);
+			weapon.CurrentСlipCapacity += weapon.AmmoReloadRate;
+        }
+
+		StopReload();
+	}
+	private void BreakReload()
+    {
+		StopReload();
+	}
+	private void StopReload()
+    {
+		if (IsReloadProccess)
+		{
+			owner.StopCoroutine(reloadCoroutine);
+			reloadCoroutine = null;
+		}
+	}
+    #endregion
+    #endregion
+
+    public void ActionsItem(Item item)
     {
 
     }
@@ -306,9 +325,11 @@ public class PlayerOpportunities
 	private void OpenUI()
     {
 		GeneralAvailability.PlayerUI.blockPanel.Enable(true);
-		GeneralAvailability.PlayerUI.ShowBreakButton().BreakPointer.AddPressListener(StopUse);
+		GeneralAvailability.PlayerUI.ShowBreakButton().BreakPointer.AddPressListener(BreakUseConsumable);
 		GeneralAvailability.PlayerUI.barHight.UpdateFillAmount(0, "%").ShowBar();
 
+		condition.thirst.EnableCondition(true);
+		condition.hungred.EnableCondition(true);
 	}
 	private void CloseUI()
     {
@@ -317,7 +338,7 @@ public class PlayerOpportunities
 
 		GeneralAvailability.PlayerUI.barHight.HideBar();
 		GeneralAvailability.PlayerUI.HideBreakButton();
-		GeneralAvailability.PlayerUI.blockPanel.Enable(true);
+		GeneralAvailability.PlayerUI.blockPanel.Enable(false);
 	}
 
 

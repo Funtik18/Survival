@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class HarvestingResultUI : MonoBehaviour
@@ -9,9 +7,9 @@ public class HarvestingResultUI : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI itemCount;
     [SerializeField] private TMPro.TextMeshProUGUI itemName;
 
-    private ItemDataWrapper item;
+    private ItemYield item;
 
-    public void SetItem(ItemDataWrapper item)
+    public void SetItem(ItemYield item)
     {
         this.item = item;
 
@@ -19,8 +17,8 @@ public class HarvestingResultUI : MonoBehaviour
     }
     private void UpdateUI()
     {
-        itemIcon.sprite = item.scriptableData.itemSprite;
-        itemCount.text = "x" + item.CurrentStackSize;
-        itemName.text = item.scriptableData.objectName;
+        itemIcon.sprite = item.item.scriptableData.itemSprite;
+        itemCount.text = item.isRandom ? "x" + item.item.CurrentStackSize + "-" + item.maxStackSize : "x" + item.item.CurrentStackSize;
+        itemName.text = item.item.scriptableData.objectName;
     }
 }

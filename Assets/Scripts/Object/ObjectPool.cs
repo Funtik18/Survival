@@ -6,7 +6,7 @@ public static class ObjectPool
 {
     private static Dictionary<string, Queue<GameObject>> objectPool = new Dictionary<string, Queue<GameObject>>();
 
-    public static GameObject GetObject(GameObject gameObject)
+    public static GameObject GetObject(GameObject gameObject, bool isEnabled = true)
     {
         if (objectPool.TryGetValue(gameObject.name, out Queue<GameObject> objectList))
         {
@@ -15,7 +15,7 @@ public static class ObjectPool
             else
             {
                 GameObject _object = objectList.Dequeue();
-                _object.SetActive(true);
+                _object.SetActive(isEnabled);
                 return _object;
             }
         }

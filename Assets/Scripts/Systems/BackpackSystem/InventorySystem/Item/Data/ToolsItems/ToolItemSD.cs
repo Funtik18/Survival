@@ -2,6 +2,7 @@
 
 using Sirenix.OdinInspector;
 
+[CreateAssetMenu(menuName = "Game/Inventory/Items/Tools/Tool", fileName = "Item")]
 public class ToolItemSD : ItemSD 
 {
 	[ShowIf("isBreakable")]

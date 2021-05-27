@@ -23,7 +23,7 @@ public class PlayerStatus
 		set => gender = value;
     }
 
-	public bool IsCanRunning => !stats.Stamina.IsEmpty;
+	public bool IsCanRunning => !stats.Stamina.IsEquilZero;
 
 	//если > 0 получаем тепло
 	//если <= 0 теряет тепло

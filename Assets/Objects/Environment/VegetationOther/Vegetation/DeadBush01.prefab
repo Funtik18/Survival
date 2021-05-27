@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 448622}
   - component: {fileID: 3354390}
   - component: {fileID: 2351456}
-  - component: {fileID: 408244837391407081}
   - component: {fileID: 7493375349568492314}
-  m_Layer: 9
+  - component: {fileID: 3556553956655293368}
+  m_Layer: 13
   m_Name: DeadBush01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,19 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &408244837391407081
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143606}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.44187728, y: 0.69172347, z: 0.44759253}
-  m_Center: {x: -0.035489842, y: 0.48482913, z: -0.03159596}
 --- !u!114 &7493375349568492314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,5 +93,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2280441756db4374aabfe063ac880004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coll: {fileID: 408244837391407081}
+  coll: {fileID: 3556553956655293368}
   data: {fileID: 11400000, guid: a85446527174680469e6f0883718979f, type: 2}
+  isBreakable: 1
+--- !u!135 &3556553956655293368
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143606}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.4
+  m_Center: {x: -0.020461947, y: 0.52989876, z: -0.03159596}

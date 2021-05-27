@@ -19,6 +19,9 @@ public class PlayerUI : MonoBehaviour
 	public ButtonBreak breakButton;
 	public SavingPanel savingPanel;
 
+	[Space]
+	public WindowExchanger exchangerWindow;
+
 	public void Setup(Player player)
 	{
 		controlUI.Setup(player.Controller);
@@ -26,20 +29,18 @@ public class PlayerUI : MonoBehaviour
 		conditionUI.Setup(player.Status);
 
 		windowsUI.buildingWindow.Setup(player.Build);
-		windowsUI.harvestingWindow.Setup(player.Inventory);
 
 		windowsUI.backpackWindow.onBack += CloseInventory;
 
 		windowsUI.harvestingWindow.onBack += CloseHarvesting;
-		windowsUI.harvestingWindow.onHarvestingCompletely += OpenControlUI;//edit
+
+		windowsUI.harvestingCarcassWindow.onBack += CloseHarvestingCarcass;
 
 		windowsUI.ignitionWindow.onBack += CloseIgnition;
 
 		windowsUI.fireMenuWindow.onBack += CloseFireMenu;
 
 		windowsUI.restingWindow.onBack += CloseResting;
-
-		windowsUI.exchangerWindow.onBack += CloseExchanger;
 	}
 
 	public void OpenDeadPanel()
@@ -49,27 +50,19 @@ public class PlayerUI : MonoBehaviour
 		panelDead.SetActive(true);
 	}
 
-
-	public void OpenShooting()
-    {
-		controlUI.windowShoting.ShowWindow();
-	}
-	public void CloseShooting()
-    {
-		controlUI.windowShoting.HideWindow();
-	}
-
-
 	public void OpenInventory()
 	{
 		CloseControlUI();
 		CloseConditionUI();
 		windowsUI.backpackWindow.ShowBackpack();
 	}
-	public void OpenInventoryWithContainer()
+	public void OpenInventoryWithContainer(Inventory container = null)
     {
 		CloseControlUI();
 		CloseConditionUI();
+
+		if(container != null)
+			windowsUI.backpackWindow.SetSecondaryContainer(container);
 
 		windowsUI.backpackWindow.ShowBackpackWithContainer();
 	}
@@ -112,6 +105,19 @@ public class PlayerUI : MonoBehaviour
 	public void CloseHarvesting()
     {
 		windowsUI.harvestingWindow.HideWindow();
+		OpenControlUI();
+		OpenConditionUI();
+	}
+
+	public void OpenHarvestingCarcass(Animal harvesting)
+	{
+		CloseControlUI();
+		CloseConditionUI();
+		windowsUI.harvestingCarcassWindow.SetHarvesting(harvesting);
+	}
+	public void CloseHarvestingCarcass()
+	{
+		windowsUI.harvestingCarcassWindow.HideWindow();
 		OpenControlUI();
 		OpenConditionUI();
 	}
@@ -184,23 +190,6 @@ public class PlayerUI : MonoBehaviour
     }
 
 
-	public void OpenExchander(float min, float max, float step, UnityAction<float> ok = null, UnityAction all = null, UnityAction cancel = null)
-    {
-		CloseControlUI();
-		CloseConditionUI();
-
-		windowsUI.exchangerWindow.Setup(min, max, step, ok, all, cancel).ShowWindow();
-
-	}
-	public void CloseExchanger()
-    {
-		windowsUI.exchangerWindow.HideWindow();
-
-		OpenControlUI();
-		OpenConditionUI();
-	}
-
-
 
 	public void OpenConditionUI()
 	{
@@ -235,5 +224,16 @@ public class PlayerUI : MonoBehaviour
     {
 		breakButton.BreakPointer.RemoveAllListeners();
 		breakButton.gameObject.SetActive(false);
+	}
+
+
+
+	public void OpenExchander(float min, float max, float step, UnityAction<float> ok = null, UnityAction all = null, UnityAction cancel = null)
+	{
+		exchangerWindow.Setup(min, max, step, ok, all, cancel).ShowWindow();
+	}
+	public void CloseExchanger()
+	{
+		exchangerWindow.HideWindow();
 	}
 }

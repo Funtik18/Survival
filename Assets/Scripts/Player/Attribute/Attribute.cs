@@ -79,7 +79,7 @@ public abstract class StatBar : Stat
 
 	public bool IsFull => CurrentValue == Value;
 	public bool IsFullNear => CurrentValue >= Value * 0.98f; 
-	public bool IsEmpty => CurrentValue == 0;
+	public bool IsEquilZero => CurrentValue == 0;
 
 	private float currentValue;
 	public float CurrentValue

@@ -35,27 +35,34 @@ public class ContainerSlotUI : MonoBehaviour
 	public ItemDataWrapper Data => item.itemData;
 	public ItemSD ScriptableData => item.itemData.scriptableData;
 
+	private ContainerUI owner;
 
-    private void Awake()
+	public ContainerSlotUI Setup(ContainerUI owner)
     {
+		this.owner = owner;
+
 		interaction.onClick += ClickSlot;
+		return this;
 	}
-
-
 	public void SetItem(Item item)
 	{
 		this.item = item;
-		if(!IsEmpty)
-			this.item.itemData.onDataChanged += UpdateUI;
+        if (!IsEmpty)
+			item.itemData.onDataChanged += UpdateUI;
 		UpdateUI();
 	}
 
 	private void UpdateUI()
 	{
         if (IsEmpty)
+        {
 			HideItemInformation();
-        else
+		}
+		else
+        {
 			ShowItemInformation();
+			owner.UpdateWeight();
+		}
 	}
 
 	private void HideItemInformation()
@@ -92,7 +99,9 @@ public class ContainerSlotUI : MonoBehaviour
 			ShowHideItemDurability(false);
 
 		if (ScriptableData.stackSize == 1)
+        {
 			ShowHideItemCount(false);
+		}
 		else
 		{
 			countText.text = "x" + Data.CurrentStackSize;

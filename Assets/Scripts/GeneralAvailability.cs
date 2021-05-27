@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class GeneralAvailability : MonoBehaviour
+﻿public class GeneralAvailability
 {
     //Player
     private static Player player;
@@ -71,29 +67,6 @@ public class GeneralAvailability : MonoBehaviour
         }
     }
 
-    private static WindowBackpack backpackWindow;
-    public static WindowBackpack BackpackWindow
-    {
-        get
-        {
-            if (backpackWindow == null)
-                backpackWindow = Player.UI.windowsUI.backpackWindow;
-            return backpackWindow;
-        }
-    }
-
-    private static WindowExchanger exchangerWindow;
-    public static WindowExchanger ExchangerWindow
-    {
-        get
-        {
-            if (exchangerWindow == null)
-                exchangerWindow = Player.UI.windowsUI.exchangerWindow;
-            return exchangerWindow;
-        }
-    }
-
-
     private static TargetPoint targetPoint;
     public static TargetPoint TargetPoint
     {
@@ -102,17 +75,6 @@ public class GeneralAvailability : MonoBehaviour
             if (targetPoint == null)
                 targetPoint = Player.UI.targetPoint;
             return targetPoint;
-        }
-    }
-
-    private static InteractionButton buttonInteraction;
-    public static InteractionButton ButtonInteraction
-    {
-        get
-        {
-            if (buttonInteraction == null)
-                buttonInteraction = Player.UI.controlUI.buttonInteraction;
-            return buttonInteraction;
         }
     }
 }

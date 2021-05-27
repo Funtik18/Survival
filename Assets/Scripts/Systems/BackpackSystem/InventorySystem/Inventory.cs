@@ -10,7 +10,7 @@ using System;
 public class Inventory
 {
     public UnityAction<List<Item>> onCollectionChanged;
-    public UnityAction onChanged;
+    protected UnityAction onChanged;
 
     private InventoryData data;
 
@@ -34,35 +34,32 @@ public class Inventory
 
     public bool AddItem(ItemDataWrapper itemData)
     {
-        Item item = null;
-
         if (itemData != null)
         {
-            if (itemData.scriptableData.isInfinityStack)
+            Item item = null;
+
+            ItemSD itemSD = itemData.scriptableData;
+
+            if (itemSD.isInfinityWeight)
             {
-                item = GetBySD(itemData.scriptableData);
+                item = GetBySD(itemSD);
 
-                if(item != null && item.itemData.scriptableData == itemData.scriptableData)
-                {
-
-                    if(itemData.scriptableData is WaterItemSD waterItem)
-                    {
-                        item.itemData.CurrentWeight += itemData.CurrentWeight;
-                    }
-                    else
-                    {
-                        item.itemData.CurrentStackSize += itemData.CurrentStackSize;
-                    }
-                }
+                if(item != null && item.itemData.scriptableData == itemSD)//нашли одинаковый
+                    item.itemData.CurrentBaseWeight += itemData.CurrentBaseWeight;
                 else
-                {
-                    item = new Item(itemData);
-                    items.Add(item);
-                }
+                    CreateAddItem(itemData);
+            }
+            else if (itemSD.isInfinityStack)
+            {
+                item = GetBySD(itemSD);
+                if (item != null && item.itemData.scriptableData == itemSD)//нашли одинаковый
+                    item.itemData.CurrentStackSize += itemData.CurrentStackSize;
+                else
+                    CreateAddItem(itemData);
             }
             else
             {
-                List<Item> findedSameItems = GetAllBySD(itemData.scriptableData);
+                List<Item> findedSameItems = GetAllBySD(itemSD);
 
                 if (findedSameItems.Count > 0)
                 {
@@ -81,29 +78,22 @@ public class Inventory
                             }
                             else
                             {
-                                if (itemData.CurrentStackSize == 0) break;//maybe delete
+                                if (itemData.IsStackEmpty) break;//maybe delete
 
                                 findedData.CurrentStackSize += itemData.CurrentStackSize;
                                 itemData.CurrentStackSize -= itemData.CurrentStackSize;
                             }
                         }
 
-                        if (itemData.CurrentStackSize == 0) break;
+                        if (itemData.IsStackEmpty) break;
                     }
 
-                    if (itemData.CurrentStackSize > 0)
-                    {
-                        item = new Item(itemData);
-                        items.Add(item);
-                    }
+                    if (!itemData.IsStackEmpty)
+                        CreateAddItem(itemData);
                 }
                 else
-                {
-                    item = new Item(itemData);
-                    items.Add(item);
-                }
+                    CreateAddItem(itemData);
             }
-            
 
             onCollectionChanged?.Invoke(items);
             onChanged?.Invoke();
@@ -111,7 +101,11 @@ public class Inventory
         }
         return false;
     }
-
+    private void CreateAddItem(ItemDataWrapper itemData)
+    {
+        Item item = new Item(itemData);
+        items.Add(item);
+    }
 
     public bool RemoveItem(Item item, int count)
     {
@@ -160,17 +154,21 @@ public class Inventory
         return false;
     }
 
-    public float GetWeight()//оптимизировать
+    public string CurrentStringWeight 
     {
-        float weight = 0f;
-        for (int i = 0; i < items.Count; i++)
+        get
         {
-            ItemDataWrapper data = items[i].itemData;
-
-            weight += data.CurrentStackSize * data.scriptableData.weight;
+            if(IsEmpty)
+            {
+                return "EMPTY";
+            }
+            else
+            {
+                return GetWeight() + " KG";
+            }
         }
-        return weight;
     }
+
 
     public Item FindItemByData(ItemDataWrapper data) => items.FindLast((x) => x.itemData == data);
     public Item GetBySD(ItemSD sd) => items.FindLast((x) => x.itemData.scriptableData == sd);
@@ -232,6 +230,19 @@ public class Inventory
         }
 
         return true;
+    }
+
+
+    private float GetWeight()//оптимизировать
+    {
+        float weight = 0f;
+        for (int i = 0; i < items.Count; i++)
+        {
+            ItemDataWrapper data = items[i].itemData;
+
+            weight += data.CurrentWeight;
+        }
+        return (float)System.Math.Round(weight, 2);
     }
 
 
@@ -337,7 +348,7 @@ public class PlayerInventory : Inventory
         {
             BlueprintExchange(components[i]);
         }
-        AddItem(blueprint.itemYield);
+        AddItem(blueprint.yield.item);
     }
 
 

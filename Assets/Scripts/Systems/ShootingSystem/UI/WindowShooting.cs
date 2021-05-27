@@ -30,7 +30,7 @@ public class WindowShooting : WindowUI
 
     private void Awake()
     {
-        pointerAim.AddPressListener(Aim);
+        pointerAim.AddPressListener(AimDeAim);
         pointerShoot.AddPressListener(Shoot);
         pointerReload.AddPressListener(Reload);
         pointerTakeAway.AddPressListener(TakeAway);
@@ -38,6 +38,8 @@ public class WindowShooting : WindowUI
 
     public WindowShooting Setup(ItemObjectWeapon weapon, UnityAction aim = null, UnityAction deaim = null, UnityAction shoot = null, UnityAction reload = null, UnityAction takeaway = null)
     {
+        DeAim();
+
         this.weapon = weapon;
         weapon.onCapacityСlipChanged += UpdateIndicatorsClipCapacity;
 
@@ -83,27 +85,33 @@ public class WindowShooting : WindowUI
         }
     }
 
-    private void Aim()
+
+
+    public void DeAim()
     {
-        if (isAim)
-        {
-            onDeAim?.Invoke();
+        pointerAim.GetComponent<Image>().color = Color.white;
 
-            pointerAim.GetComponent<Image>().color = Color.white;
-
-            isAim = false;
-        }
-        else
-        {
-            onAim?.Invoke();
-
-            pointerAim.GetComponent<Image>().color = Color.grey;
-
-            isAim = true;
-        }
+        isAim = false;
 
         crosshair.enabled = !isAim;
     }
+    public void Aim()
+    {
+        pointerAim.GetComponent<Image>().color = Color.grey;
+
+        isAim = true;
+
+        crosshair.enabled = !isAim;
+    }
+
+    private void AimDeAim()
+    {
+        if (isAim)
+            onDeAim?.Invoke();
+        else
+            onAim?.Invoke();
+    }
+
     private void Shoot()
     {
         onShoot?.Invoke();

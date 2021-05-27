@@ -51,7 +51,7 @@ public class BlueprintUI : MonoBehaviour
 
     public void UpdateUI()
     {
-        ItemDataWrapper itemYield = currentBlueprint.blueprint.itemYield;
+        ItemDataWrapper itemYield = currentBlueprint.blueprint.yield.item;
         ItemSD sd = itemYield.scriptableData;
 
         icon.sprite = sd.itemSprite;

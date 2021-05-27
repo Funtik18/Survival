@@ -14,14 +14,20 @@ public abstract class ItemSD : ObjectSD
 	[Space]
 	public ItemWorldOrientation orientation;
 
+	[HideIf("isInfinityStack")]
 	public bool isInfinityWeight = false;
 	[HideIf("isInfinityWeight")]
+	public bool isInfinityStack = false;
+
+	[SuffixLabel("kg", true)]
+	[ShowIf("IsWeight")]
 	[Space]
 	[Range(0.01f, 99.99f)]
 	public float weight = 0.01f;
+	[Tooltip("Formule : CurrentStackSize * weight")]
+	public bool isWeightDependesStack = true;
 
-	public bool isInfinityStack = false;
-	[HideIf("isInfinityStack")]
+	[ShowIf("IsStack")]
 	[Min(1)]
 	public int stackSize = 1;
 
@@ -47,6 +53,9 @@ public abstract class ItemSD : ObjectSD
 		public Vector3 position = Vector3.zero;
 		public Quaternion rotation = Quaternion.identity;
 	}
+
+	private bool IsWeight => !isInfinityWeight;
+	private bool IsStack => !isInfinityStack && !isInfinityWeight;
 }
 
 public enum ItemRarity

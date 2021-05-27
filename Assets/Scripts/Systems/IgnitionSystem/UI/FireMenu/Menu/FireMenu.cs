@@ -36,7 +36,7 @@ public class FireMenu : WindowUI
         }
         else if(item.itemData.scriptableData is WaterItemSD waterItem)
         {
-            itemAdditional.text = "Weight : " + item.itemData.CurrentWeight + " L";
+            itemAdditional.text = "Weight : " + item.itemData.CurrentBaseWeight + " L";
         }
         else
         {

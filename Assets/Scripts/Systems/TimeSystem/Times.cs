@@ -208,3 +208,37 @@ public struct Times
         Night,
     }
 }
+[System.Serializable]
+public class TimeLimits 
+{
+    [OnValueChanged("Limitation")] 
+    public bool isLimits = false;
+    [OnValueChanged("Limitation")] 
+    public Times requiredTime;
+    [ShowIf("isLimits")]
+    [OnValueChanged("Limitation")]
+    public Times requiredTimeMax;
+
+    public int GetTotalTime()
+    {
+        return isLimits ? GetRandomBtwTimes() : requiredTime.TotalSeconds;
+    }
+
+    public int GetRandomBtwTimes()
+    {
+        return UnityEngine.Random.Range(requiredTime.TotalSeconds, requiredTimeMax.TotalSeconds);
+    }
+
+    public string GetTimes()
+    {
+       return isLimits ? requiredTime.ToStringSimplification() + " - " + requiredTimeMax.ToStringSimplification() : requiredTime.ToStringSimplification();
+    }
+
+    private void Limitation()
+    {
+        if(isLimits == false) 
+            requiredTimeMax.TotalSeconds = 0;
+        else
+            requiredTimeMax.TotalSeconds = Mathf.Max(requiredTime.TotalSeconds + 60, requiredTimeMax.TotalSeconds);
+    }
+}

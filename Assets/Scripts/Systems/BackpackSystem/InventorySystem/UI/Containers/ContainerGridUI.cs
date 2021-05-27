@@ -29,19 +29,22 @@ public class ContainerGridUI : MonoBehaviour
         }
     }
 
+	private ContainerUI owner;
+
 	private int CurrentColumns => gridLayoutGroup.constraintCount;
 	private int CurrentRows => Mathf.CeilToInt((float)slots.Count / CurrentColumns);
 	private int constRows = 4;
 
-	private Scrollbar VerticalScrollbar
-	{
-		get => scrollrect.verticalScrollbar;
-	}
+	private Scrollbar VerticalScrollbar => scrollrect.verticalScrollbar;
 
-    private void Awake()
+	public ContainerGridUI Setup(ContainerUI owner)
     {
+		this.owner = owner;
+
 		onSlotsChanged += UpdateScrollBarSteps;
 		UpdateSlots();
+
+		return this;
 	}
 
     public void PutItemsList(List<Item> items)
@@ -50,8 +53,6 @@ public class ContainerGridUI : MonoBehaviour
 		DisposeSlots();
 
 		int rows = Mathf.CeilToInt((float)items.Count / CurrentColumns);
-
-		//Debug.LogError(CurrentRows + " --- " + rows + " = " + items.Count + " / " + CurrentColumns);
 
 		if(rows > 4)
         {
@@ -132,7 +133,9 @@ public class ContainerGridUI : MonoBehaviour
 	{
 		for(int i = 0; i < gridLayoutGroup.constraintCount; i++)
 		{
-			AddSlot(Instantiate(slotPrefab, Transform));
+			ContainerSlotUI slot = Instantiate(slotPrefab, Transform);
+			slot.Setup(owner);
+			AddSlot(slot);
 		}
 
 		onSlotsChanged?.Invoke();
@@ -185,7 +188,7 @@ public class ContainerGridUI : MonoBehaviour
     {
         for (int i = 0; i < slots.Count; i++)
         {
-			slots[i].onClick = ChooseSlot;
+			slots[i].Setup(owner).onClick = ChooseSlot;
         }
     }
 

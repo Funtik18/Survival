@@ -10,15 +10,17 @@ public class HarvestingSD : ObjectSD
     [InlineEditor(InlineEditorModes.GUIAndPreview)]
     public HarvestingObject model;
 
-    [Tooltip("Сколько секунд собирать.")]
-    [Min(1f)]
-    public float holdTime = 5f;
-    [SuffixLabel("cal", true)]
-    [Min(0)]
-    public float howManyCalories = 10;
-    public Times howLong;
-    
-    //награда
-    public List<ItemDataWrapper> items = new List<ItemDataWrapper>();
-    public List<ItemSD> tools = new List<ItemSD>();
+    [InfoBox("0 index == hands")]
+    public List<HarvestingData> addDatas = new List<HarvestingData>();
+
+    public List<ItemYield> yields = new List<ItemYield>();
+
+    [System.Serializable]
+    public class HarvestingData
+    {
+        public ToolItemSD tool;
+        [Min(1f)]
+        public float holdTime = 5f;
+        public TimeLimits timeLimits;
+    }
 }

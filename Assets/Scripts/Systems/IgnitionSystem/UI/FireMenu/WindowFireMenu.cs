@@ -105,7 +105,7 @@ public class WindowFireMenu : WindowUI
 
                         GeneralAvailability.PlayerUI.OpenExchander(0.5f, volume, 0.5f, AddItemByVolume, AddItemFull, Back);
                     }
-                    else if (volume > 0.5f && item.itemData.CurrentWeight > 0.5f)
+                    else if (volume > 0.5f && item.itemData.CurrentBaseWeight > 0.5f)
                     {
                         float maxWeight = item.itemData.CurrentWeightRounded;
 
@@ -147,14 +147,14 @@ public class WindowFireMenu : WindowUI
             }
             else
             {
-                if (liquedVolume >= wat.CurrentWeight)
+                if (liquedVolume >= wat.CurrentBaseWeight)
                 {
-                    liquedVolume = wat.CurrentWeight;
+                    liquedVolume = wat.CurrentBaseWeight;
                     inventory.RemoveItem(item, 1);
                 }
                 else
                 {
-                    wat.CurrentWeight -= liquedVolume;
+                    wat.CurrentBaseWeight -= liquedVolume;
                 }
             }
 

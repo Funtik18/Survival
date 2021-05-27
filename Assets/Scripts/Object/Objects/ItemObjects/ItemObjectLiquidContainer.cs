@@ -72,11 +72,11 @@ public class ItemObjectLiquidContainer : ItemObject
         }
         else if(state == LiquidState.WithLiquedUnSafe)
         {
-            return ItemsData.Instance.GetWater(liquid.CurrentWeight, false);
+            return ItemsData.Instance.GetWater(liquid.CurrentBaseWeight, false);
         }
         else if(state == LiquidState.WithLiquedPotable)
         {
-            return ItemsData.Instance.GetWater(liquid.CurrentWeight, true);
+            return ItemsData.Instance.GetWater(liquid.CurrentBaseWeight, true);
         }
         else if(state == LiquidState.WithSnow)
         {
@@ -181,7 +181,7 @@ public class ItemObjectLiquidContainer : ItemObject
 
             showTime.TotalSeconds = (int)duration - currentTime.TotalSeconds;
 
-            tooltip = showTime.ToStringSimplification(true) + "  " + liquid.CurrentWeight + phrase;
+            tooltip = showTime.ToStringSimplification(true) + "  " + liquid.CurrentBaseWeight + phrase;
         }
     }
 
@@ -201,10 +201,7 @@ public class ItemObjectLiquidContainer : ItemObject
     }
     private void BreakSkipTime()
     {
-        if (GeneralTime.Instance.IsSkipProccess())
-        {
-            GeneralTime.Instance.BreakSkipTime();
-        }
+        GeneralTime.Instance.BreakSkipTime();
     }
 
 
@@ -237,7 +234,7 @@ public class ItemObjectLiquidContainer : ItemObject
     public void SetLiquid(ItemSD liquedSD, float litres)
     {
         liquid.scriptableData = liquedSD;
-        liquid.CurrentWeight = litres;
+        liquid.CurrentBaseWeight = litres;
     }
 
     public void IsEmpty()

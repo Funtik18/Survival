@@ -7,7 +7,6 @@ public class WindowExchanger : WindowUI
     public UnityAction<float> onOk;
     public UnityAction onAll;
     public UnityAction onCancel;
-    public UnityAction onBack;
 
     [SerializeField] private Button buttonLeft;
     [SerializeField] private Button buttonRight;
@@ -36,22 +35,6 @@ public class WindowExchanger : WindowUI
         buttonCancel.onClick.AddListener(Cancel);
     }
 
-    public void SetItem(Item item)
-    {
-        //currentItem = item;
-
-        //float maxCount = currentItem.itemData.StackSize;
-        //slider.minValue = 0;
-        //slider.maxValue = maxCount;
-        //slider.value = maxCount / 2;
-
-        //slider.wholeNumbers = true;
-
-        step = 1f;
-
-        ShowWindow();
-    }
-
     public WindowExchanger Setup(float min, float max, float step, UnityAction<float> ok = null, UnityAction all = null, UnityAction cancel = null)
     {
         this.step = step;
@@ -72,30 +55,36 @@ public class WindowExchanger : WindowUI
 
     private void Left()
     {
-        if(lastStep != 0)
+        if (currentValue != minValue) 
         {
-            currentValue -= lastStep;
+            if (lastStep != 0)
+            {
+                currentValue -= lastStep;
 
-            lastStep = 0;
-        }
-        else
-        {
-            currentValue -= step;
-            currentValue = Mathf.Max(currentValue, minValue);
+                lastStep = 0;
+            }
+            else
+            {
+                currentValue -= step;
+                currentValue = Mathf.Max(currentValue, minValue);
+            }
         }
 
         UpdateUI();
     }
     private void Right()
     {
-        if(currentValue + step <= maxValue)
+        if(currentValue != maxValue)
         {
-            currentValue += step;
-        }
-        else
-        {
-            lastStep = maxValue - currentValue;
-            currentValue += lastStep;
+            if (currentValue + step <= maxValue)
+            {
+                currentValue += step;
+            }
+            else
+            {
+                lastStep = maxValue - currentValue;
+                currentValue += lastStep;
+            }
         }
 
         UpdateUI();
@@ -109,19 +98,16 @@ public class WindowExchanger : WindowUI
     private void Ok()
     {
         onOk?.Invoke(currentValue);
+        HideWindow();
     }
     private void All()
     {
         onAll?.Invoke();
+        HideWindow();
     }
     private void Cancel()
     {
         onCancel?.Invoke();
         HideWindow();
-        onBack?.Invoke();
-
-        onOk = null;
-        onAll = null;
-        onCancel = null;
     }
 }

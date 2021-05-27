@@ -64,7 +64,7 @@ public class CraftingSystemUI : BackpackWindow
     private void Craft()
     {
         Times skipTime = new Times();
-        skipTime.TotalSeconds = blueprintSD.timeLimits ? blueprintSD.GetRandomBtwTimes() : blueprintSD.requiredTime.TotalSeconds;
+        skipTime.TotalSeconds = blueprintSD.timeLimits.GetTotalTime();
 
         float waitTime = Laws.Instance.waitRealTimeCraft * ((float)skipTime.TotalSeconds / 3600f);
 
@@ -76,7 +76,7 @@ public class CraftingSystemUI : BackpackWindow
     private void StartSkip()
     {
         UpdateSkip(0);
-        GeneralAvailability.PlayerUI.blockPanel.gameObject.SetActive(true);
+        GeneralAvailability.PlayerUI.blockPanel.Enable(true);
         GeneralAvailability.PlayerUI.barHight.ShowBar();
     }
     private void UpdateSkip(float progress)
@@ -86,7 +86,7 @@ public class CraftingSystemUI : BackpackWindow
     private void EndSkip()
     {
         GeneralAvailability.PlayerUI.barHight.HideBar();
-        GeneralAvailability.PlayerUI.blockPanel.gameObject.SetActive(false);
+        GeneralAvailability.PlayerUI.blockPanel.Enable(false);
 
         CompletelyCraft();
     }
@@ -96,7 +96,7 @@ public class CraftingSystemUI : BackpackWindow
     {
         currentBlueprintAvailability = blueprint;
 
-        inspectorUI.SetItem(currentBlueprintAvailability.blueprint.itemYield.scriptableData);
+        inspectorUI.SetItem(currentBlueprintAvailability.blueprint.yield.item.scriptableData);
         requirementsUI.SetBlueprint(currentBlueprintAvailability.blueprint);
 
         buttonCraft.gameObject.SetActive(currentBlueprintAvailability.availability);

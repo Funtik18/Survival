@@ -12,27 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eca7b946d615ed48bdd49a76445b40e, type: 3}
   m_Name: Bandage
   m_EditorClassIdentifier: 
-  itemYield:
-    scriptableData: {fileID: 11400000, guid: 97e7eae6aefa81b438fead6bf57e89f9, type: 2}
-    currentStackSize: 1
-    currentDurrability: 100
-    currentCalories: 0
-    currentWeight: 0
-    minimumWeight: 0
+  workPlace: 0
   components:
   - item: {fileID: 11400000, guid: 2e4c3feb81d1a9d49ba662c285e7acdd, type: 2}
     count: 1
-  workPlace: 0
-  timeLimits: 0
-  requiredTime:
-    days: 0
-    hours: 0
-    minutes: 20
-    seconds: 0
-    totalSeconds: 1200
-  requiredTimeMax:
-    days: 0
-    hours: 0
-    minutes: 0
-    seconds: 0
-    totalSeconds: 0
+  timeLimits:
+    isLimits: 0
+    requiredTime:
+      days: 0
+      hours: 0
+      minutes: 20
+      seconds: 0
+      totalSeconds: 1200
+    requiredTimeMax:
+      days: 0
+      hours: 0
+      minutes: 21
+      seconds: 0
+      totalSeconds: 1260
+  yield:
+    item:
+      scriptableData: {fileID: 11400000, guid: 97e7eae6aefa81b438fead6bf57e89f9, type: 2}
+      currentStackSize: 1
+      currentDurrability: 100
+      currentCalories: 0
+      currentWeight: 0.01
+      minimumWeight: 0
+      currentMagazineCapacity: 0
+    isRandom: 0
+    maxStackSize: 0

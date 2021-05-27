@@ -19,9 +19,12 @@ MonoBehaviour:
   orientation:
     position: {x: 0, y: 0, z: 0}
     rotation: {x: -0.58414835, y: -0.43100607, z: -0.55582917, w: 0.40504128}
+  isInfinityWeight: 0
+  isInfinityStack: 0
   weight: 0.5
+  isWeightDependesStack: 1
   stackSize: 1
-  isBreakable: 1
+  isBreakable: 0
   decayOverTime: 0
   decayInside: 0
   decayOutsie: 0

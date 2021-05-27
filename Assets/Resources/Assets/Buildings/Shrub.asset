@@ -15,16 +15,47 @@ MonoBehaviour:
   objectName: Shrub
   description: 
   model: {fileID: 7493375349568492314, guid: 2117c38b04f89a14eb83910c12dab81f, type: 3}
-  holdTime: 3
-  howManyCalories: 25
-  howLong:
-    days: 0
-    hours: 0
-    minutes: 20
-    seconds: 0
-    totalSeconds: 0
-  items:
-  - scriptableData: {fileID: 11400000, guid: eb604291a260dd141a7d52087a07b208, type: 2}
-    currentStackSize: 3
-    currentDurrability: 100
-  tools: []
+  addDatas:
+  - tool: {fileID: 0}
+    holdTime: 5
+    timeLimits:
+      isLimits: 0
+      requiredTime:
+        days: 0
+        hours: 0
+        minutes: 20
+        seconds: 0
+        totalSeconds: 1200
+      requiredTimeMax:
+        days: 0
+        hours: 0
+        minutes: 0
+        seconds: 0
+        totalSeconds: 0
+  - tool: {fileID: 11400000, guid: 8ce9dd1d97299f14c9685b13615e65ab, type: 2}
+    holdTime: 2.5
+    timeLimits:
+      isLimits: 0
+      requiredTime:
+        days: 0
+        hours: 0
+        minutes: 10
+        seconds: 0
+        totalSeconds: 600
+      requiredTimeMax:
+        days: 0
+        hours: 0
+        minutes: 0
+        seconds: 0
+        totalSeconds: 0
+  yields:
+  - item:
+      scriptableData: {fileID: 11400000, guid: eb604291a260dd141a7d52087a07b208, type: 2}
+      currentStackSize: 1
+      currentDurrability: 100
+      currentCalories: 0
+      currentWeight: 0.15
+      minimumWeight: 0
+      currentMagazineCapacity: 0
+    isRandom: 1
+    maxStackSize: 7

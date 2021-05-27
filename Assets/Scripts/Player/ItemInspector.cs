@@ -20,15 +20,15 @@ public class ItemInspector : MonoBehaviour
 	private float thresholdAngle = 0.1f;
 
 	#region Coroutine
-    private List<Item> cashItemsToDelete = new List<Item>();
-
 	public bool IsInspectItem { get; private set; }
 
 	private Coroutine reviewCoroutine = null;
 	public bool IsReviewProccess => reviewCoroutine != null;
+	WaitForSeconds waiter = new WaitForSeconds(0.05f);
 
-	private Coroutine inspectCoutine = null;
-	public bool IsInspectProccess => inspectCoutine != null;
+
+	private Coroutine inspectCorutine = null;
+	public bool IsInspectProccess => inspectCorutine != null;
     #endregion
 
     //cash
@@ -85,7 +85,10 @@ public class ItemInspector : MonoBehaviour
 
 		if (instantiateModel)
         {
-			this.itemObject = Instantiate(sd.model, modelPlace);
+			GameObject obj = ObjectPool.GetObject(sd.model.gameObject, false);
+			obj.transform.parent = modelPlace;
+			this.itemObject = obj.GetComponent<ItemObject>();
+			obj.SetActive(true);
 		}
 
 		if (inspect == InspectAnimationType.WorldToLocal)
@@ -104,6 +107,8 @@ public class ItemInspector : MonoBehaviour
 	}
 
 	#region Review
+	private List<Item> cashItemsOnDelete = new List<Item>();
+
 	private void StartReview()
     {
         if (!IsReviewProccess)
@@ -113,24 +118,26 @@ public class ItemInspector : MonoBehaviour
     }
 	private IEnumerator Review()
     {
-		List<Item> items = inventory.items;
+		cashItemsOnDelete.Clear();
 
-        foreach (var item in items)
+		foreach (var i in inventory.items)
         {
-			SetupItem(item, true, InspectAnimationType.OnlyLocal);
-			
-			StartInspect();
+			SetupItem(i, true, InspectAnimationType.OnlyLocal);
 
 			OpenUI();
+			StartInspect();
+
+			yield return waiter;
 
 			while (IsInspectProccess)
 			{
 				yield return null;
 			}
 		}
-
-		inventory.RemoveItems(cashItemsToDelete);
-		cashItemsToDelete.Clear();
+        for (int i = 0; i < cashItemsOnDelete.Count; i++)
+        {
+			inventory.RemoveItem(cashItemsOnDelete[i]);
+        }
 
 		StopReview();
 	}
@@ -149,7 +156,7 @@ public class ItemInspector : MonoBehaviour
 	{
 		if(!IsInspectProccess)
 		{
-			inspectCoutine = StartCoroutine(Inspect());
+			inspectCorutine = StartCoroutine(Inspect());
 		}
 	}
 	private IEnumerator Inspect()
@@ -160,7 +167,8 @@ public class ItemInspector : MonoBehaviour
 		yield return InspectItem();
 
 		ItemTransform.SetParent(oldParent);
-		yield return LerpItem(ItemTransform, oldWorldPosition, oldWorldRotation, 0.3f);//lerp item back to world
+		if(oldParent != null)
+			yield return LerpItem(ItemTransform, oldWorldPosition, oldWorldRotation, 0.3f);//lerp item back to world
 
 		
 		Dispose();
@@ -277,8 +285,8 @@ public class ItemInspector : MonoBehaviour
 	{
 		if(IsInspectProccess)
 		{
-			StopCoroutine(inspectCoutine);
-			inspectCoutine = null;
+			StopCoroutine(inspectCorutine);
+			inspectCorutine = null;
 
 			IsInspectItem = false;
 		}
@@ -330,11 +338,11 @@ public class ItemInspector : MonoBehaviour
 	{
 		GeneralAvailability.PlayerInventory.AddItem(item.itemData);
 
-		StopInspect();
-
-		cashItemsToDelete.Add(item);
+		cashItemsOnDelete.Add(item);
 
 		Dispose();
+
+		StopInspect();
 	}
 	private void ToInventoryLeave()
 	{
@@ -347,7 +355,11 @@ public class ItemInspector : MonoBehaviour
 
 	private void Dispose()
     {
-		itemObject.ColliderEnable(true);
+		if (itemObject)
+		{
+			ObjectPool.ReturnGameObject(itemObject.gameObject);
+			itemObject.ColliderEnable(true);
+		}
 
 		itemObject = null;
 		item = null;
@@ -355,10 +367,6 @@ public class ItemInspector : MonoBehaviour
 		oldParent = null;
 		oldWorldPosition = Vector3.zero;
 		oldWorldRotation = Quaternion.identity;
-
-		onItemTake = null;
-		onItemAction = null;
-		onItemLeave = null;
 	}
 
 	private void ItemTake()
@@ -421,6 +429,8 @@ public class ItemInspector : MonoBehaviour
 	private void CloseUI()
     {
 		GeneralAvailability.PlayerUI.CloseItemInspector();
+
+		onItemAction = null;
 	}
 }
 public enum InspectAnimationType

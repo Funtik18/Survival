@@ -29,8 +29,6 @@ namespace DS
 /// </summary>
 public abstract class WorldBoard : DS.Object, IObservable
 {
-	public virtual bool IsObservable => Collider.enabled;
-
 	public virtual void StartObserve() { }
 	public virtual void Observe() { }
 	public virtual void EndObserve() { }
@@ -51,7 +49,7 @@ public abstract class WorldObject : DS.Object, IPerceptible
 		{
 			if (button == null)
 			{
-				button = GeneralAvailability.ButtonInteraction;
+				button = GeneralAvailability.Player.UI.controlUI.buttonInteraction;
 			}
 			return button;
 		}
@@ -69,6 +67,28 @@ public abstract class WorldObject : DS.Object, IPerceptible
 
 	public virtual void Interact() { }
 }
+
+public abstract class WorldEntity : MonoBehaviour, IObservable
+{
+	private InteractionButton button;
+	protected InteractionButton InteractionButton
+	{
+		get
+		{
+			if (button == null)
+			{
+				button = GeneralAvailability.Player.UI.controlUI.buttonInteraction;
+			}
+			return button;
+		}
+	}
+
+	public virtual void StartObserve() { }
+	public virtual void Observe() { }
+	public virtual void EndObserve() { }
+}
+
+
 
 public abstract class WorldBoard<SD> : WorldBoard where SD : ObjectSD
 {
