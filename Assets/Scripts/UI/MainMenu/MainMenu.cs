@@ -56,6 +56,8 @@ public class MainMenu : MonoBehaviour
 
         DataHolder.Data = datas[datas.Count - 1];
 
+        Debug.LogError("Continue");
+
         LoadGame();
     }
 

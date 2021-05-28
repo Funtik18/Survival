@@ -54,30 +54,69 @@ public class WindowResting : WindowUI
         pass.onRest += StartSkip;
     }
 
-    public void UseTakeButton()
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="useTakeButton"></param>
+    /// <param name="type">Если == 0 значит показывает и sleep и rest панели, если == 1 то только sleep, если == 2 то только rest.</param>
+    /// <returns></returns>
+    public WindowResting Setup(bool useTakeButton = false, int type = 0)
     {
-        takeIt.gameObject.SetActive(true);
+        takeIt.gameObject.SetActive(false);
+
+        if (type == 0)
+        {
+            toggleSleep.isOn = true;
+
+            sleep.Setup(Laws.Instance.maxSleepTime.TotalSeconds, Laws.Instance.waitRealTimeSleeping, 3600);
+            pass.Setup(Laws.Instance.maxPassTime.TotalSeconds, Laws.Instance.waitRealTimePassing, 300);
+        }
+        else if(type == 1)
+        {
+            toggleSleep.isOn = true;
+
+            toggleSleep.gameObject.SetActive(false);
+            togglePass.gameObject.SetActive(false);
+
+
+            sleep.Setup(Laws.Instance.maxSleepTime.TotalSeconds, Laws.Instance.waitRealTimeSleeping, 3600);
+
+            if (useTakeButton != false)
+                takeIt.gameObject.SetActive(useTakeButton);
+        }
+        else if(type == 2)
+        {
+            togglePass.isOn = true;
+
+            toggleSleep.gameObject.SetActive(false);
+            togglePass.gameObject.SetActive(false);
+
+            pass.Setup(Laws.Instance.maxPassTime.TotalSeconds, Laws.Instance.waitRealTimePassing, 300);
+        }
+
+        return this;
+    }
+    public override void HideWindow()
+    {
+        base.HideWindow();
+        toggleSleep.gameObject.SetActive(true);
+        togglePass.gameObject.SetActive(true);
     }
 
-    public override void ShowWindow()
-    {
-        base.ShowWindow();
 
-        toggleSleep.isOn = true;
-        TogglesChanged(toggleSleep.isOn);
-
-        sleep.Setup(Laws.Instance.maxSleepTime.TotalSeconds, Laws.Instance.waitRealTimeSleeping, 3600);
-        pass.Setup(Laws.Instance.maxPassTime.TotalSeconds, Laws.Instance.waitRealTimePassing, 300);
-    }
-
-    float lastSliderValue;
+    private float lastSliderValue;
+    private bool isSleep = true;
+    private Times howLong;
     private void StartSkip(PanelRest rest, Times skipTime)
     {
         this.rest = rest;
 
         Debug.LogError("Start ADS");
 
-        if (toggleSleep.isOn)
+        isSleep = toggleSleep.isOn;
+        howLong = skipTime;
+
+        if (isSleep)
         {
             Status.states.CurrentState = PlayerState.Sleeping;
 
@@ -96,7 +135,7 @@ public class WindowResting : WindowUI
 
     private void StartSkip()
     {
-        if (toggleSleep.isOn)
+        if (isSleep)
         {
             GeneralAvailability.PlayerUI.sleepPanel.Enable(true);
         }
@@ -121,10 +160,15 @@ public class WindowResting : WindowUI
 
     private void EndSkip()
     {
-        if (toggleSleep.isOn)
+        if (isSleep)
         {
             Cancel();
             GeneralAvailability.PlayerUI.sleepPanel.Enable(false);
+        
+            if (howLong.TotalSeconds >= 3600)
+            {
+                GlobalSaveLoader.Instance.StartSaveGame();
+            }
         }
         else
         {
@@ -135,7 +179,7 @@ public class WindowResting : WindowUI
         status.states.CurrentState = PlayerState.Standing;
     }
 
-    private void TogglesChanged(bool trigger)
+    private void TogglesChanged(bool trigger = false)
     {
         if (toggleSleep.isOn)
         {

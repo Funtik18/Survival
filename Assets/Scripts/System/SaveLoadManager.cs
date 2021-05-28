@@ -4,11 +4,10 @@ using System.IO;
 
 using UnityEngine;
 
-public class SaveLoadManager : MonoBehaviour
+public class SaveLoadManager
 {
 	private readonly static string expansion = ".txt";
 	private readonly static string directorySaves = "/saves/";
-
 
 
 	//private static int isFirstTime = -1;

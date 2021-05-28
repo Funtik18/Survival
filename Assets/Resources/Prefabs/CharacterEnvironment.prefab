@@ -5539,10 +5539,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0, g: 0, b: 0, a: 0.4509804}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0.9019608}
+    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0.9019608}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 0.9019608}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 0.9019608}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -5559,7 +5559,7 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 975555879021729659}
-  toggleTransition: 1
+  toggleTransition: 0
   graphic: {fileID: 0}
   m_Group: {fileID: 975555878437464085}
   onValueChanged:
@@ -5580,12 +5580,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toggle: {fileID: 975555879021729658}
   icon: {fileID: 975555879142468980}
-  isInverse: 0
+  isInverse: 1
   selected:
-    m_NormalColor: {r: 0, g: 0, b: 0, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0.4509804}
+    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0.4509804}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 0.4509804}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 0.4509804}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -6448,10 +6448,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0, g: 0, b: 0, a: 0.4509804}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0.9019608}
+    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0.9019608}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 0.9019608}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 0.9019608}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -6468,13 +6468,13 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 975555879389304067}
-  toggleTransition: 1
+  toggleTransition: 0
   graphic: {fileID: 0}
   m_Group: {fileID: 975555878437464085}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 0
+  m_IsOn: 1
 --- !u!114 &975555879389304065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6489,12 +6489,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toggle: {fileID: 975555879389304066}
   icon: {fileID: 975555878942853190}
-  isInverse: 0
+  isInverse: 1
   selected:
-    m_NormalColor: {r: 0, g: 0, b: 0, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0.4509804}
+    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0.4509804}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 0.4509804}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 0.4509804}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1

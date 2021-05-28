@@ -1,12 +1,29 @@
 ﻿using Sirenix.OdinInspector;
 
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
 
 public class GlobalSaveLoader : MonoBehaviour
 {
+    private static GlobalSaveLoader instance;
+    public static GlobalSaveLoader Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+                instance = FindObjectOfType<GlobalSaveLoader>();
+            }
+            return instance;
+        }
+    }
+
     [SerializeField] private NewGamePattern newGamePattern;
+
+    private Coroutine saveCoroutine = null;
+    public bool IsSaveProccess => saveCoroutine != null;
 
     private void Awake()
     {
@@ -52,6 +69,32 @@ public class GlobalSaveLoader : MonoBehaviour
         }
     }
 
+
+    public void StartSaveGame()
+    {
+        if (!IsSaveProccess)
+        {
+            saveCoroutine = StartCoroutine(SaveGame());
+        }
+    }
+    private IEnumerator SaveGame()
+    {
+        GeneralAvailability.PlayerUI.savingPanel.Enable(true);
+        yield return new WaitForSeconds(1f);
+        Save();
+        yield return new WaitForSeconds(4f);
+        GeneralAvailability.PlayerUI.savingPanel.Enable(false);
+
+        StopSaveGame();
+    }
+    private void StopSaveGame()
+    {
+        if (IsSaveProccess)
+        {
+            StopCoroutine(saveCoroutine);
+            saveCoroutine = null;
+        }
+    }
 
     [Button]
     private void Save()

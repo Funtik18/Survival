@@ -169,19 +169,18 @@ public class PlayerUI : MonoBehaviour
 	public void OpenResting()
     {
 		CloseControlUI();
-		windowsUI.restingWindow.ShowWindow();
+		windowsUI.restingWindow.Setup(type: 0).ShowWindow();
 	}
 	public void OpenPassTime()
     {
 		CloseControlUI();
-		windowsUI.restingWindow.ShowWindow();
+		windowsUI.restingWindow.Setup(type : 2).ShowWindow();
 	}
 	public void OpeRestingForBag(UnityAction takeIt)
     {
 		CloseControlUI();
 		windowsUI.restingWindow.onTakeIt = takeIt;
-		windowsUI.restingWindow.UseTakeButton();
-		windowsUI.restingWindow.ShowWindow();
+		windowsUI.restingWindow.Setup(true, 1).ShowWindow();
 	}
 	public void CloseResting()
     {
