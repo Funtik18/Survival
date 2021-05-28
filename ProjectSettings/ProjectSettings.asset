@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: StarSmith
   productName: DarkSurvival
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -771,10 +771,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: 858232e0-6582-40bb-b603-14bbb5cfd3e1
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: DarkSurvival
+  organizationId: funtiks
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

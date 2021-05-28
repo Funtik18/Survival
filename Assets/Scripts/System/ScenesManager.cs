@@ -98,5 +98,16 @@ public class ScenesManager : MonoBehaviour
 
             yield return null;
         }
+
+        if(currentSceneIndex == indexGameScene)
+        {
+            AdMobManager.Instance.ShowBanner();
+            AdMobManager.Instance.StartDurationADS();
+        }
+        else if (currentSceneIndex == indexMenuScene)
+        {
+            AdMobManager.Instance.ShowBanner();
+            AdMobManager.Instance.StopDurationADS();
+        }
     }
 }
