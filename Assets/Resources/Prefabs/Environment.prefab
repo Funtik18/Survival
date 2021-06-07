@@ -166,30 +166,42 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3d8bad5f102c13c4ba6c16828f3eee02, type: 2}
   playerContainer:
     staticItems:
-    - scriptableData: {fileID: 11400000, guid: 17e656c3d1536434d9999bfc47cc4941, type: 2}
-      currentStackSize: 1
-      currentDurrability: 100
-      currentCalories: 0
-      currentWeight: 0
-      currentMagazineCapacity: 0
-      maxStackSize: 3
-      maxWeight: 1
-    - scriptableData: {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
-      currentStackSize: 1
-      currentDurrability: 100
-      currentCalories: 0
-      currentWeight: 0
-      currentMagazineCapacity: 0
-      maxStackSize: 45
-      maxWeight: 1
     - scriptableData: {fileID: 11400000, guid: fe3f6e012c3127b4cb3b18f174143b35, type: 2}
+      isRandom: 1
       currentStackSize: 1
+      randomStackSize: {x: 0, y: 0}
       currentDurrability: 100
       currentCalories: 0
-      currentWeight: 0.5
+      currentWeight: 0.25
+      maxRandomWeight: 2
       currentMagazineCapacity: 0
-      maxStackSize: 1
-      maxWeight: 1.5
+    - scriptableData: {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 0}
+      currentDurrability: 100
+      currentCalories: 0
+      currentWeight: 0.1
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: 17e656c3d1536434d9999bfc47cc4941, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 1, y: 2}
+      currentDurrability: 100
+      currentCalories: 0
+      currentWeight: 0.1
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: eb604291a260dd141a7d52087a07b208, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 3}
+      currentDurrability: 100
+      currentCalories: 0
+      currentWeight: 0.15
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
     itemsAddCount: {x: 0, y: 7}
     dinamicPosibleItems:
     - {fileID: 11400000, guid: 3c3f027af864f36418b7e8767860fcd1, type: 2}

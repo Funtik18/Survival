@@ -47,6 +47,13 @@ public abstract class ItemSD : ObjectSD
 	[SuffixLabel("%/day")]
 	public float decayOutsie = 0f;
 
+
+	[TabGroup("RANDOM")]
+	public bool isCanRandomStack = false;
+	[TabGroup("RANDOM")]
+	public bool isCanRandomWeight = false;
+
+
 	[System.Serializable]
     public class ItemWorldOrientation 
 	{

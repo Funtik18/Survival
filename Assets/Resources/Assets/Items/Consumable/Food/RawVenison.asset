@@ -22,11 +22,15 @@ MonoBehaviour:
   isInfinityWeight: 1
   isInfinityStack: 0
   weight: 0.01
+  isWeightDependesStack: 1
   stackSize: 1
   isBreakable: 0
   decayOverTime: 0
   decayInside: 0
   decayOutsie: 0
+  isCanRanodmStack: 0
+  isCanRandomWeight: 1
   isCookable: 0
   calories: 900
   hydration: 0
+  isCanRandomCalories: 0

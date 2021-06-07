@@ -20,10 +20,13 @@ MonoBehaviour:
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
   isInfinityWeight: 0
-  weight: 0.02
   isInfinityStack: 1
+  weight: 0.02
+  isWeightDependesStack: 1
   stackSize: 1
   isBreakable: 0
   decayOverTime: 0
   decayInside: 0
   decayOutsie: 0
+  isCanRanodmStack: 1
+  isCanRandomWeight: 0

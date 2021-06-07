@@ -15,4 +15,7 @@ public abstract class ConsumableItemSD : ItemSD
     [SuffixLabel("%", true)]
     [Range(-100f, 100f)]
     public float hydration = 0f;
+
+    [TabGroup("RANDOM")]
+    public bool isCanRandomCalories = false;
 }

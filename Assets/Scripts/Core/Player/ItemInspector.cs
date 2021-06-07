@@ -167,10 +167,8 @@ public class ItemInspector : MonoBehaviour
 		yield return InspectItem();
 
 		ItemTransform.SetParent(oldParent);
-		if(oldParent != null)
-			yield return LerpItem(ItemTransform, oldWorldPosition, oldWorldRotation, 0.3f);//lerp item back to world
+		yield return LerpItem(ItemTransform, oldWorldPosition, oldWorldRotation, 0.3f);//lerp item back to world
 
-		
 		Dispose();
 
 		StopInspect();
@@ -328,6 +326,7 @@ public class ItemInspector : MonoBehaviour
 
 			ObjectPool.ReturnGameObject(itemObject.gameObject);
 		}
+
 		Dispose();
 	}
 	private void ToWorldLeave()
@@ -339,7 +338,7 @@ public class ItemInspector : MonoBehaviour
 		GeneralAvailability.PlayerInventory.AddItem(item.itemData);
 
 		cashItemsOnDelete.Add(item);
-
+		
 		Dispose();
 
 		StopInspect();
@@ -347,11 +346,10 @@ public class ItemInspector : MonoBehaviour
 	private void ToInventoryLeave()
 	{
 		StopInspect();
-
+		
 		Dispose();
 	}
 	#endregion
-
 
 	private void Dispose()
     {

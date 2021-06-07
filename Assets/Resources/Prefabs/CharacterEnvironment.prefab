@@ -18228,45 +18228,63 @@ MonoBehaviour:
       items:
       - scriptableData: {fileID: 11400000, guid: fe3f6e012c3127b4cb3b18f174143b35,
           type: 2}
+        isRandom: 0
         currentStackSize: 1
+        randomStackSize: {x: 0, y: 0}
         currentDurrability: 100
         currentCalories: 0
         currentWeight: 0.5
+        maxRandomWeight: 0
         currentMagazineCapacity: 0
       - scriptableData: {fileID: 11400000, guid: bc7ca229311567b4aa0e3dcb33624130,
           type: 2}
+        isRandom: 0
         currentStackSize: 1
+        randomStackSize: {x: 0, y: 0}
         currentDurrability: 100
         currentCalories: 250
         currentWeight: 0.25
+        maxRandomWeight: 0
         currentMagazineCapacity: 0
       - scriptableData: {fileID: 11400000, guid: eb604291a260dd141a7d52087a07b208,
           type: 2}
+        isRandom: 0
         currentStackSize: 10
+        randomStackSize: {x: 0, y: 0}
         currentDurrability: 100
         currentCalories: 0
         currentWeight: 0.15
+        maxRandomWeight: 0
         currentMagazineCapacity: 0
       - scriptableData: {fileID: 11400000, guid: 17e656c3d1536434d9999bfc47cc4941,
           type: 2}
+        isRandom: 0
         currentStackSize: 25
+        randomStackSize: {x: 0, y: 0}
         currentDurrability: 100
         currentCalories: 0
         currentWeight: 0.1
+        maxRandomWeight: 0
         currentMagazineCapacity: 0
       - scriptableData: {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9,
           type: 2}
+        isRandom: 0
         currentStackSize: 13
+        randomStackSize: {x: 0, y: 0}
         currentDurrability: 100
         currentCalories: 0
         currentWeight: 0.1
+        maxRandomWeight: 0
         currentMagazineCapacity: 0
       - scriptableData: {fileID: 11400000, guid: 02be6074666e32345b97a1d11835d01b,
           type: 2}
+        isRandom: 0
         currentStackSize: 1
+        randomStackSize: {x: 0, y: 0}
         currentDurrability: 100
         currentCalories: 4694
         currentWeight: 5.22
+        maxRandomWeight: 0
         currentMagazineCapacity: 0
   itemInspector: {fileID: 630347090620285683}
   isLockCursor: 0
@@ -48634,7 +48652,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6133772c0e0667e4fb787e5a71b633e6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bb25a649aa6f8174aa8134750b34ca2d, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -50646,7 +50664,7 @@ RectTransform:
   m_GameObject: {fileID: 9117544681562065962}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3286859411718363242}
   m_RootOrder: 2
@@ -50683,7 +50701,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ec3936b7b2aab8842a4acbfbec434ec9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bb25a649aa6f8174aa8134750b34ca2d, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

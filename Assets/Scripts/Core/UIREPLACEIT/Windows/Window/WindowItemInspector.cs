@@ -83,7 +83,7 @@ public class WindowItemInspector : WindowUI
         if (currentData.IsFireStarting)
         {
             FireStarterSD fireStarter = currentData.scriptableData as FireStarterSD;
-            matchesText.text = currentData.CurrentStackSize + " MATCHES";
+            matchesText.text = currentData.CurrentStringStackSizeMathces;
             matchesPanel.SetActive(fireStarter.isMathces);
         }
         else
@@ -93,7 +93,7 @@ public class WindowItemInspector : WindowUI
         //CALORIES
         if (currentData.IsConsumable)
         {
-            matchesText.text = currentData.CurrentCalories + " CALORIES";
+            caloriesText.text = currentData.CurrentStringCalories;
             caloriesPanel.SetActive(true);
         }
         else
@@ -103,7 +103,7 @@ public class WindowItemInspector : WindowUI
         //BULLETS
         if (currentData.IsWeapon)
         {
-            weaponText.text = currentData.CurrentMagazineCapacity + " BULLETS";
+            weaponText.text = currentData.CurrentStringMagazineCapacity;
             weaponPanel.SetActive(true);
         }
         else
@@ -111,9 +111,10 @@ public class WindowItemInspector : WindowUI
             weaponPanel.SetActive(false);
         }
         //DURATION
+        durationText.text = currentData.CurrentStringDurability;
         durationPanel.SetActive(false);
         //WEIGHT
-        weightText.text = currentData.CurrentWeight + " KG";
+        weightText.text = currentData.CurrentStringWeight;
         weightPanel.SetActive(true);
     }
 

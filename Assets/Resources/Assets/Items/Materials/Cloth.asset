@@ -28,3 +28,5 @@ MonoBehaviour:
   decayOverTime: 0
   decayInside: 0
   decayOutsie: 0
+  isCanRanodmStack: 1
+  isCanRandomWeight: 0

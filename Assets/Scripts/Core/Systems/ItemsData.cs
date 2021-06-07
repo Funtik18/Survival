@@ -202,7 +202,7 @@ public class ItemsData : MonoBehaviour
 public class Container
 {
     [InfoBox("Items которые точно будут в контейнере")]
-    public List<ItemDataRandom> staticItems = new List<ItemDataRandom>();
+    public List<ItemDataWrapper> staticItems = new List<ItemDataWrapper>();
 
     [MinMaxSlider(0, 32)]
     public Vector2Int itemsAddCount;
@@ -216,7 +216,7 @@ public class Container
 
         for (int i = 0; i < staticItems.Count; i++)
         {
-            items.Add(staticItems[i].RndData());
+            items.Add(staticItems[i].isRandom ? staticItems[i].RndData() : staticItems[i]);
         }
 
         int itemsCount = itemsAddCount.RandomNumBtw();
