@@ -19,11 +19,17 @@ MonoBehaviour:
   orientation:
     position: {x: 0, y: 0, z: -0.7}
     rotation: {x: -0.20039524, y: 0.82726294, z: -0.5134068, w: 0.109047316}
+  isInfinityWeight: 0
+  isInfinityStack: 0
   weight: 0.1
-  isCanned: 0
-  isBreakable: 0
+  isWeightDependesStack: 1
   stackSize: 45
+  isBreakable: 0
+  decayOverTime: 0
+  decayInside: 0
+  decayOutsie: 0
   chance: 5
+  isMathces: 1
   holdTime: 5
   kindleTime:
     days: 0

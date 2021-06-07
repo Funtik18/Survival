@@ -228,17 +228,24 @@ public class ItemDataWrapper
 	}
 
 
+
+	public bool IsFireStarting => scriptableData != null ? scriptableData is FireStarterSD : false;
+	public bool IsAid => scriptableData != null ? scriptableData is FirstAidItemSD : false;
+	public bool IsConsumable => scriptableData != null ? scriptableData is ConsumableItemSD : false;
+	public bool IsTool => scriptableData != null ? scriptableData is ToolItemSD : false;
+	public bool IsMaterial => scriptableData != null ? scriptableData is MaterialItemSD : false;
+	public bool IsWeapon => scriptableData != null ? scriptableData is ToolWeaponSD : false;
+
+
 	public bool IsWeightDependesStack => scriptableData != null ? scriptableData.isWeightDependesStack : false;
 
 	public bool IsInfinityWeight => scriptableData != null ? scriptableData.isInfinityWeight : false;
 	public bool IsInfinityStack => scriptableData != null ? scriptableData.isInfinityStack : false;
 	public bool IsBreakeable => scriptableData != null ? scriptableData.isBreakable : false;
-	public bool IsConsumable => scriptableData != null ? scriptableData is ConsumableItemSD : false;
 	public bool IsWater => scriptableData != null ? scriptableData is WaterItemSD : false;
 	public bool IsConsumableNoWater => IsConsumable && !IsWater;
 	public bool IsMeat => scriptableData != null ? scriptableData is MeatItemSD : false;
 
-	public bool IsWeapon => scriptableData != null ? scriptableData is ToolWeaponSD : false;
 
 
 	private bool CanChangeStackSize => scriptableData != null ? scriptableData.isInfinityStack || scriptableData.stackSize > 1 : false;

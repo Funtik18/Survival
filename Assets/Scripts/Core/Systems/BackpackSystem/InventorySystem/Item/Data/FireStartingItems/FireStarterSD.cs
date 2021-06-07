@@ -3,6 +3,8 @@
 [CreateAssetMenu(menuName = "Game/Inventory/Items/Fire/Starter", fileName = "Starter")]
 public class FireStarterSD : FireItemSD 
 {
+    public bool isMathces = false;
+
     [Tooltip("Сколько секунд розжигать.")]
     [Min(1f)]
     public float holdTime;

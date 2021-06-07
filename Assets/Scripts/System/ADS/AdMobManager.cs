@@ -89,7 +89,7 @@ public class AdMobManager : MonoBehaviour
         {
             Debug.LogError(count0);
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(60);//минута
 
             count0 += 1;
             count1 += 1;
