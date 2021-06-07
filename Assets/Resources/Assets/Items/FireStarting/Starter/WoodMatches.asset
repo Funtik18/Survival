@@ -22,7 +22,7 @@ MonoBehaviour:
   isInfinityWeight: 0
   isInfinityStack: 0
   weight: 0.1
-  isWeightDependesStack: 1
+  isWeightDependesStack: 0
   stackSize: 45
   isBreakable: 0
   decayOverTime: 0
