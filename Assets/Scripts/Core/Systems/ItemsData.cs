@@ -216,7 +216,8 @@ public class Container
 
         for (int i = 0; i < staticItems.Count; i++)
         {
-            items.Add(staticItems[i].isRandom ? staticItems[i].RndData() : staticItems[i]);
+            Debug.LogError(staticItems[i].isRandom);
+            items.Add(staticItems[i].isRandom ? staticItems[i].GetRndData() : staticItems[i]);
         }
 
         int itemsCount = itemsAddCount.RandomNumBtw();
@@ -225,7 +226,7 @@ public class Container
         {
             ItemDataWrapper data = new ItemDataWrapper();
             data.scriptableData = dinamicPosibleItems[UnityEngine.Random.Range(0, dinamicPosibleItems.Count)];
-            items.Add(data.RndData());
+            items.Add(data.GetRndData());
         }
 
         return items;

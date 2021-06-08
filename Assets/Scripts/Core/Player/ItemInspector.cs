@@ -327,7 +327,7 @@ public class ItemInspector : MonoBehaviour
 			ObjectPool.ReturnGameObject(itemObject.gameObject);
 		}
 
-		Dispose();
+		DisposeAll();
 	}
 	private void ToWorldLeave()
     {
@@ -339,7 +339,7 @@ public class ItemInspector : MonoBehaviour
 
 		cashItemsOnDelete.Add(item);
 		
-		Dispose();
+		DisposeAll();
 
 		StopInspect();
 	}
@@ -347,15 +347,23 @@ public class ItemInspector : MonoBehaviour
 	{
 		StopInspect();
 		
-		Dispose();
+		DisposeAll();
 	}
 	#endregion
 
-	private void Dispose()
+	private void DisposeAll()
     {
 		if (itemObject)
 		{
 			ObjectPool.ReturnGameObject(itemObject.gameObject);
+		}
+
+		Dispose();
+	}
+	private void Dispose()
+    {
+        if (itemObject)
+        {
 			itemObject.ColliderEnable(true);
 		}
 
@@ -366,6 +374,7 @@ public class ItemInspector : MonoBehaviour
 		oldWorldPosition = Vector3.zero;
 		oldWorldRotation = Quaternion.identity;
 	}
+
 
 	private void ItemTake()
 	{

@@ -178,7 +178,7 @@ MonoBehaviour:
     - scriptableData: {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
       isRandom: 1
       currentStackSize: 1
-      randomStackSize: {x: 0, y: 0}
+      randomStackSize: {x: 1, y: 45}
       currentDurrability: 100
       currentCalories: 0
       currentWeight: 0.1
@@ -633,7 +633,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5974223110730402865
 Transform:
   m_ObjectHideFlags: 0

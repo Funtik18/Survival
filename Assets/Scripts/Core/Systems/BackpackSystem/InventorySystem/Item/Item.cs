@@ -13,7 +13,7 @@ public class Item
 	{
 		ID = System.Guid.NewGuid();
 
-		this.itemData = itemData;
+		this.itemData = itemData.GetData();
 	}
 }
 [System.Serializable]
@@ -269,7 +269,7 @@ public class ItemDataWrapper
 
 
 	private bool IsCanRandomWeight => isRandom && scriptableData != null ? scriptableData.isCanRandomWeight : false;
-	private bool IsCanRandomStack => isRandom && scriptableData != null ? scriptableData.isCanRandomStack : false;
+	private bool IsCanRandomStack => isRandom && IsInfinityStack && scriptableData != null ? scriptableData.isCanRandomStack : false;
 
 
 	private bool CanChangeStackSize => scriptableData != null ? scriptableData.isInfinityStack || scriptableData.stackSize > 1 : false;
@@ -295,8 +295,10 @@ public class ItemDataWrapper
 		}
 	}
 
-	public virtual ItemDataWrapper FullData()
+	public virtual ItemDataWrapper GetData()
 	{
+		if (isRandom) return GetRndData();
+
 		CurrentBaseWeight = scriptableData.weight;
 
 		if (IsConsumable)
@@ -329,35 +331,34 @@ public class ItemDataWrapper
 
 		return this;
 	}
-	public ItemDataWrapper RndData()
+	public ItemDataWrapper GetRndData()
 	{
-		FullData();//DELETE
-		ItemDataWrapper data = new ItemDataWrapper();
-		data.scriptableData = scriptableData;
+		CurrentBaseWeight = scriptableData.isCanRandomWeight ? Random.Range(CurrentBaseWeight, maxRandomWeight) : scriptableData.weight;
 
-		data.CurrentBaseWeight = scriptableData.isCanRandomWeight ? Random.Range(CurrentBaseWeight, maxRandomWeight) : scriptableData.weight;
-
-        if (isRandom)
-        {
-			data.CurrentStackSize = scriptableData.isCanRandomStack ? randomStackSize.RandomNumBtw() : MinimumStackSize;
-        }
-        else
-        {
-			data.CurrentStackSize = scriptableData.isCanRandomStack ? Random.Range(MinimumStackSize, MaximumStackSize) : MinimumStackSize;
-		}
-
-		if (IsWeapon)
+		if (IsInfinityStack)
 		{
-			data.CurrentMagazineCapacity = Random.Range(0, MaxMagaizneCapacity);
+			CurrentStackSize = scriptableData.isCanRandomStack ? randomStackSize.RandomNumBtw() : MinimumStackSize;
 		}
 		else
 		{
-			data.CurrentMagazineCapacity = 0;
+			CurrentStackSize = scriptableData.isCanRandomStack ? Random.Range(MinimumStackSize, MaximumStackSize) : MinimumStackSize;
 		}
 
-		data.CurrentDurrability = 100;
+		if (CurrentStackSize == 0) return null;
 
-		return data;
+
+		if (IsWeapon)
+		{
+			CurrentMagazineCapacity = Random.Range(0, MaxMagaizneCapacity);
+		}
+		else
+		{
+			CurrentMagazineCapacity = 0;
+		}
+
+		CurrentDurrability = 100;
+
+		return this;
 	}
 
 	public ItemDataWrapper Copy()

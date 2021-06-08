@@ -28,7 +28,7 @@ MonoBehaviour:
   decayOverTime: 0
   decayInside: 0
   decayOutsie: 0
-  isCanRanodmStack: 1
+  isCanRandomStack: 1
   isCanRandomWeight: 0
   chance: 15
   addTemperature: 1

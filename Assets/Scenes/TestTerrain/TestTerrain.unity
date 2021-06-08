@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1416618130}
-  m_IndirectSpecularColor: {r: 0.34873545, g: 0.25019294, b: 0.20615797, a: 1}
+  m_IndirectSpecularColor: {r: 0.34893084, g: 0.25010583, b: 0.20580725, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -18334,7 +18334,7 @@ PrefabInstance:
     - target: {fileID: 2672445273946098017, guid: 93a837b0e45e68540aa5ce3460f4001d,
         type: 3}
       propertyPath: data.inventoryData.items.Array.size
-      value: 27
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2672445273946098017, guid: 93a837b0e45e68540aa5ce3460f4001d,
         type: 3}
@@ -22247,6 +22247,16 @@ PrefabInstance:
       objectReference: {fileID: 108086, guid: 860cf6e61727b354dacbb9dc619357e3, type: 3}
     - target: {fileID: 5195129708163620888, guid: b838f4222a7f4a341aa81d3b35e0e3b7,
         type: 3}
+      propertyPath: itemData.isRandom
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195129708163620888, guid: b838f4222a7f4a341aa81d3b35e0e3b7,
+        type: 3}
+      propertyPath: itemData.currentWeight
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195129708163620888, guid: b838f4222a7f4a341aa81d3b35e0e3b7,
+        type: 3}
       propertyPath: itemData.currentMagazineCapacity
       value: 3
       objectReference: {fileID: 0}
@@ -22398,99 +22408,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: container.staticItems.Array.size
+      propertyPath: playerContainer.staticItems.Array.data[2].randomStackSize.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: container.staticItems.Array.data[0].maxWeight
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: playerContainer.staticItems.Array.data[0].isRnd
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: container.staticItems.Array.data[0].maxStackSize
-      value: 17
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: container.staticItems.Array.data[0].currentWeight
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: playerContainer.staticItems.Array.data[0].rnddata
-      value: 
-      objectReference: {fileID: 11400000, guid: fe3f6e012c3127b4cb3b18f174143b35,
-        type: 2}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: container.staticItems.Array.data[0].scriptableData
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: container.staticItems.Array.data[0].maxRandomWeight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: container.staticItems.Array.data[0].currentStackSize
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: container.staticItems.Array.data[0].currentDurrability
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: container.staticItems.Array.data[0].data.currentWeight
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: container.staticItems.Array.data[0].maxRandomStackSize
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: playerContainer.staticItems.Array.data[0].randomWeight.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: playerContainer.staticItems.Array.data[0].randomWeight.y
-      value: 0.32
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: container.staticItems.Array.data[0].data.currentStackSize
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: container.staticItems.Array.data[0].data.currentDurrability
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: playerContainer.staticItems.Array.data[0].data.currentWeight
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: playerContainer.staticItems.Array.data[0].maxRandomStackSize
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: playerContainer.staticItems.Array.data[1].data.currentWeight
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: playerContainer.staticItems.Array.data[1].maxRandomStackSize
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: playerContainer.staticItems.Array.data[2].data.currentWeight
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: playerContainer.staticItems.Array.data[2].maxRandomStackSize
+      propertyPath: playerContainer.staticItems.Array.data[2].randomStackSize.y
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 606545091, guid: 90896f6c81194af4a837fd92f29a5b67, type: 3}
-      propertyPath: playerContainer.staticItems.Array.data[0].data.scriptableData
-      value: 
-      objectReference: {fileID: 11400000, guid: fe3f6e012c3127b4cb3b18f174143b35,
-        type: 2}
+      propertyPath: playerContainer.staticItems.Array.data[3].randomStackSize.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5974223110554429353, guid: 90896f6c81194af4a837fd92f29a5b67,
         type: 3}
       propertyPath: m_RootOrder
@@ -22550,11 +22478,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Environment
-      objectReference: {fileID: 0}
-    - target: {fileID: 5974223110730402867, guid: 90896f6c81194af4a837fd92f29a5b67,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5974223111458182838, guid: 90896f6c81194af4a837fd92f29a5b67,
         type: 3}
