@@ -24,7 +24,8 @@ public class CraftingItemInspectorUI : MonoBehaviour
             itemTittle.text = currentItemSD.objectName;
             itemDescription.text = currentItemSD.description;
 
-            inspectorUI.InstantiateModel(currentItemSD.model);
+            //inspectorUI.InstantiateModel(currentItemSD.model);
+            inspectorUI.InstantiateModel(currentItemSD);
         }
         else
         {

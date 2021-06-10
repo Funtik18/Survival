@@ -20,7 +20,8 @@ public class GlobalSaveLoader : MonoBehaviour
         }
     }
 
-    [SerializeField] private NewGamePattern newGamePattern;
+    [InfoBox("Класс выбирает тип запуска, это дебаг мод или новая игра или произошла загрузка игры.")]
+    [SerializeField] private DataHolder.NewGamePattern newGamePattern;
 
     private Coroutine saveCoroutine = null;
     public bool IsSaveProccess => saveCoroutine != null;
@@ -29,42 +30,45 @@ public class GlobalSaveLoader : MonoBehaviour
     {
         if (DataHolder.loadType == LoadType.DEBUG)
         {
-            GeneralAvailability.Player.IsDEBUG();
-
-            if (WeatherController.Instance.CurrentForecast == null) { }
-
             Debug.LogError("DEBUG");
+
+            GeneralAvailability.Player.SetData(null);
         }
         else
         {
-            Debug.LogError("LOAD GAME");
-
             if (DataHolder.loadType == LoadType.NewGame)
             {
-                Data data = newGamePattern.GetData();
+                Debug.LogError("NEW GAME");
+
+                DataHolder.Data data = newGamePattern.GetData();
 
                 GeneralTime.Instance.SetTime(data.time.TotalSeconds);
-                GeneralAvailability.Player.SetData(data.playerData);
+                GeneralAvailability.Player.SetData(data.player);
 
-                GeneralStatistics.Init();
+                Statistics.Init();
             }
             else if (DataHolder.loadType == LoadType.Continue)
             {
-                Data data = DataHolder.Data;
+                Debug.LogError("CONTINUE GAME");
+
+                DataHolder.Data data = DataHolder.CurrentData;
 
                 GeneralTime.Instance.SetTime(data.time.TotalSeconds);
 
-                GeneralAvailability.Player.SetData(data.playerData);
+                GeneralAvailability.Player.SetData(data.player);
+
+                Overseer.Instance.SetData(data.environment);
 
                 WeatherController.Instance.SetForecast(data.weatherForecast);
 
-                GeneralStatistics.SetData(data.statistic);
-                
-                GeneralStatistics.Init();
+                Statistics.SetData(data.statistic);
+                Statistics.Init();
             }
             else if (DataHolder.loadType == LoadType.Load)
             {
-                Data data = DataHolder.Data;
+                Debug.LogError("LOAD GAME");
+
+                DataHolder.Data data = DataHolder.CurrentData;
             }
         }
     }
@@ -80,6 +84,7 @@ public class GlobalSaveLoader : MonoBehaviour
     private IEnumerator SaveGame()
     {
         GeneralAvailability.PlayerUI.savingPanel.Enable(true);
+
         yield return new WaitForSeconds(1f);
         Save();
         yield return new WaitForSeconds(4f);
@@ -99,12 +104,16 @@ public class GlobalSaveLoader : MonoBehaviour
     [Button]
     private void Save()
     {
-        Data data = DataHolder.Data;
-        data.date = System.DateTime.Now;
-        data.time = GeneralTime.Instance.globalTime;
-        data.statistic = GeneralStatistics.GetData();
-        data.playerData = GeneralAvailability.Player.GetData();
-        data.weatherForecast = WeatherController.Instance.CurrentForecast;
+        GeneralAvailability.Player.Status.opportunities.UnEquip();
+
+
+        DataHolder.Data data = DataHolder.CurrentData;
+        data.date = System.DateTime.Now;//время
+        data.time = GeneralTime.Instance.globalTime;//игровое время
+        data.statistic = Statistics.GetData();//статистика
+        data.player = GeneralAvailability.Player.GetData();//игрок
+        data.environment = Overseer.Instance.GetData();//окружение
+        data.weatherForecast = WeatherController.Instance.CurrentForecast;//погода
 
         DataHolder.Save();
     }
@@ -124,49 +133,6 @@ public class GlobalSaveLoader : MonoBehaviour
                 Gizmos.color = Color.green;
                 Gizmos.DrawLine(newGamePattern.startPoints[i].position, newGamePattern.startPoints[i].position - newGamePattern.startPoints[i].up * 3.5f);
             }
-        }
-    }
-
-
-    [System.Serializable]
-    public class NewGamePattern
-    {
-        public bool randomTime = true;
-        [HideIf("randomTime")]
-        public Times startTime;
-
-        public bool randomPoints = false;
-        [HideIf("randomPoints")]
-        public Transform startPoint;
-        [ShowIf("randomPoints")]
-        public List<Transform> startPoints = new List<Transform>();
-
-        public bool randomPlayerData = false;
-
-        [ShowIf("randomPlayerData")]
-        public PlayerStatusRandomSD playerRandomData;
-
-        [HideIf("randomPlayerData")]
-        public PlayerStatusSD playerData;
-
-        public Data GetData()
-        {
-            Data data = new Data();
-
-            data.time = randomTime ? Times.GetRandomTimes() : startTime;
-
-            Transform point = randomPoints ? startPoints.GetRandomItem() : startPoint;
-
-            data.playerData.position = point.position;
-            data.playerData.rotation = Quaternion.LookRotation(point.forward);
-
-            data.playerData.statusData = randomPlayerData ? playerRandomData.GetData() : playerData.statsData;
-
-            data.playerData.inventoryData = ItemsData.Instance.PlayerContainer;
-
-            data.weatherForecast = WeatherController.Instance.CurrentForecast;
-
-            return data;
         }
     }
 }

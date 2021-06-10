@@ -5,6 +5,10 @@ public class ItemObjectWeapon : ItemObject
 {
     public UnityAction onRequiredReload;
 
+
+    [Space]
+    [SerializeField] private ItemAmmunitionSD requiredAmmo;
+    [Space]
     [SerializeField] private bool autoReload = true;
     [SerializeField] private int ammoReloadRate = 1;
     [SerializeField] private float ammoReloadDelay = 2;
@@ -13,6 +17,7 @@ public class ItemObjectWeapon : ItemObject
 
     [SerializeField] private GameObject impactSnow;
     [SerializeField] private GameObject impactAnimal;
+    
     [Header("Internal References")]
     [SerializeField] private Transform weaponMuzzle;
     [SerializeField] private Transform ejectionPort;
@@ -38,37 +43,31 @@ public class ItemObjectWeapon : ItemObject
 
     public UnityAction onCapacityСlipChanged;
 
-    private int magazineCapacity;
-    public int MagazineCapacity => magazineCapacity;
+    private int magazineCapacity = -1;
+    public int MagazineCapacity => data.MaxMagaizneCapacity;
 
     public int CurrentСlipCapacity
     {
-        get => Data.CurrentMagazineCapacity;
+        get => data.CurrentMagazineCapacity;
         set
         {
-            Data.CurrentMagazineCapacity = value;
+            data.CurrentMagazineCapacity = value;
             onCapacityСlipChanged?.Invoke();
         }
     }
-
-    private bool isReadyToShoot = false;
-
     public bool IsReadyToShoot => isReadyToShoot;
 
     public bool IsEmpty => CurrentСlipCapacity == 0;
     public bool IsFull => CurrentСlipCapacity == magazineCapacity;
 
+    private ItemDataWrapper data => Item.itemData;
 
+    private bool isReadyToShoot = false;
     private bool isAiming = false;
-
-    private void Awake()
-    {
-        magazineCapacity = Data.MaxMagaizneCapacity;
-    }
 
     public void ActionItem()
     {
-        Item item = GeneralAvailability.PlayerInventory.FindItemByData(Data);
+        Item item = GeneralAvailability.PlayerInventory.FindItemByData(data);
 
         GeneralAvailability.Player.Status.opportunities.EquipItem(item);
     }

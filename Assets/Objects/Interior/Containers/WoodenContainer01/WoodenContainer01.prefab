@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3054258400594730421}
   - component: {fileID: 3041307093893220398}
   - component: {fileID: 3041307093893220399}
-  - component: {fileID: 3923516862798284546}
   m_Layer: 13
   m_Name: WoodenContainer01
   m_TagString: Untagged
@@ -109,22 +108,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 3041307093893220398}
   scriptableData: {fileID: 11400000, guid: ca651ffbd28f01a48b9bb582dd157ac9, type: 2}
-  containerInventory:
-    initItems: []
-  isInspected: 0
---- !u!114 &3923516862798284546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3041307093893220397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e16b2bc65bcbc04cb1d4a4fa1c59a0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  generateOnAwake: 1
-  useRandomCount: 1
-  randomCount: {x: 0, y: 3}
-  constCount: 0

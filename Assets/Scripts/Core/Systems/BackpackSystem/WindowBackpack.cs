@@ -104,15 +104,12 @@ public class WindowBackpack : WindowUI
 		HideWindow();
 	}
 
-
-
 	public WindowBackpack SetSecondaryContainer(Inventory inventory)
 	{
 		inventorySystem.SetSecondaryContainer(inventory);
 
 		return this;
 	}
-
 
 	private void ShowWindowByIndex(int index)
 	{

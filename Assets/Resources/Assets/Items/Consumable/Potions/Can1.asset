@@ -31,6 +31,7 @@ MonoBehaviour:
   decayOutsie: 0
   isCanRandomStack: 0
   isCanRandomWeight: 0
+  isHaveChanceLoot: 0
   isCookable: 0
   calories: 250
   hydration: 30

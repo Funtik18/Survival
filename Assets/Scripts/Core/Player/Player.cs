@@ -44,8 +44,7 @@ public class Player : MonoBehaviour
 	public PlayerUI UI => ui;
 	#endregion
 
-	[SerializeField] private PlayerData data;
-
+	[SerializeField] private Data data;
 
 	public ItemInspector itemInspector;//make it
 
@@ -59,13 +58,11 @@ public class Player : MonoBehaviour
 	private Coroutine brainCoroutine;
 	public bool IsBrainProccess => brainCoroutine != null;
 
-	public void IsDEBUG()
+
+	
+	private void Setup()
     {
-		Status.SetData(data.statusData).Init(this);
-
 		Controller.Init(this);
-
-		Inventory.SetData(data.inventoryData).Init();
 
 		UI.Setup(this);
 		Build.Init(this);
@@ -74,39 +71,8 @@ public class Player : MonoBehaviour
 
 		StartBrain();
 	}
-
-	public void SetData(PlayerData data)
-    {
-		this.data = data;
-
-		ChangePosition(data.position, data.rotation);
-
-		Status.SetData(data.statusData).Init(this);
-
-		Controller.Init(this);
-
-		Inventory.SetData(data.inventoryData).Init();
-
-		UI.Setup(this);
-		Build.Init(this);
-
-		CheckCursor();
-
-		StartBrain();
-	}
-	public PlayerData GetData()
-    {
-		PlayerData data = new PlayerData()
-		{
-			position = transform.localPosition,
-			rotation = transform.localRotation,
-
-			statusData = Status.GetData(),
-			inventoryData = Inventory.GetData(),
-		};
-
-		return data;
-	}
+	
+	
 
 	private void StartBrain()
     {
@@ -186,6 +152,10 @@ public class Player : MonoBehaviour
 		transform.rotation = rotation;
 		ResumeBrain();
 	}
+	public void ChangePosition(Stay3 stay)
+	{
+		ChangePosition(stay.position, stay.rotation);
+	}
 
 	#region Lock
 	public void Lock()
@@ -217,10 +187,6 @@ public class Player : MonoBehaviour
 	}
     #endregion
 
-
-
-
-
 	private void CheckCursor()
 	{
 		if(isLockCursor)
@@ -229,19 +195,59 @@ public class Player : MonoBehaviour
 			Cursor.visible = false;
 		}
 	}
+
+
+	public void SetData(Data data)
+	{
+		if (data == null)
+		{
+			Status.SetData(this.data.statusData).Init(this);
+
+			Inventory.SetData(this.data.inventoryData).Init();
+		}
+		else
+		{
+			ChangePosition(data.stay);
+
+			Status.SetData(data.statusData).Init(this);
+
+			Inventory.SetData(data.inventoryData).Init();
+		}
+
+		Setup();
+	}
+	public Data GetData()
+	{
+		Data data = new Data()
+		{
+			stay = new Stay3()
+			{
+				position = transform.localPosition,
+				rotation = transform.localRotation,
+			},
+
+			statusData = Status.GetData(),
+			inventoryData = Inventory.GetData(),
+		};
+
+		return data;
+	}
+
+	[System.Serializable]
+	public class Data 
+	{
+		public Stay3 stay;
+
+		public PlayerStatus.Data statusData;
+		public Inventory.Data inventoryData;
+	}
 }
 [System.Serializable]
-public class PlayerData
+public struct Stay3
 {
-	[HideInInspector] public Vector3 position;
-	[HideInInspector] public Quaternion rotation;
+	public bool isEnable;
 
-	public PlayerStatusData statusData;
-	public InventoryData inventoryData;
-
-	public PlayerData()
-    {
-		statusData = new PlayerStatusData();
-		inventoryData = new InventoryData();
-	}
+	public Vector3 position;
+	public Quaternion rotation;
+	public Vector3 scale;
 }

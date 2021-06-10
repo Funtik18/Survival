@@ -2,6 +2,7 @@
 using UnityEngine;
 
 using Sirenix.OdinInspector;
+using System.Runtime.Serialization;
 
 public class Item
 {
@@ -13,7 +14,7 @@ public class Item
 	{
 		ID = System.Guid.NewGuid();
 
-		this.itemData = itemData.GetData();
+		this.itemData = itemData;
 	}
 }
 [System.Serializable]
@@ -98,14 +99,15 @@ public class ItemDataWrapper
 			return 100f;
 		}
 	}
-	#endregion
+    #endregion
 
-	#region Consumable
-	[ShowIf("IsConsumableNoWater")]
-	[MaxValue("MaximumCalories")]
-	[MinValue("MinimumCalories")]
-	[SerializeField] private float currentCalories;
-	public float CurrentCalories
+    #region Consumable
+    //[ShowIf("IsConsumableNoWater")]
+    //[MaxValue("MaximumCalories")]
+    //[MinValue("MinimumCalories")]
+    //[SerializeField] 
+	private float currentCalories;
+    public float CurrentCalories
 	{
 		get => currentCalories;
 		set
@@ -144,9 +146,7 @@ public class ItemDataWrapper
 	#endregion
 
 	#region Weight
-	[MaxValue("MaximumWeight")]
-	[MinValue("MinimumWeight")]
-	[SerializeField] private float currentWeight;
+	private float currentWeight;
 	/// <summary>
 	/// Базовый вес одного айтема
 	/// </summary>
@@ -185,7 +185,7 @@ public class ItemDataWrapper
 					if (IsInfinityWeight)
 						return (float)System.Math.Round((CurrentCalories / (scriptableData as ConsumableItemSD).calories), 2);
 					else
-						return (float)System.Math.Round(scriptableData.weight * (CurrentCalories / MaximumCalories), 2);
+						return scriptableData.weight; //(float)System.Math.Round(scriptableData.weight * (CurrentCalories / MaximumCalories), 2);
 				else
 					if (IsInfinityWeight)
 					return 0.1f;
@@ -266,6 +266,7 @@ public class ItemDataWrapper
 	public bool IsBreakeable => scriptableData != null ? scriptableData.isBreakable : false;
 	public bool IsConsumableNoWater => IsConsumable && !IsWater;
 	public bool IsMeat => scriptableData != null ? scriptableData is MeatItemSD : false;
+	public bool IsCanFood => scriptableData != null ? scriptableData is CannedFoodItemSD : false;
 
 
 	private bool IsCanRandomWeight => isRandom && scriptableData != null ? scriptableData.isCanRandomWeight : false;

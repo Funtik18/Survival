@@ -16,7 +16,7 @@ public class PlayerStats
 	public StatHungred Hungred;
 	public StatThirst Thirst;
 
-	public PlayerStats(PlayerStatsData data)
+	public PlayerStats(Data data)
 	{
 		Condition = new StatCondition(data.condition);
 
@@ -28,9 +28,9 @@ public class PlayerStats
 		Thirst = new StatThirst(data.thirst);
 	}
 
-	public PlayerStatsData GetData()
+	public Data GetData()
     {
-		PlayerStatsData data = new PlayerStatsData()
+		Data data = new Data()
 		{
 			condition = Condition.GetData(),
 
@@ -44,19 +44,21 @@ public class PlayerStats
 
 		return data;
 	}
-}
-[System.Serializable]
-public struct PlayerStatsData
-{
-	public StatBarData condition;
 
-	public StatBarData stamina;
+	[System.Serializable]
+	public class Data
+	{
+		public StatBarData condition;
 
-	public StatBarData warmth;
-	public StatBarData fatigue;
-	public StatBarData hunger;
-	public StatBarData thirst;
+		public StatBarData stamina;
+
+		public StatBarData warmth;
+		public StatBarData fatigue;
+		public StatBarData hunger;
+		public StatBarData thirst;
+	}
 }
+
 [InlineProperty]
 [System.Serializable]
 public struct StatBarData

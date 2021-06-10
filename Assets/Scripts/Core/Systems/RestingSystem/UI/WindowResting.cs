@@ -117,7 +117,7 @@ public class WindowResting : WindowUI
 
         if (isSleep)
         {
-            Status.states.CurrentState = PlayerState.Sleeping;
+            Status.states.CurrentState = PlayerStates.State.Sleeping;
 
             AdMobManager.Instance.ShowInterstitial();
 
@@ -125,7 +125,7 @@ public class WindowResting : WindowUI
         }
         else
         {
-            Status.states.CurrentState = PlayerState.Resting;
+            Status.states.CurrentState = PlayerStates.State.Resting;
 
             lastSliderValue = rest.slider.value;
 
@@ -177,7 +177,7 @@ public class WindowResting : WindowUI
             GeneralAvailability.PlayerUI.blockPanel.Enable(false);
         }
 
-        status.states.CurrentState = PlayerState.Standing;
+        status.states.CurrentState = PlayerStates.State.Standing;
     }
 
     private void TogglesChanged(bool trigger = false)

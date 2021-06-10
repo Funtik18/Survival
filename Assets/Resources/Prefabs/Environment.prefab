@@ -156,6 +156,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7270f1e0859aeea49a8768d3d1828fbf, type: 2}
   allWeapons:
   - {fileID: 11400000, guid: a6cb4e318b4eb8c44825bdac2e217229, type: 2}
+  allAmmunitions:
+  - {fileID: 11400000, guid: 04383b38a62ed1f41a707b007e717d45, type: 2}
   allMaterials:
   - {fileID: 11400000, guid: 5e5e4cf87ee02c74e9e15c26ce004751, type: 2}
   - {fileID: 11400000, guid: 2e4c3feb81d1a9d49ba662c285e7acdd, type: 2}
@@ -171,26 +173,27 @@ MonoBehaviour:
       currentStackSize: 1
       randomStackSize: {x: 0, y: 0}
       currentDurrability: 100
-      currentCalories: 0
-      currentWeight: 0.25
       maxRandomWeight: 2
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: 7bca834ec1a1d704ba0bc5cccc7fc6df, type: 2}
+      isRandom: 0
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 0}
+      currentDurrability: 100
+      maxRandomWeight: 0
       currentMagazineCapacity: 0
     - scriptableData: {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
       isRandom: 1
       currentStackSize: 1
       randomStackSize: {x: 1, y: 45}
       currentDurrability: 100
-      currentCalories: 0
-      currentWeight: 0.1
       maxRandomWeight: 0
       currentMagazineCapacity: 0
     - scriptableData: {fileID: 11400000, guid: 17e656c3d1536434d9999bfc47cc4941, type: 2}
       isRandom: 1
       currentStackSize: 1
-      randomStackSize: {x: 1, y: 2}
+      randomStackSize: {x: 0, y: 3}
       currentDurrability: 100
-      currentCalories: 0
-      currentWeight: 0.1
       maxRandomWeight: 0
       currentMagazineCapacity: 0
     - scriptableData: {fileID: 11400000, guid: eb604291a260dd141a7d52087a07b208, type: 2}
@@ -198,8 +201,6 @@ MonoBehaviour:
       currentStackSize: 1
       randomStackSize: {x: 0, y: 3}
       currentDurrability: 100
-      currentCalories: 0
-      currentWeight: 0.15
       maxRandomWeight: 0
       currentMagazineCapacity: 0
     itemsAddCount: {x: 0, y: 7}
@@ -210,6 +211,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: bc7ca229311567b4aa0e3dcb33624130, type: 2}
     - {fileID: 11400000, guid: c8e0ded6803c21a47af46b163f153743, type: 2}
     - {fileID: 11400000, guid: f09381bc1579d9f498ec0956cf1c7d09, type: 2}
+    dinamicItemsRules: []
   container:
     staticItems: []
     itemsAddCount: {x: 0, y: 7}
@@ -220,7 +222,161 @@ MonoBehaviour:
     - {fileID: 11400000, guid: bc7ca229311567b4aa0e3dcb33624130, type: 2}
     - {fileID: 11400000, guid: c8e0ded6803c21a47af46b163f153743, type: 2}
     - {fileID: 11400000, guid: f09381bc1579d9f498ec0956cf1c7d09, type: 2}
+    - {fileID: 11400000, guid: 91c735e4a219fd040a357fb76b5d1f72, type: 2}
+    - {fileID: 11400000, guid: eb604291a260dd141a7d52087a07b208, type: 2}
     - {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
+    - {fileID: 11400000, guid: 17e656c3d1536434d9999bfc47cc4941, type: 2}
+    - {fileID: 11400000, guid: daae5dce1aa984e4c8a6d617afb5a0ce, type: 2}
+    - {fileID: 11400000, guid: b713345a86eb4774e90400b0378dbfa1, type: 2}
+    - {fileID: 11400000, guid: 85a3e62ace3ec2540b63007ebe95d402, type: 2}
+    - {fileID: 11400000, guid: 9cffce06f0a23584e890d4c6ef7428da, type: 2}
+    - {fileID: 11400000, guid: e5a50c0cfae8cdd49a703bc8944f5fa1, type: 2}
+    - {fileID: 11400000, guid: 452ac2779f768d641ab5238d005a13b9, type: 2}
+    - {fileID: 11400000, guid: 5e5e4cf87ee02c74e9e15c26ce004751, type: 2}
+    - {fileID: 11400000, guid: 2e4c3feb81d1a9d49ba662c285e7acdd, type: 2}
+    - {fileID: 11400000, guid: 75389cfdd5366ec4cb26c49d8294f724, type: 2}
+    - {fileID: 11400000, guid: 04383b38a62ed1f41a707b007e717d45, type: 2}
+    dinamicItemsRules:
+    - scriptableData: {fileID: 11400000, guid: 3c3f027af864f36418b7e8767860fcd1, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 0}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: b4459d87d4ff9da429b95f7f319ee8d5, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 0}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: c68a0070262fac74c99fa321dd7b402f, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 0}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: bc7ca229311567b4aa0e3dcb33624130, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 0}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: c8e0ded6803c21a47af46b163f153743, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 0}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: f09381bc1579d9f498ec0956cf1c7d09, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 0}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: 91c735e4a219fd040a357fb76b5d1f72, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 2}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: eb604291a260dd141a7d52087a07b208, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 5}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: 7c2850e71792a7a44a4383e2efb7a9f9, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 0}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: 17e656c3d1536434d9999bfc47cc4941, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 5}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: daae5dce1aa984e4c8a6d617afb5a0ce, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 2}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: b713345a86eb4774e90400b0378dbfa1, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 2}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: 85a3e62ace3ec2540b63007ebe95d402, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 2}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: 9cffce06f0a23584e890d4c6ef7428da, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 2}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: e5a50c0cfae8cdd49a703bc8944f5fa1, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 5}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: 452ac2779f768d641ab5238d005a13b9, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 1}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: 5e5e4cf87ee02c74e9e15c26ce004751, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 5}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: 2e4c3feb81d1a9d49ba662c285e7acdd, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 5}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: 75389cfdd5366ec4cb26c49d8294f724, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 5}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
+    - scriptableData: {fileID: 11400000, guid: 04383b38a62ed1f41a707b007e717d45, type: 2}
+      isRandom: 1
+      currentStackSize: 1
+      randomStackSize: {x: 0, y: 25}
+      currentDurrability: 100
+      maxRandomWeight: 0
+      currentMagazineCapacity: 0
 --- !u!114 &550366340647897853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,6 +649,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5974223110554429353}
   - component: {fileID: 5980258141199936045}
+  - component: {fileID: 5442606754712345668}
   m_Layer: 0
   m_Name: Environment
   m_TagString: Untagged
@@ -550,6 +707,43 @@ MonoBehaviour:
     randomPlayerData: 1
     playerRandomData: {fileID: 11400000, guid: dca39bf00505c7045bc0c33351fb1e31, type: 2}
     playerData: {fileID: 0}
+--- !u!114 &5442606754712345668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5974223110554429354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da867d8914e5c1949bfe3801c6a1bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allItems:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  allContainers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  zones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &5974223110589789611
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,27 +11,28 @@ public class ContainerUI : MonoBehaviour
     [SerializeField] private ContainerGridUI grid;
     [SerializeField] private TMPro.TextMeshProUGUI weightText;
 
+    public Inventory Inventory { get; private set; }
 
-    [HideInInspector] public Inventory currentInventory;
-
-    public void Setup()
+    public ContainerUI Setup()
     {
         grid.Setup(this).onSlotChoosen += SlotChoosen;
+
+        return this;
     }
 
     public void SubscribeInventory(Inventory inventory)
     {
-        currentInventory = inventory;
+        Inventory = inventory;
 
-        currentInventory.onCollectionChanged = UpdateGrid;
-        UpdateGrid(currentInventory.CurrentItems);
+        Inventory.onCollectionChanged = UpdateGrid;
+        UpdateGrid(Inventory.CurrentItems);
     }
     public void UnSubscribeInventory()
     {
-        if (currentInventory != null)
+        if (Inventory != null)
         {
-            currentInventory.onCollectionChanged = null;
-            currentInventory = null;
+            Inventory.onCollectionChanged = null;
+            Inventory = null;
         }
     }
 
@@ -43,7 +44,7 @@ public class ContainerUI : MonoBehaviour
     }
     public void UpdateWeight()
     {
-        weightText.text = currentInventory.CurrentStringWeight;
+        weightText.text = Inventory.CurrentStringWeight;
     }
 
     private void UpdateGrid(List<Item> items)

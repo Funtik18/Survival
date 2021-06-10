@@ -32,9 +32,9 @@ public class InventorySystemUI : BackpackWindow
 				inventory.SetSort(currentGlobalSort);
 				primaryContainer.RefreshContainer();
 
-				if (secondaryContainer.currentInventory != null)
+				if (secondaryContainer.Inventory != null)
 				{
-					secondaryContainer.currentInventory.SetSort(currentSort);
+					secondaryContainer.Inventory.SetSort(currentSort);
 					secondaryContainer.RefreshContainer();
 				}
 			}
@@ -53,9 +53,9 @@ public class InventorySystemUI : BackpackWindow
 
 				primaryContainer.RefreshContainer();
 
-				if(secondaryContainer.currentInventory != null)
+				if(secondaryContainer.Inventory != null)
                 {
-					secondaryContainer.currentInventory.SetSort(currentSort);
+					secondaryContainer.Inventory.SetSort(currentSort);
 					secondaryContainer.RefreshContainer();
 				}
 			}
@@ -67,20 +67,17 @@ public class InventorySystemUI : BackpackWindow
     {
         base.Setup(inventory);
 
+		primaryContainer.Setup().SubscribeInventory(inventory);
+		secondaryContainer.Setup();
+
+		//
 		PlayerOpportunities opportunities = GeneralAvailability.Player.Status.opportunities;
 
 		itemInspector.onUse += opportunities.UseItem;
 		itemInspector.onActions += opportunities.ActionsItem;
 		itemInspector.onDrop += opportunities.DropItem;
 
-		primaryContainer.Setup();
-		secondaryContainer.Setup();
-
-		primaryContainer.SubscribeInventory(inventory);
-
-		primaryContainer.onSlotChoosen = itemInspector.SetItem;//события для осмотра предмета
-		primaryContainer.onUpdated = UpdateInspector;
-
+		//buttons
 		buttonAll.AddPressListener(SortAll);
 		buttonFire.AddPressListener(SortFire);
 		buttonFirstAid.AddPressListener(SortFirstAid);
@@ -135,6 +132,9 @@ public class InventorySystemUI : BackpackWindow
 	/// </summary>
 	private void OpenItemInspector()
 	{
+		primaryContainer.onSlotChoosen = itemInspector.SetItem;//события для осмотра предмета
+		primaryContainer.onUpdated = UpdateInspector;
+
 		secondaryContainer.gameObject.SetActive(false);
 		itemInspector.gameObject.SetActive(true);
 	}
@@ -192,11 +192,11 @@ public class InventorySystemUI : BackpackWindow
 
 		ItemDataWrapper itemData = itemShiftData.Copy();
 		itemData.CurrentStackSize = (int)value;
-		to.currentInventory.AddItem(itemData);
+		to.Inventory.AddItem(itemData);
 
 		itemShiftData.CurrentStackSize -= (int)value;
 		if(itemShiftData.IsStackEmpty)
-			from.currentInventory.RemoveItem(itemShift);
+			from.Inventory.RemoveItem(itemShift);
 
 		GeneralAvailability.PlayerUI.blockPanel.Enable(false);
 	}
@@ -206,11 +206,11 @@ public class InventorySystemUI : BackpackWindow
 
 		ItemDataWrapper itemData = itemShiftData.Copy();
 		itemData.CurrentBaseWeight = value;
-		to.currentInventory.AddItem(itemData);
+		to.Inventory.AddItem(itemData);
 
 		itemShiftData.CurrentBaseWeight -= value;
 		if (itemShiftData.IsWeightEmpty)
-			from.currentInventory.RemoveItem(itemShift);
+			from.Inventory.RemoveItem(itemShift);
 
 		GeneralAvailability.PlayerUI.blockPanel.Enable(false);
 	}
@@ -218,8 +218,8 @@ public class InventorySystemUI : BackpackWindow
     {
 		from.RefreshContainer();
 
-		to.currentInventory.AddItem(itemShift.itemData);
-		from.currentInventory.RemoveItem(itemShift);
+		to.Inventory.AddItem(itemShift.itemData);
+		from.Inventory.RemoveItem(itemShift);
 
 		GeneralAvailability.PlayerUI.blockPanel.Enable(false);
 	}

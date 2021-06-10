@@ -23,7 +23,7 @@ public class MainMenu : MonoBehaviour
     private List<MenuPage> pages = new List<MenuPage>();
     private List<MenuPage> nest = new List<MenuPage>();
 
-    private List<Data> datas;
+    private List<DataHolder.Data> datas;
 
     private void Awake()
     {
@@ -54,26 +54,26 @@ public class MainMenu : MonoBehaviour
     {
         DataHolder.loadType = LoadType.Continue;
 
-        DataHolder.Data = datas[datas.Count - 1];
+        DataHolder.CurrentData = datas[datas.Count - 1];
 
         LoadGame();
     }
 
     public void CreatePlayer()
     {
-        if (DataHolder.Data == null) { }
+        if (DataHolder.CurrentData == null) { }
     }
     public void IsMale()
     {
-        DataHolder.Data.playerData.statusData.gender = Gender.Male;
+        DataHolder.CurrentData.player.statusData.gender = Gender.Male;
     }
     public void IsFemale()
     {
-        DataHolder.Data.playerData.statusData.gender = Gender.Female;
+        DataHolder.CurrentData.player.statusData.gender = Gender.Female;
     }
     public void IsNormal()
     {
-        DataHolder.Data.difficult = Difficult.Normal;
+        DataHolder.CurrentData.difficult = Difficult.Normal;
     }
 
     private void LoadGame()

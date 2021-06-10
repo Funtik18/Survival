@@ -100,9 +100,11 @@ public class ItemsData : MonoBehaviour
     [VerticalGroup("Tools Items/Split/Left")] 
     [ReadOnly][SerializeField] private List<ToolWeaponSD> allWeapons = new List<ToolWeaponSD>();
 
+    [AssetList(AutoPopulate = true, Path = Assets)]
+    [VerticalGroup("Tools Items/Split/Right")]
+    [ReadOnly] [SerializeField] private List<ItemAmmunitionSD> allAmmunitions = new List<ItemAmmunitionSD>();
 
     //Materials Items
-
     [TitleGroup("Materials Items")]
     [AssetList(AutoPopulate = true, Path = Assets)]
     [ReadOnly] [SerializeField] private List<MaterialItemSD> allMaterials = new List<MaterialItemSD>();
@@ -118,8 +120,8 @@ public class ItemsData : MonoBehaviour
     [TitleGroup("Containers")]
     [SerializeField] private Container playerContainer;
     [SerializeField] private Container container;
-    public InventoryData PlayerContainer => playerContainer.GetInventoryData();
-    public InventoryData Container => container.GetInventoryData();
+    public Inventory.Data PlayerContainer => playerContainer.GetInventoryData();
+    public Inventory.Data Container => container.GetInventoryData();
 
     private ItemDataWrapper snowItem;
     public ItemDataWrapper Snow
@@ -168,7 +170,7 @@ public class ItemsData : MonoBehaviour
     private void UpdateContainers()
     {
         playerContainer.dinamicPosibleItems = MultipleLists(allConsumables.ToArray());
-        container.dinamicPosibleItems = MultipleLists(allConsumables.ToArray(), allStarters.ToArray(), allAccelerants.ToArray());
+        container.dinamicPosibleItems = MultipleLists(allConsumables.ToArray(), allFires.ToArray(), allMaterials.ToArray(), allAmmunitions.ToArray());
     }
 
     private List<ItemSD> MultipleLists(params ItemSD[][] items)
@@ -207,8 +209,9 @@ public class Container
     [MinMaxSlider(0, 32)]
     public Vector2Int itemsAddCount;
     [InfoBox("Items которые динамичные могут появится, а могут не появится")]
+    [OnValueChanged("UpdateDinamic")]
     [ReadOnly] public List<ItemSD> dinamicPosibleItems = new List<ItemSD>();
-
+    public List<ItemDataWrapper> dinamicItemsRules = new List<ItemDataWrapper>();
 
     public List<ItemDataWrapper> GetItems()
     {
@@ -216,7 +219,6 @@ public class Container
 
         for (int i = 0; i < staticItems.Count; i++)
         {
-            Debug.LogError(staticItems[i].isRandom);
             items.Add(staticItems[i].isRandom ? staticItems[i].GetRndData() : staticItems[i]);
         }
 
@@ -224,21 +226,46 @@ public class Container
 
         for (int i = 0; i < itemsCount; i++)
         {
-            ItemDataWrapper data = new ItemDataWrapper();
-            data.scriptableData = dinamicPosibleItems[UnityEngine.Random.Range(0, dinamicPosibleItems.Count)];
-            items.Add(data.GetRndData());
+            items.Add(dinamicItemsRules[UnityEngine.Random.Range(0, dinamicItemsRules.Count)].Copy().GetRndData());
         }
 
         return items;
     }
 
-    public InventoryData GetInventoryData()
+    public Inventory.Data GetInventoryData()
     {
-        InventoryData data = new InventoryData()
+        Inventory.Data data = new Inventory.Data()
         {
             items = GetItems().ToArray(),
         };
 
         return data;
+    }
+
+    [Button]
+    private void UpdateDinamic()
+    {
+        int diff = dinamicPosibleItems.Count - dinamicItemsRules.Count;
+
+        if (diff > 0)
+            for (int i = 0; i < diff; i++)
+            {
+                ItemDataWrapper data = new ItemDataWrapper();
+                data.isRandom = true;
+                dinamicItemsRules.Add(data);
+            }
+        else if (diff < 0)
+            for (int i = 0; i < -diff; i++)
+            {
+                dinamicItemsRules.Remove(dinamicItemsRules[dinamicItemsRules.Count - 1]);
+            }
+
+        for (int i = 0; i < dinamicPosibleItems.Count; i++)
+        {
+            if (dinamicItemsRules[i].scriptableData != dinamicPosibleItems[i])
+            {
+                dinamicItemsRules[i].scriptableData = dinamicPosibleItems[i];
+            }
+        }
     }
 }

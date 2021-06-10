@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7842529041907241035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7842529041907241037}
+  - component: {fileID: 7842529041907241036}
+  m_Layer: 0
+  m_Name: ShrubZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7842529041907241037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7842529041907241035}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 94, y: 150, z: 641.4}
+  m_LocalScale: {x: 78.40001, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7842529041907241036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7842529041907241035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c210e40b60d690b4d9907f8bb5e32f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCanReGenerate: 0
+  howOften:
+    days: 0
+    hours: 0
+    minutes: 0
+    seconds: 0
+    totalSeconds: 0
+  prefabs:
+  - {fileID: 141740, guid: e9140497527cfba478fcba8b1b2d5db8, type: 3}
+  - {fileID: 123050, guid: e903e6b2a8dd8ae4ebc8bdbea463c0e0, type: 3}
+  - {fileID: 171194, guid: 414f8d34317cb5c4bbabaa062245be19, type: 3}
+  - {fileID: 143606, guid: 2117c38b04f89a14eb83910c12dab81f, type: 3}
+  prefabRadius: 20
+  zoneRadiusOffset: 0
+  type: 1
+  countPrefabs: {x: 3, y: 15}
+  yOffset: 0
+  objs:
+  - {fileID: 5642275442625762355, guid: 19c896f14f4bad248858d815409e7804, type: 3}
+  - {fileID: 612187270165262284, guid: e8b35939c4431d341b98d7d618718dd2, type: 3}
+  - {fileID: 8341123886962169633, guid: c5a6832df4a266742b4b6d3f223299cd, type: 3}
+  zoneRadiusAwake: 0

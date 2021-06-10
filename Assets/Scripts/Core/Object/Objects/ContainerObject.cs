@@ -8,9 +8,6 @@ public class ContainerObject : WorldObject
 
     public Inventory containerInventory;
 
-	public bool isInspected = false;
-	//public bool saveTimeResult = false;
-
     private Coroutine holdCoroutine = null;
     public bool IsHoldProccess => holdCoroutine != null;
 
@@ -18,6 +15,7 @@ public class ContainerObject : WorldObject
     private float currentTime;
 
     private bool isFirstTime = true;
+    private bool isInspected = false;
 
     public override void StartObserve()
 	{
@@ -43,7 +41,9 @@ public class ContainerObject : WorldObject
 
     private void OpenContainer()
     {
+        Debug.LogError("Open");
         GeneralAvailability.PlayerUI.OpenInventoryWithContainer(containerInventory);
+        Statistics.TotalContainersOpened++;
     }
 
 	public override void Interact()
@@ -96,6 +96,9 @@ public class ContainerObject : WorldObject
         {
             containerInventory.SetData(ItemsData.Instance.Container).Init();
             isFirstTime = false;
+
+            Overseer.Instance.Subscribe(this);
+            Statistics.TotalContainersInspected++;
         }
 
         UpdateToolTip();
@@ -118,13 +121,36 @@ public class ContainerObject : WorldObject
         }
     }
 
-
-
     private void UpdateToolTip()
     {
         if (isInspected && containerInventory.IsEmpty)
             GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.objectName + " - Empty").ShowToolTip();
         else
             GeneralAvailability.TargetPoint.SetToolTipText(scriptableData.objectName).ShowToolTip();
+    }
+
+
+    public void SetData(Data data)
+    {
+        containerInventory.SetData(data.data).Init();
+        isInspected = true;
+        isFirstTime = false;
+    }
+
+    public Data GetData()
+    {
+        Data data = new Data()
+        {
+            index = Overseer.Instance.IndexOfContainer(this),
+            data = containerInventory.GetData(),
+        };
+        return data;
+    }
+
+    [System.Serializable]
+    public class Data 
+    {
+        public int index;
+        public Inventory.Data data;
     }
 }

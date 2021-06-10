@@ -7,29 +7,19 @@ public class ItemObject : WorldObject
 {
 	public UnityAction onDisable;
 
-	[SerializeField] protected ItemDataWrapper itemData;
-	public ItemDataWrapper Data => itemData;
-	[ShowIf("CheckCan")]
+	[SerializeField] private ItemDataWrapper data;
+	public Item Item { get; private set; }
+
+	[ShowIf("IsCan")]
 	public ItemObjectLiquidContainer canItemObject;
-	[ShowIf("CheckCan")]
+	[ShowIf("IsCan")]
 	[SerializeField] private GameObject baseCan;
-	[ShowIf("CheckCan")]
+	[ShowIf("IsCan")]
 	[SerializeField] private GameObject opennedCan;
 
-	private Item item;
-	public Item Item
-    {
-        get
-        {
-			if(item == null)
-            {
-				item = new Item(itemData);
-			}
-			return item;
-		}
-    }
+	private bool IsCan => data.IsCanFood;
 
-	public virtual void UpdateItem() { }
+    public virtual void UpdateItem() { }
 	public virtual void UpdateItem(float temperature) { }
 
 
@@ -40,7 +30,15 @@ public class ItemObject : WorldObject
 		InteractionButton.pointer.AddPressListener(Interact);
 		InteractionButton.SetIconOnPickUp();
 		InteractionButton.OpenButton();
-		GeneralAvailability.TargetPoint.SetToolTipText(itemData.scriptableData.objectName).ShowToolTip();
+
+		if(Item == null)
+        {
+			GeneralAvailability.TargetPoint.SetToolTipText(data.scriptableData.objectName).ShowToolTip();
+        }
+        else
+        {
+			GeneralAvailability.TargetPoint.SetToolTipText(Item.itemData.scriptableData.objectName).ShowToolTip();
+		}
 	}
     public override void EndObserve()
     {
@@ -51,7 +49,12 @@ public class ItemObject : WorldObject
 	}
 	public override void Interact()
 	{
+		if (Item == null)
+			SetItem(data.GetData());//генерация айтема
+
 		GeneralAvailability.Inspector.SetItem(this);
+
+		Overseer.Instance.Subscribe(this);
 	}
 
     #region POs
@@ -63,21 +66,64 @@ public class ItemObject : WorldObject
 	}
 	private void SavePosition()
     {
-		itemData.scriptableData.orientation.position = transform.localPosition;
+		Item.itemData.scriptableData.orientation.position = transform.localPosition;
     }
 	private void SaveRotation()
     {
-		itemData.scriptableData.orientation.rotation = transform.localRotation;
+		Item.itemData.scriptableData.orientation.rotation = transform.localRotation;
 	}
     #endregion
-
-    private bool CheckCan() => itemData.scriptableData is CannedFoodItemSD;
-
 
     protected virtual void OnDisable()
     {
 		onDisable?.Invoke();
 
 		onDisable = null;
+	}
+
+	public void SetItem(ItemDataWrapper itemData)
+    {
+		if(Item == null)
+        {
+			Item = new Item(itemData);
+        }
+        else
+        {
+			Item.itemData = itemData;
+		}
+	}
+
+	public void SetData(Data data)
+    {
+		gameObject.SetActive(data.stay.isEnable);
+		transform.position = data.stay.position;
+		transform.rotation = data.stay.rotation;
+
+		SetItem(data.itemData);
+	}
+	public Data GetData()
+    {
+		Data data = new Data()
+		{
+			index = Overseer.Instance.IndexOfItem(this),
+			stay = new Stay3()
+			{
+				isEnable = gameObject.activeSelf,
+				position = transform.position,
+				rotation = transform.rotation,
+			},
+			itemData = Item.itemData,
+		};
+
+		return data;
+	}
+
+
+	[System.Serializable]
+	public class Data 
+	{
+		public int index;
+		public Stay3 stay;
+		public ItemDataWrapper itemData;
 	}
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   objectName: Rifle shell casing
   description: Empty casing from firing a Rifle. Used for Crafting new Ammunition.
   itemSprite: {fileID: 21300000, guid: cd04cecc252674645bf5f3b783142059, type: 3}
-  model: {fileID: 0}
+  model: {fileID: 5534551889379458428, guid: c94e5cefe1eba8b448cfb97ee9eb7a7f, type: 3}
   orientation:
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
@@ -28,5 +28,6 @@ MonoBehaviour:
   decayOverTime: 0
   decayInside: 0
   decayOutsie: 0
-  isCanRanodmStack: 1
+  isCanRandomStack: 1
   isCanRandomWeight: 0
+  isHaveChanceLoot: 0

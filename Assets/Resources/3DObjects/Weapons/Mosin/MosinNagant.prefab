@@ -888,17 +888,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coll: {fileID: 4148917260203870181}
-  itemData:
+  data:
     scriptableData: {fileID: 11400000, guid: a6cb4e318b4eb8c44825bdac2e217229, type: 2}
+    isRandom: 1
     currentStackSize: 1
+    randomStackSize: {x: 0, y: 0}
     currentDurrability: 100
-    currentCalories: 0
+    currentCalories: 10
     currentWeight: 4
-    minimumWeight: 0
-    currentMagazineCapacity: 5
+    maxRandomWeight: 0
+    currentMagazineCapacity: 3
   canItemObject: {fileID: 0}
   baseCan: {fileID: 0}
   opennedCan: {fileID: 0}
+  requiredAmmo: {fileID: 11400000, guid: 04383b38a62ed1f41a707b007e717d45, type: 2}
   autoReload: 1
   ammoReloadRate: 1
   ammoReloadDelay: 2

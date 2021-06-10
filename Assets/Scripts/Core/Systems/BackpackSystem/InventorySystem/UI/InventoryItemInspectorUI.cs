@@ -44,7 +44,8 @@ public class InventoryItemInspectorUI : MonoBehaviour
 			itemTittle.text = data.objectName;
 			itemDescription.text = data.description;
 
-			inspectorUI.InstantiateModel(data.model);
+			//inspectorUI.InstantiateModel(data.model);
+			inspectorUI.InstantiateModel(data);
 
 			itemData = currentSlot.Data;
 

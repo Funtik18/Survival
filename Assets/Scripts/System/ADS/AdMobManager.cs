@@ -87,8 +87,6 @@ public class AdMobManager : MonoBehaviour
 
         while (true)
         {
-            Debug.LogError(count0);
-
             yield return new WaitForSeconds(60);//минута
 
             count0 += 1;

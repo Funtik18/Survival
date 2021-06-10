@@ -1,24 +1,27 @@
 ﻿using Sirenix.OdinInspector;
 
 using System;
+using System.Collections.Generic;
+
+using UnityEngine;
 
 public static class DataHolder
 {
-	private static Data data;
-	public static Data Data 
+	private static Data currentData;
+	public static Data CurrentData 
 	{
 		get
 		{
-			if (data == null)
+			if (currentData == null)
             {
-				data = new Data();
+				currentData = new Data();
 			}
 
-			return data;
+			return currentData;
 		}
         set
         {
-			data = value;
+			currentData = value;
         }
 	}
 
@@ -26,27 +29,73 @@ public static class DataHolder
 
 	public static void Save()
     {
-		SaveLoadManager.SaveData(Data);
+		SaveLoadManager.SaveData(CurrentData);
     }
-}
-public class Data
-{
-	public JsonDateTime date;
 
-	public Times time;
+	[System.Serializable]
+	public class NewGamePattern
+	{
+		public bool randomTime = true;
+		[HideIf("randomTime")]
+		public Times startTime;
 
-	public Statistic statistic;
+		public bool randomPoints = false;
+		[HideIf("randomPoints")]
+		public Transform startPoint;
+		[ShowIf("randomPoints")]
+		public List<Transform> startPoints = new List<Transform>();
 
-	public PlayerData playerData;
-	public WeatherController.WeatherForecast weatherForecast;
+		public bool randomPlayerData = false;
 
-	public Difficult difficult;
+		[ShowIf("randomPlayerData")]
+		public PlayerStatusRandomSD playerRandomData;
 
-	public Data()
-    {
-		playerData = new PlayerData();
+		[HideIf("randomPlayerData")]
+		public PlayerStatusSD playerData;
+
+		public DataHolder.Data GetData()
+		{
+			DataHolder.Data data = new DataHolder.Data();
+
+			data.time = randomTime ? Times.GetRandomTimes() : startTime;
+
+			Transform point = randomPoints ? startPoints.GetRandomItem() : startPoint;
+
+			data.player.stay = new Stay3()
+			{
+				position = point.position,
+				rotation = Quaternion.LookRotation(point.forward),
+			};
+
+			data.player.statusData = randomPlayerData ? playerRandomData.GetData() : playerData.statusData;
+
+			data.player.inventoryData = ItemsData.Instance.PlayerContainer;
+
+			data.weatherForecast = WeatherController.Instance.CurrentForecast;
+
+			return data;
+		}
+	}
+
+
+	[System.Serializable]
+	public class Data
+	{
+		public JsonDateTime date;
+
+		public Times time;
+
+		public Difficult difficult;
+		public Statistics.Data statistic;
+
+		public Player.Data player;
+
+		public Overseer.Data environment;
+
+		public WeatherController.WeatherForecast weatherForecast;
 	}
 }
+
 [System.Serializable]
 public struct JsonDateTime
 {

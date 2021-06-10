@@ -224,16 +224,13 @@ public class GeneralTime : MonoBehaviour
     [System.Serializable]
     public class TimeUnityEvent
     {
-        [SerializeField] private UnityAction<Times> callback;
-
         [SerializeField] private EventType eventType = EventType.ExecuteEveryTime;
 
-        [Space]
-        [HideLabel]
-        [SerializeField] private Times time;
-        [SerializeField] private UnityEvent events;
-
-        private UnityAction onEnd;
+        private Times time;
+        
+        private UnityAction events = null;
+        private UnityAction<Times> callback = null;
+        private UnityAction onEnd = null;
 
         private bool isNeedDelete = false;
         public bool IsNeedDelete => isNeedDelete;
@@ -244,8 +241,7 @@ public class GeneralTime : MonoBehaviour
 
             this.time = time;
 
-            if(action != null)
-                events.AddListener(action);
+            this.events += action;
             this.callback += callback;
             this.onEnd += onEnd;
         }

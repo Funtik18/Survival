@@ -10,6 +10,7 @@ public class PlayerOpportunities
 	[SerializeField] private Transform leftHand;
 	[SerializeField] private Transform rightHand;
 
+	//chash
 	private StatThirst thirst;
 	private StatHungred hungred;
 
@@ -53,15 +54,8 @@ public class PlayerOpportunities
 		inventory.RemoveItem(item);
     }
 
-	#region Use
-	private Item itemUse;
-	private ItemDataWrapper itemUseData;
-	private ConsumableItemSD consumableItem;
-	private float startHydration, endHydration;
-	private float itemHydration;
-	private float startCalories, endCalories;
-	private float itemStartCalories;
-	private float itemStartWeight, itemEndWeight;
+
+
 
 	public void UseItem(Item item)
 	{
@@ -71,12 +65,12 @@ public class PlayerOpportunities
 
 		if (data is ConsumableItemSD consumable)
 			UseConsumableItem(consumable);
-		else if(data is ToolItemSD tool)
+		else if (data is ToolItemSD tool)
 			UseTool(tool);
 	}
 
 	private void UseConsumableItem(ConsumableItemSD consumable)
-    {
+	{
 		consumableItem = consumable;
 
 		if (IsCanGetIt())
@@ -87,13 +81,13 @@ public class PlayerOpportunities
 			Times skip = new Times();
 			skip.TotalSeconds = (int)(useTimeKG.TotalSeconds * itemUseData.CurrentBaseWeight);
 
-			GeneralTime.Instance.SkipSetup(start: StartUseConsumable, progress: UpdateUseConsumable, completely : CompletelyUseConsumable).StartSkip(skip, duration);
+			GeneralTime.Instance.SkipSetup(start: StartUseConsumable, progress: UpdateUseConsumable, completely: CompletelyUseConsumable).StartSkip(skip, duration);
 		}
 	}
 	private void UseTool(ToolItemSD tool)
-    {
-		if(tool is ToolWeaponSD weapon)
-        {
+	{
+		if (tool is ToolWeaponSD weapon)
+		{
 			if (IsEquiped(itemUseData))
 			{
 				UnEquip();
@@ -103,8 +97,18 @@ public class PlayerOpportunities
 				EquipItem(itemUse);
 			}
 		}
-    }
+	}
 
+
+	#region Use
+	private Item itemUse;
+	private ItemDataWrapper itemUseData;
+	private ConsumableItemSD consumableItem;
+	private float startHydration, endHydration;
+	private float itemHydration;
+	private float startCalories, endCalories;
+	private float itemStartCalories;
+	private float itemStartWeight, itemEndWeight;
 
 	private void StartUseConsumable()
     {
@@ -163,6 +167,16 @@ public class PlayerOpportunities
 		DestroyItem(itemUse);
 
 		CloseUI();
+
+		CheckEffects();
+	}
+	private void CheckEffects()
+    {
+		//Effects
+		if (consumableItem.isHaveEffects)
+		{
+			owner.Status.effects.AddEffects(consumableItem.effects);
+		}
 	}
 
 
@@ -178,27 +192,8 @@ public class PlayerOpportunities
 	private WindowShooting windowShooting;
 	private ItemObjectWeapon weapon;
 
-
 	private Coroutine reloadCoroutine = null;
 	private bool IsReloadProccess => reloadCoroutine != null;
-
-	public bool IsEquiped(ItemDataWrapper data)
-    {
-		if (weapon == null) return false;
-		return weapon.Data == data;
-	}
-
-	public void EquipUnEquip(Item item)
-    {
-		if(item != null)
-        {
-			bool isNewWeapon = weapon == null ? true : item.itemData != weapon.Data;
-
-			UnEquip();
-			if (isNewWeapon)
-				EquipItem(item);
-		}
-	}
 
     public void EquipItem(Item item)
     {
@@ -209,6 +204,9 @@ public class PlayerOpportunities
 			if (itemObject is ItemObjectWeapon)
 			{
 				weapon = ObjectPool.GetObject(itemObject.gameObject).GetComponent<ItemObjectWeapon>();
+
+				weapon.SetItem(item.itemData);
+
 				weapon.ColliderEnable(false);
 				weapon.Enable(true);
 
@@ -221,7 +219,35 @@ public class PlayerOpportunities
 			}
 		}
     }
-	public void FreeHands()
+	public void UnEquip()
+	{
+		if (weapon != null)
+		{
+			DeAim();
+			BreakReload();
+			FreeHands();
+		}
+		weapon = null;
+	}
+	public bool IsEquiped(ItemDataWrapper data)
+    {
+		if (weapon == null) return false;
+		return weapon.Item.itemData == data;
+	}
+	public void EquipUnEquip(Item item)
+	{
+		if (item != null)
+		{
+			bool isNewWeapon = weapon == null ? true : item.itemData != weapon.Item.itemData;
+
+			UnEquip();
+			if (isNewWeapon)
+				EquipItem(item);
+		}
+	}
+
+
+	private void FreeHands()
     {
 		weapon.Enable(false);
 
@@ -271,16 +297,6 @@ public class PlayerOpportunities
     {
 		if(!weapon.IsFull)
 			StartReload();
-	}
-	private void UnEquip()
-	{
-		if (weapon != null)
-		{
-			DeAim();
-			BreakReload();
-			FreeHands();
-		}
-		weapon = null;
 	}
 
     #region Reload

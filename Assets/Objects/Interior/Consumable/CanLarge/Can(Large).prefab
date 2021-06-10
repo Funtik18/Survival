@@ -138,15 +138,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coll: {fileID: 4299764042535329353}
-  itemData:
+  data:
     scriptableData: {fileID: 11400000, guid: 3c3f027af864f36418b7e8767860fcd1, type: 2}
+    isRandom: 0
     currentStackSize: 1
+    randomStackSize: {x: 0, y: 0}
     currentDurrability: 100
-    currentTemperature: 0
-    consumableState: 2
-    currentCalories: 250
-    currentWeight: 0.5
-    minimumWeight: 0
+    currentCalories: 10
+    currentWeight: 0.01
+    maxRandomWeight: 0
+    currentMagazineCapacity: 0
   canItemObject: {fileID: 2777267408717158766, guid: 381caefacb8cbd444aed74b3095267e8,
     type: 3}
   baseCan: {fileID: 2895955305694449490}

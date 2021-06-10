@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class Generator : MonoBehaviour
 {
+    [SerializeField] private bool isCanReGenerate = false;
+    [ShowIf("isCanReGenerate")]
+    [SerializeField] private Times howOften;
     [Space]
     [SerializeField] private List<GameObject> prefabs = new List<GameObject>();
 
@@ -13,22 +16,35 @@ public class Generator : MonoBehaviour
     public float prefabRadius;
 
     public float zoneRadiusOffset;
-    
-    public GeneratorType type = GeneratorType.Sphere;
 
-    public Vector2Int countPrefabs;
+    [SerializeField] private GeneratorType type = GeneratorType.Sphere;
+
+    [SerializeField] private Vector2Int countPrefabs;
     [Space]
-    public float yOffset = 0.0f;
+    [SerializeField] private float yOffset = 0.0f;
 
     [HideInInspector] public List<Transform> objs = new List<Transform>();
 
+    [SerializeField] private float zoneRadiusAwake = 0;
 
-    public bool IsEmpty => objs.Count == 0;
-
-    public float zoneRadiusAwake = 0;
-
+    public bool IsCanGenerate => !isGenerated && objs.Count == 0;
     public float ZoneRadius => Mathf.Max(transform.localScale.x / 2, transform.localScale.y / 2, transform.localScale.z / 2);
 
+    private Transform trans;
+    public Transform Transform 
+    {
+        get
+        {
+            if(trans == null)
+            {
+                trans = transform;
+            }
+            return trans;
+        }
+    }
+
+    private bool isGenerated = false;
+    private bool isNeedRegenerate = false;
 
     private void Awake()
     {
@@ -36,7 +52,37 @@ public class Generator : MonoBehaviour
             objs.Clear();
 
         zoneRadiusAwake = ZoneRadius * Mathf.Sqrt(2) + zoneRadiusOffset;
+
+        if (isCanReGenerate)
+        {
+            GeneralTime.TimeUnityEvent unityEvent = new GeneralTime.TimeUnityEvent();
+            unityEvent.AddEvent(GeneralTime.TimeUnityEvent.EventType.ExecuteEveryTime, howOften, TriggerGenerate);
+            GeneralTime.Instance.AddEvent(unityEvent);
+        }
     }
+
+    public void Behavior(Vector3 playerPosition)
+    {
+        if (IsCanGenerate)
+        {
+            if (Vector3.Distance(playerPosition, Transform.position) <= zoneRadiusAwake)
+            {
+                ReGenerateZone();
+            }
+        }
+        else
+        {
+            if (isNeedRegenerate)
+            {
+                if(Vector3.Distance(playerPosition, Transform.position) <= zoneRadiusAwake)
+                {
+                    ReGenerateZone();
+                    isNeedRegenerate = false;
+                }
+            }
+        }
+    }
+
 
     public void ReGenerateZone()
     {
@@ -55,6 +101,8 @@ public class Generator : MonoBehaviour
         {
             GenerateCubeZone();
         }
+
+        isGenerated = true;
     }
 
     private void GenerateSphereZone()
@@ -96,6 +144,12 @@ public class Generator : MonoBehaviour
         }
     }
 
+    private void TriggerGenerate()
+    {
+        isNeedRegenerate = true;
+    }
+
+
     private bool CheckNeighbors(Vector3 point)
     {
         int count = 0;
@@ -120,7 +174,7 @@ public class Generator : MonoBehaviour
             Quaternion rot = Quaternion.FromToRotation(Vector3.up, hit.normal);
 
             Transform obj = ObjectPool.GetObject(prefabs.GetRandomItem()).transform;
-            
+
             obj.position = point;
             obj.rotation = rot;
             obj.Rotate(Vector3.up, Random.Range(0, 360f));

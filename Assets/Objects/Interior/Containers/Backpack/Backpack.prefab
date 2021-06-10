@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4690918180257398137}
   - component: {fileID: 250462470}
   - component: {fileID: 250462469}
-  - component: {fileID: 250462468}
   m_Layer: 13
   m_Name: Backpack
   m_TagString: Untagged
@@ -109,22 +108,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 250462470}
   scriptableData: {fileID: 11400000, guid: dd0b470d1f9195a4f8a5598ffe886c3d, type: 2}
-  containerInventory:
-    initItems: []
-  isInspected: 0
---- !u!114 &250462468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6492362497122000044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e16b2bc65bcbc04cb1d4a4fa1c59a0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  generateOnAwake: 1
-  useRandomCount: 1
-  randomCount: {x: 0, y: 5}
-  constCount: 0

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 170293764212559717}
   - component: {fileID: 6449320364746046003}
   - component: {fileID: 1214873605113812494}
-  - component: {fileID: 3613751991206601951}
   m_Layer: 13
   m_Name: Bag
   m_TagString: Untagged
@@ -109,22 +108,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 6449320364746046003}
   scriptableData: {fileID: 11400000, guid: 386f38692c38df74c9abb9003507f9d6, type: 2}
-  containerInventory:
-    initItems: []
-  isInspected: 0
---- !u!114 &3613751991206601951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1827895434534006448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e16b2bc65bcbc04cb1d4a4fa1c59a0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  generateOnAwake: 1
-  useRandomCount: 1
-  randomCount: {x: 0, y: 5}
-  constCount: 0

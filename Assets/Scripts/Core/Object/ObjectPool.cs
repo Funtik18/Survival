@@ -39,6 +39,11 @@ public static class ObjectPool
         gameObject.SetActive(false);
     }
 
+    public static void DestroyGameobject(GameObject gameObject)
+    {
+        GameObject.DestroyImmediate(gameObject);
+    }
+
     private static GameObject CreateNewObject(GameObject gameObject)
     {
         GameObject newGO = GameObject.Instantiate(gameObject);

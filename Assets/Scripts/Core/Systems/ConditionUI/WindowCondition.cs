@@ -36,7 +36,7 @@ public class WindowCondition : MonoBehaviour
 
         stats.Thirst.onPercentValueChanged += UpdateThirst;
 
-        status.onFeelsLikeChanged += UpdateFeelsLike;
+        status.resistances.onFeelsLikeChanged += UpdateFeelsLike;
 
         UpdateCondition(stats.Condition.CurrentValue);
 
@@ -49,7 +49,7 @@ public class WindowCondition : MonoBehaviour
 
         UpdateThirst(stats.Thirst.PercentValue);
 
-        UpdateFeelsLike(status.FeelsLike);
+        UpdateFeelsLike(status.resistances.FeelsLike);
     }
 
     public void ShowAll()

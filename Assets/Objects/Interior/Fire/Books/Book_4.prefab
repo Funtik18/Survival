@@ -107,12 +107,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coll: {fileID: 1100448431}
-  itemData:
+  data:
     scriptableData: {fileID: 11400000, guid: 9cffce06f0a23584e890d4c6ef7428da, type: 2}
+    isRandom: 0
     currentStackSize: 1
+    randomStackSize: {x: 0, y: 0}
     currentDurrability: 100
-    currentTemperature: 0
-    consumableState: 2
     currentCalories: 0
-    currentWeight: 0
-    minimumWeight: 0
+    currentWeight: 0.5
+    maxRandomWeight: 0
+    currentMagazineCapacity: 0
+  canItemObject: {fileID: 0}
+  baseCan: {fileID: 0}
+  opennedCan: {fileID: 0}

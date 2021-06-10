@@ -139,15 +139,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coll: {fileID: 857920658658162885}
-  itemData:
+  data:
     scriptableData: {fileID: 11400000, guid: c8e0ded6803c21a47af46b163f153743, type: 2}
+    isRandom: 0
     currentStackSize: 1
+    randomStackSize: {x: 0, y: 0}
     currentDurrability: 100
-    currentTemperature: 0
-    consumableState: 2
-    currentCalories: 250
-    currentWeight: 0.25
-    minimumWeight: 0
+    currentCalories: 10
+    currentWeight: 0.01
+    maxRandomWeight: 0
+    currentMagazineCapacity: 0
+  canItemObject: {fileID: 0}
+  baseCan: {fileID: 0}
+  opennedCan: {fileID: 0}
 --- !u!1 &857920658658162909
 GameObject:
   m_ObjectHideFlags: 0

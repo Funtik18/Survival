@@ -32,9 +32,9 @@ public class SaveLoadManager
 	//	}
 	//}
 
-	public static List<Data> GetAllSaves()
+	public static List<DataHolder.Data> GetAllSaves()
     {
-		List<Data> data = new List<Data>();
+		List<DataHolder.Data> data = new List<DataHolder.Data>();
 		string fullPath = Application.persistentDataPath + directorySaves;
 
 		if (!Directory.Exists(fullPath))
@@ -47,7 +47,7 @@ public class SaveLoadManager
 		string[] files = Directory.GetFiles(fullPath);
         for (int i = 0; i < files.Length; i++)
         {
-			data.Add(LoadDataFromJson<Data>(files[i]));
+			data.Add(LoadDataFromJson<DataHolder.Data>(files[i]));
         }
 
 		return data;
@@ -55,7 +55,7 @@ public class SaveLoadManager
 
 
 
-	public static void SaveData(Data data)
+	public static void SaveData(DataHolder.Data data)
     {
 		SaveDataToJson(data, directorySaves, "SaveFile" + expansion);
 	}

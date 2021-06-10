@@ -7,5 +7,5 @@ public class PlayerStatusSD : ScriptableObject
 {
 	[TabGroup("PlayerStatus")]
 	[HideLabel]
-	public PlayerStatusData statsData;
+	public PlayerStatus.Data statusData;
 }

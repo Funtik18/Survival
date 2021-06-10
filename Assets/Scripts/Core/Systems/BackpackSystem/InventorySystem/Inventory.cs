@@ -12,7 +12,7 @@ public class Inventory
     public UnityAction<List<Item>> onCollectionChanged;
     protected UnityAction onChanged;
 
-    private InventoryData data;
+    private Data data;
 
     private List<Item> allItems = new List<Item>();
     public List<Item> AllItems => allItems;
@@ -25,11 +25,6 @@ public class Inventory
 
     public bool IsEmpty => allItems.Count == 0;
 
-    public Inventory SetData(InventoryData data)
-    {
-        this.data = data;
-        return this;
-    }
     public virtual void Init()
     {
         ItemDataWrapper[] initItems = data.items;
@@ -333,14 +328,24 @@ public class Inventory
 
         return itemDatas.ToArray();
     }
-
-    public InventoryData GetData()
+    public Inventory SetData(Data data)
     {
-        InventoryData data = new InventoryData()
+        this.data = data;
+        return this;
+    }
+    public Data GetData()
+    {
+        Data data = new Data()
         {
             items = GetItemsData(),
         };
         return data;
+    }
+
+    [System.Serializable]
+    public class Data
+    {
+        public ItemDataWrapper[] items;
     }
 }
 public enum InventorySortGlobal
@@ -362,11 +367,7 @@ public enum InventorySort
 }
 
 
-[System.Serializable]
-public struct InventoryData
-{
-    public ItemDataWrapper[] items;
-}
+
 
 
 [System.Serializable]

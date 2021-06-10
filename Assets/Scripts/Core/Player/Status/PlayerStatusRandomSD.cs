@@ -28,11 +28,11 @@ public class PlayerStatusRandomSD : ScriptableObject
     public Vector2 thirst;
 
 
-    public PlayerStatusData GetData()
+    public PlayerStatus.Data GetData()
     {
-        PlayerStatusData data = new PlayerStatusData()
+        PlayerStatus.Data data = new PlayerStatus.Data()
         {
-            statsData = new PlayerStatsData()
+            statsData = new PlayerStats.Data()
             {
                 condition = new StatBarData() { currentValue = condition.RandomNumBtw(), maxValue = 100 },
                 stamina = new StatBarData() { currentValue = stamina.RandomNumBtw(), maxValue = 100 },

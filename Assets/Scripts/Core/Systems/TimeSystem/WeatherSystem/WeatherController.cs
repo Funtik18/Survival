@@ -31,6 +31,8 @@ public class WeatherController : MonoBehaviour
     {
         weather.onWeatherUpdated = onWeatherChanged;
 
+        if(CurrentForecast == null) { }
+
         weather.Setup(GeneralAvailability.Player.Camera.Transform, weatherTransform, transform);
     }
 
@@ -121,14 +123,6 @@ public class WeatherController : MonoBehaviour
 
             SetWeather(pressetClear);
         }
-
-        public WeatherForecast GenerateForecast()
-        {
-            forecast.Generate();
-
-            return forecast;
-        }
-
         public void UpdateWeather(Times time)
         {
             currentWeather = forecast.GetWeatherByTime(time.GetSkyPercent());

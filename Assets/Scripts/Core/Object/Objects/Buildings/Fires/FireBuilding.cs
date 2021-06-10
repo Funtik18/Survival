@@ -432,7 +432,7 @@ public class FireBuilding : BuildingObject
         }
         #endregion
 
-        float baseChance = GeneralAvailability.Player.Status.baseChanceIgnition;
+        float baseChance = GeneralAvailability.Player.Status.skills.baseChanceIgnition;
 
         if (starter == null)
         {

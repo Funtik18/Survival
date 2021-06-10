@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994df293b37e01d42b5f2b1c2f8e0520, type: 3}
   m_Name: Full
   m_EditorClassIdentifier: 
-  statsData:
+  statusData:
     statsData:
       condition:
         maxValue: 100

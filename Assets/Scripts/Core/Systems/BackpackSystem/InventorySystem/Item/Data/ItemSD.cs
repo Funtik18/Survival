@@ -52,7 +52,8 @@ public abstract class ItemSD : ObjectSD
 	public bool isCanRandomStack = false;
 	[TabGroup("RANDOM")]
 	public bool isCanRandomWeight = false;
-
+	[TabGroup("RANDOM")]
+	public bool isHaveChanceLoot = false;
 
 	[System.Serializable]
     public class ItemWorldOrientation 

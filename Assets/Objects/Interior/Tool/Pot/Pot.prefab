@@ -140,15 +140,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coll: {fileID: 6255514403795398030}
-  itemData:
+  data:
     scriptableData: {fileID: 11400000, guid: 94ec03e6f5e3f8140b24152371eb3576, type: 2}
+    isRandom: 0
     currentStackSize: 1
+    randomStackSize: {x: 0, y: 0}
     currentDurrability: 100
-    currentTemperature: 0
-    consumableState: 2
     currentCalories: 0
-    currentWeight: 0
-    minimumWeight: 0
+    currentWeight: 1.5
+    maxRandomWeight: 0
+    currentMagazineCapacity: 0
   canItemObject: {fileID: 0}
   baseCan: {fileID: 0}
   opennedCan: {fileID: 0}
@@ -157,13 +158,14 @@ MonoBehaviour:
   withWaterObject: {fileID: 8568632444654558354}
   liquid:
     scriptableData: {fileID: 0}
+    isRandom: 0
     currentStackSize: 1
+    randomStackSize: {x: 0, y: 0}
     currentDurrability: 100
-    currentTemperature: 0
-    consumableState: 2
     currentCalories: 0
     currentWeight: 0
-    minimumWeight: 0
+    maxRandomWeight: 0
+    currentMagazineCapacity: 0
 --- !u!1 &7450843280544398302
 GameObject:
   m_ObjectHideFlags: 0

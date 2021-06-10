@@ -151,6 +151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87861f85c559b7f40b8e6c332f8573b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NC_PRODUCTS:
+  - no_ads
+  C_PRODUCTS: []
 --- !u!114 &120410525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2396,13 +2399,13 @@ PrefabInstance:
     - target: {fileID: 8891852644345834738, guid: 90d15898df8a6034d869de677b3e8d05,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8891852644345834738, guid: 90d15898df8a6034d869de677b3e8d05,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 558398083}
+      objectReference: {fileID: 120410524}
     - target: {fileID: 8891852644345834738, guid: 90d15898df8a6034d869de677b3e8d05,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -2411,7 +2414,7 @@ PrefabInstance:
     - target: {fileID: 8891852644345834738, guid: 90d15898df8a6034d869de677b3e8d05,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OpenPage
+      value: BuyNonConsumable
       objectReference: {fileID: 0}
     - target: {fileID: 8891852644345834738, guid: 90d15898df8a6034d869de677b3e8d05,
         type: 3}
@@ -2501,12 +2504,12 @@ PrefabInstance:
     - target: {fileID: 8891852644345834739, guid: 90d15898df8a6034d869de677b3e8d05,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 300
+      value: 100.000015
       objectReference: {fileID: 0}
     - target: {fileID: 8891852644345834739, guid: 90d15898df8a6034d869de677b3e8d05,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 25
+      value: 704.2599
       objectReference: {fileID: 0}
     - target: {fileID: 8891852644345834739, guid: 90d15898df8a6034d869de677b3e8d05,
         type: 3}
@@ -2526,7 +2529,7 @@ PrefabInstance:
     - target: {fileID: 8891852644345834740, guid: 90d15898df8a6034d869de677b3e8d05,
         type: 3}
       propertyPath: m_Name
-      value: ButtonMenu
+      value: ButtonHelp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90d15898df8a6034d869de677b3e8d05, type: 3}
@@ -2720,7 +2723,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1908789794
 RectTransform:
   m_ObjectHideFlags: 0

@@ -117,7 +117,7 @@ public class WeatherZone : MonoBehaviour
                 Player p =  other.GetComponent<Player>();
                 if (p)
                 {
-                    p.Status.AddZone(this);
+                    p.Status.resistances.AddZone(this);
                 }
             }
         }
@@ -133,7 +133,7 @@ public class WeatherZone : MonoBehaviour
             Player p = other.GetComponent<Player>();
             if (p)
             {
-                p.Status.RemoveZone(this);
+                p.Status.resistances.RemoveZone(this);
             }
         }
     }

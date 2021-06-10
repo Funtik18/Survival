@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
 
 public abstract class ConsumableItemSD : ItemSD 
 {
@@ -18,4 +19,9 @@ public abstract class ConsumableItemSD : ItemSD
 
     [TabGroup("RANDOM")]
     public bool isCanRandomCalories = false;
+
+    public bool isHaveEffects = false;
+
+    [ShowIf("isHaveEffects")]
+    public List<EffectSD> effects = new List<EffectSD>();
 }

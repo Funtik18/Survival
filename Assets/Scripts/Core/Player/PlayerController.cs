@@ -245,16 +245,16 @@ public class PlayerController : MonoBehaviour
         {
             if (isSpeedUp)
             {
-                status.states.CurrentState = PlayerState.Sprinting;
+                status.states.CurrentState = PlayerStates.State.Sprinting;
             }
             else
             {
-                status.states.CurrentState = PlayerState.Walking;
+                status.states.CurrentState = PlayerStates.State.Walking;
             }
         }
         else
         {
-            status.states.CurrentState = PlayerState.Standing;
+            status.states.CurrentState = PlayerStates.State.Standing;
         }
 
         if (isSpeedUp && !status.IsCanRunning)
