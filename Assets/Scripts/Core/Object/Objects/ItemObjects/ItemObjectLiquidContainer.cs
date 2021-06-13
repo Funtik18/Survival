@@ -58,7 +58,7 @@ public class ItemObjectLiquidContainer : ItemObject
         {
             if(volume == -1)
             {
-                volume = (Item.itemData.scriptableData as ToolContainerItemSD).volume;
+                volume = (CurrentData.scriptableData as ToolContainerItemSD).volume;
             }
             return volume;
         }

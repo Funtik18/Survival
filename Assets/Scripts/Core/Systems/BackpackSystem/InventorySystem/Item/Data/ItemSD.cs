@@ -12,7 +12,7 @@ public abstract class ItemSD : ObjectSD
 	[InlineEditor(InlineEditorModes.GUIAndPreview)]
 	public ItemObject model;
 	[Space]
-	public ItemWorldOrientation orientation;
+	public Stay3 orientation;
 
 	[HideIf("isInfinityStack")]
 	public bool isInfinityWeight = false;
@@ -54,13 +54,6 @@ public abstract class ItemSD : ObjectSD
 	public bool isCanRandomWeight = false;
 	[TabGroup("RANDOM")]
 	public bool isHaveChanceLoot = false;
-
-	[System.Serializable]
-    public class ItemWorldOrientation 
-	{
-		public Vector3 position = Vector3.zero;
-		public Quaternion rotation = Quaternion.identity;
-	}
 
 	private bool IsWeight => !isInfinityWeight;
 	private bool IsStack => !isInfinityStack && !isInfinityWeight;

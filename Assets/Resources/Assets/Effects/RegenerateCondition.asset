@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectIcon: {fileID: 0}
   effectName: Effect
-  healAmount: 10
+  healAmount: 1.3
   duration:
     actionAmount: 10
     actionStep: 1
-    actionDelay: 0.25
+    actionDelay: 0.5

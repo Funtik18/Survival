@@ -5,6 +5,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Linq;
 using System;
+using System.Collections;
 
 [System.Serializable]
 public class Inventory
@@ -19,6 +20,8 @@ public class Inventory
 
     private List<Item> currentItems = new List<Item>();
     public List<Item> CurrentItems => currentItems;
+    public List<Item> CurrentItemsCopy => new List<Item>(CurrentItems);
+
 
     private InventorySortGlobal currentGlobalSort = InventorySortGlobal.None;
     private InventorySort currentSort = InventorySort.None;

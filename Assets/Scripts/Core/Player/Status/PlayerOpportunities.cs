@@ -19,9 +19,7 @@ public class PlayerOpportunities
 
 	private WindowCondition condition;
 
-
-	private Coroutine useCoroutine = null;
-	public bool IsUseProccess => useCoroutine != null;
+	public bool IsUseProccess { get; private set; }
 
 	public void Setup(Player player)
 	{
@@ -49,10 +47,6 @@ public class PlayerOpportunities
 		else
 			RemoveItem(item);
 	}
-	public void DestroyItem(Item item)
-    {
-		inventory.RemoveItem(item);
-    }
 
 
 
@@ -75,6 +69,8 @@ public class PlayerOpportunities
 
 		if (IsCanGetIt())
 		{
+			IsUseProccess = true;
+
 			itemUseData = itemUse.itemData;
 
 			float duration = useTimeKg * itemUseData.CurrentBaseWeight;//1kg
@@ -154,6 +150,8 @@ public class PlayerOpportunities
     {
 		GeneralTime.Instance.BreakSkipTime();
 
+		IsUseProccess = false;
+
 		CloseUI();
 	}
 	private void CompletelyUseConsumable()
@@ -164,7 +162,9 @@ public class PlayerOpportunities
 		hungred.CurrentValue = endCalories;
 		thirst.CurrentValue = endHydration;
 
-		DestroyItem(itemUse);
+		RemoveItem(itemUse);
+
+		IsUseProccess = false;
 
 		CloseUI();
 
@@ -205,7 +205,7 @@ public class PlayerOpportunities
 			{
 				weapon = ObjectPool.GetObject(itemObject.gameObject).GetComponent<ItemObjectWeapon>();
 
-				weapon.SetItem(item.itemData);
+				weapon.CurrentData = item.itemData;
 
 				weapon.ColliderEnable(false);
 				weapon.Enable(true);
@@ -232,13 +232,13 @@ public class PlayerOpportunities
 	public bool IsEquiped(ItemDataWrapper data)
     {
 		if (weapon == null) return false;
-		return weapon.Item.itemData == data;
+		return weapon.CurrentData == data;
 	}
 	public void EquipUnEquip(Item item)
 	{
 		if (item != null)
 		{
-			bool isNewWeapon = weapon == null ? true : item.itemData != weapon.Item.itemData;
+			bool isNewWeapon = weapon == null ? true : item.itemData != weapon.CurrentData;
 
 			UnEquip();
 			if (isNewWeapon)
@@ -358,7 +358,7 @@ public class PlayerOpportunities
 	}
 
 
-    private void RemoveItem(Item item, int count)
+	private void RemoveItem(Item item, int count)
 	{
 		inventory.RemoveItem(item, count);
 		CreateWorldItem(item, count);

@@ -55,18 +55,6 @@
         }
     }
 
-    //Inspector
-    private static ItemInspector inspector;
-    public static ItemInspector Inspector
-    {
-        get
-        {
-            if (inspector == null)
-                inspector = Player.itemInspector;
-            return inspector;
-        }
-    }
-
     private static TargetPoint targetPoint;
     public static TargetPoint TargetPoint
     {

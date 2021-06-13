@@ -30,6 +30,10 @@ public class PlayerUI : MonoBehaviour
 
 		windowsUI.buildingWindow.Setup(player.Build);
 
+		windowsUI.itemInspectorWindow.onTakeIt += CloseItemInspector;
+        windowsUI.itemInspectorWindow.onAction += CloseItemInspector;
+        windowsUI.itemInspectorWindow.onLeaveIt += CloseItemInspector;
+
 		windowsUI.backpackWindow.onBack += CloseInventory;
 
 		windowsUI.harvestingWindow.onBack += CloseHarvesting;
@@ -80,12 +84,12 @@ public class PlayerUI : MonoBehaviour
 	}
 
 
-	public void OpenItemInspector(Item item)
+	public void OpenItemInspector(ItemDataWrapper data)
     {
 		CloseControlUI();
 		CloseConditionUI();
 
-		windowsUI.itemInspectorWindow.SetItem(item);
+		windowsUI.itemInspectorWindow.SetItem(data);
 	}
 	public void CloseItemInspector()
     {

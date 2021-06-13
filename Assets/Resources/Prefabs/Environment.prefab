@@ -214,7 +214,7 @@ MonoBehaviour:
     dinamicItemsRules: []
   container:
     staticItems: []
-    itemsAddCount: {x: 0, y: 7}
+    itemsAddCount: {x: 0, y: 10}
     dinamicPosibleItems:
     - {fileID: 11400000, guid: 3c3f027af864f36418b7e8767860fcd1, type: 2}
     - {fileID: 11400000, guid: b4459d87d4ff9da429b95f7f319ee8d5, type: 2}
@@ -282,14 +282,14 @@ MonoBehaviour:
     - scriptableData: {fileID: 11400000, guid: 91c735e4a219fd040a357fb76b5d1f72, type: 2}
       isRandom: 1
       currentStackSize: 1
-      randomStackSize: {x: 0, y: 2}
+      randomStackSize: {x: 1, y: 2}
       currentDurrability: 100
       maxRandomWeight: 0
       currentMagazineCapacity: 0
     - scriptableData: {fileID: 11400000, guid: eb604291a260dd141a7d52087a07b208, type: 2}
       isRandom: 1
       currentStackSize: 1
-      randomStackSize: {x: 0, y: 5}
+      randomStackSize: {x: 1, y: 5}
       currentDurrability: 100
       maxRandomWeight: 0
       currentMagazineCapacity: 0
@@ -303,77 +303,77 @@ MonoBehaviour:
     - scriptableData: {fileID: 11400000, guid: 17e656c3d1536434d9999bfc47cc4941, type: 2}
       isRandom: 1
       currentStackSize: 1
-      randomStackSize: {x: 0, y: 5}
+      randomStackSize: {x: 1, y: 5}
       currentDurrability: 100
       maxRandomWeight: 0
       currentMagazineCapacity: 0
     - scriptableData: {fileID: 11400000, guid: daae5dce1aa984e4c8a6d617afb5a0ce, type: 2}
       isRandom: 1
       currentStackSize: 1
-      randomStackSize: {x: 0, y: 2}
+      randomStackSize: {x: 1, y: 2}
       currentDurrability: 100
       maxRandomWeight: 0
       currentMagazineCapacity: 0
     - scriptableData: {fileID: 11400000, guid: b713345a86eb4774e90400b0378dbfa1, type: 2}
       isRandom: 1
       currentStackSize: 1
-      randomStackSize: {x: 0, y: 2}
+      randomStackSize: {x: 1, y: 2}
       currentDurrability: 100
       maxRandomWeight: 0
       currentMagazineCapacity: 0
     - scriptableData: {fileID: 11400000, guid: 85a3e62ace3ec2540b63007ebe95d402, type: 2}
       isRandom: 1
       currentStackSize: 1
-      randomStackSize: {x: 0, y: 2}
+      randomStackSize: {x: 1, y: 2}
       currentDurrability: 100
       maxRandomWeight: 0
       currentMagazineCapacity: 0
     - scriptableData: {fileID: 11400000, guid: 9cffce06f0a23584e890d4c6ef7428da, type: 2}
       isRandom: 1
       currentStackSize: 1
-      randomStackSize: {x: 0, y: 2}
+      randomStackSize: {x: 1, y: 2}
       currentDurrability: 100
       maxRandomWeight: 0
       currentMagazineCapacity: 0
     - scriptableData: {fileID: 11400000, guid: e5a50c0cfae8cdd49a703bc8944f5fa1, type: 2}
       isRandom: 1
       currentStackSize: 1
-      randomStackSize: {x: 0, y: 5}
+      randomStackSize: {x: 1, y: 5}
       currentDurrability: 100
       maxRandomWeight: 0
       currentMagazineCapacity: 0
     - scriptableData: {fileID: 11400000, guid: 452ac2779f768d641ab5238d005a13b9, type: 2}
       isRandom: 1
       currentStackSize: 1
-      randomStackSize: {x: 0, y: 1}
+      randomStackSize: {x: 1, y: 2}
       currentDurrability: 100
       maxRandomWeight: 0
       currentMagazineCapacity: 0
     - scriptableData: {fileID: 11400000, guid: 5e5e4cf87ee02c74e9e15c26ce004751, type: 2}
       isRandom: 1
       currentStackSize: 1
-      randomStackSize: {x: 0, y: 5}
+      randomStackSize: {x: 1, y: 5}
       currentDurrability: 100
       maxRandomWeight: 0
       currentMagazineCapacity: 0
     - scriptableData: {fileID: 11400000, guid: 2e4c3feb81d1a9d49ba662c285e7acdd, type: 2}
       isRandom: 1
       currentStackSize: 1
-      randomStackSize: {x: 0, y: 5}
+      randomStackSize: {x: 1, y: 5}
       currentDurrability: 100
       maxRandomWeight: 0
       currentMagazineCapacity: 0
     - scriptableData: {fileID: 11400000, guid: 75389cfdd5366ec4cb26c49d8294f724, type: 2}
       isRandom: 1
       currentStackSize: 1
-      randomStackSize: {x: 0, y: 5}
+      randomStackSize: {x: 1, y: 5}
       currentDurrability: 100
       maxRandomWeight: 0
       currentMagazineCapacity: 0
     - scriptableData: {fileID: 11400000, guid: 04383b38a62ed1f41a707b007e717d45, type: 2}
       isRandom: 1
       currentStackSize: 1
-      randomStackSize: {x: 0, y: 25}
+      randomStackSize: {x: 1, y: 25}
       currentDurrability: 100
       maxRandomWeight: 0
       currentMagazineCapacity: 0

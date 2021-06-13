@@ -44,14 +44,14 @@ public class ItemObjectWeapon : ItemObject
     public UnityAction onCapacityСlipChanged;
 
     private int magazineCapacity = -1;
-    public int MagazineCapacity => data.MaxMagaizneCapacity;
+    public int MagazineCapacity => CurrentData.MaxMagaizneCapacity;
 
     public int CurrentСlipCapacity
     {
-        get => data.CurrentMagazineCapacity;
+        get => CurrentData.CurrentMagazineCapacity;
         set
         {
-            data.CurrentMagazineCapacity = value;
+            CurrentData.CurrentMagazineCapacity = value;
             onCapacityСlipChanged?.Invoke();
         }
     }
@@ -60,17 +60,8 @@ public class ItemObjectWeapon : ItemObject
     public bool IsEmpty => CurrentСlipCapacity == 0;
     public bool IsFull => CurrentСlipCapacity == magazineCapacity;
 
-    private ItemDataWrapper data => Item.itemData;
-
     private bool isReadyToShoot = false;
     private bool isAiming = false;
-
-    public void ActionItem()
-    {
-        Item item = GeneralAvailability.PlayerInventory.FindItemByData(data);
-
-        GeneralAvailability.Player.Status.opportunities.EquipItem(item);
-    }
 
     public void Enable(bool trigger)
     {

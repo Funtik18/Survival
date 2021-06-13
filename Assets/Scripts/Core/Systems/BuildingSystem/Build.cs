@@ -46,7 +46,7 @@ public class Build
 	private float lastAngle;
     #endregion
 
-    public void Init(Player player)
+    public void Setup(Player player)
     {
 		this.player = player;
 		this.inventory = player.Inventory;

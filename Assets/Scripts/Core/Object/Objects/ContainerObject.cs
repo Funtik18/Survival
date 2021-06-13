@@ -41,7 +41,6 @@ public class ContainerObject : WorldObject
 
     private void OpenContainer()
     {
-        Debug.LogError("Open");
         GeneralAvailability.PlayerUI.OpenInventoryWithContainer(containerInventory);
         Statistics.TotalContainersOpened++;
     }
@@ -51,7 +50,7 @@ public class ContainerObject : WorldObject
         if (containerInventory.IsEmpty)
             SetButtonOnInteraction();
         else
-            GeneralAvailability.Inspector.ItemsReview(containerInventory);
+            GeneralAvailability.Player.Inspector.ItemsReview(containerInventory);
     }
 
     private void SetButtonOnInteraction()

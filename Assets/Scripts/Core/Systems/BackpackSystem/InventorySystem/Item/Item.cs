@@ -253,6 +253,8 @@ public class ItemDataWrapper
 	public bool IsFireStarting => scriptableData != null ? scriptableData is FireStarterSD : false;
 	public bool IsAid => scriptableData != null ? scriptableData is FirstAidItemSD : false;
 	public bool IsConsumable => scriptableData != null ? scriptableData is ConsumableItemSD : false;
+	public bool IsDrink => scriptableData != null ? scriptableData is PotionItemSD : false;
+
 	public bool IsTool => scriptableData != null ? scriptableData is ToolItemSD : false;
 	public bool IsMaterial => scriptableData != null ? scriptableData is MaterialItemSD : false;
 	public bool IsWeapon => scriptableData != null ? scriptableData is ToolWeaponSD : false;

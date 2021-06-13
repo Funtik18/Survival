@@ -17,8 +17,10 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: ba8a4f41062e32a42a9089003b723b0a, type: 3}
   model: {fileID: 3595487982083192772, guid: e95d5856a90f4fb47b7952e5a8cb84e5, type: 3}
   orientation:
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
+    isEnable: 0
+    position: {x: 0, y: 0, z: -0.65}
+    rotation: {x: -0.4396797, y: 0.36042345, z: -0.022259997, w: 0.8223632}
+    scale: {x: 0, y: 0, z: 0}
   isInfinityWeight: 0
   isInfinityStack: 0
   weight: 0.1
@@ -37,4 +39,4 @@ MonoBehaviour:
   isCanRandomCalories: 0
   isHaveEffects: 1
   effects:
-  - {fileID: 11400000, guid: f87a3ed7b3f738440b4f81dfa155898c, type: 2}
+  - {fileID: 11400000, guid: db3c1a1e868d7e24299c23cbe0ab530a, type: 2}

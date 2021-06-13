@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 targetLookDirection;
     private Vector2 targetMoveDirection;
 
-    public void Init(Player player)
+    public void Setup(Player player)
 	{
         this.status = player.Status;
         currentSpeed = maxWalkSpeed;

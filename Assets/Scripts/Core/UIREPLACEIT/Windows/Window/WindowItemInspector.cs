@@ -41,7 +41,6 @@ public class WindowItemInspector : WindowUI
     [SerializeField] private Button actionButton;
     [SerializeField] private Button leaveItButton;
 
-    private Item currentItem;
     private ItemDataWrapper currentData;
 
     private void Awake()
@@ -51,10 +50,17 @@ public class WindowItemInspector : WindowUI
         leaveItButton.onClick.AddListener(LeaveIt);
     }
 
-    public void SetItem(Item item)
+    public void Setup(UnityAction take = null, UnityAction action = null, UnityAction leave = null)
+    {
+        onTakeIt += take;
+        onAction += action;
+        onLeaveIt += leave;
+    }
+
+    public void SetItem(ItemDataWrapper data)
 	{
-        currentItem = item;
-        currentData = currentItem.itemData;
+        currentData = currentData = data;
+        ;
 
         UpdateUI();
 
@@ -76,8 +82,8 @@ public class WindowItemInspector : WindowUI
         iconTools.SetActive(currentData.IsTool);
         iconMaterials.SetActive(currentData.IsMaterial);
 
-        itemTittle.text = currentItem.itemData.scriptableData.objectName;
-        itemDescription.text = currentItem.itemData.scriptableData.description;
+        itemTittle.text = currentData.scriptableData.objectName;
+        itemDescription.text = currentData.scriptableData.description;
 
         //MATCHES
         if (currentData.IsFireStarting)
@@ -105,6 +111,7 @@ public class WindowItemInspector : WindowUI
         {
             weaponText.text = currentData.CurrentStringMagazineCapacity;
             weaponPanel.SetActive(true);
+
         }
         else
         {
@@ -116,6 +123,36 @@ public class WindowItemInspector : WindowUI
         //WEIGHT
         weightText.text = currentData.CurrentStringWeight;
         weightPanel.SetActive(true);
+
+
+        //ButtonAction
+
+        //if (currentData.is)
+        //{
+        //    if (liquidContainer.IsProccessing)
+        //    {
+        //        SetupAction(true, "PASS TIME");
+        //    }
+        //}
+        if (currentData.IsWeapon)
+        {
+            SetupAction(true, "EQUIP");
+        }
+        else if (currentData.IsConsumable)
+        {
+            if (currentData.IsDrink)
+            {
+                SetupAction(true, "DRINK");
+            }
+            else
+            {
+                SetupAction(true, "EAT");
+            }
+        }
+        else
+        {
+            SetupAction(false);
+        }
     }
 
 

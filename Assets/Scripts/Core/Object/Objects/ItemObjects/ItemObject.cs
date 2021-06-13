@@ -8,7 +8,7 @@ public class ItemObject : WorldObject
 	public UnityAction onDisable;
 
 	[SerializeField] private ItemDataWrapper data;
-	public Item Item { get; private set; }
+	public ItemDataWrapper CurrentData { get; set; }
 
 	[ShowIf("IsCan")]
 	public ItemObjectLiquidContainer canItemObject;
@@ -17,10 +17,11 @@ public class ItemObject : WorldObject
 	[ShowIf("IsCan")]
 	[SerializeField] private GameObject opennedCan;
 
-	private bool IsCan => data.IsCanFood;
+	private bool IsCan => CurrentData.IsCanFood;
 
     public virtual void UpdateItem() { }
 	public virtual void UpdateItem(float temperature) { }
+	public virtual void ItemAction() { }
 
 
 	public override void StartObserve()
@@ -31,14 +32,7 @@ public class ItemObject : WorldObject
 		InteractionButton.SetIconOnPickUp();
 		InteractionButton.OpenButton();
 
-		if(Item == null)
-        {
-			GeneralAvailability.TargetPoint.SetToolTipText(data.scriptableData.objectName).ShowToolTip();
-        }
-        else
-        {
-			GeneralAvailability.TargetPoint.SetToolTipText(Item.itemData.scriptableData.objectName).ShowToolTip();
-		}
+		GeneralAvailability.TargetPoint.SetToolTipText(data.scriptableData.objectName).ShowToolTip();
 	}
     public override void EndObserve()
     {
@@ -49,16 +43,31 @@ public class ItemObject : WorldObject
 	}
 	public override void Interact()
 	{
-		if (Item == null)
-			SetItem(data.GetData());//генерация айтема
+		TryGenerateItemData();
 
-		GeneralAvailability.Inspector.SetItem(this);
+		GeneralAvailability.Player.Inspector.SetItem(this);
+		GeneralAvailability.PlayerUI.OpenItemInspector(CurrentData);
 
 		Overseer.Instance.Subscribe(this);
 	}
+	/// <summary>
+	/// Взаимодействия, когда сразу создаём объект и сразу его проверяем.
+	/// </summary>
+	public void InteractSub()
+    {
+		TryGenerateItemData();
+		GeneralAvailability.PlayerUI.OpenItemInspector(CurrentData);
+	}
+	private ItemObject TryGenerateItemData()
+	{
+		if (CurrentData == null)
+			CurrentData = data.GetData();//генерация айтема
 
-    #region POs
-    [Button]
+		return this;
+	}
+
+	#region POs
+	[Button]
 	private void SaveGlobalOrientation()
     {
 		SavePosition();
@@ -66,32 +75,13 @@ public class ItemObject : WorldObject
 	}
 	private void SavePosition()
     {
-		Item.itemData.scriptableData.orientation.position = transform.localPosition;
+		CurrentData.scriptableData.orientation.position = transform.localPosition;
     }
 	private void SaveRotation()
     {
-		Item.itemData.scriptableData.orientation.rotation = transform.localRotation;
+		CurrentData.scriptableData.orientation.rotation = transform.localRotation;
 	}
     #endregion
-
-    protected virtual void OnDisable()
-    {
-		onDisable?.Invoke();
-
-		onDisable = null;
-	}
-
-	public void SetItem(ItemDataWrapper itemData)
-    {
-		if(Item == null)
-        {
-			Item = new Item(itemData);
-        }
-        else
-        {
-			Item.itemData = itemData;
-		}
-	}
 
 	public void SetData(Data data)
     {
@@ -99,7 +89,7 @@ public class ItemObject : WorldObject
 		transform.position = data.stay.position;
 		transform.rotation = data.stay.rotation;
 
-		SetItem(data.itemData);
+		CurrentData = data.itemData;
 	}
 	public Data GetData()
     {
@@ -112,7 +102,7 @@ public class ItemObject : WorldObject
 				position = transform.position,
 				rotation = transform.rotation,
 			},
-			itemData = Item.itemData,
+			itemData = CurrentData,
 		};
 
 		return data;
@@ -125,5 +115,12 @@ public class ItemObject : WorldObject
 		public int index;
 		public Stay3 stay;
 		public ItemDataWrapper itemData;
+	}
+
+	protected virtual void OnDisable()
+	{
+		onDisable?.Invoke();
+
+		onDisable = null;
 	}
 }

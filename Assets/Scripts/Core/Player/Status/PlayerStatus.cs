@@ -437,16 +437,12 @@ public class Effects
 
 	private void EffectStarted(Effect effect)
     {
-		Debug.LogError("Effect Started");
     }
 	private void EffectUpdated(Effect effect)
 	{
-		Debug.LogError("Effect Updated");
 	}
 	private void EffectEnded(Effect effect)
 	{
-		Debug.LogError("Effect Removed");
-
 		RemoveEffect(effect);
 	}
 }
