@@ -65,15 +65,15 @@ public class MainMenu : MonoBehaviour
     }
     public void IsMale()
     {
-        DataHolder.CurrentData.player.statusData.gender = Gender.Male;
+        //DataHolder.CurrentData.player.statusData.gender = Gender.Male;
     }
     public void IsFemale()
     {
-        DataHolder.CurrentData.player.statusData.gender = Gender.Female;
+        //DataHolder.CurrentData.player.statusData.gender = Gender.Female;
     }
     public void IsNormal()
     {
-        DataHolder.CurrentData.difficult = Difficult.Normal;
+        //DataHolder.CurrentData.difficult = Difficult.Normal;
     }
 
     private void LoadGame()

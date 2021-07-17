@@ -61,15 +61,16 @@ public static class DataHolder
 
 			Transform point = randomPoints ? startPoints.GetRandomItem() : startPoint;
 
-			data.player.stay = new Stay3()
+			data.player = new Player.Data()
 			{
-				position = point.position,
-				rotation = Quaternion.LookRotation(point.forward),
+				stay = new Stay3()
+				{
+					position = point.position,
+					rotation = Quaternion.LookRotation(point.forward),
+				},
+				statusData = randomPlayerData ? playerRandomData.GetData() : playerData.statusData,
+				inventoryData = ItemsData.Instance.PlayerContainer,
 			};
-
-			data.player.statusData = randomPlayerData ? playerRandomData.GetData() : playerData.statusData;
-
-			data.player.inventoryData = ItemsData.Instance.PlayerContainer;
 
 			data.weatherForecast = WeatherController.Instance.CurrentForecast;
 

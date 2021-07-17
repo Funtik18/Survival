@@ -169,7 +169,7 @@ public class ItemsData : MonoBehaviour
     [Button]
     private void UpdateContainers()
     {
-        playerContainer.dinamicPosibleItems = MultipleLists(allConsumables.ToArray());
+        //playerContainer.dinamicPosibleItems = MultipleLists(allConsumables.ToArray());
         container.dinamicPosibleItems = MultipleLists(allConsumables.ToArray(), allFires.ToArray(), allMaterials.ToArray(), allAmmunitions.ToArray());
     }
 
@@ -224,10 +224,11 @@ public class Container
 
         int itemsCount = itemsAddCount.RandomNumBtw();
 
-        for (int i = 0; i < itemsCount; i++)
-        {
-            items.Add(dinamicItemsRules[UnityEngine.Random.Range(0, dinamicItemsRules.Count)].Copy().GetRndData());
-        }
+        if(dinamicItemsRules.Count > 0)
+            for (int i = 0; i < itemsCount; i++)
+            {
+                items.Add(dinamicItemsRules[UnityEngine.Random.Range(0, dinamicItemsRules.Count)].Copy().GetRndData());
+            }
 
         return items;
     }

@@ -53,22 +53,22 @@ public class Generator : MonoBehaviour
 
         zoneRadiusAwake = ZoneRadius * Mathf.Sqrt(2) + zoneRadiusOffset;
 
-        if (isCanReGenerate)
-        {
-            GeneralTime.TimeUnityEvent unityEvent = new GeneralTime.TimeUnityEvent();
-            unityEvent.AddEvent(GeneralTime.TimeUnityEvent.EventType.ExecuteEveryTime, howOften, TriggerGenerate);
-            GeneralTime.Instance.AddEvent(unityEvent);
-        }
+        //if (isCanReGenerate)
+        //{
+        //    GeneralTime.TimeUnityEvent unityEvent = new GeneralTime.TimeUnityEvent();
+        //    unityEvent.AddEvent(GeneralTime.TimeUnityEvent.EventType.ExecuteEveryTime, howOften, TriggerGenerate);
+        //    GeneralTime.Instance.AddEvent(unityEvent);
+        //}
     }
 
     public void Behavior(Vector3 playerPosition)
     {
         if (IsCanGenerate)
         {
-            if (Vector3.Distance(playerPosition, Transform.position) <= zoneRadiusAwake)
-            {
-                ReGenerateZone();
-            }
+            //if (Vector3.Distance(playerPosition, Transform.position) <= zoneRadiusAwake)
+            //{
+            //    ReGenerateZone();
+            //}
         }
         else
         {

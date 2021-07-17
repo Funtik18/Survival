@@ -59,8 +59,6 @@ public class Player : MonoBehaviour
 	private bool isLookLocked = false;
 	private bool isBrainPaussed = false;
 
-	private Coroutine brainCoroutine;
-	public bool IsBrainProccess => brainCoroutine != null;
 	
 	private void Setup()
     {
@@ -71,89 +69,27 @@ public class Player : MonoBehaviour
 		Build.Setup(this);
 
 		CheckCursor();
-
-		StartBrain();
 	}
-	
-	
 
-	private void StartBrain()
-    {
-        if (!IsBrainProccess)
+	private void Update()
+	{
+		Controller.UpdateGravity();
+
+        if (isMoveLocked == false)
         {
-			brainCoroutine = StartCoroutine(Brain());
-		}
-    }
-	private IEnumerator Brain()
-    {
-        while (true)
+            Controller.UpdateMobileMovement();
+            Controller.UpdateMovement();
+        }
+        if (isLookLocked == false)
         {
-			while (isBrainPaussed)
-			{
-				yield return null;
-			}
-
-			Controller.UpdateGravity();
-
-			if (GeneralSettings.IsPlatformMobile)
-			{
-				Debug.LogError("Mobile");
-				if (isMoveLocked == false)
-				{
-					Controller.UpdateMobileMovement();
-					Controller.UpdateMovement();
-				}
-				if (isLookLocked == false)
-				{
-					Controller.UpdateMobileLook();
-				}
-			}
-			else if (GeneralSettings.IsPlatformPC)
-			{
-				Debug.LogError("PC");
-				if (isMoveLocked == false)
-				{
-					Controller.UpdatePCMovement();
-					Controller.UpdateMovement();
-				}
-				if (isLookLocked == false)
-				{
-					Controller.UpdatePCLook();
-				}
-			}
-
-			yield return null;
-		}
-
-		StopBrain();
-	}
-	private void PauseBrain()
-    {
-		isBrainPaussed = true;
-
-		Controller.Enable(false);
-	}
-	private void ResumeBrain()
-    {
-		isBrainPaussed = false;
-
-		Controller.Enable(true);
-	}
-	private void StopBrain()
-    {
-        if (IsBrainProccess)
-        {
-			StopCoroutine(brainCoroutine);
-			brainCoroutine = null;
+            Controller.UpdateMobileLook();
         }
     }
 
 	public void ChangePosition(Vector3 position, Quaternion rotation)
     {
-		PauseBrain();
 		transform.position = position;
 		transform.rotation = rotation;
-		ResumeBrain();
 	}
 	public void ChangePosition(Stay3 stay)
 	{

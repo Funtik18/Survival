@@ -112,7 +112,7 @@ public class PlayerStatus
 	}
 	private void UpdateStatsByFrame()
     {
-		onStatsByFrame.Invoke();
+		onStatsByFrame?.Invoke();
 	}
 
 	private void ConditionFormules()

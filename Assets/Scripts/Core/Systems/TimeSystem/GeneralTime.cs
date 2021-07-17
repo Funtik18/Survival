@@ -92,7 +92,7 @@ public class GeneralTime : MonoBehaviour
     }
     private void Update()
     {
-        onUpdate.Invoke();
+        onUpdate?.Invoke();
     }
     public void BreakTime()
     {
@@ -155,9 +155,9 @@ public class GeneralTime : MonoBehaviour
 
     private void UpdateActions()
     {
-        onUpdate.Invoke();
+        onUpdate?.Invoke();
 
-        onSecond.Invoke();
+        onSecond?.Invoke();
 
         if (globalTime.TotalSeconds % 60 == 0)
         {
